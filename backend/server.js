@@ -12,17 +12,17 @@ const port = process.env.PORT
 
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
-server.use(errorHandler)
-
-//ziad: routes for doctor and patient
-const doctorRoutes = require('./route/doctorRoute')
-const patientRoutes = require('./route/patientRoute')
-server.use('/api/doctors', doctorRoutes)
-server.use('/api/patients', patientRoutes)
 
 server.listen(port,() => console.log(`Server is listening on port ${port}`))
 connectDB()
-
 server.get('/',(req,res) => {
     res.status(200).json({message:"Hello from server"})
 })
+
+const patientRoutes = require('./route/patientRoute')
+const doctorRoutes = require('./route/DoctorRoute')
+
+server.use('/api/doctor',doctorRoutes)
+server.use('/api/patients', patientRoutes)
+
+server.use(errorHandler)
