@@ -28,9 +28,9 @@ const FamilyMemberSchema = new mongoose.Schema({
         enum: ['WIFE','HUSBAND','CHILDREN']
     },
     patient:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Patient',
-    required: true
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Patient',
+        required: true
     }
 },
 { timestamps: true });
