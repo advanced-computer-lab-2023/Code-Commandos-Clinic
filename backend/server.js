@@ -12,13 +12,15 @@ const port = process.env.PORT
 
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
-server.use(errorHandler)
-
-
 
 server.listen(port,() => console.log(`Server is listening on port ${port}`))
 connectDB()
-
 server.get('/',(req,res) => {
     res.status(200).json({message:"Hello from server"})
 })
+
+const doctorRoutes = require('./route/DoctorRoute')
+
+server.use('/api/doctor',doctorRoutes)
+
+server.use(errorHandler)
