@@ -57,25 +57,31 @@ const createDoctor = asyncHandler(async (req,res) =>{
 const updateDoctor = asyncHandler(async (req, res) => {
     const { id, email, hourlyRate, affiliation } = req.body
     try{
+        let query = {}
         if(email){
-            const doctor = await DoctorModel.findOneAndUpdate({_id: id}, {email: email})
+            query.email = email
         }
         if(hourlyRate){
-            const doctor = await DoctorModel.findOneAndUpdate({_id: id}, {hourlyRate: hourlyRate})
+            query.hourlyRate = hourlyRate        
         }
         if(affiliation){
-            const doctor = await DoctorModel.findOneAndUpdate({_id: id}, {affiliation: affiliation})
+            query.affiliation = affiliation
         }
-    } catch (error){
+        if(!email && !hourlyRate && !affiliation){
+            throw new Error('You need to provide a new email, hourly rate or affiliation to continue')
+        }
+        const doctor = await DoctorModel.findOneAndUpdate({_id: id}, {...query})
+        if (!doctor) {
+            res.status(400)
+            throw new Error('Doctor not found')
+        }
+        res.status(200).json(doctor)
+    } 
+    catch (error){
         res.status(400)
         throw new Error(error.message)
     }
-    if (!doctor) {
-      res.status(400)
-      throw new Error('Doctor not found')
-    }
-    res.status(200).json(doctor)
-  })
+})
 
 module.exports = {
     searchByNameAndOrSpeciality,
