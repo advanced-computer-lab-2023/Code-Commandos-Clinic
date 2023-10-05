@@ -1,4 +1,5 @@
 const DoctorModel = require('../model/Doctor')
+const AppointmentModel = require('../model/Appointment')
 const mongoose = require('mongoose')
 const asyncHandler = require('express-async-handler')
 
@@ -51,7 +52,83 @@ const createDoctor = asyncHandler(async (req,res) =>{
     }
 })
 
+//req41
+// view all details of selected doctor including specilaty, affiliation (hospital), educational background
+const viewDoctor = asyncHandler(async(req,res) => {
+    const {id} = req.body
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        res.status(400)
+        throw new Error('Invalid mongoose id!')
+    }
+    try {
+        const doctor = await DoctorModel.findById(id).select('-password')
+        if(!doctor){
+            throw new Error('Doctor not found')
+        }
+        res.status(200).json(doctor)
+    }
+    catch (error){
+        throw new Error(error.message)
+    }
+})
+
+//req39
+//filter  a doctor by speciality and/or availability on a certain date and at a specific time
+//A doctor is available ona certain date if he/she has no Appointment where the given date is in between the start and end time of that given date
+const filterBySpecialityAndDate = asyncHandler(async (req,res) => {
+    const {speciality,date} = req.body
+    let doctorsBySpeciality
+    let nonFreeAppointments
+    let doctorsWhoHaveAppointmentsOnTheDate
+    let freeDoctors
+    if(speciality && date){
+        try {
+            doctorsBySpeciality = await DoctorModel.find({speciality})
+            const doctorsIds = doctorsBySpeciality.map((doctor) => doctor.id)
+            nonFreeAppointments = await AppointmentModel.find({
+                doctor: {$in: doctorsIds},
+                startTime: {$lte: date},
+                endTime: {$gte: date}
+            })
+            doctorsWhoHaveAppointmentsOnTheDate = nonFreeAppointments.map((appointment) => appointment.doctor)
+            freeDoctors = doctorsBySpeciality.filter((doctor) => !doctorsWhoHaveAppointmentsOnTheDate.includes(doctor.id))
+
+        }
+        catch (error){
+            throw new Error(error.message)
+        }
+    }
+    else if(speciality){
+        try {
+            freeDoctors = await DoctorModel.find({speciality})
+            res.status(200).json(freeDoctors)
+        }
+        catch (error){
+            throw new Error(error.message)
+        }
+    }
+    else if(date){
+        try {
+            nonFreeAppointments = await AppointmentModel.find({
+                startTime: {$lte: date},
+                endTime: {$gte: date}
+            })
+            doctorsWhoHaveAppointmentsOnTheDate = nonFreeAppointments.map((appointment) => appointment.doctor)
+            const doctors = await DoctorModel.find()
+            freeDoctors = doctors.filter((doctor) =>
+                !doctorsWhoHaveAppointmentsOnTheDate.includes(doctor.id)
+            )
+        }
+        catch (error){
+            throw new Error(error.message)
+        }
+    }
+    res.status(200).json(freeDoctors)
+})
+
 module.exports = {
     searchByNameAndOrSpeciality,
     createDoctor,
+    viewDoctor,
+    filterBySpecialityAndDate
 };
