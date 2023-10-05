@@ -14,10 +14,8 @@ server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 server.use(errorHandler)
 
-//ziad: routes for doctor and patient
-const doctorRoutes = require('./route/doctorRoute')
+//ziad: routes for patient
 const patientRoutes = require('./route/patientRoute')
-server.use('/api/doctors', doctorRoutes)
 server.use('/api/patients', patientRoutes)
 
 server.listen(port,() => console.log(`Server is listening on port ${port}`))
