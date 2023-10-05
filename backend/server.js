@@ -5,6 +5,8 @@ const connectDB = require("./configuration/Db")
 const {errorHandler} = require('./middleware/ErrorHandler')
 const port = process.env.PORT
 const mongoose=require("mongoose")
+const asyncHandler = require('express-async-handler')
+const familymemberroute=require("./route/FamilyMemberRoute")
 // const adminModel = require('./model/Admin')
 // const appointmentModel = require('./model/Appointment')
 // const doctorModel = require('./model/Doctor')
@@ -13,7 +15,7 @@ const mongoose=require("mongoose")
 
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
-server.use(errorHandler)
+server.use('/api/FamilyMemberRoute',familymemberroute);
 
 
 server.listen(port,() => console.log(`Server is listening on port ${port}`))
@@ -22,3 +24,5 @@ connectDB()
 server.get('/',(req,res) => {
     res.status(200).json({message:"Hello from server"})
 })
+
+server.use(errorHandler)

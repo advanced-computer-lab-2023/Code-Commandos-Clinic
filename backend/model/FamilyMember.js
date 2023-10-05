@@ -35,7 +35,5 @@ const FamilyMemberSchema = new mongoose.Schema({
 },
 { timestamps: true });
 
-
-
 const FamilyMember = mongoose.model('FamilyMember', FamilyMemberSchema);
 module.exports = FamilyMember;
