@@ -25,9 +25,15 @@ const FamilyMemberSchema = new mongoose.Schema({
     relation:{
         type: String,
         required: true,
-        enum: ['WIFE/HUSBAND','CHILDREN']
+        enum: ['WIFE','HUSBAND','CHILDREN']
+    },
+    patient:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Patient',
+    required: true
     }
-},{ timestamps: true });
+},
+{ timestamps: true });
 
 const FamilyMember = mongoose.model('FamilyMember', FamilyMemberSchema);
 module.exports = FamilyMember;
