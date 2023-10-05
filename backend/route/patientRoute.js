@@ -5,7 +5,7 @@ const {
   createPatient, 
   deletePatient, 
   updatePatient
-} = require('../controller/patientController')
+} = require('../controller/PatientController')
 
 const router = express.Router()
 
@@ -17,6 +17,9 @@ router.get('/:id', getPatient)
 
 // create or POST a new patient
 router.post('/', createPatient)
+
+// patient registration route
+router.route('/registerPatient').post(createPatient)
 
 // DELETE a patient
 router.delete('/:id', deletePatient)

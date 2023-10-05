@@ -1,83 +1,85 @@
-const Patient = require('../model/Patient')
+const PatientModel = require('../model/Patient')
 const mongoose = require('mongoose')
+const asyncHandler = require('express-async-handler')
 
 // get all patients
-const getPatients = async (req, res) => {
-  const Patients = await Patient.find({}).sort({createdAt: -1})
-
+const getPatients = asyncHandler(async (req, res) => {
+  const Patients = await PatientModel.find({}).sort({createdAt: -1})
   res.status(200).json(Patients)
-}
+})
 
 // get a single patient
-const getPatient = async (req, res) => {
+const getPatient = asyncHandler(async (req, res) => {
   const { id } = req.params
-
   if (!mongoose.Types.ObjectId.isValid(id)) {
+    res.status(400)
     throw new Error('Patient not found')
-    //return res.status(404).json({error: 'Patient not found'})
+  }
+  try{
+    const patient = await PatientModel.findById(id)
+    if (!patient) {
+      res.status(400)
+      throw new Error('Patient not found')
+    }
+    res.status(200).json(patient)
+  } catch (error){
+    res.status(400)
+    throw new Error(error.message)
   }
 
-  const patient = await Patient.findById(id)
-
-  if (!patient) {
-    throw new Error('Patient not found')
-    //return res.status(404).json({error: 'Patient not found'})
-  }
-
-  res.status(200).json(patient)
-}
+})
 
 // create a new patient
-const createPatient = async (req, res) => {
-  const {username, name, email, password, dateOfBirth, gender, mobileNumber, emergencyContact} = req.body
-
-  // add to the database
+const createPatient = asyncHandler(async (req, res) => {
+  const patientBody = req.body
   try {
-    const patient = await Patient.create({ username, name, email, password, dateOfBirth, gender, mobileNumber, emergencyContact })
+    const patient = await PatientModel.create(patientBody)
     res.status(200).json(patient)
   } catch (error) {
+    res.status(400)
     throw new Error(error.message)
-    //res.status(400).json({ error: error.message })
   }
-}//
+})
 
 // delete a patient
-const deletePatient = async (req, res) => {
+const deletePatient = asyncHandler(async (req, res) => {
   const { id } = req.params
-
   if (!mongoose.Types.ObjectId.isValid(id)) {
+    res.status(400)
     throw new Error('Patient not found')
-    //return res.status(400).json({error: 'Patient not found'})
   }
-
-  const patient = await Patient.findOneAndDelete({_id: id})
-
-  if(!patient) {
-    throw new Error('Patient not found')
-    //return res.status(400).json({error: 'Patient not found'})
+  try{
+    const patient = await PatientModel.findOneAndDelete({_id: id})
+    if(!patient) {
+      res.status(400)
+      throw new Error('Patient not found')
+    }
+    res.status(200).json(patient)
+  } catch (error){
+    res.status(400)
+    throw new Error(error.message)
   }
-
-  res.status(200).json(patient)
-}
+})
 
 // update a patient
-const updatePatient = async (req, res) => {
+const updatePatient = asyncHandler(async (req, res) => {
   const { id } = req.params
-
   if (!mongoose.Types.ObjectId.isValid(id)) {
+    res.status(400)
     throw new Error('Patient not found')
-    // res.status(400).json({error: 'Patient not found'})
   }
-
-  const patient = await Patient.findOneAndUpdate({_id: id}, {...req.body})
-
-  if (!patient) {
-    throw new Error('Patient not found')
-    //return res.status(400).json({error: 'Patient not found'})
+  try{
+    const patient = await PatientModel.findOneAndUpdate({_id: id}, {...req.body})
+    if (!patient) {
+      res.status(400)
+      throw new Error('Patient not found')
+    }
+    res.status(200).json(patient)
+  } catch (error){
+    res.status(400)
+    throw new Error(error.message)
   }
-
-  res.status(200).json(patient)
-}
+})
 
 module.exports = {
     getPatients,
