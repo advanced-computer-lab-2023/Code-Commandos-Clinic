@@ -35,10 +35,15 @@ const DoctorRegistrationSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // speciality: {
-  //   type: String,
-  //   required: true,
-  // }
+  speciality: {
+    type: String,
+    required: true,
+  },
+  status: {
+    type: String,
+    default: 'PENDING',
+    enum: ['PENDING','ACCEPTED','REJECTED']
+  }
 },{ timestamps: true });
 
 const DoctorRegistration = mongoose.model('DoctorRegistration', DoctorRegistrationSchema);
