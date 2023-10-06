@@ -32,7 +32,8 @@ const getDoctorRequests = asyncHandler(async (req, res) => {
 
 //ziad: requirement 10 (sprint 2) NOT TESTED
 //accept or reject the request of a doctor to join the platform
-const acceptDoctorRequest =asyncHandler( async (req, res) => {
+const acceptDoctorRequest = asyncHandler(async (req, res) => {
+
     try {
         const { id } = req.body
         const DoctorRequest = await DoctorRegistrationModel.findById(id)
