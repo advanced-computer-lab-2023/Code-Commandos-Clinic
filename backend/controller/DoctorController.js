@@ -52,6 +52,7 @@ const createDoctor = asyncHandler(async (req,res) =>{
     }
 })
 
+
 //req41
 // view all details of selected doctor including specilaty, affiliation (hospital), educational background
 const viewDoctor = asyncHandler(async(req,res) => {
@@ -68,6 +69,39 @@ const viewDoctor = asyncHandler(async(req,res) => {
         res.status(200).json(doctor)
     }
     catch (error){
+        res.status(400)
+        throw new Error(error.message)
+    }
+})
+
+//ziad: requirement 14
+//update doctor's email, hourlyRate, affiliation
+//function updates a doctor's email, hourlyRate, affiliation using an ID
+const updateDoctor = asyncHandler(async (req, res) => {
+    const { id, email, hourlyRate, affiliation } = req.body
+    try{
+        let query = {}
+        if(email){
+            query.email = email
+        }
+        if(hourlyRate){
+            query.hourlyRate = hourlyRate        
+        }
+        if(affiliation){
+            query.affiliation = affiliation
+        }
+        if(!email && !hourlyRate && !affiliation){
+            throw new Error('You need to provide a new email, hourly rate or affiliation to continue')
+        }
+        const doctor = await DoctorModel.findOneAndUpdate({_id: id}, {...query})
+        if (!doctor) {
+            res.status(400)
+            throw new Error('Doctor not found')
+        }
+        res.status(200).json(doctor)
+    } 
+    catch (error){
+        res.status(400)
         throw new Error(error.message)
     }
 })
@@ -132,5 +166,6 @@ module.exports = {
     searchByNameAndOrSpeciality,
     createDoctor,
     viewDoctor,
-    filterBySpecialityAndDate
-};
+    filterBySpecialityAndDate,
+    updateDoctor
+}
