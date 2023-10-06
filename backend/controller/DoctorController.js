@@ -1,5 +1,4 @@
 const DoctorModel = require('../model/Doctor')
-const AppointmentModel = require('../model/Appointment')
 const mongoose = require('mongoose')
 const asyncHandler = require('express-async-handler')
 
