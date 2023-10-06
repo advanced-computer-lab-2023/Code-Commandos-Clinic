@@ -4,24 +4,22 @@ const FamilyMemberSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
+        unique: true
       },
-
-    NationalId:{
+    nationalId:{
         type: Number,
-        required: true
+        required: true,
+        unique:true
     },
-
     age: {
         type: Number,
         required: true,
     },
-
     gender: {
         type: String,
         required: true,
         enum: ['MALE','FEMALE']
       },
-
     relation:{
         type: String,
         required: true,

@@ -5,7 +5,6 @@ const connectDB = require("./configuration/Db")
 const {errorHandler} = require('./middleware/ErrorHandler')
 const port = process.env.PORT
 const mongoose=require("mongoose")
-const familymemberroute=require("./route/FamilyMemberRoute")
 
 
 server.use(express.json());
@@ -20,9 +19,10 @@ server.get('/',(req,res) => {
 
 const doctorRoutes = require('./route/DoctorRoute')
 const appointmentRoutes = require('./route/AppointmentRoute')
+const familyMemberRoutes=require("./route/FamilyMemberRoute")
 
 server.use('/api/doctor',doctorRoutes)
 server.use('/api/appointment',appointmentRoutes)
-server.use('/api/FamilyMemberRoute',familymemberroute);
+server.use('/api/familyMember',familyMemberRoutes);
 
 server.use(errorHandler)

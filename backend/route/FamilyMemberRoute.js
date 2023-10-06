@@ -1,16 +1,13 @@
 const express = require("express");
-const FamilyMember = require("../model/FamilyMember");
 const router = express.Router();
-const asyncHandler = require('express-async-handler');
 const {
-    AddFamilyMember,
+    addFamilyMember,
     getFamilyMembers
 } = require("../controller/FamilyMemberController");
 
 // task 18
-router.post('/', AddFamilyMember);
-
-router.get('/:idofpatient',getFamilyMembers);
+router.post('/addFamilyMember', addFamilyMember);
+router.get('/getFamilyMembers/:patientId',getFamilyMembers);
 
 
 module.exports=router
