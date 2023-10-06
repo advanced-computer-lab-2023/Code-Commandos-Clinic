@@ -21,8 +21,10 @@ server.get('/',(req,res) => {
 
 const patientRoutes = require('./route/PatientRoute')
 const doctorRoutes = require('./route/DoctorRoute')
+const doctorRegisterationRoutes = require('./route/DoctorRegistrationRoute')
 
 server.use('/api/doctor', doctorRoutes)
 server.use('/api/patient', patientRoutes)
+server.use('/api/doctorRegistration', doctorRegisterationRoutes)
 
 server.use(errorHandler)
