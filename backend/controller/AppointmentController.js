@@ -1,8 +1,9 @@
 const AppointmentModel = require('../model/Appointment')
 const asyncHandler = require('express-async-handler')
 const DoctorModel = require("../model/Doctor");
+const PatientModel = require('../model/Patient')
 
-const createAppointment = asyncHandler(async (req,res) => {
+const createAppointment =asyncHandler( async (req,res) => {
     const appointmentBody = req.body
     let operlappingAppointment
     try {
@@ -21,18 +22,22 @@ const createAppointment = asyncHandler(async (req,res) => {
                 {
                     $or: [
                         {
-                            startTime: {gte: appointmentBody.startTime},
-                            startTime: {lte: appointmentBody.endTime},
+                            startTime: {$lte: appointmentBody.endTime},
+                            endTime: {$gte: appointmentBody.startTime},
                         },
                         {
-                            startTime: {lte: appointmentBody.startTime},
-                            endTime: {gte: appointmentBody.endTime},
+                            startTime: {$gte: appointmentBody.startTime},
+                            endTime: {$gte: appointmentBody.endTime},
                         },
                         {
-                            endTime: {gte: appointmentBody.startTime},
-                            endTime: {lte: appointmentBody.endTime},
+                            startTime: {$lte: appointmentBody.startTime},
+                            endTime: {$gte: appointmentBody.endTime},
                         },
                     ]
+                }
+                ,
+                {
+                    status: "PENDING",
                 }
             ]
         })
@@ -47,6 +52,11 @@ const createAppointment = asyncHandler(async (req,res) => {
     }
     try {
         const appointment = await AppointmentModel.create(appointmentBody)
+        const patient = await PatientModel.findById(appointment.patient)
+        const doctor = await DoctorModel.findById(appointment.doctor)
+        appointment.patientName = patient.name
+        appointment.doctorName = doctor.name
+        await appointment.save()
         res.status(200).json(appointment)
     }
     catch (error){

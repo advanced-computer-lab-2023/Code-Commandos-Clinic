@@ -55,7 +55,7 @@ const createDoctor = asyncHandler(async (req,res) =>{
 //req41
 // view all details of selected doctor including specilaty, affiliation (hospital), educational background
 const viewDoctor = asyncHandler(async(req,res) => {
-    const {id} = req.body
+    const {id} = req.params
     if (!mongoose.Types.ObjectId.isValid(id)) {
         res.status(400)
         throw new Error('Invalid mongoose id!')
@@ -88,11 +88,11 @@ const filterBySpecialityAndDate = asyncHandler(async (req,res) => {
             nonFreeAppointments = await AppointmentModel.find({
                 doctor: {$in: doctorsIds},
                 startTime: {$lte: date},
-                endTime: {$gte: date}
+                endTime: {$gte: date},
+                status: "PENDING"
             })
             doctorsWhoHaveAppointmentsOnTheDate = nonFreeAppointments.map((appointment) => appointment.doctor)
-            freeDoctors = doctorsBySpeciality.filter((doctor) => !doctorsWhoHaveAppointmentsOnTheDate.includes(doctor.id))
-
+            freeDoctors = doctorsBySpeciality.filter((doctor) => !doctorsWhoHaveAppointmentsOnTheDate.some((appointmentDoctorId) => appointmentDoctorId.equals(doctor.id)))
         }
         catch (error){
             throw new Error(error.message)
@@ -109,15 +109,17 @@ const filterBySpecialityAndDate = asyncHandler(async (req,res) => {
     }
     else if(date){
         try {
+            const doctors = await DoctorModel.find()
             nonFreeAppointments = await AppointmentModel.find({
                 startTime: {$lte: date},
-                endTime: {$gte: date}
+                endTime: {$gte: date},
+                status: "PENDING"
             })
             doctorsWhoHaveAppointmentsOnTheDate = nonFreeAppointments.map((appointment) => appointment.doctor)
-            const doctors = await DoctorModel.find()
             freeDoctors = doctors.filter((doctor) =>
-                !doctorsWhoHaveAppointmentsOnTheDate.includes(doctor.id)
+                !doctorsWhoHaveAppointmentsOnTheDate.some((appointmentDoctorId) => appointmentDoctorId.equals(doctor.id))
             )
+
         }
         catch (error){
             throw new Error(error.message)
