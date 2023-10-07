@@ -5,7 +5,7 @@ const {
     getFamilyMembers
 } = require("../controller/FamilyMemberController");
 
-// task 18
+// task 18 and 22
 router.post('/addFamilyMember', addFamilyMember);
 router.get('/getFamilyMembers/:patientId',getFamilyMembers);
 

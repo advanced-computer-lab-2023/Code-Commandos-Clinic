@@ -3,7 +3,7 @@ const router = express.Router();
 const asyncHandler = require('express-async-handler');
 const FamilyMember = require("../model/FamilyMember");
 
-//task 18
+//task 18 and 22
 const addFamilyMember = asyncHandler(async(req,res) => {
     const memberBody = req.body
       try{
@@ -22,7 +22,7 @@ const getFamilyMembers =  asyncHandler(async(req,res) => {
     const familyMembers = await FamilyMember.find({patient:patientId})
 
     if(familyMembers.length == 0){
-        return res.status(404)
+        res.status(404)
         throw new Error('No registered family members')
     }
     res.status(200).json(familyMembers)
