@@ -5,8 +5,8 @@ const mongoose = require('mongoose');
 const HealthPackageSchema = mongoose.Schema({
     packageType: {
         type: String,
-        enum: ['Silver', 'Gold', 'Platinum'],
-        required: true
+        required: true,
+        enum: ['Silver', 'Gold', 'Platinum']
     },
 
 },{ timestamps: true })

@@ -3,8 +3,6 @@ const asyncHandler = require('express-async-handler')
 const PatientModel = require("../model/Patient");
 const HealthPackage = require('../model/HealthPackage');
 const { default: mongoose } = require('mongoose');
-// const HealthPackage = require('../model/HealthPackage');
-// const HealthPackage = require('../model/HealthPackage');
 
 //Req ID #11 in VC
 
@@ -19,29 +17,9 @@ const addPackage = asyncHandler(async(req,res) => {
         res.status(400)
         throw new Error(error.message)
       }
-
 })
 
-//update
-const updatePackage = asyncHandler(async(req,res) => {
-    const {id} = req.params
-
-    if (!mongoose.Types.ObjectId.isValid(id)){
-        return res.status(404).json({error: 'No such package'})
-    }
-
-    const HealthPackage = await HealthPackage.findOneAndUpdate({_id: id}, {...req.body})
-
-    if(!HealthPackage){
-      return res.status(400).json({error: 'No such package'})
-    }
-
-    res.status(200).json(HealthPackage)
-    
-    
-  })
-  
-//get one (if needed)
+//get a single (if needed)
 const getPackage = asyncHandler(async(req,res) => {
     const {id} = req.params
   
@@ -65,6 +43,23 @@ const getPackages = asyncHandler(async(req,res) => {
   res.status(200).json(HealthPackage)
 })
 
+//update
+const updatePackage = asyncHandler(async(req,res) => {
+    const {id} = req.params
+
+    if (!mongoose.Types.ObjectId.isValid(id)){
+        return res.status(404).json({error: 'No such package'})
+    }
+
+    const HealthPackage = await HealthPackage.findOneAndUpdate({_id: id}, {...req.body})
+
+    if(!HealthPackage){
+      return res.status(400).json({error: 'No such package'})
+    }
+
+    res.status(200).json(HealthPackage)
+  })
+
 //delete
 const deletePackage = asyncHandler(async(req,res) => {
     const {id} = req.params
@@ -82,8 +77,5 @@ const deletePackage = asyncHandler(async(req,res) => {
     res.status(200).json(HealthPackage)
 })
 
-
-
-
-module.exports = {addPackage, updatePackage, getPackage, deletePackage};
+module.exports = {addPackage, getPackage, getPackages, updatePackage, deletePackage};
 
