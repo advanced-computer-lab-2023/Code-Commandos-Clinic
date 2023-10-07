@@ -22,7 +22,10 @@ server.get('/',(req,res) => {
 const doctorRoutes = require('./route/DoctorRoute')
 const appointmentRoutes = require('./route/AppointmentRoute')
 
+const adminRoutes=require('./route/AdminRoute')
+
 server.use('/api/doctor',doctorRoutes)
 server.use('/api/appointment',appointmentRoutes)
+server.use('/api/admin',adminRoutes)
 
 server.use(errorHandler)
