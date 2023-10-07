@@ -6,9 +6,9 @@ const asyncHandler = require('express-async-handler')
 //requirement 38
 //search for a doctor by name and/or speciality
 const searchByNameAndOrSpeciality = asyncHandler( async (req,res) => {
-    const {name,speciality} = req.body
+    const {name,speciality} = req.params
     let query = {}
-    if(name && speciality){
+    if(name !== "none" && speciality !== "none"){
         query = {
             $and: [
                 { name: { $regex: new RegExp(name, 'i') } },
@@ -16,10 +16,10 @@ const searchByNameAndOrSpeciality = asyncHandler( async (req,res) => {
             ],
         };
     }
-    else if(name){
+    else if(name !== "none"){
         query = {name: {$regex: new RegExp(name, 'i')}};
     }
-    else if (speciality) {
+    else if (speciality !== "none") {
         query = { speciality: { $regex: new RegExp(speciality, 'i') } };
     }
     else {

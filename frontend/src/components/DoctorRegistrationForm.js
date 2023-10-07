@@ -9,7 +9,8 @@ const DoctorRegistrationForm = () => {
   const [hourlyRate, setHourlyRate] = useState('')
   const [affiliation, setAffiliation] = useState('')
   const [educationalBackground, setEducationalBackground] = useState('')
-  const [error, setError] = useState(null)
+    const [speciality, setSpeciality] = useState('')
+    const [error, setError] = useState(null)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -101,6 +102,13 @@ const DoctorRegistrationForm = () => {
         onChange={(e) => setEducationalBackground(e.target.value)} 
         value={educationalBackground} 
       /> <br />
+
+    <label>Speciality:</label>
+    <input
+        type="text"
+        onChange={(e) => setSpeciality(e.target.value)}
+        value={speciality}
+    /> <br />
 
       <button>Register</button>
       {error && <div className="error">{error}</div>}
