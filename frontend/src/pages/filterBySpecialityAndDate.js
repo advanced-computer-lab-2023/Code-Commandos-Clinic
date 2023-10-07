@@ -1,64 +1,51 @@
 import {useState} from "react";
 import DoctorDetails from "../components/DoctorDetails";
 
-const SearchByNameAndOrSpeciality = ()=> {
-    const [name,setName] = useState(null);
+const FilterBySpecialityAndDate = ()=> {
     const [speciality, setSpeciality] = useState(null);
+    const [date, setDate] = useState(null);
     const [searchResults, setSearchResults] = useState(null);
     const [selectedDoctor,setSelectedDoctor] = useState(null)
+
     const fetchResults = async () => {
-        try{
-            let url = '/api/doctor/searchByNameAndOrSpeciality';
-            if (!name) {
-                url += "/none";
-            }
-            else {
-                url += `/${name}`
-            }
-            if (!speciality) {
-                url += "/none";
-            }
-            else {
-                url += `/${speciality}`
-            }
-            const response = await fetch(url,{
+        let url = '/api/doctor/filterBySpecialityAndDate';
+        if (!speciality) {
+            url += "/none";
+        }
+        else {
+            url += `/${speciality}`
+        }
+        if (!date) {
+            url += "/none";
+        }
+        else {
+            url += `/${date}:00.000+00:00`
+        }
+        try {
+            const response = await fetch(url, {
                 method: 'GET',
                 headers: {
-                    'Content-Type':'application/json',
+                    'Content-Type': 'application/json',
                 },
             });
-            if (response.ok){
+            if (response.ok) {
                 const results = await response.json();
                 setSearchResults(results)
-                setSelectedDoctor(null)
-            }
-            else {
+            } else {
                 const errorMessage = await response.text();
                 alert(errorMessage)
                 throw new Error(errorMessage)
             }
         }
-        catch (error){
+        catch (error) {
             setSelectedDoctor(null)
         }
-    };
+    }
 
 
     return (
         <div className="container mt-4">
-            <h1 className="mb-4">Search by Name and Speciality</h1>
-            <div className="mb-3">
-                <label htmlFor="name" className="form-label">
-                    Name:
-                </label>
-                <input
-                    type="text"
-                    id="name"
-                    className="form-control"
-                    value={name !== null ? name : ""}
-                    onChange={(e) => setName(e.target.value)}
-                />
-            </div>
+            <h1 className="mb-4">Filter By Speciality And Date</h1>
             <div className="mb-3">
                 <label htmlFor="speciality" className="form-label">
                     Speciality:
@@ -71,8 +58,20 @@ const SearchByNameAndOrSpeciality = ()=> {
                     onChange={(e) => setSpeciality(e.target.value)}
                 />
             </div>
+            <div className="mb-3">
+                <label htmlFor="date" className="form-label">
+                    Date:
+                </label>
+                <input
+                    type="datetime-local"
+                    id="date"
+                    className="form-control"
+                    value={date !== null ? date : ""}
+                    onChange={(e) => setDate(e.target.value)}
+                />
+            </div>
             <button className="btn btn-primary" onClick={fetchResults}>
-                Search
+                Filter
             </button>
 
             <div className="results mt-4">
@@ -81,16 +80,16 @@ const SearchByNameAndOrSpeciality = ()=> {
                         <button
                             key={doctor._id}
                             className="btn btn-link"
-                            onClick={() => setSelectedDoctor(doctor)}
-                        >
+                            onClick={() => setSelectedDoctor(doctor)} style={{ fontSize: "20px" }}>
                             {doctor.name}
                             <br/>
                         </button>
                     ))}
             </div>
             {selectedDoctor && <DoctorDetails key={selectedDoctor._id} doctor={selectedDoctor} />}
+
         </div>
     );
 };
 
-export default SearchByNameAndOrSpeciality
+export default FilterBySpecialityAndDate

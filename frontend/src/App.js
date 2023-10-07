@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import DoctorRegistrationRequests from './pages/viewDoctorRequests'
 import DoctorRegistration from './pages/registerAsDoctor';
 import SearchByNameAndOrSpeciality from './pages/searchByNameAndOrSpeciality'
+import FilterBySpecialityAndDate from "./pages/filterBySpecialityAndDate";
 
 function App() {
   return (
@@ -22,7 +23,10 @@ function App() {
             path="/SearchByNameAndOrSpeciality"
             element={<SearchByNameAndOrSpeciality />}
           />
-
+        <Route
+            path="/FilterBySpecialityAndDate"
+            element={<FilterBySpecialityAndDate/>}
+        />
         </Routes>
        </div>
       </BrowserRouter>
