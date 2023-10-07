@@ -12,8 +12,8 @@ const port = process.env.PORT
 
 
 //routes
-const DoctorRoute=require('./route/DoctorRoute');
-
+//const DoctorRoute=require('./route/DoctorRoute');
+const PatientRoute=require('./route/PatientRoute');
 
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
@@ -29,7 +29,7 @@ server.get('/',(req,res) => {
 })
 
 
-server.use('/doctor',DoctorRoute);
 
+server.use('/doctor',PatientRoute);
 
 server.use(errorHandler)
