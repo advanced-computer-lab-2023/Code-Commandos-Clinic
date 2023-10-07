@@ -6,12 +6,13 @@ const asyncHandler = require('express-async-handler')
 const getPatients = asyncHandler(async (req, res) => {
   try {
     const Patients = await PatientModel.find({}).sort({createdAt: -1})
+    res.status(200).json(Patients)
   }
   catch (error){
     res.status(400)
     throw new Error(error.message)
   }
-  res.status(200).json(Patients)
+  
 })
 
 // get a single patient

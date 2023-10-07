@@ -53,9 +53,9 @@ const createDoctor = asyncHandler(async (req,res) =>{
 
 //ziad: requirement 14
 //update doctor's email, hourlyRate, affiliation
-//function updates a doctor's email, hourlyRate, affiliation using an ID
+//function updates a doctor's info using an ID or username
 const updateDoctor = asyncHandler(async (req, res) => {
-    const { id, email, hourlyRate, affiliation } = req.body
+    const { id, username, email, hourlyRate, affiliation } = req.body
     try{
         let query = {}
         if(email){
@@ -70,7 +70,13 @@ const updateDoctor = asyncHandler(async (req, res) => {
         if(!email && !hourlyRate && !affiliation){
             throw new Error('You need to provide a new email, hourly rate or affiliation to continue')
         }
-        const doctor = await DoctorModel.findOneAndUpdate({_id: id}, {...query})
+        var doctor;
+        if(id) {
+            doctor = await DoctorModel.findOneAndUpdate({_id: id}, {...query})
+        }
+        else {
+            doctor = await DoctorModel.findOneAndUpdate({username: username}, {...query})
+        }    
         if (!doctor) {
             res.status(400)
             throw new Error('Doctor not found')
@@ -83,8 +89,22 @@ const updateDoctor = asyncHandler(async (req, res) => {
     }
 })
 
+//for testing
+const getDoctors = asyncHandler(async (req, res) => {
+    try {
+      const Doctors = await DoctorModel.find({}).sort({createdAt: -1})
+      res.status(200).json(Doctors)
+    }
+    catch (error){
+      res.status(400)
+      throw new Error(error.message)
+    }
+    
+  }) 
+
 module.exports = {
     searchByNameAndOrSpeciality,
     createDoctor,
-    updateDoctor
+    updateDoctor,
+    getDoctors
 };

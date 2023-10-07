@@ -1,24 +1,26 @@
 import { useState } from 'react'
 
-const DoctorRegistrationForm = () => {
+const PatientRegistrationForm = () => {
   const [name, setName] = useState('')
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [dateOfBirth, setDateOfBirth] = useState('')
-  const [hourlyRate, setHourlyRate] = useState('')
-  const [affiliation, setAffiliation] = useState('')
-  const [educationalBackground, setEducationalBackground] = useState('')
+  const [gender, setGender] = useState('')
+  const [mobileNumber, setMobileNumber] = useState('')
+  //const [emergencyContact, setEmergencyContact] = useState('')
+  const [ecFullName, setEcFullName] = useState('')
+  const [ecMobileNumber, setEcMobileNumber] = useState('')
   const [error, setError] = useState(null)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const doctorRequest = {username: username, name: name, email: email, password: password, dateOfBirth: dateOfBirth, hourlyRate: hourlyRate, affiliation: affiliation, educationalBackground: educationalBackground}
+    const patient = {username: username, name: name, email: email, password: password, dateOfBirth: dateOfBirth, gender: gender, mobileNumber: mobileNumber, emergencyContact: {fullName: ecFullName, mobileNumber: ecMobileNumber}}
     
-    const response = await fetch('/api/doctorRegistration/doctorRegistrationRequest', {
+    const response = await fetch('/api/patient/registerPatient', {
       method: 'POST',
-      body: JSON.stringify(doctorRequest),
+      body: JSON.stringify(patient),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -34,17 +36,19 @@ const DoctorRegistrationForm = () => {
       setUsername('')
       setEmail('')
       setPassword('')
-      setHourlyRate('')
-      setAffiliation('')
-      setEducationalBackground('')
-      console.log('new doctor registration request added:', json)
+      setGender('')
+      setMobileNumber('')
+      setEcFullName('')
+      setEcMobileNumber('')
+      
+      console.log('new patient registered:', json)
     }
 
   }
 
   return (
     <form className="create" onSubmit={handleSubmit}> 
-      <h2>Apply as a doctor to join the platform:</h2>
+      <h2>Registration:</h2>
 
       <label>Username:</label>
       <input 
@@ -81,25 +85,43 @@ const DoctorRegistrationForm = () => {
         value={dateOfBirth} 
       /> <br />
 
-      <label>Hourly Rate:</label>
+      <label>Gender:</label><br />
       <input 
-        type="number" 
-        onChange={(e) => setHourlyRate(e.target.value)} 
-        value={hourlyRate} 
-      /> <br />
+        type="radio"
+        id="MALE"
+        name="gender" 
+        onChange={(e) => setGender(e.target.id)} 
+        //value={} 
+      /> 
+      <label>Male</label><br />
+      <input 
+        type="radio"
+        id="FEMALE"
+        name="gender"  
+        onChange={(e) => setGender(e.target.id)} 
+        //value={false} 
+      /> 
+      <label>Female</label><br />
 
-      <label>Affiliation:</label>
+      <label>Mobile Number:</label>
       <input 
         type="text" 
-        onChange={(e) => setAffiliation(e.target.value)} 
-        value={affiliation} 
+        onChange={(e) => setMobileNumber(e.target.value)} 
+        value={mobileNumber} 
       /> <br />
 
-      <label>Educational Background:</label>
+      <label>Emergency Contact Full Name:</label>
       <input 
         type="text" 
-        onChange={(e) => setEducationalBackground(e.target.value)} 
-        value={educationalBackground} 
+        onChange={(e) => setEcFullName(e.target.value)} 
+        value={ecFullName} 
+      /> <br />
+
+      <label>Emergency Contact Mobile Number:</label>
+      <input 
+        type="text" 
+        onChange={(e) => setEcMobileNumber(e.target.value)} 
+        value={ecMobileNumber} 
       /> <br />
 
       <button>Register</button>
@@ -108,4 +130,4 @@ const DoctorRegistrationForm = () => {
   )
 }
 
-export default DoctorRegistrationForm
+export default PatientRegistrationForm
