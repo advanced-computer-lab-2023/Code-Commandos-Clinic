@@ -4,6 +4,8 @@ import DoctorRegistrationRequests from './pages/viewDoctorRequests'
 import DoctorRegistration from './pages/registerAsDoctor';
 import PatientRegistration from './pages/registerAsPatient';
 import DoctorUpdate from './pages/updateDoctor';
+import SearchByNameAndOrSpeciality from './pages/searchByNameAndOrSpeciality'
+import FilterBySpecialityAndDate from "./pages/filterBySpecialityAndDate";
 
 function App() {
   return (
@@ -19,7 +21,7 @@ function App() {
             path="/DoctorRegistration"
             element={<DoctorRegistration />}
           />
-          <Route 
+          <Route
             path="/PatientRegistration"
             element={<PatientRegistration />}
           />
@@ -27,7 +29,14 @@ function App() {
             path="/DoctorUpdate"
             element={<DoctorUpdate />}
           />
-
+          <Route
+            path="/SearchByNameAndOrSpeciality"
+            element={<SearchByNameAndOrSpeciality />}
+          />
+        <Route
+            path="/FilterBySpecialityAndDate"
+            element={<FilterBySpecialityAndDate/>}
+        />
         </Routes>
        </div>
       </BrowserRouter>
