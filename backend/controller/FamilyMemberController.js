@@ -26,6 +26,7 @@ const getFamilyMembers =  asyncHandler(async(req,res) => {
         throw new Error('No registered family members')
     }
     res.status(200).json(familyMembers)
+    console.log(familyMembers)
 })
 
 module.exports={

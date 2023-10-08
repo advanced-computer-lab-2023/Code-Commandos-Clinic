@@ -72,7 +72,7 @@ const getAppointment = asyncHandler( async (req , res) => {
 
    if(appointmentsAvailable.length == 0){
     res.status(404)
-    throw new Error('No appointmesnts at this date')
+    throw new Error('No appointments at this date')
 }
 res.status(200).json(appointmentsAvailable)
 })
