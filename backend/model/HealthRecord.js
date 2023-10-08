@@ -18,17 +18,20 @@ const HealthRecordSchema = mongoose.Schema({
             'FOOD',
             'MEDICATION',
             'OTHER'],
-        required: true
+        required: true,
+        default: "NONE"
     },
     MainComplaint: {
         type: String,
         enum: [ 'FEVER',
+            'NONE',
             'COUGH',
             'HEADACHE',
             'ABDOMINAL_PAIN',
             'FATIGUE',
             'OTHER'],
-        required: true
+        required: true,
+        default: "NONE"
     },
     BloodType: {
         type: String,

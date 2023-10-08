@@ -1,18 +1,13 @@
 const express = require('express');
-const PatientController = require('../controller/PatientController.js')
 const router = express.Router();
 
+const {
+    getPatients,
+    getInfoHealthPatient
+} = require('../controller/PatientController.js')
 
 
-router.get('/:id',PatientController.getPatients);
-router.get('/patients/:id',PatientController.selectPatient);
-router.get('/selected/:id',PatientController.getInfoHealthPatient);
-
-
-
-
-
-
-
+router.get('/getPatients/:doctorId',getPatients);
+router.get('/getInfoHealthPatient/:id',getInfoHealthPatient);
 
 module.exports=router;

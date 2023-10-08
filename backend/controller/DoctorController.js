@@ -2,10 +2,6 @@ const DoctorPatient = require('../model/DoctorPatient');
 const Doctor=require('../model/Doctor');
 const asyncHandler = require('express-async-handler')
 
-
-
-
-
 /*******************************************************adding a doctorPatient entry ****************************************************************************** */
 const createDoctorPatients= asyncHandler( async(req,res) =>{
     const patientdoctor=new DoctorPatient({
@@ -20,23 +16,8 @@ const createDoctorPatients= asyncHandler( async(req,res) =>{
     }catch(err){
         console.log(err.message);
     }
-}
-)
-/*
-const getMyPatients = asyncHandler ( async (req,res) =>{
-    try{
-        const allPatients= await DoctorPatient.find({ doctor: req.params.id });
-        if(allPatients.length===0){
-            throw new Error("No Patients found")
-        }
-        res.status(200).json(allPatients);
-    }catch(err){
-        res.status(400);
-        throw new Error(err.message);
-    }
-}
-)
-*/
+})
+
 module.exports = {
     createDoctorPatients
 }

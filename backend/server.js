@@ -30,6 +30,6 @@ server.get('/',(req,res) => {
 
 
 
-server.use('/doctor',PatientRoute);
+server.use('/api/patient',PatientRoute);
 
 server.use(errorHandler)
