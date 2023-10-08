@@ -43,7 +43,7 @@ const selectPatient = asyncHandler ( async (req , res) =>{
     }
 }
 )
-
+//requirement-25 Nour
 const getInfoHealthPatient = asyncHandler ( async (req , res) =>{
     try{
         const HealthRecords = await HealthRecord.find({ patient: req.params.id })
