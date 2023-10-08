@@ -13,7 +13,7 @@ router.route('/searchByNameAndOrSpeciality/:name/:speciality').get(searchByNameA
 router.route('/createDoctor').post(createDoctor)
 
 router.route('/viewDoctor/:id').get(viewDoctor)
-router.route('/filterBySpecialityAndDate').get(filterBySpecialityAndDate)
+router.route('/filterBySpecialityAndDate/:speciality/:date').get(filterBySpecialityAndDate)
 
 //ziad: req 14 update doctor's email, hourlyRate, affiliation
 router.route('/updateDoctor').put(updateDoctor)

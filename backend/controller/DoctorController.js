@@ -110,12 +110,12 @@ const updateDoctor = asyncHandler(async (req, res) => {
 //filter  a doctor by speciality and/or availability on a certain date and at a specific time
 //A doctor is available ona certain date if he/she has no Appointment where the given date is in between the start and end time of that given date
 const filterBySpecialityAndDate = asyncHandler(async (req,res) => {
-    const {speciality,date} = req.body
+    const {speciality,date} = req.params
     let doctorsBySpeciality
     let nonFreeAppointments
     let doctorsWhoHaveAppointmentsOnTheDate
     let freeDoctors
-    if(speciality && date){
+    if(speciality !== "none" && date !== "none"){
         try {
             doctorsBySpeciality = await DoctorModel.find({speciality})
             const doctorsIds = doctorsBySpeciality.map((doctor) => doctor.id)
@@ -132,7 +132,7 @@ const filterBySpecialityAndDate = asyncHandler(async (req,res) => {
             throw new Error(error.message)
         }
     }
-    else if(speciality){
+    else if(speciality !== "none"){
         try {
             freeDoctors = await DoctorModel.find({speciality})
             res.status(200).json(freeDoctors)
@@ -141,7 +141,7 @@ const filterBySpecialityAndDate = asyncHandler(async (req,res) => {
             throw new Error(error.message)
         }
     }
-    else if(date){
+    else if(date !== "none"){
         try {
             const doctors = await DoctorModel.find()
             nonFreeAppointments = await AppointmentModel.find({
