@@ -20,7 +20,7 @@ const HealthPackage = require('./model/HealthPackage');
 // const HealthPackageController = require('./controller/HealthPackageController');
 const HealthPackageRoute = require('./route/HealthPackageRoute');
 
-server.use('/HealthPackageRoute', HealthPackageRoute)
+server.use('/api/HealthPackageRoute', HealthPackageRoute)
 
 server.use(errorHandler)
 
