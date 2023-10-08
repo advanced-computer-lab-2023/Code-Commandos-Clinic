@@ -9,7 +9,8 @@ const DoctorRegistrationForm = () => {
   const [hourlyRate, setHourlyRate] = useState('')
   const [affiliation, setAffiliation] = useState('')
   const [educationalBackground, setEducationalBackground] = useState('')
-  const [error, setError] = useState(null)
+    const [speciality, setSpeciality] = useState('')
+    const [error, setError] = useState(null)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -26,7 +27,7 @@ const DoctorRegistrationForm = () => {
     const json = await response.json()
 
     if (!response.ok) {
-      setError(json.error)
+      setError(json.message)
     }
     if (response.ok) {
       setError(null)
@@ -62,21 +63,21 @@ const DoctorRegistrationForm = () => {
 
       <label>E-mail:</label>
       <input 
-        type="text" 
+        type="email" 
         onChange={(e) => setEmail(e.target.value)} 
         value={email} 
       /> <br />
 
       <label>Password:</label>
       <input 
-        type="text" 
+        type="password" 
         onChange={(e) => setPassword(e.target.value)} 
         value={password} 
       /> <br />
 
       <label>Date of Birth:</label>
       <input 
-        type="text" 
+        type="date" 
         onChange={(e) => setDateOfBirth(e.target.value)} 
         value={dateOfBirth} 
       /> <br />
@@ -101,6 +102,13 @@ const DoctorRegistrationForm = () => {
         onChange={(e) => setEducationalBackground(e.target.value)} 
         value={educationalBackground} 
       /> <br />
+
+    <label>Speciality:</label>
+    <input
+        type="text"
+        onChange={(e) => setSpeciality(e.target.value)}
+        value={speciality}
+    /> <br />
 
       <button>Register</button>
       {error && <div className="error">{error}</div>}
