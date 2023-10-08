@@ -1,4 +1,4 @@
-const DoctorPatient = require('../model/DoctorPatient.js');
+const DoctorPatientModel = require('../model/DoctorPatient.js');
 const HealthRecord = require ('../model/HealthRecord.js');
 const PatientModel = require('../model/Patient')
 const mongoose = require('mongoose')
@@ -8,7 +8,7 @@ const asyncHandler = require('express-async-handler')
 //requirement-33 Nour
 const getPatientsOfADoctor = asyncHandler ( async (req,res) =>{
     try{
-        const allPatients= await DoctorPatient.find({ doctor: req.params.doctorId });
+        const allPatients= await DoctorPatientModel.find({ doctor: req.params.doctorId });
         if(allPatients.length===0){
             throw new Error("No Patients found")
         }
@@ -115,6 +115,36 @@ const updatePatient = asyncHandler(async (req, res) => {
   }
 })
 
+
+//requirement 34 Nour
+//search for a patient by name in the list of patients of a specific doctor
+const searchByName = asyncHandler( async (req,res) =>{
+  
+  let query = {};
+  if(req.params.name !=="none"){
+    query = {patientName: {$regex: new RegExp(req.params.name , 'i')}};
+  }
+  else{
+    res.status(400);
+    throw new Error('Please enter a name')
+  }
+  try {
+    const patients = await DoctorPatientModel.find(query)
+    if(patients.length === 0 ){
+      res.status(400);
+      throw new Error("No patients found!")
+    }
+    res.status(200).json(patients)
+  }
+  catch (err){
+    res.status(400)
+    throw new Error(err.message)
+  }
+
+})
+
+
+
 module.exports = {
     getPatients,
     getPatient,
@@ -122,5 +152,6 @@ module.exports = {
     deletePatient,
     updatePatient,
     getPatientsOfADoctor,
-    getInfoHealthPatient
+    getInfoHealthPatient,
+    searchByName
 }

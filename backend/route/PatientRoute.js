@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router()
 
-const express = require('express')
+
 const {
   getPatients, 
   getPatient, 
@@ -9,7 +9,8 @@ const {
   deletePatient, 
   updatePatient,
     getPatientsOfADoctor,
-    getInfoHealthPatient
+    getInfoHealthPatient,
+    searchByName
 } = require('../controller/PatientController')
 
 
@@ -33,5 +34,6 @@ router.patch('/:id', updatePatient)
 
 router.get('/getPatientsOfADoctor/:doctorId',getPatientsOfADoctor);
 router.get('/getInfoHealthPatient/:id',getInfoHealthPatient);
+router.get('/searchByname/:name',searchByName)
 
 module.exports = router

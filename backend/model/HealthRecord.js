@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 
 
-
-
 const HealthRecordSchema = mongoose.Schema({
     patient: {
         type: mongoose.Schema.Types.ObjectId,
@@ -47,8 +45,8 @@ const HealthRecordSchema = mongoose.Schema({
     }
 },{ timestamps: true })
 
-const HealthRecord = mongoose.model('HealthRecord', HealthRecordSchema);
-module.exports = HealthRecord;
+const HealthRecord=mongoose.model('HealthRecord',HealthRecordSchema)
+module.exports=HealthRecord;
 
 
 

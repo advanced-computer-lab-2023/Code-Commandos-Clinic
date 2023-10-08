@@ -65,6 +65,38 @@ const createAppointment =asyncHandler( async (req,res) => {
     }
 })
 
+
+//requirement 35
+// get the upcoming appointments of a doctor
+const getUpcomingAppointments = asyncHandler (async (req,res)=>{
+    const {doctorid} = req.params
+    const currentDate = new Date();
+    let query = {
+        $and: [
+            { startTime : { $gt : currentDate } },
+            { doctor : doctorid }
+        ]
+    }
+    console.log(currentDate)
+    try{
+    const upcomingAppointments = await AppointmentModel.find(query)
+    if(upcomingAppointments.length===0){
+        throw new Error("No Upcoming Appointments")
+       }
+       res.status(200).json(upcomingAppointments);    
+    }catch(err){
+        res.status(400);
+        throw new Error(err.message);
+    }
+
+})
+
+
+
+
+
+
 module.exports = {
-    createAppointment
+    createAppointment,
+    getUpcomingAppointments
 };

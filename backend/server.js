@@ -18,11 +18,12 @@ const patientRoutes = require('./route/PatientRoute')
 const doctorRoutes = require('./route/DoctorRoute')
 const appointmentRoutes = require('./route/AppointmentRoute')
 const doctorRegisterationRoutes = require('./route/DoctorRegistrationRoute')
+const healthRecordRoutes=require('./route/HealthRecordRoute')
 
 server.use('/api/doctor',doctorRoutes)
 server.use('/api/appointment',appointmentRoutes)
 server.use('/api/patient', patientRoutes)
 server.use('/api/doctorRegistration', doctorRegisterationRoutes)
-
+server.use('/api/healthRecord',healthRecordRoutes)
 
 server.use(errorHandler)

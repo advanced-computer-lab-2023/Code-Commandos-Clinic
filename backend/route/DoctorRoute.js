@@ -9,6 +9,7 @@ const {
     updateDoctor,
 } = require('../controller/DoctorController')
 
+
 router.route('/searchByNameAndOrSpeciality/:name/:speciality').get(searchByNameAndOrSpeciality)
 router.route('/createDoctor').post(createDoctor)
 
