@@ -11,6 +11,7 @@ const {
 router.route('/searchByNameAndOrSpeciality').get(searchByNameAndOrSpeciality)
 router.route('/createDoctor').post(createDoctor)
 //ziad: req 14 update doctor's email, hourlyRate, affiliation
-router.route('/updateDoctor').patch(updateDoctor)
+router.route('/updateDoctor').put(updateDoctor)
+router.route('/:id').put(updateDoctor)
 router.route('/getDoctors').get(getDoctors)
 module.exports = router
