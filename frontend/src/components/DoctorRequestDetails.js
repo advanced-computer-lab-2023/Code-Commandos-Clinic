@@ -9,6 +9,8 @@ const DoctorRequestDetails = ({doctorRequest}) => {
             <p>&nbsp;&nbsp;&nbsp; <strong>Hourly Rate:</strong> {doctorRequest.hourlyRate}</p>
             <p>&nbsp;&nbsp;&nbsp; <strong>Affiliation:</strong> {doctorRequest.affiliation}</p>
             <p>&nbsp;&nbsp;&nbsp; <strong>Educational Background:</strong> {doctorRequest.educationalBackground}</p>
+            <p>&nbsp;&nbsp;&nbsp; <strong>Speciality:</strong> {doctorRequest.speciality}</p>
+            <p>&nbsp;&nbsp;&nbsp; <strong>Request Status:</strong> {doctorRequest.status}</p>
             <p>&nbsp;&nbsp;&nbsp; {doctorRequest.createdAt}</p>
             &nbsp;&nbsp;&nbsp;<button>Accept</button> <button>Reject</button>
         </div>

@@ -1,7 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e26feadf-ae4b-40d3-ab59-b42d6e711b32" name="Changes" comment="" />
+    <list default="true" id="e26feadf-ae4b-40d3-ab59-b42d6e711b32" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/Code-Commandos-Clinic.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/controller/AppointmentController.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/route/AppointmentRoute.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/DoctorDetails.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/filterBySpecialityAndDate.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/searchByNameAndOrSpeciality.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controller/DoctorController.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controller/DoctorController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/model/Appointment.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/model/Appointment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/route/DoctorRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/route/DoctorRoute.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/DoctorRegistrationForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/DoctorRegistrationForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/DoctorRequestDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/DoctorRequestDetails.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/DoctorUpdateForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/DoctorUpdateForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -37,8 +59,8 @@
     "WebServerToolWindowFactoryState": "false",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
 }]]></component>
   <component name="ReactDesignerToolWindowState">
@@ -87,7 +109,7 @@
       <workItem from="1696723418016" duration="1117000" />
       <workItem from="1696724720700" duration="3203000" />
       <workItem from="1696728856694" duration="65000" />
-      <workItem from="1696762014576" duration="415000" />
+      <workItem from="1696762014576" duration="2241000" />
     </task>
     <servers />
   </component>

@@ -25,7 +25,7 @@ const DoctorUpdateForm = () => {
     }
     
     const response = await fetch('/api/doctor/updateDoctor', {
-      method: 'PATCH',
+      method: 'PUT',
       body: JSON.stringify(doctor),
       headers: {
         'Content-Type': 'application/json'

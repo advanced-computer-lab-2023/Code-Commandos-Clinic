@@ -17,9 +17,13 @@ const AppointmentSchema = mongoose.Schema({
     patientName: {
         type: String,
     },
-    date: {
+    startTime: {
         type: Date,
         required: true,
+    },
+    endTime: {
+        type: Date,
+        required: true
     },
     status: {
         type: String,

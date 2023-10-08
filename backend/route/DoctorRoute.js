@@ -5,12 +5,16 @@ const {
     searchByNameAndOrSpeciality,
     createDoctor,
     updateDoctor,
-    getDoctors
+    getDoctors,
+    viewDoctor,
+    filterBySpecialityAndDate,
 } = require('../controller/DoctorController')
 
-router.route('/searchByNameAndOrSpeciality').get(searchByNameAndOrSpeciality)
+router.route('/searchByNameAndOrSpeciality/:name/:speciality').get(searchByNameAndOrSpeciality)
 router.route('/createDoctor').post(createDoctor)
-//ziad: req 14 update doctor's email, hourlyRate, affiliation
-router.route('/updateDoctor').patch(updateDoctor)
+router.route('/viewDoctor/:id').get(viewDoctor)
+router.route('/filterBySpecialityAndDate/:speciality/:date').get(filterBySpecialityAndDate)
 router.route('/getDoctors').get(getDoctors)
+router.route('/updateDoctor').put(updateDoctor)
+
 module.exports = router
