@@ -21,7 +21,7 @@ const PrescriptionContainer = () => {
 
   return (
     <div>
-      <h1>Prescription Container Page</h1>
+      <h1>Prescriptions list</h1>
       <PrescriptionList prescriptions={prescriptions} />
     </div>
   );

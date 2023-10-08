@@ -1,28 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 const PrescriptionList = ({ prescriptions }) => {
   const [prescriptionDetails, setPrescriptionDetails] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchDetails = async () => {
-      // Check if prescriptions is not null or undefined
+      setLoading(true);
+
       if (!prescriptions) {
+        setLoading(false);
         return;
       }
 
-      const details = await Promise.all(
-        prescriptions.map(async (prescription) => {
-          try {
-            // Fetch details for patient, medication, and doctor using Axios
+      try {
+        const details = await Promise.all(
+          prescriptions.map(async (prescription) => {
             const patientResponse = await axios.get(`http://localhost:5000/api/patient/${prescription.patient}`);
             const medicationResponse = await axios.get(`http://localhost:5000/api/medication/${prescription.medication}`);
             const doctorResponse = await axios.get(`http://localhost:5000/api/doctor/${prescription.doctor}`);
 
             if (!patientResponse || !medicationResponse || !doctorResponse) {
-              // Handle error if any of the requests fail
               console.error('Error fetching details for prescription');
               return null;
             }
@@ -33,18 +33,19 @@ const PrescriptionList = ({ prescriptions }) => {
 
             return {
               ...prescription,
-              patient: patient,      // Assuming patient is an object
-              medication: medication, // Assuming medication is an object
-              doctor: doctor,        // Assuming doctor is an object
+              patient: patient,
+              medication: medication,
+              doctor: doctor,
             };
-          } catch (error) {
-            console.error('Error fetching details for prescription:', error.message);
-            return null;
-          }
-        })
-      );
+          })
+        );
 
-      setPrescriptionDetails(details.filter(Boolean)); // Filter out null values from failed requests
+        setPrescriptionDetails(details.filter(Boolean));
+      } catch (error) {
+        console.error('Error fetching details for prescription:', error.message);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchDetails();
@@ -52,16 +53,37 @@ const PrescriptionList = ({ prescriptions }) => {
 
   return (
     <div>
-      <h2>Prescription List</h2>
-      <ul>
-        {prescriptionDetails.map((prescription) => (
-          <li key={prescription.id}>
-            <Link to={`/api/prescription/${prescription.id}`}>
-              {prescription.patient.name} - {prescription.doctor.name} - {prescription.medication.name}
-            </Link>
-          </li>
-        ))}
-      </ul>
+    
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <table style={{ width: '100%', border: '1px solid black', borderCollapse: 'collapse' }}>
+          <thead>
+            <tr>
+              <th>Prescription</th>
+              <th>Patient</th>
+              <th>Doctor</th>
+              <th>Medication</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            {prescriptionDetails.map((prescription, index) => (
+              <tr key={prescription.id} style={{ border: '1px solid black', textAlign: 'center' }}>
+                <td>{index + 1}</td>
+                <td>{prescription.patient.name}</td>
+                <td>{prescription.doctor.name}</td>
+                <td>{prescription.medication.name}</td>
+                <td>
+                  <Link to={`/api/prescription/${prescription.id}`}>
+                    View Details
+                  </Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };
