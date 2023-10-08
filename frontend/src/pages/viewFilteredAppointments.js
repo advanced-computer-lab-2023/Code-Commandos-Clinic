@@ -6,7 +6,7 @@ const FilteredAppointments = () =>{
 
     useEffect(() => {
         const fetchFilteredAppointments = async () => {
-            const response = await fetch('api/appointment/getAppointment/2023-11-08T11:00:00.000+00:00')
+            const response = await fetch('api/appointment/getAppointment/:appointmentDate')
             const json = await response.json()
 
             if(response.ok){
