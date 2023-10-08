@@ -1,28 +1,19 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+// App.js
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import PrescriptionContainer from './pages/PrescriptionContainer';
 
-import DoctorRegistrationRequests from './pages/viewDoctorRequests'
-import DoctorRegistration from './pages/registerAsDoctor';
 
-function App() {
+
+const App = () => {
   return (
-    <div className="App">
-      <BrowserRouter>
-       <div className="pages">
-        <Routes>
-          <Route 
-            path="/DoctorRegistrationRequests"
-            element={<DoctorRegistrationRequests />}
-          />
-          <Route 
-            path="/DoctorRegistration"
-            element={<DoctorRegistration />}
-          />
-
-        </Routes>
-       </div>
-      </BrowserRouter>
-    </div>
+    
+    <Router>
+     <Routes>
+       <Route path="" element={<PrescriptionContainer/>} />
+     </Routes> 
+    </Router>
   );
-}
+};
 
 export default App;
