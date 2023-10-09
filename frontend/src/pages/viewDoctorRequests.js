@@ -17,6 +17,7 @@ const DoctorRegistrationRequests = () => {
 
         fetchDoctorRequests()
     }, [])
+    
 
     return (
         <div className="doctorRegistrationRequests">

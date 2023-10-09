@@ -22,7 +22,7 @@ const getPatientsOfADoctor = asyncHandler ( async (req,res) =>{
 //requirement-25 Nour
 const getInfoHealthPatient = asyncHandler ( async (req , res) =>{
     try{
-        const HealthRecords = await HealthRecord.find({ patient: req.params.id })
+        const HealthRecords = await HealthRecord.findOne({ patient: req.params.id })
         res.status(200).json(HealthRecords);
     }catch(err){
         res.status(400);
@@ -122,7 +122,13 @@ const searchByName = asyncHandler( async (req,res) =>{
   
   let query = {};
   if(req.params.name !=="none"){
-    query = {patientName: {$regex: new RegExp(req.params.name , 'i')}};
+    const {doctorId} = req.params
+    query = {
+      $and:[
+         {patientName: {$regex: new RegExp(req.params.name , 'i')}},
+         {doctor:doctorId}
+         ]
+         };
   }
   else{
     res.status(400);

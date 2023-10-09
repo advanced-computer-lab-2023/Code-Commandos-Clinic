@@ -4,7 +4,7 @@ import DoctorRegistrationRequests from './pages/viewDoctorRequests'
 import DoctorRegistration from './pages/registerAsDoctor';
 import SearchByNameAndOrSpeciality from './pages/searchByNameAndOrSpeciality'
 import FilterBySpecialityAndDate from "./pages/filterBySpecialityAndDate";
-
+import Patient from './pages/viewListOfPatients'
 function App() {
   return (
     <div className="App">
@@ -27,6 +27,10 @@ function App() {
             path="/FilterBySpecialityAndDate"
             element={<FilterBySpecialityAndDate/>}
         />
+        <Route 
+            path="/ListOfPatients"
+            element={<Patient/>}
+          />
         </Routes>
        </div>
       </BrowserRouter>
