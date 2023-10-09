@@ -2,11 +2,35 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e26feadf-ae4b-40d3-ab59-b42d6e711b32" name="Changes" comment="">
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/backend/controller/AdminController.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controller/AdminController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/controller/DoctorController.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controller/DoctorController.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/route/AdminRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/route/AdminRoute.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/route/DoctorRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/route/DoctorRoute.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.js" afterDir="false" />
+=======
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/Code-Commandos-Clinic.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/controller/AppointmentController.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/route/AppointmentRoute.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/DoctorDetails.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/filterBySpecialityAndDate.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/searchByNameAndOrSpeciality.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/controller/DoctorController.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controller/DoctorController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/model/Appointment.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/model/Appointment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/route/DoctorRoute.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/route/DoctorRoute.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/DoctorRegistrationForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/DoctorRegistrationForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/DoctorRequestDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/DoctorRequestDetails.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/DoctorUpdateForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/DoctorUpdateForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.js" afterDir="false" />
+>>>>>>> main
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +60,7 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< HEAD
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
@@ -47,6 +72,19 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
 }</component>
+=======
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
+  }
+}]]></component>
+>>>>>>> main
   <component name="ReactDesignerToolWindowState">
     <option name="myId2Visible">
       <map>
@@ -55,7 +93,24 @@
       </map>
     </option>
   </component>
+<<<<<<< HEAD
   <component name="RunManager" selected="Node.js.AppointmentController.js">
+=======
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="Code-Commandos-Clinic" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="Code-Commandos-Clinic" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+>>>>>>> main
     <configuration name="AppointmentController.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/backend/controller/AppointmentController.js" working-dir="$PROJECT_DIR$/backend/controller">
       <method v="2" />
     </configuration>
@@ -81,7 +136,10 @@
       <workItem from="1696724720700" duration="3203000" />
       <workItem from="1696728856694" duration="65000" />
       <workItem from="1696762014576" duration="2241000" />
+<<<<<<< HEAD
       <workItem from="1696807969329" duration="2467000" />
+=======
+>>>>>>> main
     </task>
     <servers />
   </component>

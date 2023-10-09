@@ -14,12 +14,16 @@ server.get('/',(req,res) => {
     res.status(200).json({message:"Hello from server"})
 })
 
+const patientRoutes = require('./route/PatientRoute')
 const doctorRoutes = require('./route/DoctorRoute')
 const appointmentRoutes = require('./route/AppointmentRoute')
 const adminRoutes=require('./route/AdminRoute')
+const doctorRegisterationRoutes = require('./route/DoctorRegistrationRoute')
 
-server.use('/api/doctor',doctorRoutes)
 server.use('/api/appointment',appointmentRoutes)
 server.use('/api/admin',adminRoutes)
+server.use('/api/doctor',doctorRoutes)
+server.use('/api/patient', patientRoutes)
+server.use('/api/doctorRegistration', doctorRegisterationRoutes)
 
 server.use(errorHandler)
