@@ -1,12 +1,12 @@
 import React from 'react';
 
-const HealthRecordDetails = ({ HealthRecord }) => {
+const HealthRecordDetails = ({ healthRecord }) => {
     return (
         <div className="card">
             <div className="card-body">
-                <p className="card-text">AllergicHistory: {HealthRecord.BloodType}</p>
-                <p className="card-text">Main Complaint: </p>
-                <p className="card-text">Blood Type: </p>
+                <p className="card-text">AllergicHistory: {healthRecord.AllergicHistory}</p>
+                <p className="card-text">Main Complaint: {healthRecord.MainComplaint}</p>
+                <p className="card-text">Blood Type: {healthRecord.BloodType}</p>
             </div>
         </div>
     );

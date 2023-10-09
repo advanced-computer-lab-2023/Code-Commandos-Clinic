@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import HealthRecordDetails from '../components/HealthRecordDetails';
+import DoctorDetails from "./DoctorDetails";
 const PatientDetails = ({ patient }) => {
     const id=patient.patient;
-
     const[healthRecord,setHealthRecord] = useState(null);
     const[patientInfos,setPatientInfos] = useState(null);
     const fetchResults = async () => {
@@ -27,16 +27,14 @@ const PatientDetails = ({ patient }) => {
     }
     }
     catch (error){
-        
+        console.log(error)
     }
 }
 fetchResults()
     return (
         <div className="patientInfo">
             <div>
-                
-                   <p >{healthRecord && healthRecord.AllergicType}</p>
-                   
+                {healthRecord && <HealthRecordDetails  healthRecord={healthRecord} />}
             </div>
         </div>
     );
