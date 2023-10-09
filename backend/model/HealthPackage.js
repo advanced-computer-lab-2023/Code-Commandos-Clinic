@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 //3 types of packages: silver, gold, platinum
 
 const HealthPackageSchema = mongoose.Schema({
-    patientUserName: {
-        type: String,
+    patientID: {
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Patient',
         required: true
     },

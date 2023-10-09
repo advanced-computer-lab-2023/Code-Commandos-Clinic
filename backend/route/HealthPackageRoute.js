@@ -13,7 +13,7 @@ const {
 router.post('/',addPackage)
 
 //get a single package
-router.get('/:id',getPackage)
+router.get('/',getPackage)
 
 //get all packages
 router.get('/',getPackages)
@@ -21,7 +21,7 @@ router.get('/',getPackages)
 //update a package
 router.patch('/:id',updatePackage)
 
-//delete a  package
-router.delete('/:id',deletePackage)
+//delete a  package(done)
+router.delete('/',deletePackage)
 
 module.exports = router;
