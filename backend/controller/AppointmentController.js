@@ -67,12 +67,12 @@ const createAppointment =asyncHandler( async (req,res) => {
 })
 
 const getAppointment = asyncHandler( async (req , res) => {
-   const {appointmentDate} = req.params
-   const appointmentsAvailable = await Appointment.find({startTime:appointmentDate , status:'PENDING'})
+   const {appointmentDate,status} = req.params
+   const appointmentsAvailable = await Appointment.find({startTime:appointmentDate , status:status})
 
    if(appointmentsAvailable.length == 0){
     res.status(404)
-    throw new Error('No appointments at this date')
+    throw new Error('No appointments found')
 }
 res.status(200).json(appointmentsAvailable)
 })

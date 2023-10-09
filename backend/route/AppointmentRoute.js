@@ -7,5 +7,5 @@ const {
 } = require('../controller/AppointmentController')
 
 router.route('/createAppointment').post(createAppointment)
-router.route('/getAppointment/:appointmentDate').get(getAppointment)
+router.route('/getAppointment/:appointmentDate/:status').get(getAppointment)
 module.exports = router
