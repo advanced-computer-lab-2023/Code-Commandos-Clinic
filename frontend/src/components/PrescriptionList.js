@@ -75,8 +75,8 @@ const PrescriptionList = ({ prescriptions }) => {
                 <td>{prescription.doctor.name}</td>
                 <td>{prescription.medication.name}</td>
                 <td>
-                  <Link to={`/api/prescription/${prescription.id}`}>
-                    View Details
+                  <Link to={`/api/prescription/${prescription._id}`}>
+                   view details
                   </Link>
                 </td>
               </tr>
