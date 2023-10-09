@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
-const PrescriptionList = ({ prescriptions }) => {
+const PrescriptionList = ({ prescriptions, filterDate, filterDoctor, filterFilled,applyFilters }) => {
   const [prescriptionDetails, setPrescriptionDetails] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -40,7 +39,26 @@ const PrescriptionList = ({ prescriptions }) => {
           })
         );
 
-        setPrescriptionDetails(details.filter(Boolean));
+
+         // Apply filters only if applyFilters is true
+         const filteredDetails = applyFilters
+         ? details.filter((prescription) => {
+             // Filter logic based on date, doctor, and filled
+             const isDateMatch = !filterDate || prescription.issueDate.includes(filterDate);
+             const isDoctorMatch =
+               !filterDoctor || prescription.doctor.name.toLowerCase().includes(filterDoctor.toLowerCase());
+             
+             // Check if filterFilled is not null and not 'All' or is 'All'
+             const isFilledMatch =
+             filterFilled !== null
+               ? (prescription.filled && filterFilled === 'true') || (!prescription.filled && filterFilled === 'false')
+               : true;
+
+                 return isDateMatch && isDoctorMatch && isFilledMatch;
+               })
+             : details;
+
+        setPrescriptionDetails(filteredDetails);
       } catch (error) {
         console.error('Error fetching details for prescription:', error.message);
       } finally {
@@ -49,11 +67,12 @@ const PrescriptionList = ({ prescriptions }) => {
     };
 
     fetchDetails();
-  }, [prescriptions]);
+  }, [prescriptions, filterDate, filterDoctor, filterFilled,applyFilters]);
+
+
 
   return (
     <div>
-    
       {loading ? (
         <p>Loading...</p>
       ) : (
@@ -76,7 +95,7 @@ const PrescriptionList = ({ prescriptions }) => {
                 <td>{prescription.medication.name}</td>
                 <td>
                   <Link to={`/api/prescription/${prescription._id}`}>
-                   view details
+                    view details
                   </Link>
                 </td>
               </tr>
