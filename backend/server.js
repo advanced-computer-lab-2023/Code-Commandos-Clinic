@@ -4,9 +4,20 @@ const dotenv = require("dotenv").config();
 const connectDB = require("./configuration/Db")
 const {errorHandler} = require('./middleware/ErrorHandler')
 const port = process.env.PORT
+const cors = require('cors');
 
+
+server.use(cors());
+server.use(
+    cors({
+      origin: 'http://localhost:3000',
+      methods: ['GET', 'POST', 'PUT', 'DELETE'],
+      allowedHeaders: ['Content-Type'],
+    })
+  );
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
+
 
 server.listen(port,() => console.log(`Server is listening on port ${port}`))
 connectDB()
@@ -21,12 +32,16 @@ const doctorRoutes = require('./route/DoctorRoute')
 const appointmentRoutes = require('./route/AppointmentRoute')
 const doctorRegisterationRoutes = require('./route/DoctorRegistrationRoute')
 const prescriptionRoute = require('./route/PrescriptionRoute')
+const medicationRoute = require('./route/MedicationRoute')
 
 server.use('/api/doctor',doctorRoutes)
 server.use('/api/appointment',appointmentRoutes)
 server.use('/api/patient', patientRoutes)
 server.use('/api/doctorRegistration', doctorRegisterationRoutes)
 server.use('/api/prescription',prescriptionRoute)
+server.use('/api/medication',medicationRoute)
+
 
 
 server.use(errorHandler)
+
