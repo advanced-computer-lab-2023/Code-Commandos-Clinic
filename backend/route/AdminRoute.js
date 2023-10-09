@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 
 const {
-  addAdmin,removePatient,getAdmin,removeAdmin,removeDoctor,
+  addAdmin,
+  getAdmin,
+  removeAdmin,
 } = require('../controller/AdminController')
 
-router.get('/',getAdmin)
-router.post('/',addAdmin)
-router.delete('/:id',removeAdmin)
-router.delete('/:id',removeDoctor)
-router.delete('/:id',removePatient)
+router.get('/getAdmin/:id',getAdmin)
+router.post('/addAdmin',addAdmin)
+router.delete('/removeAdmin/:id',removeAdmin)
 module.exports = router

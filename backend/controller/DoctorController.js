@@ -52,6 +52,25 @@ const createDoctor = asyncHandler(async (req,res) =>{
     }
 })
 
+const removeDoctor =asyncHandler( async (req,res) => {
+    const { id } =req.params
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        res.status(400)
+        throw new Error('Doctor not found')
+    }
+    try {
+        const doctor =await DoctorModel.findByIdAndDelete(id)
+        if(!doctor){
+            res.status(400)
+            throw new Error('Doctor not found')
+        }
+        res.status(200).json(doctor)
+    }
+    catch (error){
+        throw new Error(error.message)
+    }
+})
+
 //req41
 // view all details of selected doctor including specilaty, affiliation (hospital), educational background
 const viewDoctor = asyncHandler(async(req,res) => {
@@ -132,5 +151,6 @@ module.exports = {
     searchByNameAndOrSpeciality,
     createDoctor,
     viewDoctor,
-    filterBySpecialityAndDate
+    filterBySpecialityAndDate,
+    removeDoctor
 };
