@@ -7,7 +7,10 @@ const FamilyMember = require("../model/FamilyMember");
 const addFamilyMember = asyncHandler(async(req,res) => {
     const memberBody = req.body
       try{
+        const {patientId}= req.params
         const newFamilyMember = await FamilyMember.create(memberBody)
+        newFamilyMember.patient=patientId
+        await newFamilyMember.save()
         res.status(200).json(newFamilyMember)
       }
       catch(error){

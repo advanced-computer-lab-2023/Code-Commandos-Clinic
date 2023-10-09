@@ -28,7 +28,6 @@ const FamilyMemberSchema = new mongoose.Schema({
     patient:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Patient',
-        required: true
     }
 },
 { timestamps: true });
