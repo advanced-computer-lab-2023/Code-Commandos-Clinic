@@ -2,6 +2,8 @@ const DoctorModel = require('../model/Doctor')
 const AppointmentModel = require('../model/Appointment')
 const mongoose = require('mongoose')
 const asyncHandler = require('express-async-handler')
+const HealthPackageModel = require('../model/HealthPackage') 
+const Patient = require('../model/Patient')
 
 //requirement 38
 //search for a doctor by name and/or speciality
@@ -114,6 +116,7 @@ const updateDoctor = asyncHandler(async (req, res) => {
 
 //for testing
 const getDoctors = asyncHandler(async (req, res) => {
+    
     try {
       const Doctors = await DoctorModel.find({}).sort({createdAt: -1})
       res.status(200).json(Doctors)
@@ -123,6 +126,58 @@ const getDoctors = asyncHandler(async (req, res) => {
       throw new Error(error.message)
     }
 })
+
+// req ID #37
+// get the doctor's session price depending on the patient's health package(not working correctly)
+const getDoctorsSessionPrice = asyncHandler(async (req, res) => {
+    const{patientID} = req.params
+
+    try {
+      // Retrieve all doctors from the database
+      const doctors = await DoctorModel.find();
+
+      // Create an array to store the doctor details
+      const doctorsList = [];
+  
+      // Retrieve the subscribed health package of the patient (if available)
+      const healthPackage = await HealthPackageModel.findOne({ patient: patientID });
+
+      
+      
+      // Iterate over each doctor and calculate the session price based on the subscribed health package
+      for (const doctor of doctors) {
+          const { name, 
+            speciality,
+            hourlyRate,
+        } = doctor;
+        
+        let calculatedSessionPrice = hourlyRate + 0.1
+        
+        if (healthPackage.packageType === "Silver"){
+            calculatedSessionPrice = calculatedSessionPrice * 0.4; 
+        } 
+        if (healthPackage.packageType === "Gold") {
+            calculatedSessionPrice = calculatedSessionPrice * 0.4; 
+        }
+        if (healthPackage.packageType === "Platinum") {
+            calculatedSessionPrice = calculatedSessionPrice * 0.2; 
+        }
+        
+        // Add the doctor details with the calculated session price to the doctorsList array
+        doctorsList.push({
+            name,
+            speciality,
+            hourlyRate,
+            sessionPrice: calculatedSessionPrice,
+        });
+    }
+    
+    res.status(200).json(doctorsList);
+} catch (error) {
+    res.status(400);
+      throw new Error(error.message);
+    }
+  });
 
 //req39
 //filter  a doctor by speciality and/or availability on a certain date and at a specific time
@@ -187,4 +242,5 @@ module.exports = {
     getDoctors,
     viewDoctor,
     filterBySpecialityAndDate,
+    getDoctorsSessionPrice
 }

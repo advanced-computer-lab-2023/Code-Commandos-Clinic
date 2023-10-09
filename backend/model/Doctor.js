@@ -38,7 +38,12 @@ const DoctorSchema = new mongoose.Schema({
   speciality: {
     type: String,
     required: true,
-  }
+  },
+  sessionPrice: {
+    type: Number,
+    required: true,
+  },
+
 },{ timestamps: true });
 
 const Doctor = mongoose.model('Doctor', DoctorSchema);
