@@ -7,8 +7,13 @@ import DoctorUpdate from './pages/updateDoctor';
 import SearchByNameAndOrSpeciality from './pages/searchByNameAndOrSpeciality'
 import FilterBySpecialityAndDate from "./pages/filterBySpecialityAndDate";
 import AddAdmin from './pages/addAdmin';
+import ShowAllAdminss from './pages/showAllToRemoveAdmins';
+import ShowAllDoctors from './pages/showAllToRemoveDoctors';
+import ShowAllPatients from './pages/showAllToRemovePatients';
+import Tryy from './pages/forRemovingAsAdmin';
+// import RemoveAsAdmin from './pages/removeAsAdmin'
 //import RemovePatientOrDoctorOrAdmin from '/pages/'
-import  RemoveAdmin  from './pages/removeAdmin'
+
 function App() {
   return (
     <div className="App">
@@ -44,9 +49,22 @@ function App() {
             element={<AddAdmin />}
           />
           <Route 
-            path="/RemoveAdmin"
-            element={<RemoveAdmin />}
+            path="/Tryy"
+            element={<Tryy />}
           />
+          <Route 
+            path="/ShowAllAdmins"
+            element={<ShowAllAdminss />}
+          />
+          <Route 
+            path="/ShowAllDoctors"
+            element={<ShowAllDoctors />}
+          />
+           <Route 
+            path="/ShowAllPatients"
+            element={<ShowAllPatients />}
+          />
+          
         </Routes>
        </div>
       </BrowserRouter>
