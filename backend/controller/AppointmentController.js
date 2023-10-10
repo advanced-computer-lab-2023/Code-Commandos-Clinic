@@ -1,7 +1,8 @@
 const AppointmentModel = require('../model/Appointment')
 const asyncHandler = require('express-async-handler')
 const DoctorModel = require("../model/Doctor");
-const PatientModel = require('../model/Patient')
+const PatientModel = require('../model/Patient');
+const Appointment = require('../model/Appointment');
 
 const createAppointment =asyncHandler( async (req,res) => {
     const appointmentBody = req.body
@@ -91,12 +92,39 @@ const getUpcomingAppointments = asyncHandler (async (req,res)=>{
 
 })
 
+const getAppointment = asyncHandler (async (req,res)=>{
+    
+   
+        let query={};
+        const currentDate = new Date();
+        if(req.params.doctor !=="none" && req.params.doctor !=="none"){
+            const {doctorid,patientid} =req.params
+           query={
+            $and:[
+                {doctor: doctorid},
+                {patient: patientid},
+                { startTime : { $lt : currentDate } }
+                ]
+                
+         };
+         try {
+            const previousAppointments = await Appointment.find(query)
+            res.status(200).json(previousAppointments)
+          }
+          catch (err){
+            res.status(400)
+            throw new Error(err.message)
+          }
+}
 
+
+})
 
 
 
 
 module.exports = {
     createAppointment,
-    getUpcomingAppointments
+    getUpcomingAppointments,
+    getAppointment
 };

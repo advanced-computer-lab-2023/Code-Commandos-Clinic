@@ -5,6 +5,7 @@ import DoctorRegistration from './pages/registerAsDoctor';
 import SearchByNameAndOrSpeciality from './pages/searchByNameAndOrSpeciality'
 import FilterBySpecialityAndDate from "./pages/filterBySpecialityAndDate";
 import Patient from './pages/viewListOfPatients'
+import UpcomingAppointments from './pages/viewAllUpcomingAppointments';
 function App() {
   return (
     <div className="App">
@@ -30,6 +31,10 @@ function App() {
         <Route 
             path="/ListOfPatients"
             element={<Patient/>}
+          />
+          <Route 
+            path="/viewAllUpcomingAppointments"
+            element={<UpcomingAppointments/>}
           />
         </Routes>
        </div>
