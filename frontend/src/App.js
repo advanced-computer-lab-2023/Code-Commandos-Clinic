@@ -6,6 +6,8 @@ import PatientRegistration from './pages/registerAsPatient';
 import DoctorUpdate from './pages/updateDoctor';
 import SearchByNameAndOrSpeciality from './pages/searchByNameAndOrSpeciality'
 import FilterBySpecialityAndDate from "./pages/filterBySpecialityAndDate";
+import HealthPackageUpdate from './pages/updateHealthPackage';
+import AddHealthPackage from './pages/addHealthPackage';
 
 function App() {
   return (
@@ -36,6 +38,14 @@ function App() {
         <Route
             path="/FilterBySpecialityAndDate"
             element={<FilterBySpecialityAndDate/>}
+        />
+        <Route
+            path="/HealthPackageUpdate"
+            element={<HealthPackageUpdate/>}
+        />
+        <Route
+            path="/AddHealthPackage"
+            element={<AddHealthPackage/>}
         />
         </Routes>
        </div>

@@ -8,17 +8,17 @@ const { default: mongoose } = require('mongoose');
 
 //add package(working)
 const addPackage = asyncHandler(async (req, res) => {
-  const { patientID, packageType } = req.body;
+  const { packageName, yearlySubscription, doctorSessionDiscount, medicineDiscount, familyDiscount } = req.body;
   try {
     // Check if the patient already has a subscription
-    const existingPackage = await HealthPackageModel.findOne({ patientID });
+    // const existingPackage = await HealthPackageModel.findOne({ patientID });
 
-    if (existingPackage) {
-      throw new Error('Patient already has a subscription');
-    }
+    // if (existingPackage) {
+    //   throw new Error('Patient already has a subscription');
+    // }
 
     // If the patient doesn't have a subscription, create a new one
-    const newPackage = await HealthPackageModel.create({ patientID, packageType });
+    const newPackage = await HealthPackageModel.create({ packageName, yearlySubscription, doctorSessionDiscount, medicineDiscount, familyDiscount });
     res.status(200).json(newPackage);
 
   } catch (error) {
@@ -27,55 +27,55 @@ const addPackage = asyncHandler(async (req, res) => {
   }
 });
 
-//get package subscription for patient (not working)
+//get package subscription using ID
 const getPackage = asyncHandler(async(req,res) => {
-    const {patientID} = req.body
+    const { id } = req.params
       
-    // Check if the patient ID is valid
-    if (!mongoose.Types.ObjectId.isValid(patientID)){
-        return res.status(404).json({error: 'Patient id is invalid'})
+    // Check if the package ID is valid
+    if (!mongoose.Types.ObjectId.isValid(id)){
+        return res.status(404).json({error: 'Package id is invalid'})
     }
-    
-    const HealthPackage = await HealthPackageModel.findOne(patientID)
-  
-    if(!HealthPackage){
-      return res.status(400).json({error: 'Patient has no package subscription'})
+    try {
+      const HealthPackage = await HealthPackageModel.findOne(id)
+      if(!HealthPackage){
+        return res.status(400).json({error: 'Package not found'})
+      }
+      res.status(200).json(HealthPackage)
+    } 
+    catch (error){
+      res.status(400);
+      throw new Error(error.message);
     }
-  
-    res.status(200).json(HealthPackage)
 })
 
-//get all (working if needed)
+//get all packages
 const getPackages = asyncHandler(async(req,res) => {
-  const HealthPackage = await HealthPackageModel.find({}).sort({createdAt: -1})
-
-  res.status(200).json(HealthPackage)
+  try{
+    const HealthPackage = await HealthPackageModel.find({}).sort({createdAt: -1})
+    res.status(200).json(HealthPackage)
+  }
+  catch (error){
+    res.status(400);
+    throw new Error(error.message);
+  }
 })
 
-// Update(working)
+// Update package
 const updatePackage = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { packageType } = req.body;
 
   try {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(404).json({ error: 'Invalid patient ID' });
+      return res.status(404).json({ error: 'Invalid package ID' });
     }
-    
-    // Validate the package type against the enum values
-    const validPackageTypes = ['Silver', 'Gold', 'Platinum'];
-    if (!validPackageTypes.includes(packageType)) {
-      return res.status(400).json({ error: 'Invalid package type' });
-    }
-
-    const updatedPackage = await HealthPackageModel.findByIdAndUpdate(id,{ packageType },{ new: true });
+    const updatedPackage = await HealthPackageModel.findByIdAndUpdate({_id: id}, {...req.body});
 
     if (!updatedPackage) {
-      return res.status(404).json({ error: 'Patient not found' });
+      return res.status(404).json({ error: 'Package not found' });
     }
     res.status(200).json(updatedPackage);
   }
-   catch (error) {
+  catch (error) {
     res.status(400);
     throw new Error(error.message);
   }
@@ -83,19 +83,21 @@ const updatePackage = asyncHandler(async (req, res) => {
 
 //delete(working)
 const deletePackage = asyncHandler(async(req,res) => {
-    const {patientID} = req.body
-
-    if (!mongoose.Types.ObjectId.isValid(patientID)){
-        return res.status(404).json({error: 'Patient id is invalid '})
+    const { id } = req.params
+    try{
+      if (!mongoose.Types.ObjectId.isValid(id)){
+          return res.status(404).json({error: 'Package id is invalid '})
+      }
+      const HealthPackage = await HealthPackageModel.findOneAndDelete({_id: id})
+      if(!HealthPackage){
+        return res.status(400).json({error: 'Package not found'})
+      }
+      res.status(200).json(HealthPackage)
     }
-    
-    const HealthPackage = await HealthPackageModel.findOneAndDelete({patientID: patientID})
-
-    if(!HealthPackage){
-      return res.status(400).json({error: 'Patient has no package subscription'})
+    catch (error) {
+      res.status(400);
+      throw new Error(error.message);
     }
-
-    res.status(200).json(HealthPackage)
 })
 
 module.exports = {addPackage, getPackage, getPackages, updatePackage, deletePackage};
