@@ -6,7 +6,9 @@ import PatientRegistration from './pages/registerAsPatient';
 import DoctorUpdate from './pages/updateDoctor';
 import SearchByNameAndOrSpeciality from './pages/searchByNameAndOrSpeciality'
 import FilterBySpecialityAndDate from "./pages/filterBySpecialityAndDate";
-
+import AddAdmin from './pages/addAdmin';
+//import RemovePatientOrDoctorOrAdmin from '/pages/'
+import  RemoveAdmin  from './pages/removeAdmin'
 function App() {
   return (
     <div className="App">
@@ -37,6 +39,14 @@ function App() {
             path="/FilterBySpecialityAndDate"
             element={<FilterBySpecialityAndDate/>}
         />
+        <Route 
+            path="/AddAdmin"
+            element={<AddAdmin />}
+          />
+          <Route 
+            path="/RemoveAdmin"
+            element={<RemoveAdmin />}
+          />
         </Routes>
        </div>
       </BrowserRouter>

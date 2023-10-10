@@ -51,9 +51,17 @@ const getAdmin = asyncHandler(async (req,res) => {
     }
 })
 
+const getAlladmins =async (req,res) => //for testing
+{
+   
+   const admins= await AdminModel.find({})
+   
+   res.status(200).json(admins)
+}
+
 module.exports={
     addAdmin,
     removeAdmin,
-    getAdmin
+    getAdmin,getAlladmins
 }
 
