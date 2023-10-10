@@ -8,6 +8,7 @@ import SearchByNameAndOrSpeciality from './pages/searchByNameAndOrSpeciality'
 import FilterBySpecialityAndDate from "./pages/filterBySpecialityAndDate";
 import HealthPackageUpdate from './pages/updateHealthPackage';
 import AddHealthPackage from './pages/addHealthPackage';
+import ViewDoctors from './pages/viewDoctors';
 
 function App() {
   return (
@@ -46,6 +47,10 @@ function App() {
         <Route
             path="/AddHealthPackage"
             element={<AddHealthPackage/>}
+        />
+        <Route
+            path="/ViewDoctors"
+            element={<ViewDoctors/>}
         />
         </Routes>
        </div>
