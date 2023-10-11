@@ -67,17 +67,40 @@ const createAppointment =asyncHandler( async (req,res) => {
 })
 
 const getAppointment = asyncHandler( async (req , res) => {
-   const {appointmentDate,status} = req.params
-   const appointmentsAvailable = await Appointment.find({startTime:appointmentDate , status:status})
+    try {
+        const {appointmentDate,status} = req.params
+        const _appointmentDate = new Date(appointmentDate)
+        const _appointmentDateEnd = new Date(_appointmentDate)
+        _appointmentDateEnd.setHours(23)
+        _appointmentDateEnd.setMinutes(59)
+        const appointmentsAvailable = await Appointment.find({startTime:{$gt:_appointmentDate}, endTime:{$lt:_appointmentDateEnd}, status:status})
 
-   if(appointmentsAvailable.length == 0){
-    res.status(404)
-    throw new Error('No appointments found')
-}
-res.status(200).json(appointmentsAvailable)
+        if(appointmentsAvailable.length == 0){
+            res.status(404)
+            throw new Error('No appointments found')
+        }
+        res.status(200).json(appointmentsAvailable)
+    }
+    catch (error){
+        res.status(400)
+        //alert(error.message)
+        throw new Error(error.message)
+    }
+})
+
+const getAppointments = asyncHandler( async (req , res) => {
+    //const {appointmentDate,status} = req.params
+    const appointmentsAvailable = await Appointment.find({})
+
+    if(appointmentsAvailable.length == 0){
+        res.status(404)
+        throw new Error('No appointments found')
+    }
+    res.status(200).json(appointmentsAvailable)
 })
 
 module.exports = {
     createAppointment,
-    getAppointment
+    getAppointment,
+    getAppointments
 };

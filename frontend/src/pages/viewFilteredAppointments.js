@@ -11,7 +11,7 @@ const FilteredAppointments = () =>{
 
             try {
                 let url='api/appointment/getAppointment'
-                url += `/${date}:00.000+00:00/${status}`
+                url += `/${date}/${status}`
                 const response = await fetch(url,{
                     method: 'GET',
                     headers: {
@@ -45,7 +45,7 @@ const FilteredAppointments = () =>{
                     Date:
                 </label>
                 <input
-                    type="text"
+                    type="date"
                     id="date"
                     className="form-control"
                     onChange={(e) => setDate(e.target.value)}
@@ -83,7 +83,7 @@ const FilteredAppointments = () =>{
                             key={filteredAppointment._id}
                             className="btn btn-link"
                             onClick={() => setSelectedAppointment(filteredAppointment)} style={{ fontSize: "20px" }}>
-                            <br/>
+                            Appointment with Doctor {filteredAppointment.doctorName} 
                         </button>
                     ))}
             </div>
