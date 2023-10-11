@@ -1,7 +1,8 @@
 const AppointmentModel = require('../model/Appointment')
 const asyncHandler = require('express-async-handler')
 const DoctorModel = require("../model/Doctor");
-const PatientModel = require('../model/Patient')
+const PatientModel = require('../model/Patient');
+const Appointment = require('../model/Appointment');
 
 const createAppointment =asyncHandler( async (req,res) => {
     const appointmentBody = req.body
@@ -65,6 +66,18 @@ const createAppointment =asyncHandler( async (req,res) => {
     }
 })
 
+const getAppointment = asyncHandler( async (req , res) => {
+   const {appointmentDate,status} = req.params
+   const appointmentsAvailable = await Appointment.find({startTime:appointmentDate , status:status})
+
+   if(appointmentsAvailable.length == 0){
+    res.status(404)
+    throw new Error('No appointments found')
+}
+res.status(200).json(appointmentsAvailable)
+})
+
 module.exports = {
-    createAppointment
+    createAppointment,
+    getAppointment
 };

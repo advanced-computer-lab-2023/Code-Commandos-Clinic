@@ -9,6 +9,10 @@ import FilterBySpecialityAndDate from "./pages/filterBySpecialityAndDate";
 import HealthPackageUpdate from './pages/updateHealthPackage';
 import AddHealthPackage from './pages/addHealthPackage';
 import ViewDoctors from './pages/viewDoctors';
+import RegisteredFamilyMembers from './pages/viewRegisteredFamilyMembers'
+import FilteredAppointments from './pages/viewFilteredAppointments'
+import AddFamilyMember from './pages/addFamilyMember'
+
 
 function App() {
   return (
@@ -52,6 +56,18 @@ function App() {
             path="/ViewDoctors"
             element={<ViewDoctors/>}
         />
+        <Route
+          path="/RegisteredFamilyMembers"
+          element={<RegisteredFamilyMembers/>}
+        />
+        <Route
+          path="/FilteredAppointments"
+          element={<FilteredAppointments/>}
+        />
+        <Route
+        path='/AddFamilyMember'
+        element={<AddFamilyMember/>}
+        />
         </Routes>
        </div>
       </BrowserRouter>
@@ -59,4 +75,3 @@ function App() {
   );
 }
 
-export default App;
