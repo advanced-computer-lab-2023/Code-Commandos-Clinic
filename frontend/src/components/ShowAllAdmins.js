@@ -28,7 +28,7 @@ const ShowAllAdmins = ({admin}) => {
            
       <p>Username: {admin.username}</p>
       {/* <p>Password: {admin.password}</p> */}
-<button onClick={remove}>delete</button>
+        <button onClick={remove}>delete</button>
        <br />
        </div>
     )

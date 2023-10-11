@@ -3,22 +3,22 @@ import { useEffect, useState } from "react";
 import ShowAllAdmins from '../components/ShowAllAdmins'
 
 const ShowAllAdminss = () => {
-    const [admin, setAdmin] = useState('')
+    const [admins, setAdmins] = useState('')
     //const [value, setValue] = useState('');
 
     useEffect(() => {
-        const fetchAdmin = async () => 
+        const fetchAdmins = async () =>
         {
             const response = await fetch('api/admin/getAlladmins')
             const json = await response.json()
 
             if(response.ok){
-                setAdmin(json)
+                setAdmins(json)
                 console.log(json)
             }
         }
 
-        fetchAdmin()
+        fetchAdmins()
     }, [])
 
     return (
@@ -26,7 +26,7 @@ const ShowAllAdminss = () => {
             <h2>All Admins:</h2>
             <div>
             
-                {admin && admin.map((admin) => (
+                {admins && admins.map((admin) => (
                     //<p key={doctorRequest._id}>{doctorRequest.name}</p>
                     <ShowAllAdmins key={admin._id} admin={admin}/>
                    

@@ -10,9 +10,6 @@ import AddAdmin from './pages/addAdmin';
 import ShowAllAdminss from './pages/showAllToRemoveAdmins';
 import ShowAllDoctors from './pages/showAllToRemoveDoctors';
 import ShowAllPatients from './pages/showAllToRemovePatients';
-import Tryy from './pages/forRemovingAsAdmin';
-// import RemoveAsAdmin from './pages/removeAsAdmin'
-//import RemovePatientOrDoctorOrAdmin from '/pages/'
 
 function App() {
   return (
@@ -47,10 +44,6 @@ function App() {
         <Route 
             path="/AddAdmin"
             element={<AddAdmin />}
-          />
-          <Route 
-            path="/Tryy"
-            element={<Tryy />}
           />
           <Route 
             path="/ShowAllAdmins"
