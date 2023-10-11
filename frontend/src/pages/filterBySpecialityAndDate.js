@@ -44,7 +44,7 @@ const FilterBySpecialityAndDate = ()=> {
 
 
     return (
-        <div className="container mt-4">
+        <div className="container m-5">
             <h1 className="mb-4">Filter By Speciality And Date</h1>
             <div className="mb-3">
                 <label htmlFor="speciality" className="form-label">

@@ -45,7 +45,7 @@ const ViewDoctorsWithSessionPrice = ()=> {
 
 
     return (
-        <div className="view-doctors">
+        <div className="view-doctors m-5">
             <h2>List of Doctors:</h2>
             { healthPackage && <h3>Session price is calculated based on your {healthPackage.packageName} package</h3> }
             <div>

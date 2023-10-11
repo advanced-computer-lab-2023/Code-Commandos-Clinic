@@ -23,7 +23,7 @@ const HealthPackageUpdate = () => {
     }, [])
 
     return (
-        <div className="health-package-update">
+        <div className="health-package-update m-5">
             <div>
                 {healthPackages && healthPackages.map((healthPackage) => (
                     <PackageUpdateForm key={healthPackage._id} healthPackage={healthPackage}/>

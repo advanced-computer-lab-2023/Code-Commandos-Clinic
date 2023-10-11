@@ -67,6 +67,7 @@ const ViewAndRemovePatients = ()=> {
                             {patient.name}
                         </button>
                     </li>
+
                 ))}
             </ul>
             {selectedPatient &&(

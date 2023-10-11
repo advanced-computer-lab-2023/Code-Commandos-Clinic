@@ -45,7 +45,7 @@ const SearchByNameAndOrSpeciality = ()=> {
 
 
     return (
-        <div className="container mt-4">
+        <div className="container m-5">
             <h1 className="mb-4">Search by Name and Speciality</h1>
             <div className="mb-3">
                 <label htmlFor="name" className="form-label">
