@@ -8,10 +8,8 @@ const PatientRegistrationForm = () => {
   const [dateOfBirth, setDateOfBirth] = useState('')
   const [gender, setGender] = useState('')
   const [mobileNumber, setMobileNumber] = useState('')
-  //const [emergencyContact, setEmergencyContact] = useState('')
   const [ecFullName, setEcFullName] = useState('')
   const [ecMobileNumber, setEcMobileNumber] = useState('')
-  const [error, setError] = useState(null)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -25,13 +23,12 @@ const PatientRegistrationForm = () => {
         'Content-Type': 'application/json'
       }
     })
-    const json = await response.json()
 
     if (!response.ok) {
-      setError(json.message)
+        alert( await response.text())
     }
     if (response.ok) {
-      setError(null)
+        const json = await response.json()
       setName('')
       setUsername('')
       setEmail('')
@@ -46,88 +43,143 @@ const PatientRegistrationForm = () => {
 
   }
 
-  return (
-    <form className="create" onSubmit={handleSubmit}> 
-      <h2>Registration:</h2>
+    return (
+        <form className="create m-5" onSubmit={handleSubmit}>
+            <h2>Registration:</h2>
 
-      <label>Username:</label>
-      <input 
-        type="text" 
-        onChange={(e) => setUsername(e.target.value)} 
-        value={username}
-      /> <br />
+            <div className="mb-3">
+                <label htmlFor="username" className="form-label">
+                    Username:
+                </label>
+                <input
+                    type="text"
+                    className="form-control"
+                    id="username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                />
+            </div>
 
-      <label>Name:</label>
-      <input 
-        type="text" 
-        onChange={(e) => setName(e.target.value)} 
-        value={name}
-      /> <br />
+            <div className="mb-3">
+                <label htmlFor="name" className="form-label">
+                    Name:
+                </label>
+                <input
+                    type="text"
+                    className="form-control"
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                />
+            </div>
 
-      <label>E-mail:</label>
-      <input 
-        type="email" 
-        onChange={(e) => setEmail(e.target.value)} 
-        value={email} 
-      /> <br />
+            <div className="mb-3">
+                <label htmlFor="email" className="form-label">
+                    E-mail:
+                </label>
+                <input
+                    type="email"
+                    className="form-control"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+            </div>
 
-      <label>Password:</label>
-      <input 
-        type="password" 
-        onChange={(e) => setPassword(e.target.value)} 
-        value={password} 
-      /> <br />
+            <div className="mb-3">
+                <label htmlFor="password" className="form-label">
+                    Password:
+                </label>
+                <input
+                    type="password"
+                    className="form-control"
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+            </div>
 
-      <label>Date of Birth:</label>
-      <input 
-        type="date" 
-        onChange={(e) => setDateOfBirth(e.target.value)} 
-        value={dateOfBirth} 
-      /> <br />
+            <div className="mb-3">
+                <label htmlFor="dateOfBirth" className="form-label">
+                    Date of Birth:
+                </label>
+                <input
+                    type="date"
+                    className="form-control"
+                    id="dateOfBirth"
+                    value={dateOfBirth}
+                    onChange={(e) => setDateOfBirth(e.target.value)}
+                />
+            </div>
 
-      <label>Gender:</label><br />
-      <input 
-        type="radio"
-        id="MALE"
-        name="gender" 
-        onChange={(e) => setGender(e.target.id)} 
-        //value={} 
-      /> 
-      <label>Male</label><br />
-      <input 
-        type="radio"
-        id="FEMALE"
-        name="gender"  
-        onChange={(e) => setGender(e.target.id)} 
-        //value={false} 
-      /> 
-      <label>Female</label><br />
+            <div className="mb-3">
+                <label className="form-label">Gender:</label><br />
+                <div className="form-check form-check-inline">
+                    <input
+                        type="radio"
+                        className="form-check-input"
+                        id="MALE"
+                        name="gender"
+                        onChange={(e) => setGender(e.target.id)}
+                    />
+                    <label className="form-check-label" htmlFor="MALE">Male</label>
+                </div>
+                <div className="form-check form-check-inline">
+                    <input
+                        type="radio"
+                        className="form-check-input"
+                        id="FEMALE"
+                        name="gender"
+                        onChange={(e) => setGender(e.target.id)}
+                    />
+                    <label className="form-check-label" htmlFor="FEMALE">Female</label>
+                </div>
+            </div>
 
-      <label>Mobile Number:</label>
-      <input 
-        type="text" 
-        onChange={(e) => setMobileNumber(e.target.value)} 
-        value={mobileNumber} 
-      /> <br />
+            <div className="mb-3">
+                <label htmlFor="mobileNumber" className="form-label">
+                    Mobile Number:
+                </label>
+                <input
+                    type="number"
+                    className="form-control"
+                    id="mobileNumber"
+                    value={mobileNumber}
+                    onChange={(e) => setMobileNumber(e.target.value)}
+                />
+            </div>
 
-      <label>Emergency Contact Full Name:</label>
-      <input 
-        type="text" 
-        onChange={(e) => setEcFullName(e.target.value)} 
-        value={ecFullName} 
-      /> <br />
+            <div className="mb-3">
+                <label htmlFor="ecFullName" className="form-label">
+                    Emergency Contact Full Name:
+                </label>
+                <input
+                    type="text"
+                    className="form-control"
+                    id="ecFullName"
+                    value={ecFullName}
+                    onChange={(e) => setEcFullName(e.target.value)}
+                />
+            </div>
 
-      <label>Emergency Contact Mobile Number:</label>
-      <input 
-        type="text" 
-        onChange={(e) => setEcMobileNumber(e.target.value)} 
-        value={ecMobileNumber} 
-      /> <br />
+            <div className="mb-3">
+                <label htmlFor="ecMobileNumber" className="form-label">
+                    Emergency Contact Mobile Number:
+                </label>
+                <input
+                    type="number"
+                    className="form-control"
+                    id="ecMobileNumber"
+                    value={ecMobileNumber}
+                    onChange={(e) => setEcMobileNumber(e.target.value)}
+                />
+            </div>
 
-      <button>Register</button>
-      {error && <div className="error">{error}</div>}
-    </form>
-  )
+            <button type="submit" className="btn btn-primary">
+                Register
+            </button>
+        </form>
+    );
 }
 
 export default PatientRegistrationForm

@@ -6,11 +6,13 @@ import PatientRegistration from './pages/registerAsPatient';
 import DoctorUpdate from './pages/updateDoctor';
 import SearchByNameAndOrSpeciality from './pages/searchByNameAndOrSpeciality'
 import FilterBySpecialityAndDate from "./pages/filterBySpecialityAndDate";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
+          <Navbar/>
        <div className="pages">
         <Routes>
           <Route 

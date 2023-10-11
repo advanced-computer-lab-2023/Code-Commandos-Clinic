@@ -10,13 +10,11 @@ const DoctorRegistrationForm = () => {
   const [affiliation, setAffiliation] = useState('')
   const [educationalBackground, setEducationalBackground] = useState('')
     const [speciality, setSpeciality] = useState('')
-    const [error, setError] = useState(null)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const doctorRequest = {username: username, name: name, email: email, password: password, dateOfBirth: dateOfBirth, hourlyRate: hourlyRate, affiliation: affiliation, educationalBackground: educationalBackground}
-    
+    const doctorRequest = {username: username, name: name, email: email, password: password, dateOfBirth: dateOfBirth, hourlyRate: hourlyRate, affiliation: affiliation, educationalBackground: educationalBackground,speciality:speciality}
     const response = await fetch('/api/doctorRegistration/doctorRegistrationRequest', {
       method: 'POST',
       body: JSON.stringify(doctorRequest),
@@ -24,14 +22,14 @@ const DoctorRegistrationForm = () => {
         'Content-Type': 'application/json'
       }
     })
-    const json = await response.json()
 
     if (!response.ok) {
-      setError(json.message)
+        const errorMessage = await response.text();
+        alert(errorMessage);
     }
     if (response.ok) {
-      setError(null)
-      setName('')
+        const json = await response.json()
+        setName('')
       setUsername('')
       setEmail('')
       setPassword('')
@@ -43,77 +41,132 @@ const DoctorRegistrationForm = () => {
 
   }
 
-  return (
-    <form className="create" onSubmit={handleSubmit}> 
-      <h2>Apply as a doctor to join the platform:</h2>
+    return (
+        <form className="create m-5" onSubmit={handleSubmit}>
+            <h2>Apply as a doctor to join the platform:</h2>
 
-      <label>Username:</label>
-      <input 
-        type="text" 
-        onChange={(e) => setUsername(e.target.value)} 
-        value={username}
-      /> <br />
+            <div className="mb-3">
+                <label htmlFor="username" className="form-label">
+                    Username:
+                </label>
+                <input
+                    type="text"
+                    className="form-control"
+                    id="username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                />
+            </div>
 
-      <label>Name:</label>
-      <input 
-        type="text" 
-        onChange={(e) => setName(e.target.value)} 
-        value={name}
-      /> <br />
+            <div className="mb-3">
+                <label htmlFor="name" className="form-label">
+                    Name:
+                </label>
+                <input
+                    type="text"
+                    className="form-control"
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                />
+            </div>
 
-      <label>E-mail:</label>
-      <input 
-        type="email" 
-        onChange={(e) => setEmail(e.target.value)} 
-        value={email} 
-      /> <br />
+            <div className="mb-3">
+                <label htmlFor="email" className="form-label">
+                    E-mail:
+                </label>
+                <input
+                    type="email"
+                    className="form-control"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+            </div>
 
-      <label>Password:</label>
-      <input 
-        type="password" 
-        onChange={(e) => setPassword(e.target.value)} 
-        value={password} 
-      /> <br />
+            <div className="mb-3">
+                <label htmlFor="password" className="form-label">
+                    Password:
+                </label>
+                <input
+                    type="password"
+                    className="form-control"
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+            </div>
 
-      <label>Date of Birth:</label>
-      <input 
-        type="date" 
-        onChange={(e) => setDateOfBirth(e.target.value)} 
-        value={dateOfBirth} 
-      /> <br />
+            <div className="mb-3">
+                <label htmlFor="dateOfBirth" className="form-label">
+                    Date of Birth:
+                </label>
+                <input
+                    type="date"
+                    className="form-control"
+                    id="dateOfBirth"
+                    value={dateOfBirth}
+                    onChange={(e) => setDateOfBirth(e.target.value)}
+                />
+            </div>
 
-      <label>Hourly Rate:</label>
-      <input 
-        type="number" 
-        onChange={(e) => setHourlyRate(e.target.value)} 
-        value={hourlyRate} 
-      /> <br />
+            <div className="mb-3">
+                <label htmlFor="hourlyRate" className="form-label">
+                    Hourly Rate:
+                </label>
+                <input
+                    type="number"
+                    className="form-control"
+                    id="hourlyRate"
+                    value={hourlyRate}
+                    onChange={(e) => setHourlyRate(e.target.value)}
+                />
+            </div>
 
-      <label>Affiliation:</label>
-      <input 
-        type="text" 
-        onChange={(e) => setAffiliation(e.target.value)} 
-        value={affiliation} 
-      /> <br />
+            <div className="mb-3">
+                <label htmlFor="affiliation" className="form-label">
+                    Affiliation:
+                </label>
+                <input
+                    type="text"
+                    className="form-control"
+                    id="affiliation"
+                    value={affiliation}
+                    onChange={(e) => setAffiliation(e.target.value)}
+                />
+            </div>
 
-      <label>Educational Background:</label>
-      <input 
-        type="text" 
-        onChange={(e) => setEducationalBackground(e.target.value)} 
-        value={educationalBackground} 
-      /> <br />
+            <div className="mb-3">
+                <label htmlFor="educationalBackground" className="form-label">
+                    Educational Background:
+                </label>
+                <input
+                    type="text"
+                    className="form-control"
+                    id="educationalBackground"
+                    value={educationalBackground}
+                    onChange={(e) => setEducationalBackground(e.target.value)}
+                />
+            </div>
 
-    <label>Speciality:</label>
-    <input
-        type="text"
-        onChange={(e) => setSpeciality(e.target.value)}
-        value={speciality}
-    /> <br />
+            <div className="mb-3">
+                <label htmlFor="speciality" className="form-label">
+                    Speciality:
+                </label>
+                <input
+                    type="text"
+                    className="form-control"
+                    id="speciality"
+                    value={speciality}
+                    onChange={(e) => setSpeciality(e.target.value)}
+                />
+            </div>
 
-      <button>Register</button>
-      {error && <div className="error">{error}</div>}
-    </form>
-  )
+            <button type="submit" className="btn btn-primary" >
+                Register
+            </button>
+        </form>
+    );
 }
 
 export default DoctorRegistrationForm

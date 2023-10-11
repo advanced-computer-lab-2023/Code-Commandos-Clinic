@@ -1,0 +1,112 @@
+.logo{
+    width: 230px;
+    height: 65px;
+}
+.nav-link{
+    color: black;
+}
+.LogInOrSignUp {
+    display: flex;
+    justify-content: flex-end;
+}
+.buttonNav {
+    background-color: #D21312;
+    border-radius: 0.3rem;
+    padding: 0.6em 1.3em;
+    color: white;
+    font-size: 1.1rem;
+    transition-duration: 0.7s;
+    border: 1px solid transparent;
+}
+
+.font {
+    color: black;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-right: 20px;
+}
+.nav-item{
+    margin: 0px 20px;
+    font-weight: 500;
+}
+.items-nav{
+    justify-content: inherit;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+.pages{
+    margin-top: 100px;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+.nav-link:hover {
+     color: #D21312;
+}
+.search-form {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.search-btn{
+    background: #D21312;
+    color: white;
+}
+.search-btn:hover{
+    color: #D21312;
+    background: white;
+}
+.available-medicines{
+    margin-top: -350px;
+    margin-right: 12px;
+}
+.medicinal-use-list{
+    margin-left: 30px;
+}
+.list-font{
+    color: black;
+    text-decoration: none;
+}
+.list-font:hover{
+    color: #D21312;
+}
+.form-row{
+    width: 60%;
+    justify-content: center;
+}
+.container-form{
+    margin: 120px 150px 0px 250px;
+}
+.title-form{
+    color: #D21312;
+    margin-left: 220px;
+    margin-bottom: 40px;
+}
+.submit-btn{
+    width: 15%;
+    background: navy;
+    color: white;
+    margin-left: 20%;
+    margin-top: 50px;
+}
+.submit-btn:hover{
+    width: 15%;
+    background: #D21312;
+    color: white;
+}
+.image-container {
+    position: relative;
+}
+.logo-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.edit-logo{
+    width: 35px;
+}
