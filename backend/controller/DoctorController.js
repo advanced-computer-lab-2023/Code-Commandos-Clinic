@@ -78,7 +78,8 @@ const viewDoctor = asyncHandler(async(req,res) => {
 //update doctor's email, hourlyRate, affiliation
 //function updates a doctor's info using an ID or username
 const updateDoctor = asyncHandler(async (req, res) => {
-    const { id, username, email, hourlyRate, affiliation } = req.body
+    const { id } = req.params
+    const { username, email, hourlyRate, affiliation } = req.body
     try{
         let query = {}
         if(email){
