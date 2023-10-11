@@ -52,7 +52,8 @@ const acceptDoctorRequest = asyncHandler(async (req, res) => {
                 hourlyRate:DoctorRequest.hourlyRate,
                 affiliation:DoctorRequest.affiliation,
                 educationalBackground:DoctorRequest.educationalBackground,
-                speciality:DoctorRequest.speciality
+                speciality:DoctorRequest.speciality,
+                sessionPrice:DoctorRequest.sessionPrice
         })
         res.status(200).json(Doctor)
     }

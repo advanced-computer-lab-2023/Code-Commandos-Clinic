@@ -12,6 +12,7 @@ const DoctorDetails = ({ doctor }) => {
                 <p className="card-text">Affiliation: {doctor.affiliation}</p>
                 <p className="card-text">Educational Background: {doctor.educationalBackground}</p>
                 <p className="card-text">Speciality: {doctor.speciality}</p>
+                <p className="card-text">Session Price: {doctor.sessionPrice}</p>
             </div>
         </div>
     );

@@ -7,6 +7,10 @@ import DoctorUpdate from './pages/updateDoctor';
 import SearchByNameAndOrSpeciality from './pages/searchByNameAndOrSpeciality'
 import FilterBySpecialityAndDate from "./pages/filterBySpecialityAndDate";
 import Navbar from "./components/Navbar";
+import HealthPackageUpdate from './pages/updateHealthPackage';
+import AddHealthPackage from './pages/addHealthPackage';
+import ViewDoctorsWithSessionPrice from './pages/viewDoctorsWithSessionPrice';
+import ViewAndRemovePatients from "./pages/ViewAndRemovePatients";
 
 function App() {
   return (
@@ -38,6 +42,22 @@ function App() {
         <Route
             path="/FilterBySpecialityAndDate"
             element={<FilterBySpecialityAndDate/>}
+        />
+        <Route
+            path="/HealthPackageUpdate"
+            element={<HealthPackageUpdate/>}
+        />
+        <Route
+            path="/AddHealthPackage"
+            element={<AddHealthPackage/>}
+        />
+        <Route
+            path="/ViewDoctorsWithSessionPrice"
+            element={<ViewDoctorsWithSessionPrice/>}
+        />
+        <Route
+            path="/ViewAndRemovePatients"
+            element={<ViewAndRemovePatients/>}
         />
         </Routes>
        </div>

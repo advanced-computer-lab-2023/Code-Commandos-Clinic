@@ -2,6 +2,9 @@ const DoctorModel = require('../model/Doctor')
 const AppointmentModel = require('../model/Appointment')
 const mongoose = require('mongoose')
 const asyncHandler = require('express-async-handler')
+const HealthPackageModel = require('../model/HealthPackage')
+const HealthPackagePatientModel = require('../model/HealthPackagePatient')
+const Patient = require('../model/Patient')
 
 //requirement 38
 //search for a doctor by name and/or speciality
@@ -115,6 +118,7 @@ const updateDoctor = asyncHandler(async (req, res) => {
 
 //for testing
 const getDoctors = asyncHandler(async (req, res) => {
+    
     try {
       const Doctors = await DoctorModel.find({}).sort({createdAt: -1})
       res.status(200).json(Doctors)
@@ -124,6 +128,68 @@ const getDoctors = asyncHandler(async (req, res) => {
       throw new Error(error.message)
     }
 })
+
+// req ID #37
+// get the doctor's session price depending on the patient's health package
+const getDoctorsSessionPrice = asyncHandler(async (req, res) => {
+    const{ id } = req.params
+
+    try {
+        // Retrieve all doctors from the database
+        const doctors = await DoctorModel.find();
+
+        // Create an array to store the doctor details
+        const doctorsList = [];
+
+        // Retrieve the subscribed health package of the patient (if available)
+        const healthPackagePatient = await HealthPackagePatientModel.findOne({ patientID: id });
+        if(!healthPackagePatient){
+            for (const doctor of doctors) {
+                const { name, 
+                    speciality,
+                    hourlyRate,
+                } = doctor;
+                
+                let calculatedSessionPrice = hourlyRate + hourlyRate*0.1
+                
+                // Add the doctor details with the calculated session price to the doctorsList array
+                doctorsList.push({
+                    name,
+                    speciality,
+                    hourlyRate,
+                    sessionPrice: calculatedSessionPrice,
+                });
+            }
+        } else {
+            const healthPackageID = healthPackagePatient.healthPackageID
+            const healthPackage = await HealthPackageModel.findOne({ _id: healthPackageID });
+            
+            // Iterate over each doctor and calculate the session price based on the subscribed health package
+            for (const doctor of doctors) {
+                const { name, 
+                    speciality,
+                    hourlyRate,
+                } = doctor;
+                
+                let calculatedSessionPrice = hourlyRate + hourlyRate*0.1
+                
+                calculatedSessionPrice = calculatedSessionPrice * ( 1 - healthPackage.doctorSessionDiscount); 
+                
+                // Add the doctor details with the calculated session price to the doctorsList array
+                doctorsList.push({
+                    name,
+                    speciality,
+                    hourlyRate,
+                    sessionPrice: calculatedSessionPrice,
+                });
+            }
+        }
+        res.status(200).json(doctorsList);
+    } catch (error) {
+        res.status(400);
+        throw new Error(error.message);
+    }
+});
 
 //req39
 //filter  a doctor by speciality and/or availability on a certain date and at a specific time
@@ -188,4 +254,5 @@ module.exports = {
     getDoctors,
     viewDoctor,
     filterBySpecialityAndDate,
+    getDoctorsSessionPrice
 }

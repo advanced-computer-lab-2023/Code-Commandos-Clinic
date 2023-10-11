@@ -50,6 +50,18 @@ const Navbar = () => {
                                         <li>
                                             <Link to="/FilterBySpecialityAndDate" className="dropdown-item">Filter By Speciality And Date</Link>
                                         </li>
+                                        <li>
+                                            <Link to="/HealthPackageUpdate" className="dropdown-item">Health Package Update</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/AddHealthPackage" className="dropdown-item">Add Health Package</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/ViewDoctorsWithSessionPrice" className="dropdown-item">View Doctors With Session Price</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/ViewAndRemovePatients" className="dropdown-item">View And Remove Patients</Link>
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>

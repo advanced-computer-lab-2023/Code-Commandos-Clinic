@@ -39,6 +39,10 @@ const DoctorRegistrationSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  sessionPrice: {
+    type: Number,
+    required: true,
+  },
   status: {
     type: String,
     default: 'PENDING',

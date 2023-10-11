@@ -10,21 +10,18 @@ const {
 const router = express.Router()
 
 // GET all patients
-router.get('/', getPatients)
+router.get('/getPatients', getPatients)
 
 // GET a single patient
-router.get('/:id', getPatient)
-
-// create or POST a new patient
-router.post('/', createPatient)
+router.get('/getPatient/:id', getPatient)
 
 // patient registration route
 router.route('/registerPatient').post(createPatient)
 
 // DELETE a patient
-router.delete('/:id', deletePatient)
+router.delete('/deletePatient/:id', deletePatient)
 
 // update or PATCH a patient
-router.patch('/:id', updatePatient)
+router.patch('/updatePatient/:id', updatePatient)
 
 module.exports = router
