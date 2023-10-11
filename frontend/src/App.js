@@ -8,7 +8,7 @@ import SearchByNameAndOrSpeciality from './pages/searchByNameAndOrSpeciality'
 import FilterBySpecialityAndDate from "./pages/filterBySpecialityAndDate";
 import HealthPackageUpdate from './pages/updateHealthPackage';
 import AddHealthPackage from './pages/addHealthPackage';
-import ViewDoctors from './pages/viewDoctors';
+import ViewDoctorsWithSessionPrice from './pages/viewDoctorsWithSessionPrice';
 
 function App() {
   return (
@@ -49,8 +49,8 @@ function App() {
             element={<AddHealthPackage/>}
         />
         <Route
-            path="/ViewDoctors"
-            element={<ViewDoctors/>}
+            path="/ViewDoctorsWithSessionPrice"
+            element={<ViewDoctorsWithSessionPrice/>}
         />
         </Routes>
        </div>

@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import DoctorSessionDetails from "../components/DoctorSessionDetails";
 
-const ViewDoctors = ()=> {
+const ViewDoctorsWithSessionPrice = ()=> {
     const [doctors, setDoctors] = useState(null)
     const [healthPackage, setHealthPackage] = useState(null)
     const patientID = "6521a435613bfae4cdcc4347"
@@ -58,4 +58,4 @@ const ViewDoctors = ()=> {
     );
 };
 
-export default ViewDoctors
+export default ViewDoctorsWithSessionPrice

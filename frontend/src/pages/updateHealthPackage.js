@@ -8,11 +8,14 @@ const HealthPackageUpdate = () => {
 
     useEffect(() => {
         const fetchHealthPackages = async () => {
-            const response = await fetch('api/healthPackage/')
+            const response = await fetch('api/healthPackage/getPackages')
             const json = await response.json()
 
             if(response.ok){
                 setHealthPackages(json)
+            }
+            else if (!response.ok){
+                alert(await response.text())
             }
         }
 

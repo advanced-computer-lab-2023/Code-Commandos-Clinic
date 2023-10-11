@@ -7,7 +7,6 @@ const AddPackageForm = () => {
   const [doctorSessionDiscount, setDoctorSessionDiscount] = useState('')
   const [medicineDiscount, setMedicineDiscount] = useState('')
   const [familyDiscount, setFamilyDiscount] = useState('')
-  const [error, setError] = useState(null)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -19,20 +18,20 @@ const AddPackageForm = () => {
     newHealthPackage.medicineDiscount = medicineDiscount;
     newHealthPackage.familyDiscount = familyDiscount;
     
-    const response = await fetch('/api/healthPackage/', {
+    const response = await fetch('/api/healthPackage/addPackage', {
       method: 'POST',
       body: JSON.stringify(newHealthPackage),
       headers: {
         'Content-Type': 'application/json'
       }
     })
-    const json = await response.json()
 
     if (!response.ok) {
-      setError(json.message)
+      alert(await response.text())
     }
     if (response.ok) {
-      setError('Successfully added.')
+      const json = await response.json()
+      alert('Successfully added!')
       setPackageName('')
       setYearlySubscription('')
       setDoctorSessionDiscount('')
@@ -44,49 +43,80 @@ const AddPackageForm = () => {
   }
 
   return (
-    <div>
-    <form className="create" onSubmit={handleSubmit}> 
-      <h2>Add a new package:</h2>
-      <label>Name:</label>
-      <input 
-        type="text" 
-        onChange={(e) => setPackageName(e.target.value)} 
-        value={packageName}
-      /> <br />
+      <div>
+        <form className="create m-5" onSubmit={handleSubmit}>
+          <h2>Add a new package:</h2>
+          <div className="mb-3">
+            <label htmlFor="packageName" className="form-label">
+              Name:
+            </label>
+            <input
+                type="text"
+                className="form-control"
+                id="packageName"
+                value={packageName}
+                onChange={(e) => setPackageName(e.target.value)}
+            />
+          </div>
 
-      <label>Yearly Subscription (in EGP):</label>
-      <input 
-        type="number" 
-        onChange={(e) => setYearlySubscription(e.target.value)} 
-        value={yearlySubscription} 
-      /> <br />
+          <div className="mb-3">
+            <label htmlFor="yearlySubscription" className="form-label">
+              Yearly Subscription (in EGP):
+            </label>
+            <input
+                type="number"
+                className="form-control"
+                id="yearlySubscription"
+                value={yearlySubscription}
+                onChange={(e) => setYearlySubscription(e.target.value)}
+            />
+          </div>
 
-      <label>Discount for doctor sessions:</label>
-      <input 
-        type="number" 
-        onChange={(e) => setDoctorSessionDiscount(e.target.value)} 
-        value={doctorSessionDiscount} 
-      /> <br />
+          <div className="mb-3">
+            <label htmlFor="doctorSessionDiscount" className="form-label">
+              Discount for doctor sessions:
+            </label>
+            <input
+                type="number"
+                className="form-control"
+                id="doctorSessionDiscount"
+                value={doctorSessionDiscount}
+                onChange={(e) => setDoctorSessionDiscount(e.target.value)}
+            />
+          </div>
 
-      <label>Discount for medicine:</label>
-      <input 
-        type="text" 
-        onChange={(e) => setMedicineDiscount(e.target.value)} 
-        value={medicineDiscount} 
-      /> <br />
+          <div className="mb-3">
+            <label htmlFor="medicineDiscount" className="form-label">
+              Discount for medicine:
+            </label>
+            <input
+                type="number"
+                className="form-control"
+                id="medicineDiscount"
+                value={medicineDiscount}
+                onChange={(e) => setMedicineDiscount(e.target.value)}
+            />
+          </div>
 
-      <label>Discount for family members:</label>
-      <input 
-        type="text" 
-        onChange={(e) => setFamilyDiscount(e.target.value)} 
-        value={familyDiscount} 
-      /> <br />
+          <div className="mb-3">
+            <label htmlFor="familyDiscount" className="form-label">
+              Discount for family members:
+            </label>
+            <input
+                type="number"
+                className="form-control"
+                id="familyDiscount"
+                value={familyDiscount}
+                onChange={(e) => setFamilyDiscount(e.target.value)}
+            />
+          </div>
 
-      <button>Submit</button> 
-      {error && <div className="error">{error}</div>}
-    </form>
-    </div>
-  )
+          <button type="submit" className="btn btn-primary">
+            Submit
+          </button>
+        </form>
+      </div>
+  );
 }
 
 export default AddPackageForm

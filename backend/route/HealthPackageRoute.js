@@ -10,18 +10,18 @@ const {
 } = require('../controller/HealthPackageController')
 
 //post a new package
-router.post('/', addPackage)
+router.post('/addPackage', addPackage)
 
 //get a single package
-router.get('/:id', getPackage)
+router.get('/getPackage/:id', getPackage)
 
 //get all packages
-router.get('/', getPackages)
+router.get('/getPackages', getPackages)
 
 //update a package
-router.put('/:id', updatePackage)
+router.put('/updatePackage/:id', updatePackage)
 
 //delete a  package(done)
-router.delete('/:id', deletePackage)
+router.delete('/deletePackage/:id', deletePackage)
 
 module.exports = router;

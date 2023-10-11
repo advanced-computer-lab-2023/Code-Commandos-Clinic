@@ -10,7 +10,7 @@ const PackageUpdateForm = ({ healthPackage }) => {
   const [error, setError] = useState(null)
 
   const deleteHealthPackage = async () => {
-    const response = await fetch('/api/healthPackage/'+healthPackage._id, {
+    const response = await fetch('/api/healthPackage/deletePackage/'+healthPackage._id, {
       method: 'DELETE',
     })
     const json = await response.json()
@@ -33,7 +33,7 @@ const PackageUpdateForm = ({ healthPackage }) => {
     newHealthPackage.medicineDiscount = medicineDiscount;
     newHealthPackage.familyDiscount = familyDiscount;
     
-    const response = await fetch('/api/healthPackage/'+healthPackage._id, {
+    const response = await fetch('/api/healthPackage/updatePackage/'+healthPackage._id, {
       method: 'PUT',
       body: JSON.stringify(newHealthPackage),
       headers: {
