@@ -60,7 +60,16 @@ const Navbar = () => {
                                             <Link to="/ViewDoctorsWithSessionPrice" className="dropdown-item">View Doctors With Session Price</Link>
                                         </li>
                                         <li>
+                                            <Link to="/AddAdmin" className="dropdown-item">Add Admin</Link>
+                                        </li>
+                                        <li>
                                             <Link to="/ViewAndRemovePatients" className="dropdown-item">View And Remove Patients</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/ShowAndRemoveAdmins" className="dropdown-item">View And Remove Admins</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/ViewAndRemoveDoctors" className="dropdown-item">View And Remove Doctors</Link>
                                         </li>
                                     </ul>
                                 </li>

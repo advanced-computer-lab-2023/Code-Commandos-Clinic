@@ -1,16 +1,19 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
+import Navbar from "./components/Navbar";
 import DoctorRegistrationRequests from './pages/viewDoctorRequests'
 import DoctorRegistration from './pages/registerAsDoctor';
 import PatientRegistration from './pages/registerAsPatient';
 import DoctorUpdate from './pages/updateDoctor';
 import SearchByNameAndOrSpeciality from './pages/searchByNameAndOrSpeciality'
 import FilterBySpecialityAndDate from "./pages/filterBySpecialityAndDate";
-import Navbar from "./components/Navbar";
 import HealthPackageUpdate from './pages/updateHealthPackage';
 import AddHealthPackage from './pages/addHealthPackage';
 import ViewDoctorsWithSessionPrice from './pages/viewDoctorsWithSessionPrice';
 import ViewAndRemovePatients from "./pages/ViewAndRemovePatients";
+import AddAdmin from './pages/AddAdmin';
+import ShowAndRemoveAdmins from './pages/ShowAndRemoveAdmins';
+import ViewAndRemoveDoctors from "./pages/ViewAndRemoveDoctors";
 
 function App() {
   return (
@@ -59,6 +62,19 @@ function App() {
             path="/ViewAndRemovePatients"
             element={<ViewAndRemovePatients/>}
         />
+        <Route
+            path="/AddAdmin"
+            element={<AddAdmin />}
+          />
+          <Route 
+            path="/ShowAndRemoveAdmins"
+            element={<ShowAndRemoveAdmins />}
+          />
+          <Route 
+            path="/ViewAndRemoveDoctors"
+            element={<ViewAndRemoveDoctors />}
+          />
+
         </Routes>
        </div>
       </BrowserRouter>

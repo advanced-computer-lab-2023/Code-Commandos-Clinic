@@ -14,16 +14,17 @@ connectDB()
 const patientRoutes = require('./route/PatientRoute')
 const doctorRoutes = require('./route/DoctorRoute')
 const appointmentRoutes = require('./route/AppointmentRoute')
+const adminRoutes=require('./route/AdminRoute')
 const doctorRegisterationRoutes = require('./route/DoctorRegistrationRoute')
 const healthPackageRoutes = require('./route/HealthPackageRoute');
 const healthPackagePatientRoutes = require('./route/HealthPackagePatientRoute');
 
-server.use('/api/doctor',doctorRoutes)
 server.use('/api/appointment',appointmentRoutes)
+server.use('/api/admin',adminRoutes)
+server.use('/api/doctor',doctorRoutes)
 server.use('/api/patient', patientRoutes)
 server.use('/api/doctorRegistration', doctorRegisterationRoutes)
 server.use('/api/healthPackage', healthPackageRoutes)
 server.use('/api/healthPackagePatient', healthPackagePatientRoutes)
-
 
 server.use(errorHandler)
