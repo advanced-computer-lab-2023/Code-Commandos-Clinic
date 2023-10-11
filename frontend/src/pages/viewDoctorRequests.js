@@ -13,6 +13,9 @@ const DoctorRegistrationRequests = () => {
             if(response.ok){
                 setDoctorRequests(json)
             }
+            else if(!response.ok){
+                alert(await response.text())
+            }
         }
 
         fetchDoctorRequests()
