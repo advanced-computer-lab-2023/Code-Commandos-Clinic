@@ -3,19 +3,19 @@ const { getPrescriptionsbyPatient, addPrescription, getPrescriptionbyId, filterb
 const router = express.Router();
 
 //view all prescriptions
-router.get('/prescriptionList/:patient', getPrescriptionsbyPatient)
+router.get('/prescriptionList/:patientId', getPrescriptionsbyPatient)
 
 // view by id
-router.get('/:id', getPrescriptionbyId)
+router.get('/getPrescriptionbyId/:id', getPrescriptionbyId)
 
 // add a prescription
 router.post('/addPrescription', addPrescription)
 
-router.get('/filterByDoctor', filterbyDoctor)
+router.get('/filterByDoctor/:doctorId', filterbyDoctor)
 
-router.get('/filterByDate', filterbyDate)
+router.get('/filterByDate/:createdAt', filterbyDate)
 
-router.get('/filterByFilledOrNot', filterbyFilledOrNot)   
+router.get('/filterbyStatus/:status', filterbyStatus)
 
 module.exports = router
 

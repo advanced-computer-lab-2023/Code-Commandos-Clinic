@@ -12,9 +12,9 @@ const App = () => {
     
     <Router>
      <Routes>
-       <Route path="/api/prescription/prescriptionList/:patient" element={<PrescriptionContainer/>} />
-       <Route path={`/api/prescription/:id`}  element={<ViewPrescriptionDetails/>} />
-       <Route path={`/api/prescription/filterByDoctor`}  element={<FilterByDoctor/>}/>
+       <Route path="/PrescriptionContainer" element={<PrescriptionContainer/>} />
+       <Route path="/ViewPrescriptionDetails"  element={<ViewPrescriptionDetails/>} />
+       <Route path="/FilterByDoctor"  element={<FilterByDoctor/>}/>
      </Routes> 
     </Router>
   );

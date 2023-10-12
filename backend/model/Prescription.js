@@ -16,14 +16,11 @@ const PrescriptionSchema = new mongoose.Schema({
     ref: 'Medication',
     required: true,
   },
-  filled :Boolean ,
-  issueDate: Date,
-  refillInfo: String,
-  diagnosis: String,
-  specialInstructions: String,
-  allergies: String,
-  precautions: String,
-  notes: String,
+  status: {
+    type: String,
+    enum: ["FILLED,UNFILLED"],
+    default: "UNFILLED"
+  }
 
 },{ timestamps: true });
 

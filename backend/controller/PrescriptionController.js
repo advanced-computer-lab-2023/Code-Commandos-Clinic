@@ -3,12 +3,12 @@ const mongoose = require('mongoose');
 const asyncHandler = require('express-async-handler');
 
 const getPrescriptionsbyPatient = asyncHandler(async (req, res) => {
-  const { patient } = req.params;
+  const { patientId } = req.params;
+  if(!mongoose.Types.ObjectId.isValid(patientId) ){
+    throw new Error('Invalid id format')
+  }
   try {
-    const prescriptions = await PrescriptionModel.find({ patient: new mongoose.Types.ObjectId(patient) })
-    .populate('patient', 'name')
-    .populate('doctor', 'name')
-    .populate('medication', 'name');
+    const prescriptions = await PrescriptionModel.find({ patient: patientId })
     res.status(200).json(prescriptions);
   } catch (error) {
     res.status(400);
@@ -46,9 +46,9 @@ const addPrescription = asyncHandler(async (req, res) => {
 });
 
 const filterbyDate = asyncHandler(async (req, res) => {
-  const { issueDate } = req.params;
+  const { createdAt } = req.params;
   try {
-    const prescriptions = await PrescriptionModel.find({issueDate});
+    const prescriptions = await PrescriptionModel.find({createdAt});
     res.status(200).json(prescriptions)
   } catch (error) {
     res.status(400)
@@ -56,10 +56,10 @@ const filterbyDate = asyncHandler(async (req, res) => {
   }
 });
 
-const filterbyFilledOrNot = asyncHandler(async (req, res) => {
-  const { filled } = req.params;
+const filterbyStatus = asyncHandler(async (req, res) => {
+  const { status } = req.params;
   try {
-    const prescriptions = await PrescriptionModel.find({filled});
+    const prescriptions = await PrescriptionModel.find({status});
     res.status(200).json(prescriptions)
   } catch (error) {
     res.status(400)
@@ -68,10 +68,9 @@ const filterbyFilledOrNot = asyncHandler(async (req, res) => {
 });
 
 const filterbyDoctor = asyncHandler(async (req, res) => {
-  const { name } = req.params;
+  const { doctorId } = req.params;
   try {
-    const prescriptions = await PrescriptionModel.find({
-      'doctor.name': name}); 
+    const prescriptions = await PrescriptionModel.find({doctor:doctorId})
     res.status(200).json(prescriptions)
   } catch (error) {
     res.status(400)
@@ -79,9 +78,11 @@ const filterbyDoctor = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { getPrescriptionsbyPatient,
-                   addPrescription , 
-                   getPrescriptionbyId,
-                   filterbyDate,
-                   filterbyFilledOrNot,
-                   filterbyDoctor};
+module.exports = {
+  getPrescriptionsbyPatient,
+  addPrescription ,
+  getPrescriptionbyId,
+  filterbyDate,
+  filterbyStatus,
+  filterbyDoctor
+};
