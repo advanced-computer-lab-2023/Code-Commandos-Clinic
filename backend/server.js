@@ -15,6 +15,7 @@ const patientRoutes = require('./route/PatientRoute')
 const doctorRoutes = require('./route/DoctorRoute')
 const appointmentRoutes = require('./route/AppointmentRoute')
 const adminRoutes=require('./route/AdminRoute')
+const familyMemberRoutes=require("./route/FamilyMemberRoute")
 const doctorRegisterationRoutes = require('./route/DoctorRegistrationRoute')
 const healthPackageRoutes = require('./route/HealthPackageRoute');
 const healthPackagePatientRoutes = require('./route/HealthPackagePatientRoute');
@@ -23,6 +24,7 @@ const healthRecordRoutes=require('./route/HealthRecordRoute')
 server.use('/api/appointment',appointmentRoutes)
 server.use('/api/admin',adminRoutes)
 server.use('/api/doctor',doctorRoutes)
+server.use('/api/familyMember',familyMemberRoutes);
 server.use('/api/patient', patientRoutes)
 server.use('/api/doctorRegistration', doctorRegisterationRoutes)
 server.use('/api/healthPackage', healthPackageRoutes)

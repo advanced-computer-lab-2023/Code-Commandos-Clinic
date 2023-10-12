@@ -17,6 +17,9 @@ import ViewAndRemoveDoctors from "./pages/ViewAndRemoveDoctors";
 import ViewPatientsOfDoctor from "./pages/ViewPatientsOfDoctor";
 import RegisterPatientWithDoctor from "./pages/RegisterPatientWithDoctor";
 import FilterPatientsWithUpcomingAppointments from "./pages/FilterPatientsWithUpcomingAppointments";
+import RegisteredFamilyMembers from './pages/viewRegisteredFamilyMembers'
+import FilteredAppointments from './pages/viewFilteredAppointments'
+import AddFamilyMember from './pages/addFamilyMember'
 
 function App() {
   return (
@@ -89,6 +92,18 @@ function App() {
                 path="/RegisterPatientWithDoctor"
                 element={<RegisterPatientWithDoctor/>}
             />
+            <Route
+            path="/RegisteredFamilyMembers"
+            element={<RegisteredFamilyMembers/>}
+            />
+        <Route
+          path="/FilteredAppointments"
+          element={<FilteredAppointments/>}
+        />
+        <Route
+        path='/AddFamilyMember'
+        element={<AddFamilyMember/>}
+        />
         </Routes>
        </div>
       </BrowserRouter>
@@ -96,4 +111,5 @@ function App() {
   );
 }
 
-export default App;
+export default App
+

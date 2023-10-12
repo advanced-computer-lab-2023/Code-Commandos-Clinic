@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <list default="true" id="e04ac8b6-2add-4fdb-a01b-b62257d34867" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/frontend/src/components/Navbar.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/frontend/src/css/navbar.css" afterDir="false" />
@@ -51,6 +52,18 @@
       <change beforePath="$PROJECT_DIR$/frontend/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.js" afterDir="false" />
 >>>>>>> main
 >>>>>>> yara
+=======
+    <list default="true" id="3720fbf1-82a3-4d3e-9f46-8048099bf804" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/AppointmentsDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/AppointmentsDetails.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/FamilyMemberForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/FamilyMemberForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/FamilyMembersDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/FamilyMembersDetails.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/viewFilteredAppointments.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/viewFilteredAppointments.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/viewRegisteredFamilyMembers.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/viewRegisteredFamilyMembers.js" afterDir="false" />
+>>>>>>> shafie
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +72,7 @@
   </component>
   <component name="Git.Settings">
 <<<<<<< HEAD
+<<<<<<< HEAD
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="main" />
@@ -66,16 +80,22 @@
     </option>
 =======
 >>>>>>> omar
+=======
+>>>>>>> shafie
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
 <<<<<<< HEAD
+<<<<<<< HEAD
   <component name="ProjectId" id="2WcZnwJSNEGBM0yYCgsERBWXOCE" />
 =======
   <component name="ProjectId" id="2Wcu32rtc2hdjYFy7KidEAfHVjE" />
 >>>>>>> omar
+=======
+  <component name="ProjectId" id="2WdtYTkxG2rK3GltbapfBcxMvrA" />
+>>>>>>> shafie
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -99,9 +119,12 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "last_opened_file_path": "D:/ntsal/ACL projects/Code-Commandos-Clinic/frontend/src",
 =======
 >>>>>>> omar
+=======
+>>>>>>> shafie
     "nodejs_package_manager_path": "npm"
   }
 }]]></component>
@@ -114,6 +137,7 @@
       </map>
     </option>
   </component>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   <component name="RecentsManager">
@@ -190,6 +214,17 @@
 =======
 >>>>>>> main
 >>>>>>> yara
+=======
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3720fbf1-82a3-4d3e-9f46-8048099bf804" name="Changes" comment="" />
+      <created>1697074331495</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1697074331495</updated>
+      <workItem from="1697074332892" duration="1327000" />
+>>>>>>> shafie
     </task>
     <servers />
   </component>
