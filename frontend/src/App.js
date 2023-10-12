@@ -4,8 +4,9 @@ import DoctorRegistrationRequests from './pages/viewDoctorRequests'
 import DoctorRegistration from './pages/registerAsDoctor';
 import SearchByNameAndOrSpeciality from './pages/searchByNameAndOrSpeciality'
 import FilterBySpecialityAndDate from "./pages/filterBySpecialityAndDate";
-import Patient from './pages/viewListOfPatients'
-import UpcomingAppointments from './pages/viewAllUpcomingAppointments';
+import ViewPatientsOfDoctor from "./pages/ViewPatientsOfDoctor";
+import RegisterPatientWithDoctor from "./pages/RegisterPatientWithDoctor";
+import FilterPatientsWithUpcomingAppointments from "./pages/FilterPatientsWithUpcomingAppointments";
 function App() {
   return (
     <div className="App">
@@ -29,13 +30,17 @@ function App() {
             element={<FilterBySpecialityAndDate/>}
         />
         <Route 
-            path="/ListOfPatients"
-            element={<Patient/>}
+            path="/ViewPatientsOfDoctor"
+            element={<ViewPatientsOfDoctor/>}
           />
           <Route 
-            path="/viewAllUpcomingAppointments"
-            element={<UpcomingAppointments/>}
+            path="/FilterPatientsWithUpcomingAppointments"
+            element={<FilterPatientsWithUpcomingAppointments/>}
           />
+            <Route
+                path="/RegisterPatientWithDoctor"
+                element={<RegisterPatientWithDoctor/>}
+            />
         </Routes>
        </div>
       </BrowserRouter>

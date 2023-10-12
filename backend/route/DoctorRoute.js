@@ -7,6 +7,7 @@ const {
     viewDoctor,
     filterBySpecialityAndDate,
     updateDoctor,
+    createDoctorPatients
 } = require('../controller/DoctorController')
 
 
@@ -18,4 +19,6 @@ router.route('/filterBySpecialityAndDate/:speciality/:date').get(filterBySpecial
 
 //ziad: req 14 update doctor's email, hourlyRate, affiliation
 router.route('/updateDoctor').put(updateDoctor)
+router.post('/createDoctorPatients',createDoctorPatients)
+
 module.exports = router

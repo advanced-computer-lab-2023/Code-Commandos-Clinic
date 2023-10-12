@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import PatientDetails from '../components/PatientDetails'
 
-const Patients = () =>{
+const ViewPatientsOfDoctor = () =>{
     const [patients , setPatients] = useState(null)
     const [selectedPatient,setSelectedPatient] = useState(null)
     const [searchQuery, setSearchQuery] = useState("");
@@ -36,8 +36,8 @@ const Patients = () =>{
             });
             if (response.ok) {
                 const results = await response.json();
+                console.log(results)
                 setPatients(results)
-
             } else {
                 const errorMessage = await response.text();
                 
@@ -52,36 +52,39 @@ const Patients = () =>{
     }
 
     return (
-    <div className="patients">
-        <h2>List of Your Patients</h2>
-        <div>
+        <div className="container mt-4">
+            <h2 className="mb-4">List of Your Patients</h2>
+            <div className="input-group mb-3">
                 <input
                     type="text"
                     id="name"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
+                    className="form-control"
                     placeholder="Search by name"
                 />
-                <button onClick={handleSearch}>Search</button>
-      </div>
-        
-        <div>
-            {patients && patients.map((patient) => (
-                <button
-                    key={patient._id}
-                    className="btn btn-link"
-                    onClick={()=> setSelectedPatient(patient)}
-                    >
-                        {patient.patientName}
-                        <br/>
-               </button>    
-            ))}   
+                <button onClick={handleSearch} className="btn btn-primary">
+                    Search
+                </button>
+            </div>
+
+            <div className="list-group">
+                {patients &&
+                    patients.map((patient) => (
+                        <button
+                            key={patient._id}
+                            className="list-group-item list-group-item-action"
+                            onClick={() => setSelectedPatient(patient)}
+                        >
+                            {patient.patientName}
+                        </button>
+                    ))}
+            </div>
+            {selectedPatient && <PatientDetails key={selectedPatient._id} patient={selectedPatient} />}
         </div>
-        {selectedPatient && <PatientDetails key={selectedPatient._id} patient={selectedPatient}/>}
-    </div>
     );
 }
 
-export default Patients;
+export default ViewPatientsOfDoctor;
 
 

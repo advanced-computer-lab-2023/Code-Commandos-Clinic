@@ -119,16 +119,15 @@ const updatePatient = asyncHandler(async (req, res) => {
 //requirement 34 Nour
 //search for a patient by name in the list of patients of a specific doctor
 const searchByName = asyncHandler( async (req,res) =>{
-  
   let query = {};
-  if(req.params.name !=="none"){
-    const {doctorId} = req.params
+  const {name,doctorId} = req.params
+  if(name !== "none"){
     query = {
       $and:[
-         {patientName: {$regex: new RegExp(req.params.name , 'i')}},
-         {doctor:doctorId}
-         ]
-         };
+          {patientName: {$regex: new RegExp(name , 'i')}},
+          {doctor:doctorId}
+      ]
+    };
   }
   else{
     res.status(400);

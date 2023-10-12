@@ -69,7 +69,7 @@ const createAppointment =asyncHandler( async (req,res) => {
 
 //requirement 35
 // get the upcoming appointments of a doctor
-const getUpcomingAppointments = asyncHandler (async (req,res)=>{
+const getUpcomingPatientsOfDoctor = asyncHandler (async (req,res)=>{
     const {doctorid} = req.params
     const currentDate = new Date();
     let query = {
@@ -84,7 +84,9 @@ const getUpcomingAppointments = asyncHandler (async (req,res)=>{
     if(upcomingAppointments.length===0){
         throw new Error("No Upcoming Appointments")
        }
-       res.status(200).json(upcomingAppointments);    
+        const patientIds = upcomingAppointments.map(appointment => appointment.patient);
+        const upcomingPatients = await PatientModel.find({ _id: { $in: patientIds } });
+        res.status(200).json(upcomingPatients);
     }catch(err){
         res.status(400);
         throw new Error(err.message);
@@ -125,6 +127,6 @@ const getAppointment = asyncHandler (async (req,res)=>{
 
 module.exports = {
     createAppointment,
-    getUpcomingAppointments,
+    getUpcomingPatientsOfDoctor,
     getAppointment
 };

@@ -35,5 +35,4 @@ router.patch('/:id', updatePatient)
 router.get('/getPatientsOfADoctor/:doctorId',getPatientsOfADoctor);
 router.get('/getInfoHealthPatient/:id',getInfoHealthPatient);
 router.get('/searchByname/:name/:doctorId',searchByName)
-
 module.exports = router

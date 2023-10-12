@@ -3,20 +3,29 @@ const DoctorModel = require('../model/Doctor')
 const AppointmentModel = require('../model/Appointment')
 const mongoose = require('mongoose')
 const asyncHandler = require('express-async-handler')
-
+const PatientModel = require('../model/Patient')
 
 const createDoctorPatients= asyncHandler( async(req,res) =>{
-    const patientdoctor=new DoctorPatient({
-        patient:req.body.patient,
-        doctor:req.body.doctor,
-        doctorName:req.body.doctorName,
-        patientName:req.body.patientName
-    })
+    const {patientUsername,doctorUsername} = req.body
     try{
-        const newPatientDoctor=await patientdoctor.save();
-        res.status(201).json(newPatientDoctor);
-    }catch(err){
-        console.log(err.message);
+        const patient = await PatientModel.findOne({username: patientUsername})
+        const doctor = await DoctorModel.findOne({username: doctorUsername})
+        if(!patient || !doctor){
+            res.status(400)
+            throw new Error('You have to provide both patient username and doctor username')
+        }
+        const patientDoctor = {
+            patient:patient._id,
+            doctor:doctor._id,
+            patientName:patient.name,
+            doctorName:doctor.name
+        }
+        const newPatientDoctor = await DoctorPatient.create(patientDoctor)
+        res.status(200).json(newPatientDoctor);
+    }
+    catch(error){
+        res.status(400)
+        throw new Error(error.message)
     }
 })
 
