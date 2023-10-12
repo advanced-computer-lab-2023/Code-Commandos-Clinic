@@ -1,15 +1,19 @@
-const AppointmentsDetails =({filteredAppointment}) =>{
-    return(
-        <div className="appointment-details" style={{marginLeft: '20px', marginDown: '40px', backgroundColor: '#f1f1f1', borderRadius:'4px'}}> 
-        <h3 style={{color: '#1aac83'}}>&nbsp;{filteredAppointment.patient}</h3>
-            <p>&nbsp;&nbsp;&nbsp; <strong>Doctor:</strong> {filteredAppointment.doctor}</p> 
-            <p>&nbsp;&nbsp;&nbsp; <strong>DoctorName:</strong> {filteredAppointment.doctorName}</p>
-            <p>&nbsp;&nbsp;&nbsp; <strong>PatientName:</strong> {filteredAppointment.patientName}</p>
-            <p>&nbsp;&nbsp;&nbsp; <strong>StartTime:</strong> {filteredAppointment.startTime}</p>
-            <p>&nbsp;&nbsp;&nbsp; <strong>EndTime:</strong> {filteredAppointment.endTime}</p>
-            <p>&nbsp;&nbsp;&nbsp; <strong>Status:</strong> {filteredAppointment.status}</p>
-        </div>
-    )
-}
+import React from 'react';
 
-export default AppointmentsDetails
+const AppointmentsDetails = ({ filteredAppointment }) => {
+    return (
+        <div className="card">
+            <div className="card-body">
+                <h3 className="card-title" style={{ color: '#1aac83' }}>{filteredAppointment.patient}</h3>
+                <p className="card-text">Doctor: {filteredAppointment.doctor}</p>
+                <p className="card-text">Doctor Name: {filteredAppointment.doctorName}</p>
+                <p className="card-text">Patient Name: {filteredAppointment.patientName}</p>
+                <p className="card-text">Start Time: {filteredAppointment.startTime}</p>
+                <p className="card-text">End Time: {filteredAppointment.endTime}</p>
+                <p className="card-text">Status: {filteredAppointment.status}</p>
+            </div>
+        </div>
+    );
+};
+
+export default AppointmentsDetails;

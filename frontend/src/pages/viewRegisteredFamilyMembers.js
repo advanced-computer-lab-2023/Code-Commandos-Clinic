@@ -17,8 +17,9 @@ const RegisteredFamilyMembers = () =>{
         fetchRegisteredFamilyMembers()
     }, [])
     return(
-        <div className="registeredFamilyMembers">
+        <div className="registeredFamilyMembers m-5">
             <h2>Registered  Family Members:</h2>
+            <br/>
             <div>
                 {registeredFamilyMembers && registeredFamilyMembers.map((registeredFamilyMember)=>(
                     <FamilyMembersDetails key={registeredFamilyMember._id}  registeredFamilyMember={registeredFamilyMember}/>

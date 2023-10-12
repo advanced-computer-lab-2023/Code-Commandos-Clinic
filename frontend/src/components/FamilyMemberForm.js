@@ -6,7 +6,6 @@ const FamilyMemberForm = () => {
   const [age, setAge] = useState('')
   const [gender, setGender] = useState('')
   const [relation, setRelation] = useState('')
-  const [error, setError] = useState(null)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -20,14 +19,13 @@ const FamilyMemberForm = () => {
         'Content-Type': 'application/json'
       }
     })
-    const json = await response.json()
 
     if (!response.ok) {
-      setError(json.message)
+        alert(await response.text())
     }
     if (response.ok) {
-      setError(null)
-      setName('')
+        const json = await response.json()
+        setName('')
       setNationalId('')
       setAge('')
       setGender('')
@@ -37,74 +35,124 @@ const FamilyMemberForm = () => {
 
   }
 
-  return (
-    <form className="add" onSubmit={handleSubmit}> 
-      <h2>Add family member:</h2>
+    return (
+        <form className="add m-5" onSubmit={handleSubmit}>
+            <h2>Add Family Member:</h2>
+            <div className="mb-3">
+                <label htmlFor="name" className="form-label">
+                    Name:
+                </label>
+                <input
+                    type="text"
+                    className="form-control"
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                />
+            </div>
 
-      <label>Name:</label>
-      <input 
-        type="text" 
-        onChange={(e) => setName(e.target.value)} 
-        value={name}
-      /> <br />
+            <div className="mb-3">
+                <label htmlFor="nationalId" className="form-label">
+                    National ID:
+                </label>
+                <input
+                    type="text"
+                    className="form-control"
+                    id="nationalId"
+                    value={nationalId}
+                    onChange={(e) => setNationalId(e.target.value)}
+                />
+            </div>
 
-      <label>NationalId:</label>
-      <input 
-        type="text" 
-        onChange={(e) => setNationalId(e.target.value)} 
-        value={nationalId} 
-      /> <br />
+            <div className="mb-3">
+                <label htmlFor="age" className="form-label">
+                    Age:
+                </label>
+                <input
+                    type="text"
+                    className="form-control"
+                    id="age"
+                    value={age}
+                    onChange={(e) => setAge(e.target.value)}
+                />
+            </div>
 
-      <label>Age:</label>
-      <input 
-        type="text" 
-        onChange={(e) => setAge(e.target.value)} 
-        value={age} 
-      /> <br />
+            <div className="mb-3">
+                <label>Gender:</label>
+                <div className="form-check">
+                    <input
+                        type="radio"
+                        className="form-check-input"
+                        id="MALE"
+                        name="gender"
+                        onChange={(e) => setGender(e.target.id)}
+                    />
+                    <label className="form-check-label" htmlFor="MALE">
+                        Male
+                    </label>
+                </div>
 
-      <label>Gender:</label><br />
-      <input 
-        type="radio"
-        id="MALE"
-        name="gender" 
-        onChange={(e) => setGender(e.target.id)} 
-      /> 
-      <label>Male</label><br />
-      <input 
-        type="radio"
-        id="FEMALE"
-        name="gender"  
-        onChange={(e) => setGender(e.target.id)}  
-      /> 
-      <label>Female</label><br />
+                <div className="form-check">
+                    <input
+                        type="radio"
+                        className="form-check-input"
+                        id="FEMALE"
+                        name="gender"
+                        onChange={(e) => setGender(e.target.id)}
+                    />
+                    <label className="form-check-label" htmlFor="FEMALE">
+                        Female
+                    </label>
+                </div>
+            </div>
 
-      <label>Relation:</label><br />
-      <input 
-        type="radio"
-        id ="WIFE"
-        name="relation"
-        onChange={(e) => setRelation(e.target.id)} 
-      /> 
-      <label>Wife</label><br />
-      <input 
-        type="radio"
-        id ="HUSBAND"
-        name="relation"
-        onChange={(e) => setRelation(e.target.id)} 
-      /> 
-      <label>Husband</label><br />
-      <input 
-        type="radio"
-        id ="CHILDREN"
-        name="relation"
-        onChange={(e) => setRelation(e.target.id)} 
-      />
-      <label>Children</label><br /> 
+            <div className="mb-3">
+                <label>Relation:</label>
+                <div className="form-check">
+                    <input
+                        type="radio"
+                        className="form-check-input"
+                        id="WIFE"
+                        name="relation"
+                        onChange={(e) => setRelation(e.target.id)}
+                    />
+                    <label className="form-check-label" htmlFor="WIFE">
+                        Wife
+                    </label>
+                </div>
 
-      <button>Add</button>
-      {error && <div className="error">{error}</div>}
-    </form>
-  )
+                <div className="form-check">
+                    <input
+                        type="radio"
+                        className="form-check-input"
+                        id="HUSBAND"
+                        name="relation"
+                        onChange={(e) => setRelation(e.target.id)}
+                    />
+                    <label className="form-check-label" htmlFor="HUSBAND">
+                        Husband
+                    </label>
+                </div>
+
+                <div className="form-check">
+                    <input
+                        type="radio"
+                        className="form-check-input"
+                        id="CHILDREN"
+                        name="relation"
+                        onChange={(e) => setRelation(e.target.id)}
+                    />
+                    <label className="form-check-label" htmlFor="CHILDREN">
+                        Children
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" className="btn btn-primary">
+                Add
+            </button>
+        </form>
+    );
 }
 
 export default FamilyMemberForm

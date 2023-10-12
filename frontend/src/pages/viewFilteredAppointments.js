@@ -26,6 +26,7 @@ const FilteredAppointments = () =>{
                 } else {
                     const errorMessage = await response.text();
                     alert(errorMessage)
+                    setSearchResults(null)
                     throw new Error(errorMessage)
                 }
             }
@@ -45,13 +46,15 @@ const FilteredAppointments = () =>{
                     Date:
                 </label>
                 <input
+                    required={true}
                     type="date"
                     id="date"
                     className="form-control"
                     onChange={(e) => setDate(e.target.value)}
                 />
             </div>
-             <input 
+             <input
+                required={true}
                 type="radio"
                 id="PENDING"
                 name="status" 
