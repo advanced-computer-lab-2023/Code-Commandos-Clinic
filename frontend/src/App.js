@@ -7,13 +7,16 @@ import PatientRegistration from './pages/registerAsPatient';
 import DoctorUpdate from './pages/updateDoctor';
 import SearchByNameAndOrSpeciality from './pages/searchByNameAndOrSpeciality'
 import FilterBySpecialityAndDate from "./pages/filterBySpecialityAndDate";
-import HealthPackageUpdate from './pages/updateHealthPackage';
 import AddHealthPackage from './pages/addHealthPackage';
+import HealthPackageUpdate from './pages/updateHealthPackage';
 import ViewDoctorsWithSessionPrice from './pages/viewDoctorsWithSessionPrice';
 import ViewAndRemovePatients from "./pages/ViewAndRemovePatients";
 import AddAdmin from './pages/AddAdmin';
 import ShowAndRemoveAdmins from './pages/ShowAndRemoveAdmins';
 import ViewAndRemoveDoctors from "./pages/ViewAndRemoveDoctors";
+import ViewPatientsOfDoctor from "./pages/ViewPatientsOfDoctor";
+import RegisterPatientWithDoctor from "./pages/RegisterPatientWithDoctor";
+import FilterPatientsWithUpcomingAppointments from "./pages/FilterPatientsWithUpcomingAppointments";
 
 function App() {
   return (
@@ -74,7 +77,18 @@ function App() {
             path="/ViewAndRemoveDoctors"
             element={<ViewAndRemoveDoctors />}
           />
-
+        <Route
+            path="/ViewPatientsOfDoctor"
+            element={<ViewPatientsOfDoctor/>}
+          />
+          <Route 
+            path="/FilterPatientsWithUpcomingAppointments"
+            element={<FilterPatientsWithUpcomingAppointments/>}
+          />
+            <Route
+                path="/RegisterPatientWithDoctor"
+                element={<RegisterPatientWithDoctor/>}
+            />
         </Routes>
        </div>
       </BrowserRouter>

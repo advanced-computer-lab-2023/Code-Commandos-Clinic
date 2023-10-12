@@ -1,13 +1,18 @@
-const express = require('express')
+const express = require('express');
+const router = express.Router()
+
+
 const {
   getPatients, 
   getPatient, 
   createPatient, 
   deletePatient, 
-  updatePatient
+  updatePatient,
+    getPatientsOfADoctor,
+    getInfoHealthPatient,
+    searchByName
 } = require('../controller/PatientController')
 
-const router = express.Router()
 
 // GET all patients
 router.get('/getPatients', getPatients)
@@ -24,4 +29,7 @@ router.delete('/deletePatient/:id', deletePatient)
 // update or PATCH a patient
 router.patch('/updatePatient/:id', updatePatient)
 
+router.get('/getPatientsOfADoctor/:doctorId',getPatientsOfADoctor);
+router.get('/getInfoHealthPatient/:id',getInfoHealthPatient);
+router.get('/searchByname/:name/:doctorId',searchByName)
 module.exports = router

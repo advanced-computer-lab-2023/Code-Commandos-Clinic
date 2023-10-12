@@ -13,7 +13,8 @@ const PatientDetails = ({ patient }) => {
                 <p className="card-text">Emergency Contact: {patient.emergencyContact.fullName}</p>
             </div>
         </div>
-    );
-};
+    )
+}
 
 export default PatientDetails;
+

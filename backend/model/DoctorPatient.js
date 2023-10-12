@@ -13,7 +13,7 @@ const DoctorPatientSchema = mongoose.Schema({
     },
     doctorName: {
         type: String,
-    },
+    }, 
     patientName: {
         type: String,
     }

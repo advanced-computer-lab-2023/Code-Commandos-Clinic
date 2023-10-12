@@ -1,6 +1,34 @@
+const DoctorPatientModel = require('../model/DoctorPatient.js');
+const HealthRecord = require ('../model/HealthRecord.js');
 const PatientModel = require('../model/Patient')
 const mongoose = require('mongoose')
 const asyncHandler = require('express-async-handler')
+
+
+//requirement-33 Nour
+const getPatientsOfADoctor = asyncHandler ( async (req,res) =>{
+    try{
+        const allPatients= await DoctorPatientModel.find({ doctor: req.params.doctorId });
+        if(allPatients.length===0){
+            throw new Error("No Patients found")
+        }
+        res.status(200).json(allPatients);
+    }catch(err){
+        res.status(400);
+        throw new Error(err.message);
+    }
+})
+
+//requirement-25 Nour
+const getInfoHealthPatient = asyncHandler ( async (req , res) =>{
+    try{
+        const HealthRecords = await HealthRecord.findOne({ patient: req.params.id })
+        res.status(200).json(HealthRecords);
+    }catch(err){
+        res.status(400);
+        throw new Error(err.message);
+    }
+})
 
 // get all patients
 const getPatients = asyncHandler(async (req, res) => {
@@ -88,10 +116,48 @@ const updatePatient = asyncHandler(async (req, res) => {
   }
 })
 
+
+//requirement 34 Nour
+//search for a patient by name in the list of patients of a specific doctor
+const searchByName = asyncHandler( async (req,res) =>{
+  let query = {};
+  const {name,doctorId} = req.params
+  if(name !== "none"){
+    query = {
+      $and:[
+          {patientName: {$regex: new RegExp(name , 'i')}},
+          {doctor:doctorId}
+      ]
+    };
+  }
+  else{
+    res.status(400);
+    throw new Error('Please enter a name')
+  }
+  try {
+    const patients = await DoctorPatientModel.find(query)
+    if(patients.length === 0 ){
+      res.status(400);
+      throw new Error("No patients found!")
+    }
+    res.status(200).json(patients)
+  }
+  catch (err){
+    res.status(400)
+    throw new Error(err.message)
+  }
+
+})
+
+
+
 module.exports = {
     getPatients,
     getPatient,
     createPatient,
     deletePatient,
-    updatePatient
+    updatePatient,
+    getPatientsOfADoctor,
+    getInfoHealthPatient,
+    searchByName
 }

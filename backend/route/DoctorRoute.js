@@ -9,8 +9,10 @@ const {
     viewDoctor,
     filterBySpecialityAndDate,
     getDoctorsSessionPrice,
-    removeDoctor
+    removeDoctor,
+    createDoctorPatients
 } = require('../controller/DoctorController')
+
 
 router.route('/searchByNameAndOrSpeciality/:name/:speciality').get(searchByNameAndOrSpeciality)
 router.route('/createDoctor').post(createDoctor)
@@ -20,5 +22,6 @@ router.route('/filterBySpecialityAndDate/:speciality/:date').get(filterBySpecial
 router.route('/getDoctors').get(getDoctors)
 router.route('/updateDoctor/:id').put(updateDoctor)
 router.route('/getSessionPrice/:id').get(getDoctorsSessionPrice)
+router.post('/createDoctorPatients',createDoctorPatients)
 
 module.exports = router
