@@ -1,6 +1,7 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-
+import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navbar from "./components/Navbar";
+
 import DoctorRegistrationRequests from './pages/viewDoctorRequests'
 import DoctorRegistration from './pages/registerAsDoctor';
 import PatientRegistration from './pages/registerAsPatient';
@@ -20,8 +21,11 @@ import FilterPatientsWithUpcomingAppointments from "./pages/FilterPatientsWithUp
 import RegisteredFamilyMembers from './pages/viewRegisteredFamilyMembers'
 import FilteredAppointments from './pages/viewFilteredAppointments'
 import AddFamilyMember from './pages/addFamilyMember'
+import PrescriptionContainer from './pages/PrescriptionContainer';
+import FilterPrescriptions from "./pages/FilterPrescriptions";
+import AddPrescription from "./pages/AddPrescription";
 
-function App() {
+const App = () => {
   return (
     <div className="App">
       <BrowserRouter>
@@ -104,12 +108,15 @@ function App() {
         path='/AddFamilyMember'
         element={<AddFamilyMember/>}
         />
+        <Route path="/PrescriptionContainer" element={<PrescriptionContainer/>} />
+        <Route path="/FilterPrescriptions"  element={<FilterPrescriptions/>}/>
+        <Route path="/AddPrescription"  element={<AddPrescription/>}/>
         </Routes>
        </div>
       </BrowserRouter>
     </div>
   );
-}
+};
 
 export default App
 

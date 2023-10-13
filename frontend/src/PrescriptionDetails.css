@@ -1,0 +1,17 @@
+.details-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.details-box {
+  width: 48%; /* Adjust as needed */
+  border: 2px solid #3498db; /* Colored frame */
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.details-box h2 {
+  color: #3498db; /* Box title color */
+}

@@ -61,7 +61,6 @@ const getPatient = asyncHandler(async (req, res) => {
     res.status(400)
     throw new Error(error.message)
   }
-
 })
 
 // create a new patient
@@ -116,7 +115,6 @@ const updatePatient = asyncHandler(async (req, res) => {
   }
 })
 
-
 //requirement 34 Nour
 //search for a patient by name in the list of patients of a specific doctor
 const searchByName = asyncHandler( async (req,res) =>{
@@ -159,5 +157,5 @@ module.exports = {
     updatePatient,
     getPatientsOfADoctor,
     getInfoHealthPatient,
-    searchByName
+    searchByName,
 }

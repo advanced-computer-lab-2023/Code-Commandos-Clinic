@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router()
 
 const {
     searchByNameAndOrSpeciality,
@@ -13,8 +13,7 @@ const {
     createDoctorPatients
 } = require('../controller/DoctorController')
 
-
-router.route('/searchByNameAndOrSpeciality/:name/:speciality').get(searchByNameAndOrSpeciality)
+router.route('/searchByNameAndOrSpeciality').get(searchByNameAndOrSpeciality)
 router.route('/createDoctor').post(createDoctor)
 router.route('/viewDoctor/:id').get(viewDoctor)
 router.route('/removeDoctor/:id').delete(removeDoctor)

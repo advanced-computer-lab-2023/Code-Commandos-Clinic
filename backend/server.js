@@ -8,8 +8,14 @@ const port = process.env.PORT
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 
+
 server.listen(port,() => console.log(`Server is listening on port ${port}`))
 connectDB()
+
+server.get('/',(req,res) => {
+    res.status(200).json({message:"Hello from server"})
+})
+
 
 const patientRoutes = require('./route/PatientRoute')
 const doctorRoutes = require('./route/DoctorRoute')
@@ -19,7 +25,8 @@ const familyMemberRoutes=require("./route/FamilyMemberRoute")
 const doctorRegisterationRoutes = require('./route/DoctorRegistrationRoute')
 const healthPackageRoutes = require('./route/HealthPackageRoute');
 const healthPackagePatientRoutes = require('./route/HealthPackagePatientRoute');
-const healthRecordRoutes=require('./route/HealthRecordRoute')
+const prescriptionRoute = require('./route/PrescriptionRoute')
+const healthRecordRoutes = require('./route/HealthRecordRoute')
 
 server.use('/api/appointment',appointmentRoutes)
 server.use('/api/admin',adminRoutes)
@@ -30,5 +37,8 @@ server.use('/api/doctorRegistration', doctorRegisterationRoutes)
 server.use('/api/healthPackage', healthPackageRoutes)
 server.use('/api/healthPackagePatient', healthPackagePatientRoutes)
 server.use('/api/healthRecord',healthRecordRoutes)
+server.use('/api/prescription',prescriptionRoute)
+
 
 server.use(errorHandler)
+

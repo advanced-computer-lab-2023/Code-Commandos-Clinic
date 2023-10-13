@@ -1,6 +1,5 @@
 const DoctorPatient = require('../model/DoctorPatient');
 const DoctorModel = require('../model/Doctor')
-const AppointmentModel = require('../model/Appointment')
 const mongoose = require('mongoose')
 const asyncHandler = require('express-async-handler')
 const HealthPackageModel = require('../model/HealthPackage')
@@ -291,6 +290,25 @@ const filterBySpecialityAndDate = asyncHandler(async (req,res) => {
     res.status(200).json(freeDoctors)
 })
 
+const getDoctor = asyncHandler(async (req, res) => {
+    const { id } = req.params
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      res.status(400)
+      throw new Error('Doctor not found')
+    }
+    try{
+      const doctor = await DoctorModel.findById(id)
+      if (!doctor) {
+        res.status(400)
+        throw new Error('Doctor not found')
+      }
+      res.status(200).json(doctor)
+    } catch (error){
+      res.status(400)
+      throw new Error(error.message)
+    }
+  })
+
 module.exports = {
     searchByNameAndOrSpeciality,
     createDoctor,
@@ -300,5 +318,6 @@ module.exports = {
     filterBySpecialityAndDate,
     getDoctorsSessionPrice,
     removeDoctor,
-    createDoctorPatients
+    createDoctorPatients,
+    getDoctor
 }
