@@ -1,8 +1,7 @@
-const AppointmentModel = require('../model/Appointment')
 const asyncHandler = require('express-async-handler')
 const DoctorModel = require("../model/Doctor");
 const PatientModel = require('../model/Patient');
-const Appointment = require('../model/Appointment');
+const AppointmentModel = require('../model/Appointment');
 
 const createAppointment =asyncHandler( async (req,res) => {
     const appointmentBody = req.body
@@ -23,16 +22,16 @@ const createAppointment =asyncHandler( async (req,res) => {
                 {
                     $or: [
                         {
-                            startTime: {$lte: appointmentBody.endTime},
+                            startTime: {$lte: appointmentBody.startTime},
                             endTime: {$gte: appointmentBody.startTime},
                         },
                         {
                             startTime: {$gte: appointmentBody.startTime},
-                            endTime: {$gte: appointmentBody.endTime},
+                            endTime: {$lte: appointmentBody.endTime},
                         },
                         {
-                            startTime: {$lte: appointmentBody.startTime},
-                            endTime: {$gte: appointmentBody.endTime},
+                            startTime: {$lte: appointmentBody.endTime},
+                            endTime: {$gte: appointmentBody.startTime},
                         },
                     ]
                 }
@@ -109,7 +108,7 @@ const getAppointment = asyncHandler (async (req,res)=>{
                 
          };
          try {
-            const previousAppointments = await Appointment.find(query)
+            const previousAppointments = await AppointmentModel.find(query)
             res.status(200).json(previousAppointments)
           }
           catch (err){
@@ -129,7 +128,7 @@ const getAppointmentsByDateAndStatus = asyncHandler( async (req , res) => {
         const _appointmentDateEnd = new Date(_appointmentDate)
         _appointmentDateEnd.setHours(23)
         _appointmentDateEnd.setMinutes(59)
-        const appointmentsAvailable = await Appointment.find({startTime:{$gt:_appointmentDate}, endTime:{$lt:_appointmentDateEnd}, status:status})
+        const appointmentsAvailable = await AppointmentModel.find({startTime:{$gt:_appointmentDate}, endTime:{$lt:_appointmentDateEnd}, status:status})
 
         if(appointmentsAvailable.length == 0){
             res.status(404)
@@ -146,7 +145,7 @@ const getAppointmentsByDateAndStatus = asyncHandler( async (req , res) => {
 
 const getAppointments = asyncHandler( async (req , res) => {
     //const {appointmentDate,status} = req.params
-    const appointmentsAvailable = await Appointment.find({})
+    const appointmentsAvailable = await AppointmentModel.find({})
 
     if(appointmentsAvailable.length == 0){
         res.status(404)

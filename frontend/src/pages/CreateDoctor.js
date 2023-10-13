@@ -1,47 +1,47 @@
 import { useState } from 'react'
 
-const DoctorRegistrationForm = () => {
-  const [name, setName] = useState('')
-  const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [dateOfBirth, setDateOfBirth] = useState('')
-  const [hourlyRate, setHourlyRate] = useState('')
-  const [affiliation, setAffiliation] = useState('')
-  const [educationalBackground, setEducationalBackground] = useState('')
+const CreateDoctor = () => {
+    const [name, setName] = useState('')
+    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [dateOfBirth, setDateOfBirth] = useState('')
+    const [hourlyRate, setHourlyRate] = useState('')
+    const [affiliation, setAffiliation] = useState('')
+    const [educationalBackground, setEducationalBackground] = useState('')
     const [sessionPrice, setSessionPrice] = useState('')
     const [speciality, setSpeciality] = useState('')
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+    const handleSubmit = async (e) => {
+        e.preventDefault()
 
-    const doctorRequest = {username: username, name: name, email: email, password: password, dateOfBirth: dateOfBirth, hourlyRate: hourlyRate, affiliation: affiliation, educationalBackground: educationalBackground,speciality:speciality,sessionPrice:sessionPrice}
-    const response = await fetch('/api/doctorRegistration/doctorRegistrationRequest', {
-      method: 'POST',
-      body: JSON.stringify(doctorRequest),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+        const doctorRequest = {username: username, name: name, email: email, password: password, dateOfBirth: dateOfBirth, hourlyRate: hourlyRate, affiliation: affiliation, educationalBackground: educationalBackground,speciality:speciality,sessionPrice:sessionPrice}
+        const response = await fetch('/api/doctor/createDoctor', {
+            method: 'POST',
+            body: JSON.stringify(doctorRequest),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
 
-    if (!response.ok) {
-        const errorMessage = await response.text();
-        alert(errorMessage);
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            alert(errorMessage);
+        }
+        if (response.ok) {
+            const json = await response.json()
+            setName('')
+            setUsername('')
+            setEmail('')
+            setPassword('')
+            setHourlyRate('')
+            setAffiliation('')
+            setEducationalBackground('')
+            setSessionPrice(null)
+            console.log('new doctor registration request added:', json)
+        }
+
     }
-    if (response.ok) {
-        const json = await response.json()
-        setName('')
-      setUsername('')
-      setEmail('')
-      setPassword('')
-      setHourlyRate('')
-      setAffiliation('')
-      setEducationalBackground('')
-        setSessionPrice(null)
-      console.log('new doctor registration request added:', json)
-    }
-
-  }
 
     return (
         <form className="create m-5" onSubmit={handleSubmit}>
@@ -216,10 +216,10 @@ const DoctorRegistrationForm = () => {
             </div>
 
             <button type="submit" className="btn btn-primary" >
-                Register
+                Create
             </button>
         </form>
     );
 }
 
-export default DoctorRegistrationForm
+export default CreateDoctor

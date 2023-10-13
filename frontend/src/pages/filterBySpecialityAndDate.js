@@ -4,7 +4,7 @@ import DoctorDetails from "../components/DoctorDetails";
 const FilterBySpecialityAndDate = ()=> {
     const [speciality, setSpeciality] = useState(null);
     const [date, setDate] = useState(null);
-    const [searchResults, setSearchResults] = useState(null);
+    const [searchResults, setSearchResults] = useState([]);
     const [selectedDoctor,setSelectedDoctor] = useState(null)
 
     const fetchResults = async () => {
@@ -30,6 +30,7 @@ const FilterBySpecialityAndDate = ()=> {
             });
             if (response.ok) {
                 const results = await response.json();
+                console.log(searchResults)
                 setSearchResults(results)
             } else {
                 const errorMessage = await response.text();

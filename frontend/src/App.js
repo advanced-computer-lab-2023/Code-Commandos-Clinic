@@ -24,6 +24,8 @@ import AddFamilyMember from './pages/addFamilyMember'
 import PrescriptionContainer from './pages/PrescriptionContainer';
 import FilterPrescriptions from "./pages/FilterPrescriptions";
 import AddPrescription from "./pages/AddPrescription";
+import CreateAppointment from "./pages/CreateAppointment";
+import CreateDoctor from "./pages/CreateDoctor";
 
 const App = () => {
   return (
@@ -111,6 +113,8 @@ const App = () => {
         <Route path="/PrescriptionContainer" element={<PrescriptionContainer/>} />
         <Route path="/FilterPrescriptions"  element={<FilterPrescriptions/>}/>
         <Route path="/AddPrescription"  element={<AddPrescription/>}/>
+            <Route path="/CreateAppointment"  element={<CreateAppointment/>}/>
+            <Route path="/CreateDoctor"  element={<CreateDoctor/>}/>
         </Routes>
        </div>
       </BrowserRouter>

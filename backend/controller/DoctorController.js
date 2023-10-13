@@ -5,6 +5,7 @@ const asyncHandler = require('express-async-handler')
 const HealthPackageModel = require('../model/HealthPackage')
 const HealthPackagePatientModel = require('../model/HealthPackagePatient')
 const PatientModel = require('../model/Patient')
+const AppointmentModel = require('../model/Appointment')
 
 const createDoctorPatients= asyncHandler( async(req,res) =>{
     const {patientUsername,doctorUsername} = req.body
@@ -247,7 +248,7 @@ const filterBySpecialityAndDate = asyncHandler(async (req,res) => {
         try {
             doctorsBySpeciality = await DoctorModel.find({speciality})
             const doctorsIds = doctorsBySpeciality.map((doctor) => doctor.id)
-            nonFreeAppointments = await AppointmentModel.find({
+            nonFreeAppointments = await Ap.find({
                 doctor: {$in: doctorsIds},
                 startTime: {$lte: date},
                 endTime: {$gte: date},
