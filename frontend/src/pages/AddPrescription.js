@@ -7,12 +7,10 @@ const AddPrescription = () => {
     const [doctors, setDoctors] = useState([]);
 
     useEffect(() => {
-        // Fetch the list of patients
         fetch('/api/patient/getPatients')
             .then((response) => response.json())
             .then((data) => setPatients(data));
 
-        // Fetch the list of doctors
         fetch('/api/doctor/getDoctors')
             .then((response) => response.json())
             .then((data) => setDoctors(data));
@@ -28,17 +26,14 @@ const AddPrescription = () => {
 
     const handleSubmit = async () => {
         try{
-            const response = await fetch('api/prescription/addPrescription',{
+            const response = await fetch('/api/prescription/addPrescription',{
                 method: 'POST',
                 headers: {
                     'Content-Type':'application/json',
                 },
                 body: JSON.stringify({patient: patientId,doctor: doctorId})
             });
-            if (response.ok){
-                const result = await response.json();
-            }
-            else {
+            if(! response.ok) {
                 const errorMessage = await response.text();
                 alert(errorMessage)
                 throw new Error(errorMessage)

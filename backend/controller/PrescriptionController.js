@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const asyncHandler = require('express-async-handler');
 const PatientModel = require('../model/Patient')
 const DoctorModel = require('../model/Doctor')
+
 const getPrescriptionsbyPatient = asyncHandler(async (req, res) => {
   const { patientId } = req.params;
   if(!mongoose.Types.ObjectId.isValid(patientId) ){
@@ -40,6 +41,7 @@ const addPrescription = asyncHandler(async (req, res) => {
     const newPrescription = await PrescriptionModel.create(req.body);
     const patient = await PatientModel.findById(newPrescription.patient)
     const doctor = await DoctorModel.findById(newPrescription.doctor)
+    console.log(newPrescription)
     newPrescription.patientName = patient.name
     newPrescription.doctorName = doctor.name
     await newPrescription.save()

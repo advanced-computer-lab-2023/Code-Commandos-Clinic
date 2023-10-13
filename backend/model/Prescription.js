@@ -18,8 +18,8 @@ const PrescriptionSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ["FILLED,UNFILLED"],
-    default: "UNFILLED"
+    enum: ['FILLED','UNFILLED'],
+    default: 'UNFILLED'
   }
 
 },{ timestamps: true });

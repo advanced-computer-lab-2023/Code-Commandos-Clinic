@@ -23,12 +23,9 @@ const Navbar = () => {
                                 <li className="nav-item">
                                     <a className="nav-link" href="#">Services</a>
                                 </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="#">Blog</a>
-                                </li>
                                 <li className="nav-item dropdown">
                                     <a className="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Virtual Clinic
+                                        Services
                                     </a>
                                     <ul className="dropdown-menu" aria-labelledby="servicesDropdown">
 
@@ -62,6 +59,13 @@ const Navbar = () => {
                                         <li>
                                             <Link to="/AddAdmin" className="dropdown-item">Add Admin</Link>
                                         </li>
+                                    </ul>
+                                </li>
+                                <li className="nav-item dropdown">
+                                    <a className="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Virtual Clinic
+                                    </a>
+                                    <ul className="dropdown-menu" aria-labelledby="servicesDropdown">
                                         <li>
                                             <Link to="/ViewAndRemovePatients" className="dropdown-item">View And Remove Patients</Link>
                                         </li>
@@ -88,6 +92,15 @@ const Navbar = () => {
                                         </li>
                                         <li>
                                             <Link to="/FilteredAppointments" className="dropdown-item">Filtered Appointments</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/PrescriptionContainer" className="dropdown-item">Your Prescriptions</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/FilterPrescriptions" className="dropdown-item">Filter Prescriptions</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/AddPrescription" className="dropdown-item">Add Prescription</Link>
                                         </li>
                                     </ul>
                                 </li>

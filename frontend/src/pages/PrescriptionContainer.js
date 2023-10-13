@@ -15,7 +15,9 @@ const PrescriptionContainer = () => {
           },
         });
         if (response.ok){
-          setPrescriptions(response.data);
+          const result = await response.json()
+          setPrescriptions(result)
+          console.log(result)
         }
         else{
           alert(await response.text())
@@ -33,14 +35,14 @@ const PrescriptionContainer = () => {
       <div className="container mt-4">
         <h1 className="mb-4">Your prescriptions</h1>
         <ul className="list-group">
-          {prescriptions.map((prescription) => (
+          {prescriptions && prescriptions.map((prescription) => (
               <li key={prescription._id} className="list-group-item">
                 <button
                     className="btn btn-link btn-lg"
-                    onClick={() => selectedPrescription(prescription)}
+                    onClick={() => setSelectedPrescription(prescription)}
                     style={{ textDecoration: "none" }}
                 >
-                  {`Prescription by doctor ${prescription.doctor}`}
+                  {`Prescription by doctor ${prescription.doctorName}`}
                 </button>
               </li>
           ))}
