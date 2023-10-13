@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const PrescriptionSchema = new mongoose.Schema({
   patient: {
     type: mongoose.Schema.Types.ObjectId,
@@ -11,10 +10,11 @@ const PrescriptionSchema = new mongoose.Schema({
     ref: 'Doctor',
     required: true,
   },
-  medication: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Medication',
-    required: true,
+  patientName:{
+    type: String,
+  },
+  doctorName:{
+    type: String
   },
   status: {
     type: String,

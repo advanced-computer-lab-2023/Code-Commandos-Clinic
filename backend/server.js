@@ -4,17 +4,7 @@ const dotenv = require("dotenv").config();
 const connectDB = require("./configuration/Db")
 const {errorHandler} = require('./middleware/ErrorHandler')
 const port = process.env.PORT
-const cors = require('cors');
 
-
-server.use(cors());
-server.use(
-    cors({
-      origin: 'http://localhost:3000',
-      methods: ['GET', 'POST', 'PUT', 'DELETE'],
-      allowedHeaders: ['Content-Type'],
-    })
-  );
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 

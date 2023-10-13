@@ -1,27 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import PrescriptionList from '../components/PrescriptionList';
-import axios from 'axios';
+import PrescriptionDetails from "../components/PrescriptionDetails";
 
 const PrescriptionContainer = () => {
   const [prescriptions, setPrescriptions] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [selectedPrescription,setSelectedPrescription] = useState(null)
 
   useEffect(() => {
     const fetchPrescriptions = async () => {
       try {
-        const response = await axios.get("/api/prescription/prescriptionList/6526cce90cd9ec95a0c24b93");
+        const response = await fetch('/api/prescription/getPrescriptionsbyPatient/6526cce90cd9ec95a0c24b93',{
+          method: 'GET',
+          headers: {
+            'Content-Type':'application/json',
+          },
+        });
         if (response.ok){
           setPrescriptions(response.data);
-          setLoading(false);
         }
         else{
-          alert("Something went wrong")
+          alert(await response.text())
         }
       } catch (error) {
-        console.error('Error fetching prescriptions:', error);
-        alert(error)
-        setLoading(false);
+        alert(error.message)
       }
     };
 
@@ -30,10 +30,23 @@ const PrescriptionContainer = () => {
 
   
   return (
-    <div>
-      <h1>Prescriptions list</h1>
-      <PrescriptionList prescriptions={prescriptions} loading={loading} />
-    </div>
+      <div className="container mt-4">
+        <h1 className="mb-4">Your prescriptions</h1>
+        <ul className="list-group">
+          {prescriptions.map((prescription) => (
+              <li key={prescription._id} className="list-group-item">
+                <button
+                    className="btn btn-link btn-lg"
+                    onClick={() => selectedPrescription(prescription)}
+                    style={{ textDecoration: "none" }}
+                >
+                  {`Prescription by doctor ${prescription.doctor}`}
+                </button>
+              </li>
+          ))}
+        </ul>
+        {selectedPrescription && <PrescriptionDetails prescription={selectedPrescription} />}
+      </div>
   );
 };
 

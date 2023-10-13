@@ -1,9 +1,9 @@
 const express = require('express')
-const { getPrescriptionsbyPatient, addPrescription, getPrescriptionbyId, filterbyDate, filterbyFilledOrNot, filterbyDoctor } = require("../controller/PrescriptionController")
+const { getPrescriptionsbyPatient, addPrescription, getPrescriptionbyId, filterbyDate, filterbyStatus, filterbyDoctor } = require("../controller/PrescriptionController")
 const router = express.Router();
 
 //view all prescriptions
-router.get('/prescriptionList/:patientId', getPrescriptionsbyPatient)
+router.get('/getPrescriptionsbyPatient/:patientId', getPrescriptionsbyPatient)
 
 // view by id
 router.get('/getPrescriptionbyId/:id', getPrescriptionbyId)

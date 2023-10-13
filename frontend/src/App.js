@@ -2,8 +2,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PrescriptionContainer from './pages/PrescriptionContainer';
-import ViewPrescriptionDetails from './pages/viewPrescriptionDetails';
-import FilterByDoctor from './pages/filterByDoctor';
+import FilterPrescriptions from "./pages/FilterPrescriptions";
+import AddPrescription from "./pages/AddPrescription";
 
 
 
@@ -13,8 +13,8 @@ const App = () => {
     <Router>
      <Routes>
        <Route path="/PrescriptionContainer" element={<PrescriptionContainer/>} />
-       <Route path="/ViewPrescriptionDetails"  element={<ViewPrescriptionDetails/>} />
-       <Route path="/FilterByDoctor"  element={<FilterByDoctor/>}/>
+       <Route path="/FilterPrescriptions"  element={<FilterPrescriptions/>}/>
+        <Route path="/AddPrescription"  element={<AddPrescription/>}/>
      </Routes> 
     </Router>
   );
