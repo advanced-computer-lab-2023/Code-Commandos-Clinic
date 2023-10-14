@@ -3,11 +3,11 @@ import PatientDetails from '../components/PatientDetails'
 
 const ViewPatientsOfDoctor = () =>{
     const [patients , setPatients] = useState([])
-    const [selectedPatient,setSelectedPatient] = useState(null)
+    const [selectedPatient, setSelectedPatient] = useState(null)
     const [searchQuery, setSearchQuery] = useState("");
     useEffect(() => {
         const fetchPatients = async () =>{
-            const response = await fetch('api/patient/getPatientsOfADoctor/651ef559dab5ab80c6697d47')
+            const response = await fetch('api/patient/getPatientsOfADoctor/651ef3b26c21aee2d43e6b9b')
             if(response.ok){
                 const json = await response.json()
                 setPatients(json)
@@ -75,9 +75,9 @@ const ViewPatientsOfDoctor = () =>{
                         <button
                             key={patient._id}
                             className="list-group-item list-group-item-action"
-                            onClick={() => setSelectedPatient(patient)}
+                            onClick={() => {setSelectedPatient(patient); console.log("selected patient:"+selectedPatient+" patient:"+JSON.stringify(patient))}}
                         >
-                            {patient.patientName}
+                            {patient.name}
                         </button>
                     ))}
             </div>

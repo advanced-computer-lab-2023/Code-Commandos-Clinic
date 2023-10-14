@@ -36,8 +36,9 @@ const DoctorRegistrationForm = () => {
       setPassword('')
       setHourlyRate('')
       setAffiliation('')
+      setSessionPrice('')
       setEducationalBackground('')
-        setSessionPrice(null)
+      alert('Request to register successful.')
       console.log('new doctor registration request added:', json)
     }
 

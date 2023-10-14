@@ -28,8 +28,9 @@ const FamilyMemberForm = () => {
         setName('')
       setNationalId('')
       setAge('')
-      setGender('')
-      setRelation('')
+      //setGender('')
+      //setRelation('')
+      alert('Successfully added')
       console.log('new family member added:', json)
     }
 

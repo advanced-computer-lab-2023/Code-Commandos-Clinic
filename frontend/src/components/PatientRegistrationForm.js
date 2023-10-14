@@ -33,11 +33,11 @@ const PatientRegistrationForm = () => {
       setUsername('')
       setEmail('')
       setPassword('')
-      setGender('')
+      //setGender('')
       setMobileNumber('')
       setEcFullName('')
       setEcMobileNumber('')
-      
+      alert('Registration successful.')
       console.log('new patient registered:', json)
     }
 

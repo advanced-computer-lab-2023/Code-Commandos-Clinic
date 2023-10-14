@@ -39,6 +39,7 @@ const DoctorUpdateForm = () => {
       setEmail('')
       setHourlyRate('')
       setAffiliation('')
+      alert('Update successful.')
       console.log('a doctor\'s profile has been updated:', json)
     }
 
