@@ -12,7 +12,11 @@ const getPatientsOfADoctor = asyncHandler ( async (req,res) =>{
         if(allPatients.length===0){
             throw new Error("No Patients found")
         }
-        res.status(200).json(allPatients);
+        let _allPatients = []
+        for(const patient of allPatients){
+          _allPatients.push(await PatientModel.findOne({_id: patient.patient}))
+        }
+        res.status(200).json(_allPatients);
     }catch(err){
         res.status(400);
         throw new Error(err.message);
@@ -138,7 +142,11 @@ const searchByName = asyncHandler( async (req,res) =>{
       res.status(400);
       throw new Error("No patients found!")
     }
-    res.status(200).json(patients)
+    let allPatients = []
+        for(const patient of patients){
+          allPatients.push(await PatientModel.findOne({_id: patient.patient}))
+        }
+    res.status(200).json(allPatients)
   }
   catch (err){
     res.status(400)

@@ -8,7 +8,7 @@ const ViewPatientsOfDoctor = () =>{
     const [searchQuery, setSearchQuery] = useState("");
     useEffect(() => {
         const fetchPatients = async () =>{
-            const response = await fetch('api/patient/getPatientsOfADoctor/6529a426266e14ffa71e46d3')
+            const response = await fetch('api/patient/getPatientsOfADoctor/651ef3b26c21aee2d43e6b9b')
             if(response.ok){
                 const json = await response.json()
                 console.log("patients are ",json)
@@ -97,7 +97,7 @@ const ViewPatientsOfDoctor = () =>{
                             className="list-group-item list-group-item-action"
                             onClick={() => setSelectedPatient(getSelectedPatient(patient.patient))}
                         >
-                            {patient.patientName}
+                            {patient.name}
                         </button>
                     ))}
             </div>

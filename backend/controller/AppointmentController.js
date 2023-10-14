@@ -128,7 +128,7 @@ const getAppointmentsByDateAndStatus = asyncHandler( async (req , res) => {
         const _appointmentDateEnd = new Date(_appointmentDate)
         _appointmentDateEnd.setHours(23)
         _appointmentDateEnd.setMinutes(59)
-        const appointmentsAvailable = await AppointmentModel.find({startTime:{$gt:_appointmentDate}, endTime:{$lt:_appointmentDateEnd}, status:status})
+        const appointmentsAvailable = await AppointmentModel.find({startTime:{$gte:_appointmentDate,$lte:_appointmentDateEnd}, status:status})
 
         if(appointmentsAvailable.length == 0){
             res.status(404)
