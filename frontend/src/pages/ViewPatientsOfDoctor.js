@@ -3,13 +3,15 @@ import PatientDetails from '../components/PatientDetails'
 
 const ViewPatientsOfDoctor = () =>{
     const [patients , setPatients] = useState([])
+    const [selectedPatientDoctor,setSelectedPatientDoctor] = useState(null)
     const [selectedPatient,setSelectedPatient] = useState(null)
     const [searchQuery, setSearchQuery] = useState("");
     useEffect(() => {
         const fetchPatients = async () =>{
-            const response = await fetch('api/patient/getPatientsOfADoctor/651ef559dab5ab80c6697d47')
+            const response = await fetch('api/patient/getPatientsOfADoctor/6529a426266e14ffa71e46d3')
             if(response.ok){
                 const json = await response.json()
+                console.log("patients are ",json)
                 setPatients(json)
             }
             else {
@@ -27,7 +29,7 @@ const ViewPatientsOfDoctor = () =>{
         else {
             url += `/${searchQuery}`
         }
-        url+='/651ef3b26c21aee2d43e6b9b'
+        url+='/6529a426266e14ffa71e46d3'
         try {
             const response = await fetch(url, {
                 method: 'GET',
@@ -50,6 +52,24 @@ const ViewPatientsOfDoctor = () =>{
            alert(error)
         }
         
+    }
+
+    const getSelectedPatient = async (patientId) =>{
+        try {
+            const response = await fetch(`api/patient/getPatient/${patientId}`)
+            if (response.ok) {
+                const patient = await response.json();
+                console.log(patient)
+                setSelectedPatient(patient)
+            } else {
+                const errorMessage = await response.text();
+                alert(errorMessage)
+                throw new Error(errorMessage)
+            }
+        }
+        catch (error) {
+            alert(error)
+        }
     }
 
     return (
@@ -75,13 +95,13 @@ const ViewPatientsOfDoctor = () =>{
                         <button
                             key={patient._id}
                             className="list-group-item list-group-item-action"
-                            onClick={() => setSelectedPatient(patient)}
+                            onClick={() => setSelectedPatient(getSelectedPatient(patient.patient))}
                         >
                             {patient.patientName}
                         </button>
                     ))}
             </div>
-            {selectedPatient && <PatientDetails key={selectedPatient._id} patient={selectedPatient} />}
+            {selectedPatient && <PatientDetails patient={selectedPatient} />}
         </div>
     );
 }
