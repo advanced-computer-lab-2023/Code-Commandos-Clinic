@@ -56,7 +56,7 @@ const FamilyMemberForm = () => {
                     National ID:
                 </label>
                 <input
-                    type="text"
+                    type="number"
                     className="form-control"
                     id="nationalId"
                     value={nationalId}
@@ -69,7 +69,7 @@ const FamilyMemberForm = () => {
                     Age:
                 </label>
                 <input
-                    type="text"
+                    type="number"
                     className="form-control"
                     id="age"
                     value={age}

@@ -10,11 +10,15 @@ const AppointmentModel = require('../model/Appointment')
 const createDoctorPatients= asyncHandler( async(req,res) =>{
     const {patientUsername,doctorUsername} = req.body
     try{
+        if(!patientUsername || !doctorUsername){
+            res.status(400)
+            throw new Error('You have to provide both patient username and doctor username')
+        }
         const patient = await PatientModel.findOne({username: patientUsername})
         const doctor = await DoctorModel.findOne({username: doctorUsername})
         if(!patient || !doctor){
             res.status(400)
-            throw new Error('You have to provide both patient username and doctor username')
+            throw new Error('Invalid doctor/patient')
         }
         const patientDoctor = {
             patient:patient._id,
@@ -125,8 +129,7 @@ const viewDoctor = asyncHandler(async(req,res) => {
 //update doctor's email, hourlyRate, affiliation
 //function updates a doctor's info using an ID or username
 const updateDoctor = asyncHandler(async (req, res) => {
-    const { id } = req.params
-    const { username, email, hourlyRate, affiliation } = req.body
+    const {id, username, email, hourlyRate, affiliation } = req.body
     try{
         let query = {}
         if(email){
@@ -248,7 +251,7 @@ const filterBySpecialityAndDate = asyncHandler(async (req,res) => {
         try {
             doctorsBySpeciality = await DoctorModel.find({speciality})
             const doctorsIds = doctorsBySpeciality.map((doctor) => doctor.id)
-            nonFreeAppointments = await Ap.find({
+            nonFreeAppointments = await AppointmentModel.find({
                 doctor: {$in: doctorsIds},
                 startTime: {$lte: date},
                 endTime: {$gte: date},

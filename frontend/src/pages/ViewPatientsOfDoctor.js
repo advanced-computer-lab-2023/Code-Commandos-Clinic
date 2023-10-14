@@ -2,17 +2,18 @@ import { useEffect, useState } from "react";
 import PatientDetails from '../components/PatientDetails'
 
 const ViewPatientsOfDoctor = () =>{
-    const [patients , setPatients] = useState(null)
+    const [patients , setPatients] = useState([])
     const [selectedPatient,setSelectedPatient] = useState(null)
     const [searchQuery, setSearchQuery] = useState("");
     useEffect(() => {
         const fetchPatients = async () =>{
-            const response = await fetch('api/patient/getPatientsOfADoctor/651ef3b26c21aee2d43e6b9b')
-            const json = await response.json()
-
+            const response = await fetch('api/patient/getPatientsOfADoctor/651ef559dab5ab80c6697d47')
             if(response.ok){
+                const json = await response.json()
                 setPatients(json)
-                setSelectedPatient(null)
+            }
+            else {
+                alert(await response.text())
             }
         }
         fetchPatients()
@@ -46,7 +47,7 @@ const ViewPatientsOfDoctor = () =>{
             }
         }
         catch (error) {
-           
+           alert(error)
         }
         
     }

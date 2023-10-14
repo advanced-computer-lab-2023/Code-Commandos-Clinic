@@ -19,11 +19,10 @@ const RegisterPatientWithDoctor = ()=> {
             else {
                 const errorMessage = await response.text();
                 alert(errorMessage)
-                throw new Error(errorMessage)
             }
         }
         catch (error){
-            alert(error.message)
+            console.log(error)
         }
     };
 

@@ -1,6 +1,5 @@
 // const HealthPackageModel = require('../model/HealthPackage')
 const asyncHandler = require('express-async-handler')
-const PatientModel = require("../model/Patient");
 const HealthPackagePatientModel = require('../model/HealthPackagePatient');
 const HealthPackageModel = require('../model/HealthPackage')
 const { default: mongoose } = require('mongoose');
