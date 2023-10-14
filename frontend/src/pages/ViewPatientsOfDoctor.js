@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import PatientDetails from '../components/PatientDetails'
+import PatientInfo from "../components/PatientInfo";
 
 const ViewPatientsOfDoctor = () =>{
     const [patients , setPatients] = useState([])
-    const [selectedPatientDoctor,setSelectedPatientDoctor] = useState(null)
     const [selectedPatient,setSelectedPatient] = useState(null)
     const [searchQuery, setSearchQuery] = useState("");
     useEffect(() => {
@@ -29,7 +28,7 @@ const ViewPatientsOfDoctor = () =>{
         else {
             url += `/${searchQuery}`
         }
-        url+='/6529a426266e14ffa71e46d3'
+        url+='/651ef3b26c21aee2d43e6b9b'
         try {
             const response = await fetch(url, {
                 method: 'GET',
@@ -43,7 +42,6 @@ const ViewPatientsOfDoctor = () =>{
                 setPatients(results)
             } else {
                 const errorMessage = await response.text();
-                
                 alert(errorMessage)
                 throw new Error(errorMessage)
             }
@@ -52,24 +50,6 @@ const ViewPatientsOfDoctor = () =>{
            alert(error)
         }
         
-    }
-
-    const getSelectedPatient = async (patientId) =>{
-        try {
-            const response = await fetch(`api/patient/getPatient/${patientId}`)
-            if (response.ok) {
-                const patient = await response.json();
-                console.log(patient)
-                setSelectedPatient(patient)
-            } else {
-                const errorMessage = await response.text();
-                alert(errorMessage)
-                throw new Error(errorMessage)
-            }
-        }
-        catch (error) {
-            alert(error)
-        }
     }
 
     return (
@@ -95,13 +75,13 @@ const ViewPatientsOfDoctor = () =>{
                         <button
                             key={patient._id}
                             className="list-group-item list-group-item-action"
-                            onClick={() => setSelectedPatient(getSelectedPatient(patient.patient))}
+                            onClick={() => setSelectedPatient(patient)}
                         >
                             {patient.name}
                         </button>
                     ))}
             </div>
-            {selectedPatient && <PatientDetails patient={selectedPatient} />}
+            {selectedPatient && <PatientInfo patient={selectedPatient} />}
         </div>
     );
 }

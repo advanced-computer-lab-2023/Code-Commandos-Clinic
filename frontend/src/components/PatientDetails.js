@@ -10,7 +10,7 @@ const PatientDetails = ({ patient }) => {
                 <p className="card-text">Date of Birth: {patient.dateOfBirth}</p>
                 <p className="card-text">Gender: {patient.gender}</p>
                 <p className="card-text">Mobile Number: {patient.mobileNumber}</p>
-                {/*<p className="card-text">Emergency Contact: {patient.emergencyContact.fullName}</p>*/}
+                <p className="card-text">Emergency Contact: {patient.emergencyContact.fullName}</p>
             </div>
         </div>
     )
