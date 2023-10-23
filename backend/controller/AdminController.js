@@ -51,13 +51,18 @@ const getAdmin = asyncHandler(async (req,res) => {
     }
 })
 
-const getAlladmins =async (req,res) => //for testing
-{
-   
-   const admins= await AdminModel.find({})
-   
-   res.status(200).json(admins)
-}
+const getAlladmins =asyncHandler(async (req,res) => {
+    console.log('user is ',req.user)
+    try {
+        const admins= await AdminModel.find({})
+        res.status(200).json(admins)
+    }
+    catch (error) {
+        res.status(400)
+        throw new Error(error.message)
+    }
+
+})
 
 module.exports={
     addAdmin,

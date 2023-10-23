@@ -3,10 +3,13 @@ const server = express();
 const dotenv = require("dotenv").config();
 const connectDB = require("./configuration/Db");
 const {errorHandler} = require('./middleware/ErrorHandler')
+const cookieParser = require('cookie-parser');
+
 const port = process.env.PORT
 
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
+server.use(cookieParser());
 
 
 server.listen(port,() => console.log(`Server is listening on port ${port}`))
@@ -27,6 +30,7 @@ const healthPackageRoutes = require('./route/HealthPackageRoute');
 const healthPackagePatientRoutes = require('./route/HealthPackagePatientRoute');
 const prescriptionRoute = require('./route/PrescriptionRoute')
 const healthRecordRoutes = require('./route/HealthRecordRoute')
+const userRoutes= require('./route/UserRoute')
 
 server.use('/api/appointment',appointmentRoutes)
 server.use('/api/admin',adminRoutes)
@@ -38,6 +42,7 @@ server.use('/api/healthPackage', healthPackageRoutes)
 server.use('/api/healthPackagePatient', healthPackagePatientRoutes)
 server.use('/api/healthRecord',healthRecordRoutes)
 server.use('/api/prescription',prescriptionRoute)
+server.use('/api/user',userRoutes)
 
 
 server.use(errorHandler)

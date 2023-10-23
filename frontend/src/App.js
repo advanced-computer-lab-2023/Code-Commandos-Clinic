@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Navbar from "./components/Navbar";
 
 import DoctorRegistrationRequests from './pages/viewDoctorRequests'
 import DoctorRegistration from './pages/registerAsDoctor';
@@ -26,12 +25,13 @@ import FilterPrescriptions from "./pages/FilterPrescriptions";
 import AddPrescription from "./pages/AddPrescription";
 import CreateAppointment from "./pages/CreateAppointment";
 import CreateDoctor from "./pages/CreateDoctor";
+import Login from "./pages/Login";
 
 const App = () => {
   return (
     <div className="App">
       <BrowserRouter>
-          <Navbar/>
+          <Login/>
        <div className="pages">
         <Routes>
           <Route 
