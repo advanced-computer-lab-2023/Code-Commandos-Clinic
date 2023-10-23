@@ -4,7 +4,7 @@ import "../css/style.css"
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [loginSuccess, setLoginSuccess] = useState(false); // State variable to track login success
+    const [loginSuccess, setLoginSuccess] = useState(false);
 
     const handleLogin = async() => {
         const response = await fetch('/api/user/login', {
