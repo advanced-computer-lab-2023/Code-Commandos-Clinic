@@ -1,10 +1,16 @@
-import React, { useState } from "react";
-import Navbar from "../components/Navbar";
+import React, { useState} from "react";
+import { useNavigate } from 'react-router-dom';
 import "../css/style.css"
+
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [loginSuccess, setLoginSuccess] = useState(false);
+    const navigate = useNavigate();
+
+    // const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+    // if (isAuthenticated) {
+    //     navigate('/Home')
+    // }
 
     const handleLogin = async() => {
         const response = await fetch('/api/user/login', {
@@ -15,7 +21,8 @@ function Login() {
             }
         })
         if(response.ok){
-            setLoginSuccess(true)
+            localStorage.setItem('isAuthenticated', 'true');
+            navigate('/Home')
         }
         if (!response.ok) {
             alert(await response.text())
@@ -24,9 +31,6 @@ function Login() {
 
     return (
         <div className="container">
-            {loginSuccess ? (
-                <Navbar />
-            ) : (
                 <div className="row justify-content-center">
                     <div className="col-md-6">
                         <div className="card mt-5 border-danger box">
@@ -56,7 +60,7 @@ function Login() {
                                     <br/>
                                     <button
                                         type="button"
-                                        className="btn btn-danger btn-block buttons" // Make the button span the width
+                                        className="btn btn-danger btn-block buttons"
                                         onClick={handleLogin}
                                     >
                                         Login

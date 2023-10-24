@@ -34,14 +34,14 @@ const login = asyncHandler(async (req,res) => {
     const user = await User.findOne({username})
     if (user && user.password === password){
         const token = generateToken(user.username,user.role)
-        res.header('Authorization', 'Bearer '+token);
+        res.header('Authorization',`Bearer${token}`)
         console.log(token)
         res.cookie('token', token, {
-            maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+            maxAge: 3600000,
             httpOnly: true,
         });
 
-        res.json({
+        res.status(200).json({
             username: user.username,
             role: user.role,
             token: token
@@ -58,9 +58,15 @@ const getLoggedInUser = asyncHandler( async (req,res) => {
     res.status(200).json(req.user)
 })
 
+const skipLogin = asyncHandler( async (req,res) => {
+    res.status(200)
+    console.log("helllllll")
+    return true;
+})
+
 const generateToken = (username,role) => {
     return jwt.sign({username,role}, process.env.JWT_SECRET, {
-        expiresIn: '30d',
+        expiresIn: 3600000,
     })
 }
 
@@ -68,4 +74,5 @@ module.exports = {
     register,
     login,
     getLoggedInUser,
+    skipLogin
 }
