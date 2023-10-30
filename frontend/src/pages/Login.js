@@ -7,11 +7,6 @@ function Login() {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
-    // const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
-    // if (isAuthenticated) {
-    //     navigate('/Home')
-    // }
-
     const handleLogin = async() => {
         const response = await fetch('/api/user/login', {
             method: 'POST',
@@ -21,8 +16,8 @@ function Login() {
             }
         })
         if(response.ok){
-            localStorage.setItem('isAuthenticated', 'true');
             navigate('/Home')
+            window.location.reload();
         }
         if (!response.ok) {
             alert(await response.text())

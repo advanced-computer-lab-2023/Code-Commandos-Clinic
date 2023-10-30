@@ -1,5 +1,6 @@
-import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
+import Cookies from 'js-cookie';
+
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import DoctorRegistrationRequests from "./pages/viewDoctorRequests";
@@ -26,13 +27,18 @@ import FilterPrescriptions from "./pages/FilterPrescriptions";
 import AddPrescription from "./pages/AddPrescription";
 import CreateAppointment from "./pages/CreateAppointment";
 import CreateDoctor from "./pages/CreateDoctor";
-import Navbar from "./components/Navbar";
 
 const App = () => {
+    const checkLogIn = () => {
+        const token = Cookies.get('token');
+        const isLoggedIn = !!token;
+        console.log(token)
+        return isLoggedIn;
+    }
   return (
     <div className="App">
       <BrowserRouter>
-          <Login />
+          {checkLogIn() ? <Home/> : <Login />}
        <div className="pages">
         <Routes>
             <Route path="/DoctorRegistrationRequests" element={<DoctorRegistrationRequests />}/>
@@ -59,9 +65,8 @@ const App = () => {
             <Route path="/AddPrescription"  element={<AddPrescription/>}/>
             <Route path="/CreateAppointment"  element={<CreateAppointment/>}/>
             <Route path="/CreateDoctor"  element={<CreateDoctor/>}/>
-            <Route path="/Login" element={<Login/>}/>
-            <Route path="/Home" element={<Home/>}/>
-
+            <Route path="/Login" element={checkLogIn() ? <Navigate to="/Home" replace /> : <Login/>}/>
+            <Route exact path="/Home" element={<Home/>}/>
         </Routes>
        </div>
       </BrowserRouter>
