@@ -1,5 +1,4 @@
 import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
-import Cookies from 'js-cookie';
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import DoctorRegistrationRequests from "./pages/viewDoctorRequests";
@@ -26,40 +25,10 @@ import FilterPrescriptions from "./pages/FilterPrescriptions";
 import AddPrescription from "./pages/AddPrescription";
 import CreateAppointment from "./pages/CreateAppointment";
 import CreateDoctor from "./pages/CreateDoctor";
-import {useState,useEffect} from "react";
 
 const App = () => {
-
-    // const [isLoggedIn, setIsLoggedIn] = useState(false);
-    // const [check, setCheck] = useState(null);
     const logged = window.localStorage.getItem("logged");
-    // useEffect(() => {
-    //     checkLogIn();
-    // }, []);
-    //     const checkLogIn = async ()=>{
-    //     try {
-    //         const response = await fetch('/api/user/checkLoggedIn',{
-    //             method: 'GET',
-    //             headers: {
-    //                 'Content-Type':'application/json',
-    //             },
-    //         });
-    //         if(response.ok){
-    //             console.log("frontend says logged in")
-    //             setIsLoggedIn(true);
-    //             setCheck(true)
-    //         }
-    //         else {
-    //             console.log("not logged in from frontend")
-    //             setIsLoggedIn(false);
-    //             setCheck(true)
-    //         }
-    //     }
-    //     catch (error){
-    //         setIsLoggedIn(false);
-    //         setCheck(true)
-    //     }
-    // }
+
 
   return (
     <div className="App">
