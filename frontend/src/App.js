@@ -1,6 +1,5 @@
 import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
 import Cookies from 'js-cookie';
-
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import DoctorRegistrationRequests from "./pages/viewDoctorRequests";
@@ -27,18 +26,45 @@ import FilterPrescriptions from "./pages/FilterPrescriptions";
 import AddPrescription from "./pages/AddPrescription";
 import CreateAppointment from "./pages/CreateAppointment";
 import CreateDoctor from "./pages/CreateDoctor";
+import {useState,useEffect} from "react";
 
 const App = () => {
-    const checkLogIn = () => {
-        const token = Cookies.get('token');
-        const isLoggedIn = !!token;
-        console.log(token)
-        return isLoggedIn;
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [check, setCheck] = useState(null);
+
+    useEffect(() => {
+        checkLogIn();
+    }, []);
+        const checkLogIn = async ()=>{
+        try {
+            const response = await fetch('/api/user/checkLoggedIn',{
+                method: 'GET',
+                headers: {
+                    'Content-Type':'application/json',
+                },
+            });
+            if(response.ok){
+                console.log("frontend says logged in")
+                setIsLoggedIn(true);
+                setCheck(true)
+            }
+            else {
+                console.log("not logged in from frontend")
+                setIsLoggedIn(false);
+                setCheck(true)
+            }
+        }
+        catch (error){
+            setIsLoggedIn(false);
+            setCheck(true)
+        }
     }
+
   return (
     <div className="App">
       <BrowserRouter>
-          {checkLogIn() ? <Home/> : <Login />}
+          {check && (isLoggedIn ? <Home/> : <Login />)}
        <div className="pages">
         <Routes>
             <Route path="/DoctorRegistrationRequests" element={<DoctorRegistrationRequests />}/>
@@ -65,7 +91,7 @@ const App = () => {
             <Route path="/AddPrescription"  element={<AddPrescription/>}/>
             <Route path="/CreateAppointment"  element={<CreateAppointment/>}/>
             <Route path="/CreateDoctor"  element={<CreateDoctor/>}/>
-            <Route path="/Login" element={checkLogIn() ? <Navigate to="/Home" replace /> : <Login/>}/>
+            <Route path="/Login" element={check && (isLoggedIn ? <Navigate to="/Home" replace /> : <Login/>)}/>
             <Route exact path="/Home" element={<Home/>}/>
         </Routes>
        </div>

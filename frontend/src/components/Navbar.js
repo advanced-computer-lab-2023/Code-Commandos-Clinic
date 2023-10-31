@@ -2,14 +2,41 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from '../images/logo.png';
 import '../css/navbar.css';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useCookies } from "react-cookie";
 
 
 const Navbar = () => {
+    const navigate = useNavigate();
+    const [cookies, removeCookie] = useCookies([]);
+
+    const handleLogout = async () =>{
+        console.log("in handle logout")
+
+        // const response = await fetch('/api/user/logout',{
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type':'application/json',
+        //     },
+        //     credentials: 'include',
+        // });
+        // if(!response.ok){
+        //     console.log("logout failed")
+        //     alert(await response.text())
+        // }
+        // else{
+        //     console.log("logout success")
+        //     navigate('/Login')
+        // }
+        removeCookie("token",{path:'/'});
+        navigate('/Login')
+    }
+
     return (
         <header>
             <nav className="navbar navbar-expand-md navbar-dark bg-light fixed-top">
                 <div className="container">
-                    <a className="navbar-brand col-4" href="#">
+                    <a className="navbar-brand col-4">
                         <img src={logo} class="logo" alt="Logo"/>
                     </a>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -114,7 +141,7 @@ const Navbar = () => {
 
                             <ul class="navbar-nav">
                                 <li>
-                                    <a href="" className="nav-link font">Log in</a>
+                                    <button onClick={handleLogout} className="buttonNav logout">Log out</button>
                                 </li>
                                 <li>
                                     <button className="buttonNav">Sign Up</button>

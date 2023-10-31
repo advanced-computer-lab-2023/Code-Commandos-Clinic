@@ -38,7 +38,8 @@ const login = asyncHandler(async (req,res) => {
         console.log(token)
         res.cookie('token', token, {
             maxAge: 3600000,
-            httpOnly: true,
+            httpOnly: false,
+            path: '/'
         });
 
         res.status(200).json({
@@ -54,14 +55,24 @@ const login = asyncHandler(async (req,res) => {
     }
 })
 
+const logout = asyncHandler(async (req, res) => {
+    console.log("inside logout method")
+    try {
+        res.cookie('token', '', {
+            maxAge: 0,
+            httpOnly: false,
+        });
+        const token = req.cookies.token
+        console.log("token from backend ",token)
+        res.status(200);
+    }
+    catch (error){
+        throw new Error(error)
+    }
+});
+
 const getLoggedInUser = asyncHandler( async (req,res) => {
     res.status(200).json(req.user)
-})
-
-const skipLogin = asyncHandler( async (req,res) => {
-    res.status(200)
-    console.log("helllllll")
-    return true;
 })
 
 const generateToken = (username,role) => {
@@ -70,9 +81,16 @@ const generateToken = (username,role) => {
     })
 }
 
+const skipLogin = asyncHandler( async (req,res) => {
+    res.status(200)
+    return true;
+})
+
+
 module.exports = {
     register,
     login,
     getLoggedInUser,
+    logout,
     skipLogin
 }

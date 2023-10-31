@@ -9,7 +9,7 @@
     display: flex;
     justify-content: flex-end;
 }
-.buttonNav {
+.buttonNav, .logout {
     background-color: #D21312;
     border-radius: 0.3rem;
     padding: 0.6em 1.3em;
@@ -17,8 +17,14 @@
     font-size: 1.1rem;
     transition-duration: 0.7s;
     border: 1px solid transparent;
+    margin-right:0.5rem ;
 }
 
+.logout{
+    background-color: white;
+    color: #D21312;
+    border: 1px solid red;
+}
 .font {
     color: black;
     font-size: 1rem;
