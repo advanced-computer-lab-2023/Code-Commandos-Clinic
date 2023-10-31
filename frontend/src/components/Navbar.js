@@ -12,23 +12,8 @@ const Navbar = () => {
 
     const handleLogout = async () =>{
         console.log("in handle logout")
-
-        // const response = await fetch('/api/user/logout',{
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type':'application/json',
-        //     },
-        //     credentials: 'include',
-        // });
-        // if(!response.ok){
-        //     console.log("logout failed")
-        //     alert(await response.text())
-        // }
-        // else{
-        //     console.log("logout success")
-        //     navigate('/Login')
-        // }
         removeCookie("token",{path:'/'});
+        window.localStorage.removeItem("logged");
         navigate('/Login')
     }
 

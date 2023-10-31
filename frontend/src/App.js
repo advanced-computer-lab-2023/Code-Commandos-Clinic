@@ -30,41 +30,41 @@ import {useState,useEffect} from "react";
 
 const App = () => {
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [check, setCheck] = useState(null);
-
-    useEffect(() => {
-        checkLogIn();
-    }, []);
-        const checkLogIn = async ()=>{
-        try {
-            const response = await fetch('/api/user/checkLoggedIn',{
-                method: 'GET',
-                headers: {
-                    'Content-Type':'application/json',
-                },
-            });
-            if(response.ok){
-                console.log("frontend says logged in")
-                setIsLoggedIn(true);
-                setCheck(true)
-            }
-            else {
-                console.log("not logged in from frontend")
-                setIsLoggedIn(false);
-                setCheck(true)
-            }
-        }
-        catch (error){
-            setIsLoggedIn(false);
-            setCheck(true)
-        }
-    }
+    // const [isLoggedIn, setIsLoggedIn] = useState(false);
+    // const [check, setCheck] = useState(null);
+    const logged = window.localStorage.getItem("logged");
+    // useEffect(() => {
+    //     checkLogIn();
+    // }, []);
+    //     const checkLogIn = async ()=>{
+    //     try {
+    //         const response = await fetch('/api/user/checkLoggedIn',{
+    //             method: 'GET',
+    //             headers: {
+    //                 'Content-Type':'application/json',
+    //             },
+    //         });
+    //         if(response.ok){
+    //             console.log("frontend says logged in")
+    //             setIsLoggedIn(true);
+    //             setCheck(true)
+    //         }
+    //         else {
+    //             console.log("not logged in from frontend")
+    //             setIsLoggedIn(false);
+    //             setCheck(true)
+    //         }
+    //     }
+    //     catch (error){
+    //         setIsLoggedIn(false);
+    //         setCheck(true)
+    //     }
+    // }
 
   return (
     <div className="App">
       <BrowserRouter>
-          {check && (isLoggedIn ? <Home/> : <Login />)}
+          {logged ? <Home/> : <Login />}
        <div className="pages">
         <Routes>
             <Route path="/DoctorRegistrationRequests" element={<DoctorRegistrationRequests />}/>
@@ -91,8 +91,8 @@ const App = () => {
             <Route path="/AddPrescription"  element={<AddPrescription/>}/>
             <Route path="/CreateAppointment"  element={<CreateAppointment/>}/>
             <Route path="/CreateDoctor"  element={<CreateDoctor/>}/>
-            <Route path="/Login" element={check && (isLoggedIn ? <Navigate to="/Home" replace /> : <Login/>)}/>
-            <Route exact path="/Home" element={<Home/>}/>
+            <Route path="/Login" element={logged ? <Navigate to="/Home" replace /> : <Login/>}/>
+            <Route path="/Home" element={<Home/>}/>
         </Routes>
        </div>
       </BrowserRouter>
