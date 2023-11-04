@@ -27,7 +27,6 @@ const protect = asyncHandler(async (req,res,next) => {
 const localVariables = asyncHandler(async (req, res, next) =>{
     req.app.locals = {
         OTP : null,
-        email: null,
         resetSession : false
     }
     next()

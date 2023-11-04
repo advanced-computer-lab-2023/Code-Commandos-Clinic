@@ -7,6 +7,8 @@ const Doctor = require("../model/Doctor");
 const Admin = require("../model/Admin");
 const otpGenerator = require('otp-generator');
 const nodemailer = require('nodemailer');
+const Mailgen =  require('mailgen');
+const dotenv = require("dotenv").config();
 
 const register = asyncHandler(async (req,res) => {
     const {username,password} = req.body
@@ -96,31 +98,38 @@ const generateOTP =  asyncHandler(async (req,res) => {
     req.app.locals.OTP = await otpGenerator.generate(6, { lowerCaseAlphabets: false, upperCaseAlphabets: false, specialChars: false})
     req.app.locals.email = email
 
-    const transporter = nodemailer.createTransport({
-        service: 'alll',
+    let nodeConfig = {
+        service: "gmail",
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false,
         auth: {
-            user: 'ebram@ntsal.com',
-            pass: '18094',
-        },
-    });
-    console.log(req.app.locals.OTP)
-    const mailOptions = {
-        from: 'no-reply@example.com',
-        to: email,
-        subject: 'Password Reset OTP',
-        text: `Your OTP for password reset is: ${req.app.locals.OTP}`,
-        replyTo: email,
-    };
-    console.log(mailOptions)
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            res.status(400)
-            throw new Error(error.message)
-        } else {
-            res.status(200).json({message: "Email sent successfully"})
-        }
-    });
+            user: process.env.APP_EMAIL,
+            pass: process.env.APP_PASSWORD,
 
+        }
+    }
+
+    let transporter = nodemailer.createTransport(nodeConfig);
+
+    let message = {
+        from : {
+            name: "Code Commandos",
+            address: process.env.ETHEREAL_EMAIL
+        },
+        to: email,
+        subject : "OTP Verification",
+        text: `Your OTP for verification is ${req.app.locals.OTP}`,
+    }
+
+    try {
+        const response = await transporter.sendMail(message)
+        res.status(200).json(message)
+    }
+    catch (error){
+        res.status(500)
+        throw new Error(error.message)
+    }
 
 })
 
@@ -137,15 +146,18 @@ const verifyOTP =  asyncHandler(async (req,res,next) => {
 })
 
 const resetPassword = asyncHandler(async (req,res) => {
-    const {newPassword} = req.body
-    const email = req.app.locals.email+""
-    const patient = await Patient.findOneAndUpdate({email},{password:newPassword})
-    const doctor = await Doctor.findOneAndUpdate({email},{password:newPassword})
-    const admin = await Admin.findOneAndUpdate({email},{password:newPassword})
+    const {username,newPassword} = req.body
+    const patient = await Patient.findOneAndUpdate({username},{password:newPassword})
+    const doctor = await Doctor.findOneAndUpdate({username},{password:newPassword})
+    const admin = await Admin.findOneAndUpdate({username},{password:newPassword})
+
     if (!patient && !doctor && !admin){
         throw new Error("No user found")
     }
-    req.app.locals.email = null;
+    else {
+        await User.findOneAndUpdate({username},{password:newPassword})
+    }
+    res.status(200).json({message: "Your password has been reset"})
 })
 
 module.exports = {
