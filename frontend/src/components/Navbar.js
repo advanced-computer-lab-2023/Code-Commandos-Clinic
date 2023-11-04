@@ -88,6 +88,9 @@ const Navbar = () => {
                                             <Link to="/ViewAndRemoveDoctors" className="dropdown-item">View And Remove Doctors</Link>
                                         </li>
                                         <li>
+                                            <Link to="/ViewMyWallet" className="dropdown-item">View My Wallet</Link>
+                                        </li>
+                                        <li>
                                             <Link to="/ViewPatientsOfDoctor" className="dropdown-item">Your Patients</Link>
                                         </li>
                                         <li>

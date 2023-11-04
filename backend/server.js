@@ -31,6 +31,7 @@ const healthPackagePatientRoutes = require('./route/HealthPackagePatientRoute');
 const prescriptionRoute = require('./route/PrescriptionRoute')
 const healthRecordRoutes = require('./route/HealthRecordRoute')
 const userRoutes= require('./route/UserRoute')
+const walletRoutes= require('./route/WalletRoute')
 
 server.use('/api/appointment',appointmentRoutes)
 server.use('/api/admin',adminRoutes)
@@ -42,6 +43,7 @@ server.use('/api/healthPackage', healthPackageRoutes)
 server.use('/api/healthPackagePatient', healthPackagePatientRoutes)
 server.use('/api/healthRecord',healthRecordRoutes)
 server.use('/api/prescription',prescriptionRoute)
+server.use('/api/wallet',walletRoutes)
 server.use('/api/user',userRoutes)
 
 

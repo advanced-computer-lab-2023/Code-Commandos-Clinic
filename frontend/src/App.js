@@ -24,6 +24,7 @@ import PrescriptionContainer from "./pages/PrescriptionContainer";
 import FilterPrescriptions from "./pages/FilterPrescriptions";
 import AddPrescription from "./pages/AddPrescription";
 import CreateAppointment from "./pages/CreateAppointment";
+import ViewMyWallet from "./pages/ViewMyWallet";
 import CreateDoctor from "./pages/CreateDoctor";
 
 const App = () => {
@@ -50,6 +51,7 @@ const App = () => {
             <Route path="/ShowAndRemoveAdmins" element={<ShowAndRemoveAdmins />}/>
             <Route path="/ViewAndRemoveDoctors" element={<ViewAndRemoveDoctors />}/>
             <Route path="/ViewPatientsOfDoctor" element={<ViewPatientsOfDoctor/>}/>
+            <Route path="/ViewMyWallet" element={<ViewMyWallet/>}/>
             <Route path="/FilterPatientsWithUpcomingAppointments" element={<FilterPatientsWithUpcomingAppointments/>}/>
             <Route path="/RegisterPatientWithDoctor" element={<RegisterPatientWithDoctor/>}/>
             <Route path="/RegisteredFamilyMembers" element={<RegisteredFamilyMembers/>}/>
