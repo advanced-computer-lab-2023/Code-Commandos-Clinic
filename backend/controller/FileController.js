@@ -2,7 +2,7 @@
 const SingleFile = require('../model/File');
 const MultipleFile = require('../model/MultipleFiles');
 
-const singleFileUpload = async (req, res) => {
+const singleFileUpload = async (req, res ,next) => {
   try{
       const file = new SingleFile({
           fileName: req.file.originalname,
