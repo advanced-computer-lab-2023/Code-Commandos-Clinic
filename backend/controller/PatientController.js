@@ -1,6 +1,7 @@
 const DoctorPatientModel = require('../model/DoctorPatient.js');
 const HealthRecord = require ('../model/HealthRecord.js');
 const PatientModel = require('../model/Patient')
+const WalletModel = require('../model/Wallet')
 const mongoose = require('mongoose')
 const asyncHandler = require('express-async-handler')
 
@@ -47,6 +48,7 @@ const getPatients = asyncHandler(async (req, res) => {
   
 })
 
+
 // get a single patient
 const getPatient = asyncHandler(async (req, res) => {
   const { id } = req.params
@@ -70,9 +72,11 @@ const getPatient = asyncHandler(async (req, res) => {
 // create a new patient
 const createPatient = asyncHandler(async (req, res) => {
   const patientBody = req.body
+  const {username} = req.body
   try {
     const patient = await PatientModel.create(patientBody)
-    res.status(200).json(patient)
+    const wallet = await WalletModel.create({ username, amount: 0 })
+    res.status(200).json({ patient, wallet });
   } catch (error) {
     res.status(400)
     throw new Error(error.message)

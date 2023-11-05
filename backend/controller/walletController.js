@@ -7,12 +7,13 @@ const WalletModel = require('../model/Wallet');
 const getAmount = asyncHandler(async (req, res) => {
   const { username } = req.params;
   try {
-    const wallet = await WalletModel.find({ username });
+    const wallet = await WalletModel.findOne({ username });
     if (!wallet) {
       res.status(400)
       throw new Error('Wallet not found')
     }
-    res.status(200).json(wallet)
+
+    res.status(200).json(wallet) 
   }
   catch (error) {
     res.status(400)
@@ -21,5 +22,5 @@ const getAmount = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
-  getAmount,
+  getAmount
 };

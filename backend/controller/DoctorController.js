@@ -6,6 +6,7 @@ const HealthPackageModel = require('../model/HealthPackage')
 const HealthPackagePatientModel = require('../model/HealthPackagePatient')
 const PatientModel = require('../model/Patient')
 const AppointmentModel = require('../model/Appointment')
+const WalletModel = require('../model/Wallet')
 
 const createDoctorPatients= asyncHandler( async(req,res) =>{
     const {patientUsername,doctorUsername} = req.body
@@ -75,9 +76,11 @@ const searchByNameAndOrSpeciality = asyncHandler( async (req,res) => {
 
 const createDoctor = asyncHandler(async (req,res) =>{
     const doctorBody = req.body
+    const {username} = req.body
     try {
         const doctor = await DoctorModel.create(doctorBody)
-        res.status(200).json(doctor)
+        const wallet = await WalletModel.create({ username, amount: 0 })
+        res.status(200).json({ doctor, wallet });
     }
     catch (error){
         res.status(400)
