@@ -1,9 +1,12 @@
 const express = require("express")
+const path = require('path');
 const server = express();
 const dotenv = require("dotenv").config();
 const connectDB = require("./configuration/Db");
 const {errorHandler} = require('./middleware/ErrorHandler')
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+
 
 const port = process.env.PORT
 
@@ -31,7 +34,8 @@ const healthPackagePatientRoutes = require('./route/HealthPackagePatientRoute');
 const prescriptionRoute = require('./route/PrescriptionRoute')
 const healthRecordRoutes = require('./route/HealthRecordRoute')
 const userRoutes= require('./route/UserRoute')
-const walletRoutes= require('./route/WalletRoute')
+const walletRoutes = require('./route/WalletRoute')
+const fileRoutes = require('./route/FileRoute')
 
 server.use('/api/appointment',appointmentRoutes)
 server.use('/api/admin',adminRoutes)
@@ -45,7 +49,9 @@ server.use('/api/healthRecord',healthRecordRoutes)
 server.use('/api/prescription',prescriptionRoute)
 server.use('/api/wallet',walletRoutes)
 server.use('/api/user',userRoutes)
-
+server.use('/api/file',fileRoutes.routes)
+server.use(bodyParser.json());
+server.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 server.use(errorHandler)
 
