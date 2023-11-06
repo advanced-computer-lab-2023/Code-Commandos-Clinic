@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import PatientInfo from "../components/PatientInfo";
 
 const ViewPatientsOfDoctor = () =>{
+    const [hello , sethello] = useState([])
     const [patients , setPatients] = useState([])
     const [selectedPatient,setSelectedPatient] = useState(null)
     const [searchQuery, setSearchQuery] = useState("");
