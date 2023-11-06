@@ -18,9 +18,13 @@ const singleFileSchema = new Schema({
     fileSize: {
         type: String,
         required: true
+    },
+    fileHash: {
+        type: String,
+        required: true
     }
-}, {timestamps: true});
+}, { timestamps: true });
 
 
- const file = mongoose.model('SingleFile', singleFileSchema);
- module.exports = file;
+const file = mongoose.model('SingleFile', singleFileSchema);
+module.exports = file;
