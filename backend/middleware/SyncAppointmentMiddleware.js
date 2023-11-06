@@ -1,6 +1,7 @@
 const Appointment = require("../model/Appointment")
 const asyncHandler = require('express-async-handler')
 
+
 const updateAppointmentsStatus = asyncHandler( async () => {
     try {
         const currentTime = new Date();
@@ -12,6 +13,7 @@ const updateAppointmentsStatus = asyncHandler( async () => {
             appointment.status = 'COMPLETED';
             await appointment.save();
         }
+
     }
     catch (error){
         throw new Error(error.message)
