@@ -40,8 +40,20 @@ const login = asyncHandler(async (req,res) => {
     const {username, password} = req.body
     const user = await User.findOne({username})
     if (user && user.password === password){
-        const token = generateToken(user.username,user.role)
-        res.header('Authorization',`Bearer${token}`)
+        var id
+        if(user.role == 'PATIENT'){
+            const patient = await Patient.findOne({username}).select('_id')
+            id = patient._id
+        }
+        else if(user.role == 'DOCTOR'){
+            const doctor = await Doctor.findOne({username}).select('_id')
+            id = doctor._id
+        }
+        else if(user.role == 'ADMIN'){
+            const admin = await Admin.findOne({username}).select('_id')
+            id = admin._id
+        }
+        const token = generateToken(user.username,user.role,id)
         console.log(token)
         res.cookie('token', token, {
             maxAge: 3600000,
@@ -82,8 +94,8 @@ const getLoggedInUser = asyncHandler( async (req,res) => {
     res.status(200).json(req.user)
 })
 
-const generateToken = (username,role) => {
-    return jwt.sign({username,role}, process.env.JWT_SECRET, {
+const generateToken = (username,role,id) => {
+    return jwt.sign({username,role,id}, process.env.JWT_SECRET, {
         expiresIn: 3600000,
     })
 }
@@ -141,8 +153,10 @@ const verifyOTP =  asyncHandler(async (req,res,next) => {
         req.app.locals.resetSession = true;
         next()
     }
-    else
+    else{
+        res.status(401)
         throw new Error("Invalid OTP")
+    }
 })
 
 const resetPassword = asyncHandler(async (req,res) => {

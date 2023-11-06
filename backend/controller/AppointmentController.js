@@ -165,11 +165,37 @@ const viewAvailableAppointmentsOfDoctor = asyncHandler(async (req,res) => {
     }
 })
 
+const reserveAppointment = asyncHandler(async (req,res) => {
+    const {id , familyMemberId} = req.body
+    try {
+        const appointment = await AppointmentModel.findById(id)
+        appointment.patient = req.user.id
+        if(familyMemberId){
+            appointment.familyMember = familyMemberId
+        }
+        appointment.status = 'RESERVED'
+        await appointment.save()
+        res.status(200).json(appointment)
+    }
+    catch (error){
+        res.status(400)
+        throw new Error(error.message)
+    }
+
+
+})
+
+
+
 module.exports = {
     getUpcomingPatientsOfDoctor,
     createAppointment,
     getAppointment,
     getAppointments,
     getAppointmentsByDateAndStatus,
-    viewAvailableAppointmentsOfDoctor
+    viewAvailableAppointmentsOfDoctor,
+    reserveAppointment,
+    upcomingPastAppointmentsOfDoctor,
+    upcomingPastAppointmentsOfPatient,
+    filterAppointmentsByDateOrStatus
 };

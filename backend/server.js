@@ -4,7 +4,7 @@ const dotenv = require("dotenv").config();
 const connectDB = require("./configuration/Db");
 const {errorHandler} = require('./middleware/ErrorHandler')
 const cookieParser = require('cookie-parser');
-
+const updateAppointmentStatus = require('./middleware/SyncAppointmentMiddleware')
 const port = process.env.PORT
 
 server.use(express.json());
@@ -31,6 +31,8 @@ const healthPackagePatientRoutes = require('./route/HealthPackagePatientRoute');
 const prescriptionRoute = require('./route/PrescriptionRoute')
 const healthRecordRoutes = require('./route/HealthRecordRoute')
 const userRoutes= require('./route/UserRoute')
+
+updateAppointmentStatus()
 
 server.use('/api/appointment',appointmentRoutes)
 server.use('/api/admin',adminRoutes)
