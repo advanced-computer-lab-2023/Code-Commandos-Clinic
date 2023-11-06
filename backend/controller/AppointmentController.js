@@ -209,6 +209,29 @@ const upcomingPastAppointmentsOfPatient = asyncHandler(async (req,res) => {
     }
 })
 
+const filterAppointmentsByDateOrStatus = asyncHandler(async (req,res) => {
+    const {date,inputStatus} = req.params
+    const query = {};
+    if (date) {
+        query.$or = [
+            {
+                startTime: { $lte: date },
+                endTime: { $gte: date },
+            }
+        ];
+    }
+    if (inputStatus) {
+        query.status = inputStatus;
+    }
+    try {
+        const appointments = await AppointmentModel.find(query);
+        res.status(200).json(appointments)
+    }
+    catch (error){
+        res.status(400)
+        throw new Error(error.message)
+    }
+})
 
 module.exports = {
     getUpcomingPatientsOfDoctor,
