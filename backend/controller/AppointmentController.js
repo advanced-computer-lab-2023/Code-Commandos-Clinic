@@ -185,6 +185,29 @@ const reserveAppointment = asyncHandler(async (req,res) => {
 
 })
 
+const upcomingPastAppointmentsOfDoctor = asyncHandler(async (req,res) => {
+    try {
+        const upcomingAppointments = await AppointmentModel.find({doctor:req.user.id,status:'RESERVED'})
+        const pastAppointments = await AppointmentModel.find({doctor:req.user.id,status:'COMPLETED'})
+        res.status(200).json({upcoming: upcomingAppointments, past: pastAppointments})
+    }
+    catch (error){
+        res.status(400)
+        throw new Error(error.message)
+    }
+})
+
+const upcomingPastAppointmentsOfPatient = asyncHandler(async (req,res) => {
+    try {
+        const upcomingAppointments = await AppointmentModel.find({patient:req.user.id,status:'RESERVED'})
+        const pastAppointments = await AppointmentModel.find({patient:req.user.id,status:'COMPLETED'})
+        res.status(200).json({upcoming: upcomingAppointments, past: pastAppointments})
+    }
+    catch (error){
+        res.status(400)
+        throw new Error(error.message)
+    }
+})
 
 
 module.exports = {
