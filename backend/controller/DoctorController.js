@@ -255,7 +255,7 @@ const filterBySpecialityAndDate = asyncHandler(async (req,res) => {
                 doctor: {$in: doctorsIds},
                 startTime: {$lte: date},
                 endTime: {$gte: date},
-                status: "PENDING"
+                status: "RESERVED"
             })
             doctorsWhoHaveAppointmentsOnTheDate = nonFreeAppointments.map((appointment) => appointment.doctor)
             freeDoctors = doctorsBySpeciality.filter((doctor) => !doctorsWhoHaveAppointmentsOnTheDate.some((appointmentDoctorId) => appointmentDoctorId.equals(doctor.id)))
@@ -279,7 +279,7 @@ const filterBySpecialityAndDate = asyncHandler(async (req,res) => {
             nonFreeAppointments = await AppointmentModel.find({
                 startTime: {$lte: date},
                 endTime: {$gte: date},
-                status: "PENDING"
+                status: "RESERVED"
             })
             doctorsWhoHaveAppointmentsOnTheDate = nonFreeAppointments.map((appointment) => appointment.doctor)
             freeDoctors = doctors.filter((doctor) =>

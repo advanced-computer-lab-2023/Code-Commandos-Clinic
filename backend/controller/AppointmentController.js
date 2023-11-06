@@ -6,18 +6,18 @@ const AppointmentModel = require('../model/Appointment');
 const createAppointment =asyncHandler( async (req,res) => {
     const appointmentBody = req.body
     let operlappingAppointment
+    const currentDateTime = new Date();
+    if(currentDateTime <= appointmentBody.startTime){
+        res.status(400)
+        throw new Error("The appointment has to start and end in the future")
+    }
+    const doctor = await DoctorModel.findOne({username:req.user.username}).select('_id')
+
     try {
         operlappingAppointment = await AppointmentModel.findOne({
             $and: [
                 {
-                    $or: [
-                        {
-                            doctor: appointmentBody.doctor
-                        },
-                        {
-                            patient: appointmentBody.patient
-                        }
-                    ]
+                    doctor: doctor._id,
                 },
                 {
                     $or: [
@@ -37,7 +37,7 @@ const createAppointment =asyncHandler( async (req,res) => {
                 }
                 ,
                 {
-                    status: "PENDING",
+                    status: "RESERVED",
                 }
             ]
         })
@@ -48,13 +48,11 @@ const createAppointment =asyncHandler( async (req,res) => {
     }
     if (operlappingAppointment){
         res.status(400)
-        throw new Error('The appointment overlapps with another appointment with the doctor/patient')
+        throw new Error('The appointment overlapps with another appointment')
     }
     try {
         const appointment = await AppointmentModel.create(appointmentBody)
-        const patient = await PatientModel.findById(appointment.patient)
         const doctor = await DoctorModel.findById(appointment.doctor)
-        appointment.patientName = patient.name
         appointment.doctorName = doctor.name
         await appointment.save()
         res.status(200).json(appointment)
@@ -73,7 +71,8 @@ const getUpcomingPatientsOfDoctor = asyncHandler (async (req,res)=>{
     let query = {
         $and: [
             { startTime : { $gt : currentDate } },
-            { doctor : doctorid }
+            { doctor : doctorid },
+            {status: "RESERVED"}
         ]
     }
     console.log(currentDate)
@@ -154,10 +153,23 @@ const getAppointments = asyncHandler( async (req , res) => {
     res.status(200).json(appointmentsAvailable)
 })
 
+const viewAvailableAppointmentsOfDoctor = asyncHandler(async (req,res) => {
+    const {doctorId} = req.params
+    try {
+        const availableAppointments = await AppointmentModel.find({doctor:doctorId,status:'FREE'})
+        res.status(200).json(availableAppointments)
+    }
+    catch (error){
+        res.status(400)
+        throw new Error(error.message)
+    }
+})
+
 module.exports = {
     getUpcomingPatientsOfDoctor,
     createAppointment,
     getAppointment,
     getAppointments,
-    getAppointmentsByDateAndStatus
+    getAppointmentsByDateAndStatus,
+    viewAvailableAppointmentsOfDoctor
 };
