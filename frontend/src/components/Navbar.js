@@ -4,6 +4,7 @@ import '../css/navbar.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from "react-cookie";
+import FilterAppointmentsByDateOrStatus from "../pages/FilterAppointmentsByDateOrStatus";
 
 
 const Navbar = () => {
@@ -80,6 +81,9 @@ const Navbar = () => {
                                         <li>
                                             <Link to="/PatientUpcomingPastAppointments" className="dropdown-item">Patient Upcoming And Past Appointments</Link>
                                         </li>
+                                        <li>
+                                            <Link to="/FilterAppointmentsByDateOrStatus" className="dropdown-item">Filter Appointments By Date Or Status</Link>
+                                        </li>
                                     </ul>
                                 </li>
                                 <li className="nav-item dropdown">
@@ -112,7 +116,7 @@ const Navbar = () => {
                                             <Link to="/RegisteredFamilyMembers" className="dropdown-item">Registered Family Members</Link>
                                         </li>
                                         <li>
-                                            <Link to="/FilteredAppointments" className="dropdown-item">Filtered Appointments</Link>
+                                            <Link to="/FilterAppointmentsByDateAndStatus" className="dropdown-item">Filter Appointments By Date & Status</Link>
                                         </li>
                                         <li>
                                             <Link to="/PrescriptionContainer" className="dropdown-item">Your Prescriptions</Link>

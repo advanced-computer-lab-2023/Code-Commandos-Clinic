@@ -56,11 +56,19 @@ const FilteredAppointments = () =>{
              <input
                 required={true}
                 type="radio"
-                id="PENDING"
+                id="RESERVED"
                 name="status" 
                 onChange={(e) => setStatus(e.target.id)} 
             />
-            <label>Pending</label><br />
+            <label>Reserved</label><br />
+            <input
+                required={true}
+                type="radio"
+                id="FREE"
+                name="status"
+                onChange={(e) => setStatus(e.target.id)}
+            />
+            <label>Free</label><br />
             <input 
               type="radio"
               id="COMPLETED"

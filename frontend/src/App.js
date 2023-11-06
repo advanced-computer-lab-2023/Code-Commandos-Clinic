@@ -18,7 +18,7 @@ import ViewPatientsOfDoctor from "./pages/ViewPatientsOfDoctor";
 import FilterPatientsWithUpcomingAppointments from "./pages/FilterPatientsWithUpcomingAppointments";
 import RegisterPatientWithDoctor from "./pages/RegisterPatientWithDoctor";
 import RegisteredFamilyMembers from "./pages/viewRegisteredFamilyMembers";
-import FilteredAppointments from "./pages/viewFilteredAppointments";
+import FilteredAppointments from "./pages/FilterAppointmentsByDateAndStatus";
 import AddFamilyMember from "./pages/addFamilyMember";
 import PrescriptionContainer from "./pages/PrescriptionContainer";
 import FilterPrescriptions from "./pages/FilterPrescriptions";
@@ -27,8 +27,9 @@ import CreateAppointment from "./pages/CreateAppointment";
 import CreateDoctor from "./pages/CreateDoctor";
 import ViewAvailableAppointmentsOfDoctor from "./pages/ViewAvailableAppointmentsOfDoctor";
 import DoctorUpcomingPastAppointments from "./pages/DoctorUpcomingPastAppointments";
-import PatientAppointments from "./pages/PatientUpcomingPastAppointments";
 import PatientUpcomingPastAppointments from "./pages/PatientUpcomingPastAppointments";
+import FilterAppointmentsByDateAndStatus from "./pages/FilterAppointmentsByDateAndStatus";
+import FilterAppointmentsByDateOrStatus from "./pages/FilterAppointmentsByDateOrStatus";
 
 const App = () => {
     const logged = window.localStorage.getItem("logged");
@@ -57,7 +58,7 @@ const App = () => {
             <Route path="/FilterPatientsWithUpcomingAppointments" element={<FilterPatientsWithUpcomingAppointments/>}/>
             <Route path="/RegisterPatientWithDoctor" element={<RegisterPatientWithDoctor/>}/>
             <Route path="/RegisteredFamilyMembers" element={<RegisteredFamilyMembers/>}/>
-            <Route path="/FilteredAppointments" element={<FilteredAppointments/>}/>
+            <Route path="/FilterAppointmentsByDateAndStatus" element={<FilterAppointmentsByDateAndStatus/>}/>
             <Route path='/AddFamilyMember' element={<AddFamilyMember/>}/>
             <Route path="/PrescriptionContainer" element={<PrescriptionContainer/>} />
             <Route path="/FilterPrescriptions"  element={<FilterPrescriptions/>}/>
@@ -67,6 +68,7 @@ const App = () => {
             <Route path="/ViewAvailableAppointmentsOfDoctor"  element={<ViewAvailableAppointmentsOfDoctor/>}/>
             <Route path="/DoctorUpcomingPastAppointments"  element={<DoctorUpcomingPastAppointments/>}/>
             <Route path="/PatientUpcomingPastAppointments"  element={<PatientUpcomingPastAppointments/>}/>
+            <Route path="/FilterAppointmentsByDateOrStatus"  element={<FilterAppointmentsByDateOrStatus/>}/>
 
             <Route path="/Login" element={logged ? <Navigate to="/Home" replace /> : <Login/>}/>
             <Route path="/Home" element={<Home/>}/>

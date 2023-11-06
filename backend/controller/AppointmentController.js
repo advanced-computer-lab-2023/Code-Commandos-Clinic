@@ -217,18 +217,25 @@ const upcomingPastAppointmentsOfPatient = asyncHandler(async (req,res) => {
 })
 
 const filterAppointmentsByDateOrStatus = asyncHandler(async (req,res) => {
-    const {date,inputStatus} = req.params
-    const query = {};
-    if (date) {
-        query.$or = [
-            {
-                startTime: { $lte: date },
-                endTime: { $gte: date },
-            }
-        ];
+    const {date,status} = req.params
+    var query
+    const _appointmentDate = new Date(date)
+    const _appointmentDateEnd = new Date(_appointmentDate)
+    _appointmentDateEnd.setHours(23)
+    _appointmentDateEnd.setMinutes(59)
+    if (date != "none" && status != "none") {
+        query = {
+            $or: [
+                {startTime:{$gte:_appointmentDate,$lte:_appointmentDateEnd}},
+                {status: status}
+            ]
+        }
     }
-    if (inputStatus) {
-        query.status = inputStatus;
+    else if (date != "none") {
+        query = {startTime:{$gte:_appointmentDate,$lte:_appointmentDateEnd}}
+    }
+    else if (status != "none") {
+        query = {status : status};
     }
     try {
         const appointments = await AppointmentModel.find(query);
