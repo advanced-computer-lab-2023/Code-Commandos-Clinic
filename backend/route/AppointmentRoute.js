@@ -24,8 +24,8 @@ router.route('/getAppointmentsByDateAndStatus/:appointmentDate/:status').get(get
 router.route('/getAppointments').get(getAppointments)
 router.get('/viewAvailableAppointmentsOfDoctor/:doctorId',protect,checkPatientRole,viewAvailableAppointmentsOfDoctor)
 router.get('/reserveAppointment',reserveAppointment)
-router.get('/upcomingPastAppointmentsOfDoctor',upcomingPastAppointmentsOfDoctor)
-router.get('/upcomingPastAppointmentsOfPatient',upcomingPastAppointmentsOfPatient)
+router.get('/upcomingPastAppointmentsOfDoctor',protect,checkDoctorRole,upcomingPastAppointmentsOfDoctor)
+router.get('/upcomingPastAppointmentsOfPatient',protect,checkPatientRole,upcomingPastAppointmentsOfPatient)
 router.get('/filterAppointmentsByDateOrStatus',filterAppointmentsByDateOrStatus)
 
 module.exports = router
