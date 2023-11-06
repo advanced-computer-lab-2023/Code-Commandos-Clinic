@@ -12,5 +12,6 @@ const {protect} = require("../middleware/AuthenticationHandler");
 router.post('/login',login)
 router.post('/logout',logout)
 router.get('/checkLoggedIn',protect,skipLogin)
+router.post('/register',register)
 
 module.exports = router

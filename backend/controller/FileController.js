@@ -58,14 +58,13 @@ const deleteAllSingleFiles = async (req, res) => {
         const files = await SingleFile.find();
         files.forEach(async file => {
             const filePath = file.filePath;
-            await file.deleteOne();
             fs.unlink(filePath, (err) => {
                 if (err) {
                     console.error(err);
                     return res.status(500).send(err.message);
-                }
-                res.status(200).send('hihihi deleted successfully');
+                }  
             });
+            await file.deleteOne(); 
         });
         res.status(200).send('All single files deleted successfully');
     } catch (error) {

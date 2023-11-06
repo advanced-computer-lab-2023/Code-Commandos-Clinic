@@ -27,6 +27,7 @@ import CreateAppointment from "./pages/CreateAppointment";
 import ViewMyWallet from "./pages/ViewMyWallet";
 import CreateDoctor from "./pages/CreateDoctor";
 import UploadDocument from "./pages/UploadDocument";
+import RemoveDocument from './pages/RemoveDocument';
 
 const App = () => {
     const logged = window.localStorage.getItem("logged");
@@ -54,6 +55,7 @@ const App = () => {
             <Route path="/ViewPatientsOfDoctor" element={<ViewPatientsOfDoctor/>}/>
             <Route path="/ViewMyWallet" element={<ViewMyWallet/>}/>
             <Route path="/UploadDocument" element={<UploadDocument/>}/>
+            <Route path="/RemoveDocument" element={<RemoveDocument/>}/>
             <Route path="/FilterPatientsWithUpcomingAppointments" element={<FilterPatientsWithUpcomingAppointments/>}/>
             <Route path="/RegisterPatientWithDoctor" element={<RegisterPatientWithDoctor/>}/>
             <Route path="/RegisteredFamilyMembers" element={<RegisteredFamilyMembers/>}/>
