@@ -162,6 +162,8 @@ const viewAvailableAppointmentsOfDoctor = asyncHandler(async (req,res) => {
     const {doctorId} = req.params
     try {
         const availableAppointments = await AppointmentModel.find({doctor:doctorId,status:'FREE'})
+        console.log(availableAppointments)
+        console.log(doctorId)
         res.status(200).json(availableAppointments)
     }
     catch (error){

@@ -71,6 +71,9 @@ const Navbar = () => {
                                         <li>
                                             <Link to="/AddAdmin" className="dropdown-item">Add Admin</Link>
                                         </li>
+                                        <li>
+                                            <Link to="/ViewAvailableAppointmentsOfDoctor" className="dropdown-item">View Available Appointments</Link>
+                                        </li>
                                     </ul>
                                 </li>
                                 <li className="nav-item dropdown">

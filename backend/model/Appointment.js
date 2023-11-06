@@ -20,6 +20,9 @@ const AppointmentSchema = mongoose.Schema({
     patientName: {
         type: String,
     },
+    familyMemberName: {
+        type: String
+    },
     startTime: {
         type: Date,
         required: true,
