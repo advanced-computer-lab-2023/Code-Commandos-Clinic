@@ -4,12 +4,10 @@ const AppointmentSchema = mongoose.Schema({
     patient: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Patient',
-        required: true
     },
     familyMember:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'FamilyMember',
-        required: true,
     },
     doctor: {
         type: mongoose.Schema.Types.ObjectId,
@@ -33,7 +31,7 @@ const AppointmentSchema = mongoose.Schema({
     status: {
         type: String,
         enum: ['RESERVED', 'COMPLETED', 'CANCELLED','FREE'],
-        default: 'RESERVED'
+        default: 'FREE'
     }
 },{ timestamps: true })
 

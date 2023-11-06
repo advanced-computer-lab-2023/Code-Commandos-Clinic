@@ -15,8 +15,9 @@ const {
 
 } = require('../controller/AppointmentController')
 const {protect} = require("../middleware/AuthenticationHandler");
+const {checkDoctorRole} = require("../middleware/AccessHandler");
 
-router.route('/createAppointment').post(createAppointment)
+router.post('/createAppointment',protect,checkDoctorRole,createAppointment)
 router.get('/getUpcomingPatientsOfDoctor/:doctorid',getUpcomingPatientsOfDoctor)
 router.get('/getAppointment/:patientid/:doctorid',getAppointment)
 router.route('/getAppointmentsByDateAndStatus/:appointmentDate/:status').get(getAppointmentsByDateAndStatus)

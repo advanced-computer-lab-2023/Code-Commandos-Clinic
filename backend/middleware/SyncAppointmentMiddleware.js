@@ -1,4 +1,4 @@
-import Appointment from "../model/Appointment";
+const Appointment = require("../model/Appointment")
 const asyncHandler = require('express-async-handler')
 
 const updateAppointmentsStatus = asyncHandler( async () => {

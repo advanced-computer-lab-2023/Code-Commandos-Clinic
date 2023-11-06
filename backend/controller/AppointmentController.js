@@ -7,17 +7,24 @@ const createAppointment =asyncHandler( async (req,res) => {
     const appointmentBody = req.body
     let operlappingAppointment
     const currentDateTime = new Date();
-    if(currentDateTime <= appointmentBody.startTime){
+    console.log(currentDateTime)
+    const convertedStartTime = new Date(appointmentBody.startTime)
+    console.log(convertedStartTime)
+    if(currentDateTime >= convertedStartTime){
         res.status(400)
         throw new Error("The appointment has to start and end in the future")
     }
-    const doctor = await DoctorModel.findOne({username:req.user.username}).select('_id')
+
+    if(appointmentBody.startTime >= appointmentBody.endTime){
+        res.status(400)
+        throw new Error("Start time has to be greater than end time")
+    }
 
     try {
         operlappingAppointment = await AppointmentModel.findOne({
             $and: [
                 {
-                    doctor: doctor._id,
+                    doctor: req.user.id,
                 },
                 {
                     $or: [
@@ -35,10 +42,7 @@ const createAppointment =asyncHandler( async (req,res) => {
                         },
                     ]
                 }
-                ,
-                {
-                    status: "RESERVED",
-                }
+
             ]
         })
     }
@@ -51,6 +55,7 @@ const createAppointment =asyncHandler( async (req,res) => {
         throw new Error('The appointment overlapps with another appointment')
     }
     try {
+        appointmentBody.doctor = req.user.id
         const appointment = await AppointmentModel.create(appointmentBody)
         const doctor = await DoctorModel.findById(appointment.doctor)
         appointment.doctorName = doctor.name
