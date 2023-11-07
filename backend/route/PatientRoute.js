@@ -12,7 +12,8 @@ const {
     getInfoHealthPatient,
     searchByName
 } = require('../controller/PatientController')
-
+const {protect} = require("../middleware/AuthenticationHandler");
+const {checkDoctorRole} = require("../middleware/AccessHandler");
 
 // GET all patients
 router.get('/getPatients', getPatients)
@@ -29,7 +30,7 @@ router.delete('/deletePatient/:id', deletePatient)
 // update or PATCH a patient
 router.patch('/updatePatient/:id', updatePatient)
 
-router.get('/getPatientsOfADoctor/:doctorId',getPatientsOfADoctor);
-router.get('/getInfoHealthPatient/:id',getInfoHealthPatient);
-router.get('/searchByname/:name/:doctorId',searchByName)
+router.get('/getPatientsOfADoctor',protect,checkDoctorRole,getPatientsOfADoctor);
+router.get('/getInfoHealthPatient/:id',protect,checkDoctorRole,getInfoHealthPatient);
+router.get('/searchByname/:name',protect,checkDoctorRole,searchByName)
 module.exports = router

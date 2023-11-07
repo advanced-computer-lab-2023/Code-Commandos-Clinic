@@ -5,7 +5,7 @@ const FilterPatientsWithUpcomingAppointments = () => {
 
     useEffect(() => {
         const fetchUpcomingPatients = async () => {
-            const response = await fetch('api/appointment/getUpcomingPatientsOfDoctor/651ef3b26c21aee2d43e6b9b')
+            const response = await fetch('api/appointment/getUpcomingPatientsOfDoctor')
             const json = await response.json()
             if(response.ok){
                 setResults(json)

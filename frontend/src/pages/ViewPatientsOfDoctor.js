@@ -8,7 +8,7 @@ const ViewPatientsOfDoctor = () =>{
     const [searchQuery, setSearchQuery] = useState("");
     useEffect(() => {
         const fetchPatients = async () =>{
-            const response = await fetch('api/patient/getPatientsOfADoctor/651ef3b26c21aee2d43e6b9b')
+            const response = await fetch('api/patient/getPatientsOfADoctor')
             if(response.ok){
                 const json = await response.json()
                 console.log("patients are ",json)
@@ -29,7 +29,6 @@ const ViewPatientsOfDoctor = () =>{
         else {
             url += `/${searchQuery}`
         }
-        url+='/651ef3b26c21aee2d43e6b9b'
         try {
             const response = await fetch(url, {
                 method: 'GET',
