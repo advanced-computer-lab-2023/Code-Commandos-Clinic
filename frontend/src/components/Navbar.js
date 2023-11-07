@@ -85,6 +85,9 @@ const Navbar = () => {
                                             <Link to="/ShowAndRemoveAdmins" className="dropdown-item">View And Remove Admins</Link>
                                         </li>
                                         <li>
+                                            <Link to="/ViewpatientHealthRecord" className="dropdown-item">View Health Record</Link>
+                                        </li>
+                                        <li>
                                             <Link to="/ViewAndRemoveDoctors" className="dropdown-item">View And Remove Doctors</Link>
                                         </li>
                                         <li>
