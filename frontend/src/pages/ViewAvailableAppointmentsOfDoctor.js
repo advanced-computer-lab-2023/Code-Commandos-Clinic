@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AppointmentsDetails from "../components/AppointmentsDetails";
+import axios from "axios";
 
 const ViewAvailableAppointmentsOfDoctor = () => {
     const [doctorId, setDoctorId] = useState(null);
@@ -7,32 +8,37 @@ const ViewAvailableAppointmentsOfDoctor = () => {
     const [appointments,setAppointments] = useState([])
 
     useEffect(() => {
-        fetch('/api/doctor/getPatientDoctors')
-            .then((response) => response.json())
-            .then((data) => setDoctors(data));
+        fetchDoctors()
     }, []);
 
     const handleDoctorChange = (event) => {
         setDoctorId(event.target.value);
     };
 
-    const handleSubmit = async () => {
+    const fetchDoctors = async () =>{
+        const response = await fetch('/api/doctor/getPatientDoctors')
+        if(response.ok){
+            const result = await response.json()
+            setDoctors(result)
+        }
+        else {
+            alert(await response.text())
+        }
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log("in handle submit")
         try{
-            console.log(doctorId)
-            const response = await fetch('api/appointment/viewAvailableAppointmentsOfDoctor/'+doctorId, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-            if(response.ok){
-                const result = await response.json()
+            const response = await axios.get('api/appointment/viewAvailableAppointmentsOfDoctor/'+doctorId)
+            if(response.status === 200){
+                const result = response.data
+                console.log(result)
+                console.log(doctorId)
                 setAppointments(result)
-                console.log(appointments)
             }
-            else if(!response.ok) {
-                const errorMessage = await response.text();
-                alert(errorMessage)
+            else {
+                alert(response.data)
             }
         }
         catch (error){
@@ -41,9 +47,9 @@ const ViewAvailableAppointmentsOfDoctor = () => {
     };
 
     return (
-        <div>
-            <h2>Select the doctor with whom you are registered</h2>
-            <form onSubmit={handleSubmit}>
+        <div className="container">
+            <h2>The available appointments of a doctor</h2>
+            <form>
                 <div className="form-group">
                     <label htmlFor="doctor">Select Doctor</label>
                     <select
@@ -53,7 +59,7 @@ const ViewAvailableAppointmentsOfDoctor = () => {
                         onChange={(e) => {
                             setDoctorId(e.target.value)
                         }}
-                        className="form-control"
+                        className="form-control input-danger"
                         required
                     >
                         <option value="">Select a doctor</option>
@@ -64,9 +70,12 @@ const ViewAvailableAppointmentsOfDoctor = () => {
                         ))}
                     </select>
                 </div>
-                <button type="submit" className="btn btn-primary">
+                <br/>
+                <button type="button" className="btn btn-primary" onClick={handleSubmit}>
                     View
                 </button>
+                <br/>
+                <br/>
             </form>
             <div>
                 {appointments && appointments.map((app) => (

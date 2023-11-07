@@ -2,7 +2,7 @@ import React from 'react';
 
 const AppointmentsDetails = ({ filteredAppointment }) => {
     return (
-        <div className="card">
+        <div className="card box">
             <div className="card-body">
                 <p className="card-text">Doctor: {filteredAppointment.doctor}</p>
                 <p className="card-text">Doctor Name: {filteredAppointment.doctorName}</p>

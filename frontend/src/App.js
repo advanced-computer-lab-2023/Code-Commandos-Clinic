@@ -18,7 +18,6 @@ import ViewPatientsOfDoctor from "./pages/ViewPatientsOfDoctor";
 import FilterPatientsWithUpcomingAppointments from "./pages/FilterPatientsWithUpcomingAppointments";
 import RegisterPatientWithDoctor from "./pages/RegisterPatientWithDoctor";
 import RegisteredFamilyMembers from "./pages/viewRegisteredFamilyMembers";
-import FilteredAppointments from "./pages/FilterAppointmentsByDateAndStatus";
 import AddFamilyMember from "./pages/addFamilyMember";
 import PrescriptionContainer from "./pages/PrescriptionContainer";
 import FilterPrescriptions from "./pages/FilterPrescriptions";
