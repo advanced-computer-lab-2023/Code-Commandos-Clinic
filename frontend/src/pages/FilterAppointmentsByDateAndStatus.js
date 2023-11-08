@@ -98,7 +98,7 @@ const FilteredAppointments = () =>{
                         </button>
                     ))}
             </div>
-            {selectedAppointment && <AppointmentsDetails key={selectedAppointment._id} filteredAppointment={selectedAppointment} />}
+            {selectedAppointment && <AppointmentsDetails key={selectedAppointment._id} filteredAppointment={selectedAppointment} reserve={false}/>}
         </div>
     )
 }

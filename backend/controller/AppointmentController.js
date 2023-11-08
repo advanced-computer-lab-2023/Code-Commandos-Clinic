@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler')
 const DoctorModel = require("../model/Doctor");
 const PatientModel = require('../model/Patient');
 const AppointmentModel = require('../model/Appointment');
+const FamilyMember = require("../model/FamilyMember");
 
 const createAppointment =asyncHandler( async (req,res) => {
     const appointmentBody = req.body
@@ -181,6 +182,8 @@ const reserveAppointment = asyncHandler(async (req,res) => {
         appointment.patient = req.user.id
         if(familyMemberId){
             appointment.familyMember = familyMemberId
+            const member = await FamilyMember.findById(familyMemberId)
+            appointment.familyMemberName = member.name
         }
         appointment.status = 'RESERVED'
         await appointment.save()

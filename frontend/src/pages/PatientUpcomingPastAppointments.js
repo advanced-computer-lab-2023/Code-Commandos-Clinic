@@ -33,18 +33,20 @@ const PatientAppointments = () => {
     }
 
     return (
-        <div>
+        <div className="container">
             <h2>Upcoming Appointments</h2>
+            <br/>
             <div>
                 {upcomingAppointments && upcomingAppointments.map((appointment) => (
-                    <AppointmentsDetails key={appointment._id} filteredAppointment={appointment} />
+                    <AppointmentsDetails key={appointment._id} filteredAppointment={appointment} reserve={false} />
                 ))}
             </div>
-
+            <br/>
             <h2>Past Appointments</h2>
+            <br/>
             <div>
                 {pastAppointments && pastAppointments.map((appointment) => (
-                    <AppointmentsDetails key={appointment._id} filteredAppointment={appointment} />
+                    <AppointmentsDetails key={appointment._id} filteredAppointment={appointment} reserve={false} />
                 ))}
             </div>
         </div>

@@ -29,6 +29,7 @@ import DoctorUpcomingPastAppointments from "./pages/DoctorUpcomingPastAppointmen
 import PatientUpcomingPastAppointments from "./pages/PatientUpcomingPastAppointments";
 import FilterAppointmentsByDateAndStatus from "./pages/FilterAppointmentsByDateAndStatus";
 import FilterAppointmentsByDateOrStatus from "./pages/FilterAppointmentsByDateOrStatus";
+import ReserveAppointment from "./components/ReserveAppointment";
 
 const App = () => {
     const logged = window.localStorage.getItem("logged");
@@ -68,6 +69,7 @@ const App = () => {
             <Route path="/DoctorUpcomingPastAppointments"  element={<DoctorUpcomingPastAppointments/>}/>
             <Route path="/PatientUpcomingPastAppointments"  element={<PatientUpcomingPastAppointments/>}/>
             <Route path="/FilterAppointmentsByDateOrStatus"  element={<FilterAppointmentsByDateOrStatus/>}/>
+            <Route path="/ReserveAppointment/:id"  element={<ReserveAppointment/>}/>
 
             <Route path="/Login" element={logged ? <Navigate to="/Home" replace /> : <Login/>}/>
             <Route path="/Home" element={<Home/>}/>

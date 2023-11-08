@@ -11,10 +11,6 @@ const ViewAvailableAppointmentsOfDoctor = () => {
         fetchDoctors()
     }, []);
 
-    const handleDoctorChange = (event) => {
-        setDoctorId(event.target.value);
-    };
-
     const fetchDoctors = async () =>{
         const response = await fetch('/api/doctor/getPatientDoctors')
         if(response.ok){
@@ -77,9 +73,10 @@ const ViewAvailableAppointmentsOfDoctor = () => {
                 <br/>
                 <br/>
             </form>
+
             <div>
                 {appointments && appointments.map((app) => (
-                    <AppointmentsDetails filteredAppointment={app}/>
+                    <AppointmentsDetails filteredAppointment={app} reserve={true} />
                 ))}
             </div>
         </div>

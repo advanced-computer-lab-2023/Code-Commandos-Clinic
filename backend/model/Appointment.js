@@ -21,7 +21,8 @@ const AppointmentSchema = mongoose.Schema({
         type: String,
     },
     familyMemberName: {
-        type: String
+        type: String,
+        default: "NONE"
     },
     startTime: {
         type: Date,
