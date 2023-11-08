@@ -2,14 +2,15 @@ const express = require("express");
 const router = express.Router();
 const asyncHandler = require('express-async-handler');
 const FamilyMember = require("../model/FamilyMember");
+const HealthPackage = require("../model/HealthPackage");
 
 //task 18 and 22
 const addFamilyMember = asyncHandler(async(req,res) => {
     const memberBody = req.body
       try{
-        const {patientId}= req.params
+        const {id}= req.user
         const newFamilyMember = await FamilyMember.create(memberBody)
-        newFamilyMember.patient=patientId
+        newFamilyMember.patient=id
         await newFamilyMember.save()
         res.status(200).json(newFamilyMember)
       }
@@ -21,8 +22,8 @@ const addFamilyMember = asyncHandler(async(req,res) => {
 
 
 const getFamilyMembers =  asyncHandler(async(req,res) => {
-    const {patientId}= req.params
-    const familyMembers = await FamilyMember.find({patient:patientId})
+    const {id}= req.user
+    const familyMembers = await FamilyMember.find({patient:id})
 
     if(familyMembers.length == 0){
         res.status(404)
@@ -32,7 +33,24 @@ const getFamilyMembers =  asyncHandler(async(req,res) => {
     console.log(familyMembers)
 })
 
+const getSubscribedPackagesForFamilyMembers =  asyncHandler(async(req,res) => {
+  const {id}= req.user
+  const familyMembers = await FamilyMember.find({patient:id})
+  if(familyMembers.length == 0){
+      res.status(404)
+      throw new Error('No registered family members')
+  }
+  for(const familyMember in familyMembers){
+    if(familyMember.healthPackage){
+      const healthPackage = await HealthPackage.findOne({_id:familyMember.healthPackage.healthPackageID})
+      familyMember.healthPackage.healthPackageID = healthPackage
+    }
+  }
+  res.status(200).json(familyMembers)
+})
+
 module.exports={
     addFamilyMember,
-    getFamilyMembers
+    getFamilyMembers,
+    getSubscribedPackagesForFamilyMembers
 }

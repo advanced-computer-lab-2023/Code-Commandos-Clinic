@@ -51,7 +51,7 @@ const getPackage = asyncHandler(async(req,res) => {
 //get all packages
 const getPackages = asyncHandler(async(req,res) => {
   try{
-    const HealthPackage = await HealthPackageModel.find({}).sort({createdAt: -1})
+    const HealthPackage = await HealthPackageModel.find({}).sort({yearlySubscription: 1})
     res.status(200).json(HealthPackage)
   }
   catch (error){

@@ -12,7 +12,7 @@ const FamilyMemberForm = () => {
 
     const FamilyMember = { name: name, nationalId: nationalId, age: age, gender: gender, relation: relation}
     
-    const response = await fetch('/api/familyMember/addFamilyMember/651f050ab25af493ab27db83', {
+    const response = await fetch('/api/familyMember/addFamilyMember/', {
       method: 'POST',
       body: JSON.stringify(FamilyMember),
       headers: {

@@ -6,7 +6,7 @@ const RegisteredFamilyMembers = () =>{
 
     useEffect(() => {
         const fetchRegisteredFamilyMembers = async () => {
-            const response = await fetch('api/familyMember/getFamilyMembers/651f050ab25af493ab27db83')
+            const response = await fetch('api/familyMember/getFamilyMembers/')
             const json = await response.json()
 
             if(response.ok){
