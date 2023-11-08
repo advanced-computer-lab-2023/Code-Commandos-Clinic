@@ -4,12 +4,12 @@ import DoctorSessionDetails from "../components/DoctorSessionDetails";
 const ViewDoctorsWithSessionPrice = ()=> {
     const [doctors, setDoctors] = useState(null)
     const [healthPackage, setHealthPackage] = useState(null)
-    const patientID = "6521a435613bfae4cdcc4347"
+    //const patientID = "6521a435613bfae4cdcc4347"
 
     useEffect( () => {
         const fetchDoctors = async () => {
             let url = '/api/doctor/getSessionPrice/';
-            url += patientID;
+            //url += patientID;
             const response = await fetch(url, {
                 method: 'GET',
                 headers: {
@@ -25,7 +25,7 @@ const ViewDoctorsWithSessionPrice = ()=> {
             }
 
             url = '/api/healthPackagePatient/getSubscribedPackage/'
-            url += patientID;
+            //url += patientID;
             const response2 = await fetch(url, {
                 method: 'GET',
                 headers: {

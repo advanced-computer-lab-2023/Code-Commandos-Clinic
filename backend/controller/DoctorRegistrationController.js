@@ -30,7 +30,6 @@ const getDoctorRequests = asyncHandler(async (req, res) => {
 })
 
 
-
 module.exports = {
     doctorRegistrationRequest,
     getDoctorRequests,

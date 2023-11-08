@@ -18,6 +18,7 @@ const Login = () => {
         if(response.ok){
             window.localStorage.setItem("logged",true)
             navigate('/Home')
+            window.location.reload()
         }
         if (!response.ok) {
             alert(await response.text())

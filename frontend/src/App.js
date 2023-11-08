@@ -60,8 +60,8 @@ const App = () => {
             <Route path="/AddPrescription"  element={<AddPrescription/>}/>
             <Route path="/CreateAppointment"  element={<CreateAppointment/>}/>
             <Route path="/CreateDoctor"  element={<CreateDoctor/>}/>
-            <Route path="/Login" element={logged ? <Navigate to="/Home" replace /> : <Login/>}/>
-            <Route path="/Home" element={<Home/>}/>
+            <Route path="/Login" element={logged ? <Navigate to="/Home" replace /> : <Navigate to="/Login" replace /> }/>
+            {/* <Route path="/Home" element={<Home/>}/> */}
         </Routes>
        </div>
       </BrowserRouter>

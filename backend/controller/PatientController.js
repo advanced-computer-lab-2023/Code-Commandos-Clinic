@@ -1,6 +1,7 @@
 const DoctorPatientModel = require('../model/DoctorPatient.js');
 const HealthRecord = require ('../model/HealthRecord.js');
 const PatientModel = require('../model/Patient')
+const UserModel = require('../model/User')
 const mongoose = require('mongoose')
 const asyncHandler = require('express-async-handler')
 
@@ -72,6 +73,7 @@ const createPatient = asyncHandler(async (req, res) => {
   const patientBody = req.body
   try {
     const patient = await PatientModel.create(patientBody)
+    const user = await UserModel.create({username: patientBody.username, password: patientBody.password, role:"PATIENT"})
     res.status(200).json(patient)
   } catch (error) {
     res.status(400)

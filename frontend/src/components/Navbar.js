@@ -15,6 +15,7 @@ const Navbar = () => {
         removeCookie("token",{path:'/'});
         window.localStorage.removeItem("logged");
         navigate('/Login')
+        window.location.reload()
     }
 
     return (

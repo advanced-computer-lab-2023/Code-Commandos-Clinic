@@ -2,6 +2,9 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
 const User = require('../model/User')
+const Patient = require('../model/Patient')
+const Doctor = require('../model/Doctor')
+const Admin = require('../model/Admin')
 
 const register = asyncHandler(async (req,res) => {
     const {username,password} = req.body

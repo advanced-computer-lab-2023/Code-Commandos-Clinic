@@ -28,7 +28,7 @@ const subscribeToPackage = asyncHandler(async (req, res) => {
 
 //get package subscription using patient ID
 const getSubscribedPackage = asyncHandler(async(req,res) => {
-    const { id } = req.params
+    const { id } = req.user
       
     // Check if the package ID is valid
     if (!mongoose.Types.ObjectId.isValid(id)){

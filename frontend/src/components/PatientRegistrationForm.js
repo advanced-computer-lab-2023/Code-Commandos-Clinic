@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import {useNavigate} from "react-router-dom";
 
 const PatientRegistrationForm = () => {
   const [name, setName] = useState('')
@@ -10,6 +11,7 @@ const PatientRegistrationForm = () => {
   const [mobileNumber, setMobileNumber] = useState('')
   const [ecFullName, setEcFullName] = useState('')
   const [ecMobileNumber, setEcMobileNumber] = useState('')
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -39,7 +41,10 @@ const PatientRegistrationForm = () => {
       setEcMobileNumber('')
       alert('Registration successful.')
       console.log('new patient registered:', json)
+      navigate('/Login')
+      window.location.reload()
     }
+
 
   }
 
