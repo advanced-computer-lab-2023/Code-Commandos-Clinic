@@ -30,6 +30,8 @@ import PatientUpcomingPastAppointments from "./pages/PatientUpcomingPastAppointm
 import FilterAppointmentsByDateAndStatus from "./pages/FilterAppointmentsByDateAndStatus";
 import FilterAppointmentsByDateOrStatus from "./pages/FilterAppointmentsByDateOrStatus";
 import ReserveAppointment from "./components/ReserveAppointment";
+import EnterEmailReset from "./components/EnterEmailReset";
+import ResetPassword from "./components/ResetPassword";
 
 const App = () => {
     const logged = window.localStorage.getItem("logged");
@@ -70,6 +72,8 @@ const App = () => {
             <Route path="/PatientUpcomingPastAppointments"  element={<PatientUpcomingPastAppointments/>}/>
             <Route path="/FilterAppointmentsByDateOrStatus"  element={<FilterAppointmentsByDateOrStatus/>}/>
             <Route path="/ReserveAppointment/:id"  element={<ReserveAppointment/>}/>
+            <Route path="/EnterEmailReset"  element={<EnterEmailReset/>}/>
+            <Route path="/ResetPassword"  element={<ResetPassword/>}/>
 
             <Route path="/Login" element={logged ? <Navigate to="/Home" replace /> : <Login/>}/>
             <Route path="/Home" element={<Home/>}/>

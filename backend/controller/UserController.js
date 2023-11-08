@@ -161,17 +161,22 @@ const verifyOTP =  asyncHandler(async (req,res,next) => {
 
 const resetPassword = asyncHandler(async (req,res) => {
     const {username,newPassword} = req.body
+    if (newPassword.search(/[a-z]/) < 0 || newPassword.search(/[A-Z]/) < 0 || newPassword.search(/[0-9]/) < 0) {
+        res.status(400)
+        throw new Error("Password must contain at least one number, one capital letter and one small letter")
+    }
     const patient = await Patient.findOneAndUpdate({username},{password:newPassword})
     const doctor = await Doctor.findOneAndUpdate({username},{password:newPassword})
     const admin = await Admin.findOneAndUpdate({username},{password:newPassword})
 
     if (!patient && !doctor && !admin){
+        res.status(404)
         throw new Error("No user found")
     }
     else {
         await User.findOneAndUpdate({username},{password:newPassword})
     }
-    res.status(200).json({message: "Your password has been reset"})
+    res.status(200).json("Your password has been reset")
 })
 
 const changePassword = asyncHandler(async (req,res) => {
@@ -209,7 +214,7 @@ const changePassword = asyncHandler(async (req,res) => {
         if(role == "ADMIN"){
             await Admin.findOneAndUpdate({username},{password:newPassword})
         }
-        return res.status(200).json({message: "Password changed successfully we recommend closing the browser!"})
+        return res.status(200).json("Password changed successfully we recommend closing the browser!")
     }
     catch (error){
         res.status(400)

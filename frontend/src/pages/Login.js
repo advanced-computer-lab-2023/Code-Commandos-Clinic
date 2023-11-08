@@ -1,8 +1,6 @@
-import React, { useState,useEffect} from "react";
+import React, { useState} from "react";
 import "../css/style.css"
-import {useNavigate} from "react-router-dom";
-import Home from "./Home";
-import Navbar from "../components/Navbar";
+import {Link, useNavigate} from "react-router-dom";
 
 const Login = () => {
     const [username, setUsername] = useState("");
@@ -63,6 +61,12 @@ const Login = () => {
                                     >
                                         Login
                                     </button>
+                                    <br/>
+
+                                    <p className="text-center">
+                                        <Link to="/EnterEmailReset">Forgot Password?</Link>
+                                    </p>
+
                                 </form>
                             </div>
                         </div>
