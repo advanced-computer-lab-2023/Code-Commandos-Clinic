@@ -5,9 +5,11 @@ const {
     doctorRegistrationRequest,
     getDoctorRequests,
     deleteRequest
-} = require('../controller/DoctorRegistrationController')
+} = require('../controller/DoctorRegistrationController');
+const { checkAdminRole } = require('../middleware/AccessHandler');
+const { protect } = require('../middleware/AuthenticationHandler');
 
 router.route('/doctorRegistrationRequest').post(doctorRegistrationRequest)
-router.route('/getDoctorRequests').get(getDoctorRequests)
+router.get('/getDoctorRequests',protect, checkAdminRole, getDoctorRequests)
 router.route('/doctorRegistrationRequestDelete/:id').delete(deleteRequest)
 module.exports = router

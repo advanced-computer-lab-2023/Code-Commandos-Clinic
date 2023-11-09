@@ -25,6 +25,7 @@ import FilterPrescriptions from "./pages/FilterPrescriptions";
 import AddPrescription from "./pages/AddPrescription";
 import CreateAppointment from "./pages/CreateAppointment";
 import CreateDoctor from "./pages/CreateDoctor";
+import DocHome from "./pages/DocHome";
 
 const App = () => {
     const logged = window.localStorage.getItem("logged");
@@ -62,6 +63,7 @@ const App = () => {
             <Route path="/CreateDoctor"  element={<CreateDoctor/>}/>
             <Route path="/Login" element={logged ? <Navigate to="/Home" replace /> : <Login/>}/>
             <Route path="/Home" element={<Home/>}/>
+            <Route path="/DocHome" element={<DocHome/>}/>
         </Routes>
        </div>
       </BrowserRouter>

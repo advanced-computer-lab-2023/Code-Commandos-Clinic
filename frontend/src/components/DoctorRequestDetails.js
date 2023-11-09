@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-// import Doctor from '../../../backend/model/Doctor';
 
 const DoctorRequestDetails = ({ doctorRequest }) => {
     const [isVisible, setIsVisible] = useState(true);
 
-    const handleClick = () =>{
+    const handleClick = async () =>{
       const recordId = doctorRequest._id;
         fetch(`/api/doctorRegistration/doctorRegistrationRequestDelete/${recordId}`, {
             method: 'DELETE', // Use the appropriate HTTP method for your backend API
@@ -28,7 +27,7 @@ const DoctorRequestDetails = ({ doctorRequest }) => {
             });
     };
 
-    const handleRejectClick = () => {
+    const handleRejectClick = async () => {
       const recordId = doctorRequest._id;
       fetch(`/api/doctorRegistration/doctorRegistrationRequestDelete/${recordId}`, {
         method: 'DELETE', // Use the appropriate HTTP method for your backend API

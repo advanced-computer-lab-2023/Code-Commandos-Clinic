@@ -9,6 +9,7 @@ const protect = asyncHandler(async (req,res,next) => {
             token = req.cookies.token;
             const decoded = jwt.verify(token,process.env.JWT_SECRET)
             req.user = await User.findOne({username:decoded.username}).select('-password')
+            req.user.id = decoded.id
             next()
         }
         catch (error){
@@ -22,5 +23,4 @@ const protect = asyncHandler(async (req,res,next) => {
         throw new Error('You are not logged in, No token was found')
     }
 })
-
 module.exports = {protect}
