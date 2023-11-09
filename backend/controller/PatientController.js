@@ -163,27 +163,33 @@ const searchByName = asyncHandler( async (req,res) =>{
 
 //choose to pay with wallet, or credit card (using Stripe)
 const payForSubscription = asyncHandler(async (req, res) => {
+  // Extract family member, package, and payment method from request parameters
   const { id } = req.user
-  const { familyMemberID, packageID, paymentMethod } = req.params; // Extract payment method and amount from request body
+  const { familyMemberID, packageID, paymentMethod } = req.params; 
   try {
+    //get the patient and the health package from our database
     const patient = await PatientModel.findById(id)
     const healthPackage = await HealthPackageModel.findOne({_id:packageID})
     if(!healthPackage){
       throw new Error("invalid package")
     }
+    //get the yearly subscription amount from health package
     const amount = await healthPackage.yearlySubscription
+    //check if payment is wallet or credit
     if (paymentMethod === 'wallet') {
+      //update database if wallet balance is sufficient
       if(patient.wallet < amount){
         res.status(400)
         throw new Error("Wallet balance insufficient.")
       } else {
         const newWallet = patient.wallet - amount;
         PatientModel.findOneAndUpdate({_id:id},{wallet:newWallet})
-
+        nagivate('/HealthPackage/Success')
         res.status(200).json({ success: true, message: 'Wallet payment processed successfully.' });
       }
     }
     else if (paymentMethod === 'credit_card') {
+      //create a stripe session
       const session = await stripe.checkout.sessions.create({
         billing_address_collection: 'auto',
         line_items: [
@@ -194,16 +200,20 @@ const payForSubscription = asyncHandler(async (req, res) => {
               },
               unit_amount: amount*100,
               currency: 'egp',
-              recurring: { //remove if not a subscription
+              //remove recurring variable if not a subscription
+              recurring: {         
                 interval: 'year',
               },
             },
             quantity: 1,
           },
         ],
-        mode: 'subscription', //change to 'payment' if not a subscription
+        //change mode to 'payment' if not a subscription
+        mode: 'subscription', 
+        //redirection url after success, query contains session id
         success_url: `http://localhost:3000/HealthPackages/Subscribe/success?sessionID={CHECKOUT_SESSION_ID}`,
         cancel_url: 'http://localhost:3000/HealthPackages/Subscribe/cancel',
+        //metadata containing your product's id and its purchaser (important for later)
         metadata: {
           'patientID': req.user.id.toString(),
           'familyMemberID': familyMemberID.toString(),
@@ -229,27 +239,29 @@ const subscribeToPackage = asyncHandler(async (req, res) => {
       expand: ['line_items'],
     }
   );
-  console.log(await session)
-  console.log(await session.payment_status)
-  const familyMemberID = session.metadata.familyMemberID
-  const patientID = session.metadata.patientID
-  const packageID = session.metadata.packageID
-  var today = new Date();
-  var dd = String(today.getDate()).padStart(2, '0');
-  var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-  var yyyy = today.getFullYear() + 1;
-  const renewalDate = yyyy+'/'+mm+'/'+dd
-  try{
-    if(familyMemberID==="user"){
-      const healthPackagePatient = await HealthPackagePatientModel.create({patientID:patientID,healthPackageID:packageID, status:"SUBSCRIBED", renewalDate:renewalDate})
-      res.status(200).json(healthPackagePatient)
-    } else {
-      const familyMember = await FamilyMemberModel.findOneAndUpdate({_id:familyMemberID},{healthPackage:{healthPackageID:packageID, status:"SUBSCRIBED", renewalDate:renewalDate}})
-      res.status(200).json(familyMember)
+  if(session.payment_status==="paid"){
+    const familyMemberID = session.metadata.familyMemberID
+    const patientID = session.metadata.patientID
+    const packageID = session.metadata.packageID
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear() + 1;
+    const renewalDate = yyyy+'/'+mm+'/'+dd
+    try{
+      if(familyMemberID==="user"){
+        const healthPackagePatient = await HealthPackagePatientModel.create({patientID:patientID,healthPackageID:packageID, status:"SUBSCRIBED", renewalDate:renewalDate})
+        res.status(200).json(healthPackagePatient)
+      } else {
+        const familyMember = await FamilyMemberModel.findOneAndUpdate({_id:familyMemberID},{healthPackage:{healthPackageID:packageID, status:"SUBSCRIBED", renewalDate:renewalDate}})
+        res.status(200).json(familyMember)
+      }
     }
-  }
-  catch (error) {
-    res.status(400).json(error.message)
+    catch (error) {
+      res.status(400).json(error.message)
+    }
+  } else {
+    res.status(400).json({error:"payment unsuccessful"})
   }
 })
 
