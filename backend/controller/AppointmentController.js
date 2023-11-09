@@ -2,22 +2,30 @@ const asyncHandler = require('express-async-handler')
 const DoctorModel = require("../model/Doctor");
 const PatientModel = require('../model/Patient');
 const AppointmentModel = require('../model/Appointment');
+const FamilyMember = require("../model/FamilyMember");
 
 const createAppointment =asyncHandler( async (req,res) => {
     const appointmentBody = req.body
     let operlappingAppointment
+    const currentDateTime = new Date();
+    console.log(currentDateTime)
+    const convertedStartTime = new Date(appointmentBody.startTime)
+    console.log(convertedStartTime)
+    if(currentDateTime >= convertedStartTime){
+        res.status(400)
+        throw new Error("The appointment has to start and end in the future")
+    }
+
+    if(appointmentBody.startTime >= appointmentBody.endTime){
+        res.status(400)
+        throw new Error("Start time has to be greater than end time")
+    }
+
     try {
         operlappingAppointment = await AppointmentModel.findOne({
             $and: [
                 {
-                    $or: [
-                        {
-                            doctor: appointmentBody.doctor
-                        },
-                        {
-                            patient: appointmentBody.patient
-                        }
-                    ]
+                    doctor: req.user.id,
                 },
                 {
                     $or: [
@@ -35,10 +43,7 @@ const createAppointment =asyncHandler( async (req,res) => {
                         },
                     ]
                 }
-                ,
-                {
-                    status: "PENDING",
-                }
+
             ]
         })
     }
@@ -48,13 +53,12 @@ const createAppointment =asyncHandler( async (req,res) => {
     }
     if (operlappingAppointment){
         res.status(400)
-        throw new Error('The appointment overlapps with another appointment with the doctor/patient')
+        throw new Error('The appointment overlapps with another appointment')
     }
     try {
+        appointmentBody.doctor = req.user.id
         const appointment = await AppointmentModel.create(appointmentBody)
-        const patient = await PatientModel.findById(appointment.patient)
         const doctor = await DoctorModel.findById(appointment.doctor)
-        appointment.patientName = patient.name
         appointment.doctorName = doctor.name
         await appointment.save()
         res.status(200).json(appointment)
@@ -73,7 +77,8 @@ const getUpcomingPatientsOfDoctor = asyncHandler (async (req,res)=>{
     let query = {
         $and: [
             { startTime : { $gt : currentDate } },
-            { doctor : doctorid }
+            { doctor : doctorid },
+            {status: "RESERVED"}
         ]
     }
     console.log(currentDate)
@@ -154,10 +159,108 @@ const getAppointments = asyncHandler( async (req , res) => {
     res.status(200).json(appointmentsAvailable)
 })
 
+const viewAvailableAppointmentsOfDoctor = asyncHandler(async (req,res) => {
+    const {doctorId} = req.params
+    try {
+        const availableAppointments = await AppointmentModel.find({doctor:doctorId,status:'FREE'})
+        console.log(availableAppointments)
+        console.log(doctorId)
+        console.log("hello")
+        res.status(200).json(availableAppointments)
+        console.log("after")
+    }
+    catch (error){
+        res.status(400)
+        throw new Error(error.message)
+    }
+})
+
+const reserveAppointment = asyncHandler(async (req,res) => {
+    const {id , familyMemberId} = req.body
+    try {
+        const appointment = await AppointmentModel.findById(id)
+        appointment.patient = req.user.id
+        if(familyMemberId){
+            appointment.familyMember = familyMemberId
+            const member = await FamilyMember.findById(familyMemberId)
+            appointment.familyMemberName = member.name
+        }
+        appointment.status = 'RESERVED'
+        await appointment.save()
+        res.status(200).json(appointment)
+    }
+    catch (error){
+        res.status(400)
+        throw new Error(error.message)
+    }
+
+
+})
+
+const upcomingPastAppointmentsOfDoctor = asyncHandler(async (req,res) => {
+    try {
+        const upcomingAppointments = await AppointmentModel.find({doctor:req.user.id,status:'RESERVED'})
+        const pastAppointments = await AppointmentModel.find({doctor:req.user.id,status:'COMPLETED'})
+        res.status(200).json({upcoming: upcomingAppointments, past: pastAppointments})
+    }
+    catch (error){
+        res.status(400)
+        throw new Error(error.message)
+    }
+})
+
+const upcomingPastAppointmentsOfPatient = asyncHandler(async (req,res) => {
+    try {
+        const upcomingAppointments = await AppointmentModel.find({patient:req.user.id,status:'RESERVED'})
+        const pastAppointments = await AppointmentModel.find({patient:req.user.id,status:'COMPLETED'})
+        res.status(200).json({upcoming: upcomingAppointments, past: pastAppointments})
+    }
+    catch (error){
+        res.status(400)
+        throw new Error(error.message)
+    }
+})
+
+const filterAppointmentsByDateOrStatus = asyncHandler(async (req,res) => {
+    const {date,status} = req.params
+    var query
+    const _appointmentDate = new Date(date)
+    const _appointmentDateEnd = new Date(_appointmentDate)
+    _appointmentDateEnd.setHours(23)
+    _appointmentDateEnd.setMinutes(59)
+    if (date != "none" && status != "none") {
+        query = {
+            $or: [
+                {startTime:{$gte:_appointmentDate,$lte:_appointmentDateEnd}},
+                {status: status}
+            ]
+        }
+    }
+    else if (date != "none") {
+        query = {startTime:{$gte:_appointmentDate,$lte:_appointmentDateEnd}}
+    }
+    else if (status != "none") {
+        query = {status : status};
+    }
+    try {
+        const appointments = await AppointmentModel.find(query);
+        res.status(200).json(appointments)
+    }
+    catch (error){
+        res.status(400)
+        throw new Error(error.message)
+    }
+})
+
 module.exports = {
     getUpcomingPatientsOfDoctor,
     createAppointment,
     getAppointment,
     getAppointments,
-    getAppointmentsByDateAndStatus
+    getAppointmentsByDateAndStatus,
+    viewAvailableAppointmentsOfDoctor,
+    reserveAppointment,
+    upcomingPastAppointmentsOfDoctor,
+    upcomingPastAppointmentsOfPatient,
+    filterAppointmentsByDateOrStatus
 };

@@ -21,15 +21,14 @@ const addFamilyMember = asyncHandler(async(req,res) => {
 
 
 const getFamilyMembers =  asyncHandler(async(req,res) => {
-    const {patientId}= req.params
-    const familyMembers = await FamilyMember.find({patient:patientId})
-
-    if(familyMembers.length == 0){
-        res.status(404)
-        throw new Error('No registered family members')
+    try {
+        const familyMembers = await FamilyMember.find({patient: req.user.id})
+        res.status(200).json(familyMembers)
     }
-    res.status(200).json(familyMembers)
-    console.log(familyMembers)
+    catch (error){
+        res.status(400)
+        throw new Error(error.message)
+    }
 })
 
 module.exports={

@@ -53,6 +53,8 @@ const getAdmin = asyncHandler(async (req,res) => {
 
 const getAlladmins =asyncHandler(async (req,res) => {
     console.log('user is ',req.user)
+    console.log('user is ',req.user.id)
+
     try {
         const admins= await AdminModel.find({})
         res.status(200).json(admins)

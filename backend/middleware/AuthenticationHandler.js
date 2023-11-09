@@ -24,4 +24,13 @@ const protect = asyncHandler(async (req,res,next) => {
     }
 })
 
-module.exports = {protect}
+
+const localVariables = asyncHandler(async (req, res, next) =>{
+    req.app.locals = {
+        OTP : null,
+        resetSession : false
+    }
+    next()
+})
+
+module.exports = {protect,localVariables}

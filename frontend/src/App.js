@@ -18,13 +18,21 @@ import ViewPatientsOfDoctor from "./pages/ViewPatientsOfDoctor";
 import FilterPatientsWithUpcomingAppointments from "./pages/FilterPatientsWithUpcomingAppointments";
 import RegisterPatientWithDoctor from "./pages/RegisterPatientWithDoctor";
 import RegisteredFamilyMembers from "./pages/viewRegisteredFamilyMembers";
-import FilteredAppointments from "./pages/viewFilteredAppointments";
 import AddFamilyMember from "./pages/addFamilyMember";
 import PrescriptionContainer from "./pages/PrescriptionContainer";
 import FilterPrescriptions from "./pages/FilterPrescriptions";
 import AddPrescription from "./pages/AddPrescription";
 import CreateAppointment from "./pages/CreateAppointment";
 import CreateDoctor from "./pages/CreateDoctor";
+import ViewAvailableAppointmentsOfDoctor from "./pages/ViewAvailableAppointmentsOfDoctor";
+import DoctorUpcomingPastAppointments from "./pages/DoctorUpcomingPastAppointments";
+import PatientUpcomingPastAppointments from "./pages/PatientUpcomingPastAppointments";
+import FilterAppointmentsByDateAndStatus from "./pages/FilterAppointmentsByDateAndStatus";
+import FilterAppointmentsByDateOrStatus from "./pages/FilterAppointmentsByDateOrStatus";
+import ReserveAppointment from "./components/ReserveAppointment";
+import EnterEmailReset from "./components/EnterEmailReset";
+import ResetPassword from "./components/ResetPassword";
+import ChangePassword from "./pages/ChangePassword";
 
 const App = () => {
     const logged = window.localStorage.getItem("logged");
@@ -53,13 +61,22 @@ const App = () => {
             <Route path="/FilterPatientsWithUpcomingAppointments" element={<FilterPatientsWithUpcomingAppointments/>}/>
             <Route path="/RegisterPatientWithDoctor" element={<RegisterPatientWithDoctor/>}/>
             <Route path="/RegisteredFamilyMembers" element={<RegisteredFamilyMembers/>}/>
-            <Route path="/FilteredAppointments" element={<FilteredAppointments/>}/>
+            <Route path="/FilterAppointmentsByDateAndStatus" element={<FilterAppointmentsByDateAndStatus/>}/>
             <Route path='/AddFamilyMember' element={<AddFamilyMember/>}/>
             <Route path="/PrescriptionContainer" element={<PrescriptionContainer/>} />
             <Route path="/FilterPrescriptions"  element={<FilterPrescriptions/>}/>
             <Route path="/AddPrescription"  element={<AddPrescription/>}/>
             <Route path="/CreateAppointment"  element={<CreateAppointment/>}/>
             <Route path="/CreateDoctor"  element={<CreateDoctor/>}/>
+            <Route path="/ViewAvailableAppointmentsOfDoctor"  element={<ViewAvailableAppointmentsOfDoctor/>}/>
+            <Route path="/DoctorUpcomingPastAppointments"  element={<DoctorUpcomingPastAppointments/>}/>
+            <Route path="/PatientUpcomingPastAppointments"  element={<PatientUpcomingPastAppointments/>}/>
+            <Route path="/FilterAppointmentsByDateOrStatus"  element={<FilterAppointmentsByDateOrStatus/>}/>
+            <Route path="/ReserveAppointment/:id"  element={<ReserveAppointment/>}/>
+            <Route path="/EnterEmailReset"  element={<EnterEmailReset/>}/>
+            <Route path="/ResetPassword"  element={<ResetPassword/>}/>
+            <Route path="/ChangePassword"  element={<ChangePassword/>}/>
+
             <Route path="/Login" element={logged ? <Navigate to="/Home" replace /> : <Login/>}/>
             <Route path="/Home" element={<Home/>}/>
         </Routes>

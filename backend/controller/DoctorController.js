@@ -255,7 +255,7 @@ const filterBySpecialityAndDate = asyncHandler(async (req,res) => {
                 doctor: {$in: doctorsIds},
                 startTime: {$lte: date},
                 endTime: {$gte: date},
-                status: "PENDING"
+                status: "RESERVED"
             })
             doctorsWhoHaveAppointmentsOnTheDate = nonFreeAppointments.map((appointment) => appointment.doctor)
             freeDoctors = doctorsBySpeciality.filter((doctor) => !doctorsWhoHaveAppointmentsOnTheDate.some((appointmentDoctorId) => appointmentDoctorId.equals(doctor.id)))
@@ -279,7 +279,7 @@ const filterBySpecialityAndDate = asyncHandler(async (req,res) => {
             nonFreeAppointments = await AppointmentModel.find({
                 startTime: {$lte: date},
                 endTime: {$gte: date},
-                status: "PENDING"
+                status: "RESERVED"
             })
             doctorsWhoHaveAppointmentsOnTheDate = nonFreeAppointments.map((appointment) => appointment.doctor)
             freeDoctors = doctors.filter((doctor) =>
@@ -313,6 +313,22 @@ const getDoctor = asyncHandler(async (req, res) => {
     }
   })
 
+const getPatientDoctors = asyncHandler(async (req,res) => {
+    try{
+        const allPatientDoctors = await DoctorPatient.find({ patient: req.user.id });
+        let allDoctors = []
+        for(const doctor of allPatientDoctors){
+            allDoctors.push(await DoctorModel.findOne({_id: doctor.doctor}))
+        }
+        res.status(200).json(allDoctors);
+    }
+    catch (error){
+        res.status(400)
+        throw new Error(error.message)
+    }
+
+})
+
 module.exports = {
     searchByNameAndOrSpeciality,
     createDoctor,
@@ -323,5 +339,6 @@ module.exports = {
     getDoctorsSessionPrice,
     removeDoctor,
     createDoctorPatients,
-    getDoctor
+    getDoctor,
+    getPatientDoctors
 }

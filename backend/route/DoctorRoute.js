@@ -10,17 +10,20 @@ const {
     filterBySpecialityAndDate,
     getDoctorsSessionPrice,
     removeDoctor,
-    createDoctorPatients
+    createDoctorPatients,
+    getPatientDoctors
 } = require('../controller/DoctorController')
+const {protect} = require("../middleware/AuthenticationHandler");
+const {checkPatientRole} = require("../middleware/AccessHandler");
 
-router.route('/searchByNameAndOrSpeciality/:name/:speciality').get(searchByNameAndOrSpeciality)
+router.route('/searchByNameAndOrSpeciality/:name/:speciality',protect,checkPatientRole).get(searchByNameAndOrSpeciality)
 router.route('/createDoctor').post(createDoctor)
 router.route('/viewDoctor/:id').get(viewDoctor)
 router.route('/removeDoctor/:id').delete(removeDoctor)
-router.route('/filterBySpecialityAndDate/:speciality/:date').get(filterBySpecialityAndDate)
+router.get('/filterBySpecialityAndDate/:speciality/:date',protect,checkPatientRole,filterBySpecialityAndDate)
 router.route('/getDoctors').get(getDoctors)
 router.route('/updateDoctor').put(updateDoctor)
 router.route('/getSessionPrice/:id').get(getDoctorsSessionPrice)
 router.post('/createDoctorPatients',createDoctorPatients)
-
+router.get('/getPatientDoctors',protect,checkPatientRole,getPatientDoctors)
 module.exports = router

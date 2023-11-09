@@ -4,7 +4,10 @@ const AppointmentSchema = mongoose.Schema({
     patient: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Patient',
-        required: true
+    },
+    familyMember:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'FamilyMember',
     },
     doctor: {
         type: mongoose.Schema.Types.ObjectId,
@@ -17,6 +20,10 @@ const AppointmentSchema = mongoose.Schema({
     patientName: {
         type: String,
     },
+    familyMemberName: {
+        type: String,
+        default: "NONE"
+    },
     startTime: {
         type: Date,
         required: true,
@@ -27,8 +34,8 @@ const AppointmentSchema = mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['PENDING', 'COMPLETED', 'CANCELLED'],
-        default: 'PENDING'
+        enum: ['RESERVED', 'COMPLETED', 'CANCELLED','FREE'],
+        default: 'FREE'
     }
 },{ timestamps: true })
 
