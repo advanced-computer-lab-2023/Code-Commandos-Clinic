@@ -6,7 +6,24 @@ const HealthPackageModel = require('../model/HealthPackage')
 const HealthPackagePatientModel = require('../model/HealthPackagePatient')
 const PatientModel = require('../model/Patient')
 const AppointmentModel = require('../model/Appointment')
-const WalletModel = require('../model/Wallet')
+
+//requirement 67  -> akram
+const getAmount = asyncHandler(async (req, res) => {
+    const { username } = req.params;
+    try {
+      const wallet = await DoctorModel.findOne({ username });
+      if (!wallet) {
+        res.status(400)
+        throw new Error('Wallet not found')
+      }
+  
+      res.status(200).json(wallet) 
+    }
+    catch (error) {
+      res.status(400)
+      throw new Error(error.message)
+    }
+  });
 
 const createDoctorPatients= asyncHandler( async(req,res) =>{
     const {patientUsername,doctorUsername} = req.body
@@ -76,10 +93,8 @@ const searchByNameAndOrSpeciality = asyncHandler( async (req,res) => {
 
 const createDoctor = asyncHandler(async (req,res) =>{
     const doctorBody = req.body
-    const {username} = req.body
     try {
         const doctor = await DoctorModel.create(doctorBody)
-        const wallet = await WalletModel.create({ username, amount: 0 })
         res.status(200).json({ doctor, wallet });
     }
     catch (error){
@@ -326,5 +341,6 @@ module.exports = {
     getDoctorsSessionPrice,
     removeDoctor,
     createDoctorPatients,
-    getDoctor
+    getDoctor,
+    getAmount
 }

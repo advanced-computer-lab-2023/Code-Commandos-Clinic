@@ -10,7 +10,7 @@ const {
   updatePatient,
     getPatientsOfADoctor,
     getInfoHealthPatient,
-    searchByName
+    searchByName,getAmount
 } = require('../controller/PatientController')
 
 
@@ -28,6 +28,8 @@ router.delete('/deletePatient/:id', deletePatient)
 
 // update or PATCH a patient
 router.patch('/updatePatient/:id', updatePatient)
+
+router.get('/getAmount/:username', getAmount)
 
 router.get('/getPatientsOfADoctor/:doctorId',getPatientsOfADoctor);
 router.get('/getInfoHealthPatient/:id',getInfoHealthPatient);

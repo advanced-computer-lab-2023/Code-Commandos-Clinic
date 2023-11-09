@@ -83,7 +83,11 @@ const DoctorSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-
+  wallet: {
+    type: Number,
+    required: true,
+    default: 0.00
+  }
 },{ timestamps: true });
 
 const Doctor = mongoose.model('Doctor', DoctorSchema);

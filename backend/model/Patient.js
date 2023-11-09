@@ -42,6 +42,11 @@ const PatientSchema = new mongoose.Schema({
       required: true,
     },
   },
+  wallet: {
+    type: Number,
+    required: true,
+    default: 0.00
+  }
 },{ timestamps: true });
 
 const Patient = mongoose.model('Patient', PatientSchema);

@@ -5,6 +5,7 @@ const asyncHandler = require('express-async-handler')
 //ziad: requirement 3
 //submit a request to register as a doctor using username, name, email, password, date of birth, hourly rate, affiliation, educational background
 const doctorRegistrationRequest = asyncHandler(async (req,res) =>{
+    console.log("hi")
     const doctorBody = req.body
     try {
         const doctor = await DoctorRegistrationModel.create(doctorBody)

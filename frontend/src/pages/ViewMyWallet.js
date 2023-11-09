@@ -6,7 +6,7 @@ const ViewMyWallet = () => {
     useEffect(() => {
         const fetchAmount = async () => {
             try {
-                const response = await fetch('/api/wallet/getAmount/akram2002', {
+                const response = await fetch('/api/patient/getAmount', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
