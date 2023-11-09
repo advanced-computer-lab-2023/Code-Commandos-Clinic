@@ -39,7 +39,6 @@ const FamilyMemberSchema = new mongoose.Schema({
             type: String,
             enum: [ 'SUBSCRIBED', 'CANCELLED' ],
             required: false,
-            default: "SUBSCRIBED"
         },
         renewalDate: {
             type: Date,

@@ -1,6 +1,12 @@
 const express = require('express');
 const router = express.Router()
 
+const {protect} = require('../middleware/AuthenticationHandler')
+const {
+  checkPatientRole,
+  checkDoctorRole,
+  checkAdminRole
+} = require('../middleware/AccessHandler')
 
 const {
   getPatients, 
@@ -10,7 +16,9 @@ const {
   updatePatient,
     getPatientsOfADoctor,
     getInfoHealthPatient,
-    searchByName
+    searchByName,
+    payForSubscription,
+    subscribeToPackage
 } = require('../controller/PatientController')
 
 
@@ -32,4 +40,7 @@ router.patch('/updatePatient/:id', updatePatient)
 router.get('/getPatientsOfADoctor/:doctorId',getPatientsOfADoctor);
 router.get('/getInfoHealthPatient/:id',getInfoHealthPatient);
 router.get('/searchByname/:name/:doctorId',searchByName)
+
+router.get('/payForSubscription/:familyMemberID/:packageID/:paymentMethod', protect, checkPatientRole, payForSubscription)
+router.post('/subscribeToPackage/:sessionID',subscribeToPackage)
 module.exports = router

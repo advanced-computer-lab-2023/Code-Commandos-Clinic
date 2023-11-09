@@ -4,7 +4,8 @@ const router = express.Router()
 const {
     subscribeToPackage,
     getSubscribedPackage,
-    getPatientPackages
+    getPatientPackages,
+    getSubscribedPackageStatus
 } = require('../controller/HealthPackagePatientController')
 
 const {protect} = require('../middleware/AuthenticationHandler')
@@ -19,6 +20,9 @@ router.post('/subscribeToPackage', subscribeToPackage)
 
 //get a patient's package
 router.get('/getSubscribedPackage/', protect, checkPatientRole, getSubscribedPackage)
+
+//get a patient's package status and renewal date
+router.get('/getSubscribedPackageStatus', protect, checkPatientRole, getSubscribedPackageStatus)
 
 //get all patient packages
 router.get('/getPatientPackages', getPatientPackages)

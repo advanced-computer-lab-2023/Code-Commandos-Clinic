@@ -35,17 +35,17 @@ const getFamilyMembers =  asyncHandler(async(req,res) => {
 
 const getSubscribedPackagesForFamilyMembers =  asyncHandler(async(req,res) => {
   const {id}= req.user
-  const familyMembers = await FamilyMember.find({patient:id})
+  var familyMembers = await FamilyMember.find({patient:id}).populate('healthPackage.healthPackageID').exec()
   if(familyMembers.length == 0){
       res.status(404)
       throw new Error('No registered family members')
   }
-  for(const familyMember in familyMembers){
-    if(familyMember.healthPackage){
-      const healthPackage = await HealthPackage.findOne({_id:familyMember.healthPackage.healthPackageID})
-      familyMember.healthPackage.healthPackageID = healthPackage
-    }
-  }
+  // for(const familyMember in familyMembers){
+  //   if(familyMember.healthPackage){
+  //     const healthPackage = await HealthPackage.findOne({_id:familyMember.healthPackage.healthPackageID})
+  //     familyMember.healthPackage.healthPackageID = healthPackage
+  //   }
+  // }
   res.status(200).json(familyMembers)
 })
 

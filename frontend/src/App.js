@@ -26,6 +26,9 @@ import AddPrescription from "./pages/AddPrescription";
 import CreateAppointment from "./pages/CreateAppointment";
 import CreateDoctor from "./pages/CreateDoctor";
 import HealthPackages from './pages/ViewHealthPackages';
+import SubscribeToPackage from './pages/SubscribeToPackage';
+import PaymentSuccess from './pages/PaymentSuccess';
+import PaymentCancel from './pages/PaymentCancel';
 
 const App = () => {
     const logged = window.localStorage.getItem("logged");
@@ -62,6 +65,9 @@ const App = () => {
             <Route path="/CreateAppointment"  element={<CreateAppointment/>}/>
             <Route path="/CreateDoctor"  element={<CreateDoctor/>}/>
             <Route path="/HealthPackages" element={<HealthPackages/>}/>
+            <Route path="/HealthPackages/Subscribe" element={<SubscribeToPackage/>}/>
+            <Route path="/HealthPackages/Subscribe/Success" element={<PaymentSuccess/>}/>
+            <Route path="/HealthPackages/Subscribe/Cancel" element={<PaymentCancel/>}/>
             <Route path="/Login" element={logged ? <Navigate to="/Home" replace /> : <Navigate to="/Login" replace /> }/>
             {/* <Route path="/Home" element={<Home/>}/> */}
         </Routes>

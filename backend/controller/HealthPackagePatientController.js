@@ -55,6 +55,29 @@ const getSubscribedPackage = asyncHandler(async(req,res) => {
     }
 })
 
+//get package subscription status and renewal date using patient ID
+const getSubscribedPackageStatus = asyncHandler(async(req,res) => {
+  const { id } = req.user
+    
+  // Check if the package ID is valid
+  if (!mongoose.Types.ObjectId.isValid(id)){
+      res.status(404)
+      throw new Error('Patient id is invalid');
+  }
+  try {
+    const HealthPackagePatient = await HealthPackagePatientModel.findOne({patientID: id})
+    if(!HealthPackagePatient){
+      res.status(404)
+      throw new Error('No subscribed package');
+    }
+    res.status(200).json(HealthPackagePatient)
+  } 
+  catch (error){
+    res.status(400);
+    throw new Error(error.message);
+  }
+})
+
 //get all packages
 const getPatientPackages = asyncHandler(async(req,res) => {
   try{
@@ -67,5 +90,5 @@ const getPatientPackages = asyncHandler(async(req,res) => {
   }
 })
 
-module.exports = {subscribeToPackage, getSubscribedPackage, getPatientPackages};
+module.exports = {subscribeToPackage, getSubscribedPackage, getPatientPackages, getSubscribedPackageStatus};
 
