@@ -2,6 +2,13 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
 const User = require('../model/User')
+const Patient = require("../model/Patient");
+const Doctor = require("../model/Doctor");
+const Admin = require("../model/Admin");
+const otpGenerator = require('otp-generator');
+const nodemailer = require('nodemailer');
+const Mailgen =  require('mailgen');
+const dotenv = require("dotenv").config();
 
 const register = asyncHandler(async (req,res) => {
     const {username,password} = req.body
@@ -32,11 +39,13 @@ const register = asyncHandler(async (req,res) => {
 const login = asyncHandler(async (req,res) => {
     const {username, password} = req.body
     const user = await User.findOne({username})
+    console.log("before pass " +id)
     if (user && user.password === password){
         var id
         if(user.role == 'PATIENT'){
             const patient = await Patient.findOne({username}).select('_id')
             id = patient._id
+            console.log("i am here" +id)
         }
         else if(user.role == 'DOCTOR'){
             const doctor = await Doctor.findOne({username}).select('_id')

@@ -103,6 +103,9 @@ const Navbar = () => {
                                             <Link to="/RegisteredFamilyMembers" className="dropdown-item">Registered Family Members</Link>
                                         </li>
                                         <li>
+                                            <Link to="/LinkFamilyMember" className="dropdown-item">Link Family Member</Link>
+                                        </li>
+                                        <li>
                                             <Link to="/FilteredAppointments" className="dropdown-item">Filtered Appointments</Link>
                                         </li>
                                         <li>
