@@ -3,13 +3,10 @@ import logo from '../images/logo.png';
 import '../css/navbar.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { useCookies } from "react-cookie";
-import FilterAppointmentsByDateOrStatus from "../pages/FilterAppointmentsByDateOrStatus";
 
 
 const Navbar = () => {
     const navigate = useNavigate();
-    const [cookies, removeCookie] = useCookies([]);
 
     const handleLogout = async () =>{
         console.log("in handle logout")
