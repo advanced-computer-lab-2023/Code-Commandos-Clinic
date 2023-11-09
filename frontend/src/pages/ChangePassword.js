@@ -10,21 +10,26 @@ const ChangePassword = () => {
         e.preventDefault()
         const body = {currentPassword:currentPassword,newPassword:newPassword,confirmPassword:confirmPassword}
         try{
-            const response = await axios.post('api/user/changePassword', body);
-            if(response.status === 200){
-                const res = response.data
-                console.log(res)
-                alert(response.data)
-            }
-            else {
-                alert(response.data)
+            const response = await fetch('api/user/changePassword', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(body),
+            });
+
+            const responseData = await response.json();
+
+            if (response.status === 200) {
+                console.log(responseData);
+                alert(responseData);
+            } else {
+                alert(responseData.error);
             }
         }
         catch (error){
             alert(error.message)
         }
-
-
     };
 
     return (

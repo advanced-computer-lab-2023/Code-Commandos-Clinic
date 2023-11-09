@@ -192,16 +192,13 @@ const changePassword = asyncHandler(async (req,res) => {
         throw new Error(error.message)
     }
     if(currentPassword != currentComparedPassword.password){
-        res.status(401)
-        throw new Error("Your current password is incorrect!")
+        return res.status(401).json({ error: "Your current password is incorrect!" });
     }
     if (newPassword.search(/[a-z]/) < 0 || newPassword.search(/[A-Z]/) < 0 || newPassword.search(/[0-9]/) < 0) {
-        res.status(400)
-        throw new Error("Password must contain at least one number, one capital letter and one small letter")
+        return res.status(400).json({error: "Password must contain at least one number, one capital letter and one small letter"})
     }
     if(newPassword != confirmPassword){
-        res.status(400)
-        throw new Error("Password confirmation incorrect")
+        return res.status(400).json({ error: "Password confirmation incorrect" });
     }
     try {
         await User.findOneAndUpdate({username},{password:newPassword})
