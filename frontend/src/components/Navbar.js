@@ -13,7 +13,24 @@ const Navbar = () => {
 
     const handleLogout = async () =>{
         console.log("in handle logout")
-        removeCookie("token",{path:'/'});
+        try {
+            const response = await fetch('api/user/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            if (response.ok) {
+                const message = await response.json()
+                alert(message)
+            }
+            else {
+                alert(await response.text())
+            }
+        }
+        catch (error){
+            alert(error.message)
+        }
         window.localStorage.removeItem("logged");
         navigate('/Login')
     }

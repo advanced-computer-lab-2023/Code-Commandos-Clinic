@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 const ChangePassword = () => {
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -22,7 +23,9 @@ const ChangePassword = () => {
 
             if (response.status === 200) {
                 console.log(responseData);
+                window.localStorage.removeItem("logged");
                 alert(responseData);
+                navigate('/Login')
             } else {
                 alert(responseData.error);
             }
