@@ -42,6 +42,9 @@ const HealthRecordSchema = mongoose.Schema({
             'O_POSITIVE',
             'O_NEGATIVE'
         ]
+    },
+    imageName:{
+        type:Int32
     }
 },{ timestamps: true })
 

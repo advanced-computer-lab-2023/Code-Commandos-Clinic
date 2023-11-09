@@ -1,8 +1,9 @@
 const HealthRecordModel=require('../model/HealthRecord');
+const DoctorPatientModel = require('../model/DoctorPatient.js');
+const AppointmentModel = require('../model/Appointment');
 const mongoose = require('mongoose')
 const asyncHandler = require('express-async-handler');
-
-
+const PatientModel = require('../model/Patient')
 
 const createHealthRecord = asyncHandler( async (req,res)=>{
     const HealthRecord= new HealthRecordModel({
@@ -23,7 +24,7 @@ const createHealthRecord = asyncHandler( async (req,res)=>{
 const getHealthRecordsPatient = asyncHandler ( async (req,res) =>{
     try{
         const healthRecord= await HealthRecordModel.findOne({ patient: req.user.id });
-        if(healthRecord===undefined){
+        if(healthRecord===null){
             throw new Error("No health record found")
         }
         res.status(200).json(healthRecord);
@@ -34,7 +35,53 @@ const getHealthRecordsPatient = asyncHandler ( async (req,res) =>{
 })
 
 
+//used to view health records of patients of a specific doctor and this patients have at least one appointment with doctor
+const getHealthRecordPatientsOfDoctor = asyncHandler(async (req,res)=>{
+    try{
+        const patients = await DoctorPatientModel.find({doctor: req.params.doctorid});
+        if(patients.length==0){
+            throw new Error("you do not have any patients")
+        }
+        let healthRecords = []
+        for(const _patient of patients){
+            console.log(_patient)
+            const currentDate = new Date();
+            let query={
+            $and: [
+                { startTime : { $lt : currentDate } },
+                { endTime : { $lt : currentDate } },
+                { doctor : req.params.doctorid },
+                { patient : _patient.patient},
+                { status : 'COMPLETED'}
+            ]
+        }
+           const previousAppointments = await AppointmentModel.findOne(query)
+           console.log(previousAppointments)
+           if(previousAppointments!==null){
+            console.log(_patient.patient)
+             healthRecords.push(await HealthRecordModel.findOne({patient: _patient.patient}))
+             console.log(healthRecords)
+           }
+        }
+        if(healthRecords==null){
+            throw new Error("no health records of patients")
+        }
+        console.log(healthRecords)
+        res.status(200).json(healthRecords);
+
+    }catch(err){
+        res.status(400)
+        throw new Error(err.message)
+    }
+})
+
+
+
+
+
 module.exports={
     createHealthRecord,
-    getHealthRecordsPatient
+    getHealthRecordsPatient,
+    getHealthRecordPatientsOfDoctor,
+   
 }
