@@ -177,7 +177,7 @@ const changePassword = async (req,res) => {
     const {currentPassword,newPassword,confirmPassword} = req.body
     var currentComparedPassword
     try {
-         currentComparedPassword = await User.findOne({username}).select('password')
+        currentComparedPassword = await User.findOne({username}).select('password')
     }
     catch (error){
         return res.status(400).json({error:error.message})

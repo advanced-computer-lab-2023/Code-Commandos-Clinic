@@ -33,7 +33,7 @@ const HealthRecordSchema = mongoose.Schema({
     },
     BloodType: {
         type: String,
-        enum: [ ' A_POSITIVE',
+        enum: [ 'A_POSITIVE',
             'A_NEGATIVE',
             'B_POSITIVE',
             'B_NEGATIVE',
@@ -42,6 +42,9 @@ const HealthRecordSchema = mongoose.Schema({
             'O_POSITIVE',
             'O_NEGATIVE'
         ]
+    },
+    imageName:{
+        type:String
     }
 },{ timestamps: true })
 

@@ -17,8 +17,9 @@ const {
 const {protect} = require("../middleware/AuthenticationHandler");
 const {checkDoctorRole, checkPatientRole, checkPatientDoctorRole} = require("../middleware/AccessHandler");
 
+
 router.post('/createAppointment',protect,checkDoctorRole,createAppointment)
-router.get('/getUpcomingPatientsOfDoctor/:doctorid',getUpcomingPatientsOfDoctor)
+router.get('/getUpcomingPatientsOfDoctor',protect,checkDoctorRole,getUpcomingPatientsOfDoctor)
 router.get('/getAppointment/:patientid/:doctorid',getAppointment)
 router.route('/getAppointmentsByDateAndStatus/:appointmentDate/:status').get(getAppointmentsByDateAndStatus)
 router.route('/getAppointments').get(getAppointments)

@@ -72,13 +72,13 @@ const createAppointment =asyncHandler( async (req,res) => {
 //requirement 35
 // get the upcoming appointments of a doctor
 const getUpcomingPatientsOfDoctor = asyncHandler (async (req,res)=>{
-    const {doctorid} = req.params
+    
     const currentDate = new Date();
     let query = {
         $and: [
             { startTime : { $gt : currentDate } },
-            { doctor : doctorid },
-            {status: "RESERVED"}
+            {status: "RESERVED"},
+            { doctor : req.user.id }
         ]
     }
     console.log(currentDate)

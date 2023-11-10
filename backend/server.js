@@ -1,19 +1,17 @@
 const express = require("express")
 const server = express();
 const dotenv = require("dotenv").config();
-const connectDB = require("./configuration/Db");
+const connectToDb = require("./configuration/Db");
 const {errorHandler} = require('./middleware/ErrorHandler')
 const cookieParser = require('cookie-parser');
-const updateAppointmentStatus = require('./middleware/SyncAppointmentMiddleware')
 const port = process.env.PORT
 
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 server.use(cookieParser());
 
-
 server.listen(port,() => console.log(`Server is listening on port ${port}`))
-connectDB()
+connectToDb()
 
 server.get('/',(req,res) => {
     res.status(200).json({message:"Hello from server"})
@@ -31,6 +29,7 @@ const healthPackagePatientRoutes = require('./route/HealthPackagePatientRoute');
 const prescriptionRoute = require('./route/PrescriptionRoute')
 const healthRecordRoutes = require('./route/HealthRecordRoute')
 const userRoutes= require('./route/UserRoute')
+const updateAppointmentStatus = require('./middleware/SyncAppointmentMiddleware')
 
 updateAppointmentStatus()
 
