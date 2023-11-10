@@ -1,10 +1,29 @@
 const HealthRecordModel=require('../model/HealthRecord');
 const DoctorPatientModel = require('../model/DoctorPatient.js');
 const AppointmentModel = require('../model/Appointment');
-const mongoose = require('mongoose')
+
 const asyncHandler = require('express-async-handler');
 const PatientModel = require('../model/Patient')
+const {S3Client,PutObjectCommand} = require('@aws-sdk/client-s3');
 
+const crypto=require('crypto')
+const multer=require('multer')
+const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Types;
+const storage = multer.memoryStorage()
+const upload = multer({ storage: storage })
+const bucketName = process.env.BUCKET_NAME
+const bucketRegion = process.env.BUCKET_REGION
+const accessKey = process.env.ACCESS_KEY
+const secretAccessKey = process.env.SECRET_ACCESS_KEY
+const s3 = new S3Client({
+    credentials: {
+      accessKeyId:accessKey,
+      secretAccessKey:secretAccessKey
+    },
+    region:bucketRegion,
+  })
+const randomImageName=(bytes=32)=>crypto.randomBytes(bytes).toString('hex')
 const createHealthRecord = asyncHandler( async (req,res)=>{
     const HealthRecord= new HealthRecordModel({
         patient: req.body.patient,
@@ -20,6 +39,53 @@ const createHealthRecord = asyncHandler( async (req,res)=>{
         throw new Error(err.message)
     }
 })
+
+
+
+const addHealthRecordByDoctor = async(req,res)=>{
+    console.log("req.body",req.body)
+    console.log("req.file",req.file)
+    
+    const imageName=randomImageName()+"healthrecord"
+    const params ={
+        Bucket:bucketName,
+        Key:req.file.originalname,
+        Body : req.file.buffer,
+        ContentType :req.file.mimetype
+    }
+    const command = new PutObjectCommand(params)
+    console.log(req.params.patientid)
+    const HealthRecord= new HealthRecordModel({
+        patient: req.params.patientid,
+        AllergicHistory: req.body.AllergicHistory,
+        Maincomplaint: req.body.Maincomplaint,
+        BloodType: req.body.BloodType,
+        imageName:req.file.originalname
+    })
+    try{
+        const healthrecord = await HealthRecordModel.findOne({patient:req.params.patientid})
+        if(healthrecord){
+            throw new Error("patient you are trying to add to it health redord have already one ")
+        }
+        await s3.send(command)
+        const newHealthRecord=await HealthRecord.save();
+        res.status(200).json(newHealthRecord)
+    } catch(err) {
+        res.status(400)
+        throw new Error(err.message)
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
 //used to view health records of a patient when you sign in as a patient you view your own health record
 const getHealthRecordsPatient = asyncHandler ( async (req,res) =>{
     try{
@@ -83,5 +149,6 @@ module.exports={
     createHealthRecord,
     getHealthRecordsPatient,
     getHealthRecordPatientsOfDoctor,
+    addHealthRecordByDoctor
    
 }

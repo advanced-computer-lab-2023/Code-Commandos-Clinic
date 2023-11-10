@@ -5,16 +5,17 @@ const connectToDb = require("./configuration/Db");
 const {errorHandler} = require('./middleware/ErrorHandler')
 const cookieParser = require('cookie-parser');
 const port = process.env.PORT
+
+/*
+const storage = multer.memoryStorage()
+const upload = multer({ storage: storage })
+
 const {S3Client,PutObjectCommand} = require('@aws-sdk/client-s3');
 const HealthRecordModel=require('../backend/model/HealthRecord');
 const crypto=require('crypto')
 const multer=require('multer')
 const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
-
-const storage = multer.memoryStorage()
-const upload = multer({ storage: storage })
-
 
 const bucketName = process.env.BUCKET_NAME
 const bucketRegion = process.env.BUCKET_REGION
@@ -29,16 +30,6 @@ const s3 = new S3Client({
     region:bucketRegion,
   })
 
-
-
-
-server.use(express.json());
-server.use(express.urlencoded({ extended: false }));
-server.use(cookieParser());
-
-
-server.listen(port,() => console.log(`Server is listening on port ${port}`))
-connectToDb()
 
 server.post("/api/posts",upload.single('image'),async(req,res)=>{
     console.log("req.body",req.body)
@@ -70,6 +61,15 @@ server.post("/api/posts",upload.single('image'),async(req,res)=>{
 
 
 })
+*/
+server.use(express.json());
+server.use(express.urlencoded({ extended: false }));
+server.use(cookieParser());
+
+server.listen(port,() => console.log(`Server is listening on port ${port}`))
+connectToDb()
+
+
 
 server.get('/',(req,res) => {
     
