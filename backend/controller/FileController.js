@@ -25,8 +25,7 @@ const singleFileUpload = async (req, res, next) => {
                 fileHash,
             });
             await file.save();
-            res.status(201).send('File Uploaded Successfully');
-            return file;
+            res.status(201).json(file._id);
         }
     } catch (error) {
         res.status(400).send(error.message);

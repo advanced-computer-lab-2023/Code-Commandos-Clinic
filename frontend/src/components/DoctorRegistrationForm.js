@@ -15,6 +15,9 @@ const DoctorRegistrationForm = () => {
     const [medicalIDFile, setMedicalIDFile] = useState(null);
     const [medicalLicensesFile, setMedicalLicensesFile] = useState(null);
     const [medicalDegreeFile, setMedicalDegreeFile] = useState(null);
+    const [IDID, setIDID] = useState(null);
+    const [LicenseID, setLicenseID] = useState(null);
+    const [DegreeID, setDegreeID] = useState(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -30,9 +33,9 @@ const DoctorRegistrationForm = () => {
         formData.append('educationalBackground', educationalBackground);
         formData.append('speciality', speciality);
         formData.append('sessionPrice', sessionPrice);
-        formData.append('medicalID', medicalIDFile);
-        formData.append('medicalLicenses', medicalLicensesFile);
-        formData.append('medicalDegree', medicalDegreeFile);
+        formData.append('medicalID', IDID);
+        formData.append('medicalLicenses',LicenseID );
+        formData.append('medicalDegree',DegreeID );
 
         const jsonFormData = {};
         formData.forEach((value, key) => {
@@ -73,15 +76,17 @@ const DoctorRegistrationForm = () => {
 
     }
     const handleMedicalIDSubmit = async () => {
-        await handleFileSubmit( medicalIDFile);
+      setIDID( await handleFileSubmit( medicalIDFile));
+        
     };
 
     const handleMedicalLicensesSubmit = async () => {
-        await handleFileSubmit(medicalLicensesFile);
+        setLicenseID (await handleFileSubmit(medicalLicensesFile));
+        
     };
 
     const handleMedicalDegreeSubmit = async () => {
-        await handleFileSubmit( medicalDegreeFile);
+        setDegreeID( await handleFileSubmit( medicalDegreeFile));
     };
 
     const handleFileSubmit = async ( file) => {
@@ -104,6 +109,8 @@ const DoctorRegistrationForm = () => {
                 throw new Error(errorMessage);
             } else {
                 alert('File is uploaded successfully');
+                const fileId = await response.json(); 
+                return fileId;
             }
         } catch (error) {
             alert(error.message);
