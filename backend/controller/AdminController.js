@@ -1,4 +1,5 @@
 const AdminModel = require('../model/Admin')
+const UserModel = require('../model/User')
 const mongoose = require('mongoose')
 const asyncHandler = require('express-async-handler')
 
@@ -8,6 +9,7 @@ const addAdmin = asyncHandler(async(req,res) => {
     const{username,password}= req.body
     //add admin to db
     try{
+        const user = await UserModel.create({username,password,'role':'ADMIN'})
         const admin =await AdminModel.create({username,password})
         res.status(200).json(admin)
     }
@@ -21,8 +23,11 @@ const addAdmin = asyncHandler(async(req,res) => {
 //remove a doctor/patient/ Admin from the system
 const removeAdmin =asyncHandler( async (req,res) => {
     const { id } =req.params
+    const {username} =await AdminModel.findById(id);
     try {
-        const admin =await AdminModel.findByIdAndDelete(id)
+        const user = await UserModel.findOneAndDelete({username:username})
+        const admin =await AdminModel.findByIdAndDelete(id);//req.user.username);
+        
         if(!admin){
             res.status(400)
             throw new Error('Admin not found')

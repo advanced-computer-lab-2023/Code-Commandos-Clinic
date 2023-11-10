@@ -1,7 +1,8 @@
 const DoctorRegistrationModel = require('../model/DoctorRegistration')
 const mongoose = require('mongoose')
 const asyncHandler = require('express-async-handler')
-
+const DoctorModel = require('../model/Doctor')
+const UserModel = require('../model/User')
 //ziad: requirement 3
 //submit a request to register as a doctor using username, name, email, password, date of birth, hourly rate, affiliation, educational background
 const doctorRegistrationRequest = asyncHandler(async (req,res) =>{
@@ -49,8 +50,39 @@ const deleteRequest = asyncHandler(async (req, res) => {
   })
 
 
+const acceptDoctorRequests = asyncHandler(async (req, res) => {
+    const {id} = req.params
+    console.log(id)
+    try {
+        const request = await DoctorRegistrationModel.findOneAndDelete(id)
+        const user = await UserModel.create({username: request.username,password: request.password,role:'DOCTOR'})
+        const addDoctor =await DoctorModel.create({username: request.username,name: request.name,email:  request.email,password: request.password,dateOfBirth:  request.dateOfBirth,hourlyRate: request.hourlyRate,affiliation: request.affiliation,educationalBackground: request.educationalBackground,speciality: request.speciality,sessionPrice: request.sessionPrice})
+        res.status(200).json(addDoctor)
+        
+    }
+    catch (error){
+        res.status(400)
+        throw new Error(error.message)
+    }
+})
+
+const rejectDoctorRequests = asyncHandler(async (req, res) => {
+    const {id}=req.params
+    try {
+        const request = await DoctorRegistrationModel.findByIdAndRemove(id)
+        res.status(200).json(request)
+    }
+    catch (error){
+        res.status(400)
+        throw new Error(error.message)
+    }
+})
+
+
+
 module.exports = {
     doctorRegistrationRequest,
     getDoctorRequests,
-    deleteRequest
+    acceptDoctorRequests,
+    rejectDoctorRequests
 };

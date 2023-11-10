@@ -4,12 +4,15 @@ const router = express.Router();
 const {
     doctorRegistrationRequest,
     getDoctorRequests,
-    deleteRequest
+    acceptDoctorRequests,
+    rejectDoctorRequests,
 } = require('../controller/DoctorRegistrationController');
-const { checkAdminRole } = require('../middleware/AccessHandler');
-const { protect } = require('../middleware/AuthenticationHandler');
 
-router.route('/doctorRegistrationRequest').post(doctorRegistrationRequest)
+const { protect } = require('../middleware/AuthenticationHandler');
+const { checkAdminRole} = require('../middleware/AccessHandler')
+
+router.post('/doctorRegistrationRequest',doctorRegistrationRequest)
 router.get('/getDoctorRequests',protect, checkAdminRole, getDoctorRequests)
-router.route('/doctorRegistrationRequestDelete/:id').delete(deleteRequest)
+router.post('/acceptDoctorRequests/:id',protect,checkAdminRole,acceptDoctorRequests)
+router.delete('/rejectDoctorRequests/:id',protect,checkAdminRole,rejectDoctorRequests)
 module.exports = router
