@@ -8,7 +8,7 @@ const asyncHandler = require('express-async-handler')
 //requirement-33 Nour
 const getPatientsOfADoctor = asyncHandler ( async (req,res) =>{
     try{
-        const allPatients= await DoctorPatientModel.find({ doctor: req.params.doctorId });
+        const allPatients= await DoctorPatientModel.find({ doctor: req.user.id });
         if(allPatients.length===0){
             throw new Error("No Patients found")
         }

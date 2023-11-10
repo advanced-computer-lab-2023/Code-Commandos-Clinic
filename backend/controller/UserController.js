@@ -38,11 +38,13 @@ const register = asyncHandler(async (req,res) => {
 const login = asyncHandler(async (req,res) => {
     const {username, password} = req.body
     const user = await User.findOne({username})
+    console.log("before pass " +id)
     if (user && user.password === password){
         var id
         if(user.role == 'PATIENT'){
             const patient = await Patient.findOne({username}).select('_id')
             id = patient._id
+            console.log("i am here" +id)
         }
         else if(user.role == 'DOCTOR'){
             const doctor = await Doctor.findOne({username}).select('_id')

@@ -35,6 +35,9 @@ import ResetPassword from "./components/ResetPassword";
 import ChangePassword from "./pages/ChangePassword";
 import DoctorContract from "./pages/DoctorContract";
 
+import LinkFamilyMember from "./pages/linkFamilyMember";
+import CreateFollowUp from "./pages/CreateFollowUp";
+
 const App = () => {
     const logged = window.localStorage.getItem("logged");
 
@@ -68,6 +71,7 @@ const App = () => {
             <Route path="/FilterPrescriptions"  element={<FilterPrescriptions/>}/>
             <Route path="/AddPrescription"  element={<AddPrescription/>}/>
             <Route path="/CreateAppointment"  element={<CreateAppointment/>}/>
+            <Route path="/CreateFollowUp"  element={<CreateFollowUp/>}/>
             <Route path="/CreateDoctor"  element={<CreateDoctor/>}/>
             <Route path="/ViewAvailableAppointmentsOfDoctor"  element={<ViewAvailableAppointmentsOfDoctor/>}/>
             <Route path="/DoctorUpcomingPastAppointments"  element={<DoctorUpcomingPastAppointments/>}/>
@@ -77,10 +81,12 @@ const App = () => {
             <Route path="/EnterEmailReset"  element={<EnterEmailReset/>}/>
             <Route path="/ResetPassword"  element={<ResetPassword/>}/>
             <Route path="/ChangePassword"  element={<ChangePassword/>}/>
+            <Route path="/DoctorContract" element={<DoctorContract/>}/>
+            <Route path="/LinkFamilyMember" element={<LinkFamilyMember/>}/>
+            <Route path="/CreateFollowUp" element={<CreateFollowUp/>}/>
 
             <Route path="/Login" element={logged ? <Navigate to="/Home" replace /> : <Login/>}/>
             <Route path="/Home" element={<Home/>}/>
-            <Route path="/DoctorContract" element={<DoctorContract/>}/>
         </Routes>
        </div>
       </BrowserRouter>

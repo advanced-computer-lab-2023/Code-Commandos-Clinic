@@ -36,6 +36,11 @@ const AppointmentSchema = mongoose.Schema({
         type: String,
         enum: ['RESERVED', 'COMPLETED', 'CANCELLED','FREE'],
         default: 'FREE'
+    },
+    type: {
+        type: String,
+        enum: ['NORMAL', 'FOLLOWUP'],
+        default: 'NORMAL'
     }
 },{ timestamps: true })
 

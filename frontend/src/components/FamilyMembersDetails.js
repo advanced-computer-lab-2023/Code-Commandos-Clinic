@@ -2,7 +2,7 @@ const FamilyMembersDetails =({registeredFamilyMember}) =>{
     return (
         <div className="card">
             <div className="card-body">
-                <h5 className="card-title">{registeredFamilyMember.name}</h5>
+                <h2 className="card-title">{registeredFamilyMember.name}</h2>
                 <p className="card-text">
                     National ID: {registeredFamilyMember.nationalId}
                 </p>
@@ -15,9 +15,7 @@ const FamilyMembersDetails =({registeredFamilyMember}) =>{
                 <p className="card-text">
                     Relation: {registeredFamilyMember.relation}
                 </p>
-                <p className="card-text">
-                    Patient ID: {registeredFamilyMember.patient}
-                </p>
+
             </div>
         </div>
     );

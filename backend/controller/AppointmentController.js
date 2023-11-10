@@ -14,9 +14,7 @@ const createAppointment =asyncHandler( async (req,res) => {
     const appointmentBody = req.body
     let operlappingAppointment
     const currentDateTime = new Date();
-    console.log(currentDateTime)
     const convertedStartTime = new Date(appointmentBody.startTime)
-    console.log(convertedStartTime)
     if(currentDateTime >= convertedStartTime){
         res.status(400)
         throw new Error("The appointment has to start and end in the future")
@@ -169,11 +167,7 @@ const viewAvailableAppointmentsOfDoctor = asyncHandler(async (req,res) => {
     const {doctorId} = req.params
     try {
         const availableAppointments = await AppointmentModel.find({doctor:doctorId,status:'FREE'})
-        console.log(availableAppointments)
-        console.log(doctorId)
-        console.log("hello")
         res.status(200).json(availableAppointments)
-        console.log("after")
     }
     catch (error){
         res.status(400)
@@ -185,7 +179,9 @@ const reserveAppointment = asyncHandler(async (req,res) => {
     const {id , familyMemberId} = req.body
     try {
         const appointment = await AppointmentModel.findById(id)
+        const patient = await PatientModel.findById(req.user.id)
         appointment.patient = req.user.id
+        appointment.patientName = patient.name
         if(familyMemberId){
             appointment.familyMember = familyMemberId
             const member = await FamilyMember.findById(familyMemberId)
@@ -258,6 +254,79 @@ const filterAppointmentsByDateOrStatus = asyncHandler(async (req,res) => {
     }
 })
 
+const scheduleFollowUp = asyncHandler(async (req,res) => {
+    const {patientId} = req.params
+    const appointmentBody = req.body
+    let operlappingAppointment
+    const currentDateTime = new Date();
+    const convertedStartTime = new Date(appointmentBody.startTime)
+    if(currentDateTime >= convertedStartTime){
+        res.status(400)
+        throw new Error("The appointment has to start and end in the future")
+    }
+
+    if(appointmentBody.startTime >= appointmentBody.endTime){
+        res.status(400)
+        throw new Error("End time has to be greater than start time")
+    }
+
+    try {
+        operlappingAppointment = await AppointmentModel.findOne({
+            $and: [
+                {
+                    doctor: req.user.id,
+                },
+                {
+                    $or: [
+                        {
+                            startTime: {$lte: appointmentBody.startTime},
+                            endTime: {$gte: appointmentBody.startTime},
+                        },
+                        {
+                            startTime: {$gte: appointmentBody.startTime},
+                            endTime: {$lte: appointmentBody.endTime},
+                        },
+                        {
+                            startTime: {$lte: appointmentBody.endTime},
+                            endTime: {$gte: appointmentBody.startTime},
+                        },
+                    ]
+                }
+
+            ]
+        })
+    }
+    catch (error){
+        res.status(400)
+        throw new Error(error.message)
+    }
+    if (operlappingAppointment){
+        res.status(400)
+        throw new Error('The appointment overlapps with another appointment')
+    }
+    try {
+        appointmentBody.doctor = req.user.id
+        console.log("doctor id from back ",req.user.id)
+        console.log("patient id from backend ",patientId)
+        const appointment = await AppointmentModel.create(appointmentBody)
+        console.log("after create app")
+        const doctor = await DoctorModel.findById(req.user.id)
+        const patient = await PatientModel.findById(patientId)
+        appointment.doctorName = doctor.name
+        appointment.patientName = patient.name
+        appointment.patient = patientId
+        appointment.status = 'RESERVED'
+        appointment.type = 'FOLLOWUP'
+        appointment.patient = patientId
+        await appointment.save()
+        res.status(200).json(appointment)
+    }
+    catch (error){
+        res.status(400)
+        throw new Error(error.message)
+    }
+})
+
 module.exports = {
     getUpcomingPatientsOfDoctor,
     createAppointment,
@@ -268,5 +337,6 @@ module.exports = {
     reserveAppointment,
     upcomingPastAppointmentsOfDoctor,
     upcomingPastAppointmentsOfPatient,
-    filterAppointmentsByDateOrStatus
+    filterAppointmentsByDateOrStatus,
+    scheduleFollowUp
 };
