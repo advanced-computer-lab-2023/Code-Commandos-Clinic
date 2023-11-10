@@ -8,9 +8,11 @@ const {
     updatePackage,
     deletePackage
 } = require('../controller/HealthPackageController')
+const {protect} = require("../middleware/AuthenticationHandler");
+const {checkAdminRole} = require("../middleware/AccessHandler");
 
 //post a new package
-router.post('/addPackage', addPackage)
+router.post('/addPackage',protect,checkAdminRole, addPackage)
 
 //get a single package
 router.get('/getPackage/:id', getPackage)
@@ -19,9 +21,9 @@ router.get('/getPackage/:id', getPackage)
 router.get('/getPackages', getPackages)
 
 //update a package
-router.put('/updatePackage/:id', updatePackage)
+router.put('/updatePackage/:id', protect,checkAdminRole,updatePackage)
 
 //delete a  package(done)
-router.delete('/deletePackage/:id', deletePackage)
+router.delete('/deletePackage/:id', protect,checkAdminRole,deletePackage)
 
 module.exports = router;
