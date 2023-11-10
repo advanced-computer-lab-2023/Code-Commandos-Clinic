@@ -7,14 +7,20 @@ const DoctorRegistrationRequests = () => {
 
     useEffect(() => {
         const fetchDoctorRequests = async () => {
-            const response = await fetch('api/doctorRegistration/getDoctorRequests')
+            const response = await fetch('api/doctorRegistration/getDoctorRequests',{
+                method: 'GET',
+                headers: {
+                'Content-Type':'application/json',
+            },
+            });
+            const res = response.clone();
             const json = await response.json()
 
             if(response.ok){
                 setDoctorRequests(json)
             }
             else if(!response.ok){
-                alert(await response.text())
+                alert(await res.text())
             }
         }
 

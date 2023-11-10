@@ -24,7 +24,6 @@ const protect = asyncHandler(async (req,res,next) => {
     }
 })
 
-
 const localVariables = asyncHandler(async (req, res, next) =>{
     req.app.locals = {
         OTP : null,
@@ -34,3 +33,4 @@ const localVariables = asyncHandler(async (req, res, next) =>{
 })
 
 module.exports = {protect,localVariables}
+

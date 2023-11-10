@@ -35,7 +35,6 @@ const register = asyncHandler(async (req,res) => {
         throw new Error('Invalid user data')
     }
 })
-
 const login = asyncHandler(async (req,res) => {
     const {username, password} = req.body
     const user = await User.findOne({username})
@@ -82,20 +81,11 @@ const logout = async (req, res) => {
     }
 }
 
-const getLoggedInUser = asyncHandler( async (req,res) => {
-    res.status(200).json(req.user)
-})
-
 const generateToken = (username,role,id) => {
     return jwt.sign({username,role,id}, process.env.JWT_SECRET, {
         expiresIn: 3600000,
     })
 }
-
-const skipLogin = asyncHandler( async (req,res) => {
-    res.status(200)
-    return true;
-})
 
 const generateOTP =  asyncHandler(async (req,res) => {
     const {email} = req.body
@@ -210,12 +200,11 @@ const changePassword = async (req,res) => {
     }
 }
 
+
 module.exports = {
     register,
     login,
-    getLoggedInUser,
     logout,
-    skipLogin,
     generateOTP,
     verifyOTP,
     resetPassword,

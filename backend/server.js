@@ -31,6 +31,7 @@ const healthPackagePatientRoutes = require('./route/HealthPackagePatientRoute');
 const prescriptionRoute = require('./route/PrescriptionRoute')
 const healthRecordRoutes = require('./route/HealthRecordRoute')
 const userRoutes= require('./route/UserRoute')
+const employmentContractRoutes = require('./route/employmentContractRoutes')
 
 updateAppointmentStatus()
 
@@ -45,6 +46,7 @@ server.use('/api/healthPackagePatient', healthPackagePatientRoutes)
 server.use('/api/healthRecord',healthRecordRoutes)
 server.use('/api/prescription',prescriptionRoute)
 server.use('/api/user',userRoutes)
+server.use('/api/employmentContract',employmentContractRoutes)
 
 
 server.use(errorHandler)

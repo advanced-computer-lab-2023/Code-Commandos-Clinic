@@ -5,7 +5,6 @@ const {
     login,
     register,
     logout,
-    skipLogin,
     generateOTP,
     verifyOTP,
     resetPassword,
@@ -15,7 +14,6 @@ const {protect,localVariables} = require("../middleware/AuthenticationHandler");
 
 router.post('/login',login)
 router.post('/logout',protect,logout)
-router.get('/checkLoggedIn',protect,skipLogin)
 
 router.post('/generateOTP',localVariables,generateOTP)
 router.post('/resetPassword',verifyOTP,resetPassword)

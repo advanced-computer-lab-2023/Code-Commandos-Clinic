@@ -29,9 +29,28 @@ const getDoctorRequests = asyncHandler(async (req, res) => {
     }
 })
 
+const deleteRequest = asyncHandler(async (req, res) => {
+    const { id } = req.params
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      res.status(400)
+      throw new Error('Request not found')
+    }
+    try{
+      const DoctorRequest = await DoctorRegistrationModel.findOneAndDelete({_id: id})
+      if(!DoctorRequest) {
+        res.status(400)
+        throw new Error('Request not found')
+      }
+      res.status(200).json(DoctorRequest)
+    } catch (error){
+      res.status(400)
+      throw new Error(error.message)
+    }
+  })
 
 
 module.exports = {
     doctorRegistrationRequest,
     getDoctorRequests,
+    deleteRequest
 };

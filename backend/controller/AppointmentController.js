@@ -3,8 +3,14 @@ const DoctorModel = require("../model/Doctor");
 const PatientModel = require('../model/Patient');
 const AppointmentModel = require('../model/Appointment');
 const FamilyMember = require("../model/FamilyMember");
+const EmploymentContract = require("../model/EmploymentContract");
 
 const createAppointment =asyncHandler( async (req,res) => {
+    const contract = await EmploymentContract.findOne({doctor:req.user.id})
+    if(!contract || contract.status === "REJECTED"){
+        res.status(400)
+        throw new Error("You can add your slots only if your contract is accepted")
+    }
     const appointmentBody = req.body
     let operlappingAppointment
     const currentDateTime = new Date();
@@ -18,7 +24,7 @@ const createAppointment =asyncHandler( async (req,res) => {
 
     if(appointmentBody.startTime >= appointmentBody.endTime){
         res.status(400)
-        throw new Error("Start time has to be greater than end time")
+        throw new Error("End time has to be greater than start time")
     }
 
     try {

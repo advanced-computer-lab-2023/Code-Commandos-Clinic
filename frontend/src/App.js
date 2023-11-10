@@ -33,6 +33,7 @@ import ReserveAppointment from "./components/ReserveAppointment";
 import EnterEmailReset from "./components/EnterEmailReset";
 import ResetPassword from "./components/ResetPassword";
 import ChangePassword from "./pages/ChangePassword";
+import DoctorContract from "./pages/DoctorContract";
 
 const App = () => {
     const logged = window.localStorage.getItem("logged");
@@ -79,6 +80,7 @@ const App = () => {
 
             <Route path="/Login" element={logged ? <Navigate to="/Home" replace /> : <Login/>}/>
             <Route path="/Home" element={<Home/>}/>
+            <Route path="/DoctorContract" element={<DoctorContract/>}/>
         </Routes>
        </div>
       </BrowserRouter>

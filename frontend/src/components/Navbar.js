@@ -98,6 +98,9 @@ const Navbar = () => {
                                         <li>
                                             <Link to="/FilterAppointmentsByDateOrStatus" className="dropdown-item">Filter Appointments By Date Or Status</Link>
                                         </li>
+                                        <li>
+                                            <Link to="/DoctorContract" className="dropdown-item">My contract</Link>
+                                        </li>
                                     </ul>
                                 </li>
                                 <li className="nav-item dropdown">
