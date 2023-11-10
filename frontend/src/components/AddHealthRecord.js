@@ -8,7 +8,7 @@ const AddHealthRecord =() =>{
     const [bloodType, setBloodType] = useState("");
     const [mainComplaint, setMainComplaint] = useState("");
     const {id} = useParams()
-   const url="/api/healthRecord/AddHealthRecord/651f050ab25af493ab27db83"
+   const url="/api/healthRecord/AddHealthRecord/"+id
    console.log(url)
     const submit = async event => {
       event.preventDefault()
