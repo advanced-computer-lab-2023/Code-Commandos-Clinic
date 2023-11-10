@@ -4,7 +4,7 @@ const AppointmentModel = require('../model/Appointment');
 
 const asyncHandler = require('express-async-handler');
 const PatientModel = require('../model/Patient')
-const {S3Client,PutObjectCommand} = require('@aws-sdk/client-s3');
+
 
 const crypto=require('crypto')
 const multer=require('multer')
@@ -16,6 +16,13 @@ const bucketName = process.env.BUCKET_NAME
 const bucketRegion = process.env.BUCKET_REGION
 const accessKey = process.env.ACCESS_KEY
 const secretAccessKey = process.env.SECRET_ACCESS_KEY
+
+
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+const { S3Client, PutObjectCommand,GetObjectCommand } = require("@aws-sdk/client-s3");
+
+
+
 const s3 = new S3Client({
     credentials: {
       accessKeyId:accessKey,
@@ -90,9 +97,21 @@ const addHealthRecordByDoctor = async(req,res)=>{
 const getHealthRecordsPatient = asyncHandler ( async (req,res) =>{
     try{
         const healthRecord= await HealthRecordModel.findOne({ patient: req.user.id });
-        if(healthRecord===null){
+        console.log(healthRecord)
+        const getObjectParams={
+            Bucket:bucketName,
+            Key :healthRecord.imageName
+        }
+    
+
+
+        if(!healthRecord){
             throw new Error("No health record found")
         }
+        const command = new GetObjectCommand(getObjectParams)
+        const url = await getSignedUrl(s3,command,{expiresIn:3600})
+        healthRecord.urlName=url
+
         res.status(200).json(healthRecord);
     }catch(err){
         res.status(400);
@@ -104,7 +123,7 @@ const getHealthRecordsPatient = asyncHandler ( async (req,res) =>{
 //used to view health records of patients of a specific doctor and this patients have at least one appointment with doctor
 const getHealthRecordPatientsOfDoctor = asyncHandler(async (req,res)=>{
     try{
-        const patients = await DoctorPatientModel.find({doctor: req.params.doctorid});
+        const patients = await DoctorPatientModel.find({doctor: req.user.id});
         if(patients.length==0){
             throw new Error("you do not have any patients")
         }
@@ -116,7 +135,7 @@ const getHealthRecordPatientsOfDoctor = asyncHandler(async (req,res)=>{
             $and: [
                 { startTime : { $lt : currentDate } },
                 { endTime : { $lt : currentDate } },
-                { doctor : req.params.doctorid },
+                { doctor : req.user.id },
                 { patient : _patient.patient},
                 { status : 'COMPLETED'}
             ]
@@ -132,6 +151,18 @@ const getHealthRecordPatientsOfDoctor = asyncHandler(async (req,res)=>{
         if(healthRecords==null){
             throw new Error("no health records of patients")
         }
+
+        for(const healthRecord of healthRecords ){
+            const getObjectParams={
+                Bucket:bucketName,
+                Key :healthRecord.imageName
+            }
+            const command = new GetObjectCommand(getObjectParams)
+            const url = await getSignedUrl(s3,command,{expiresIn:3600})
+            healthRecord.urlName=url
+
+        }
+
         console.log(healthRecords)
         res.status(200).json(healthRecords);
 

@@ -45,6 +45,9 @@ const HealthRecordSchema = mongoose.Schema({
     },
     imageName:{
         type:String
+    },
+    urlName:{
+        type:String
     }
 },{ timestamps: true })
 

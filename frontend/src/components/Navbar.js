@@ -114,7 +114,12 @@ const Navbar = () => {
                                         <li>
                                             <Link to="/ViewpatientHealthRecord" className="dropdown-item">View Health Record</Link>
                                         </li>
-                                       
+                                        <li>
+                                            <Link to="/viewUploadedHealthRecordPatient" className="dropdown-item">View uploaded Health Record</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/ViewUploadedHealthRecordPatientsOfDoctor" className="dropdown-item">uploaded helthrecord of patients (you are the doctor) </Link>
+                                        </li>
                                         <li>
                                             <Link to="/ViewAndRemoveDoctors" className="dropdown-item">View And Remove Doctors</Link>
                                         </li>
