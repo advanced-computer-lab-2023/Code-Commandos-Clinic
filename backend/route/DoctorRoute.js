@@ -14,14 +14,14 @@ const {
     getPatientDoctors
 } = require('../controller/DoctorController')
 const {protect} = require("../middleware/AuthenticationHandler");
-const {checkPatientRole} = require("../middleware/AccessHandler");
+const {checkPatientRole,checkAdminRole} = require("../middleware/AccessHandler");
 
 router.route('/searchByNameAndOrSpeciality/:name/:speciality',protect,checkPatientRole).get(searchByNameAndOrSpeciality)
 router.route('/createDoctor').post(createDoctor)
 router.route('/viewDoctor/:id').get(viewDoctor)
-router.route('/removeDoctor/:id').delete(removeDoctor)
+router.delete('/removeDoctor/:id',protect,checkAdminRole,removeDoctor)
 router.get('/filterBySpecialityAndDate/:speciality/:date',protect,checkPatientRole,filterBySpecialityAndDate)
-router.route('/getDoctors').get(getDoctors)
+router.get('/getDoctors',protect,checkAdminRole,getDoctors)
 router.route('/updateDoctor').put(updateDoctor)
 router.route('/getSessionPrice/:id').get(getDoctorsSessionPrice)
 router.post('/createDoctorPatients',createDoctorPatients)

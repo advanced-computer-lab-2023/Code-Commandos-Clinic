@@ -22,9 +22,10 @@ const addAdmin = asyncHandler(async(req,res) => {
 //requirement 8
 //remove a doctor/patient/ Admin from the system
 const removeAdmin =asyncHandler( async (req,res) => {
-    const { id } =req.user.id
+    const { id } =req.params
+    const {username} =await AdminModel.findById(id);
     try {
-        const user = await UserModel.findByIdAndDelete(req.user.username)
+        const user = await UserModel.findOneAndDelete({username:username})
         const admin =await AdminModel.findByIdAndDelete(id);//req.user.username);
         
         if(!admin){
