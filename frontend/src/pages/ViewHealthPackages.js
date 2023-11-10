@@ -5,6 +5,7 @@ import PackageDetails from '../components/PackageDetails'
 
 const HealthPackages = () => {
     const [healthPackages, setHealthPackages] = useState(null)
+    const [discountedHealthPackages, setDiscountedHealthPackages] = useState(null)
     const [subscribedPackage, setSubscribedPackage] = useState({})
     const [subscribedPackageStatus, setSubscribedPackageStatus] = useState({})
     const [selectedPackage, setSelectedPackage] = useState({})
@@ -13,17 +14,6 @@ const HealthPackages = () => {
     const navigate = useNavigate()
 
     const fetchAll = () => {
-        const fetchHealthPackages = async () => {
-            const response = await fetch('api/healthPackage/getPackages')
-            const json = await response.json()
-
-            if(response.ok){
-                setHealthPackages(json)
-            }
-            else if(!response.ok){
-                alert(await response.text())
-            }
-        }
         const fetchSubscribedPackage = async () => {
             const response = await fetch('api/healthPackagePatient/getSubscribedPackage')
             const json = await response.json()
@@ -48,7 +38,6 @@ const HealthPackages = () => {
                 setFamilyMembers(null)
             }
         }
-        fetchHealthPackages()
         fetchSubscribedPackage()
         fetchFamilyMembers()
         setSelectedFamilyMember(null)
@@ -67,7 +56,31 @@ const HealthPackages = () => {
                 setSubscribedPackageStatus({})
             }
         }
+        const fetchHealthPackages = async () => {
+            const response = await fetch('api/healthPackage/getPackages')
+            const json = await response.json()
+
+            if(response.ok){
+                setHealthPackages(json)
+            }
+            else {
+                alert(json)
+            }
+        }
+        const fetchDiscountedHealthPackages = async () => {
+            const response = await fetch('api/healthPackage/getPackagesWithDiscount')
+            const json = await response.json()
+
+            if(response.ok){
+                setDiscountedHealthPackages(json)
+            }
+            else {
+                setDiscountedHealthPackages(null)
+            }
+        }
         fetchSubscribedPackageStatus()
+        fetchHealthPackages()
+        fetchDiscountedHealthPackages()
     }, [])
 
     const handleSubmit = async () => {
@@ -77,6 +90,22 @@ const HealthPackages = () => {
         if(selectedFamilyMember)
             url+= "&familyMember=" + selectedFamilyMember._id
         navigate(url)
+    }
+
+    const handleDelete = async () => {
+        const familyMemberID = selectedFamilyMember? selectedFamilyMember._id: "user"
+        const response = await fetch(`http://localhost:3000/api/healthPackagePatient/cancelSubscription/${familyMemberID}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+        })
+        if(response.ok) {
+            alert("Subscription cancelled successfully")
+            window.location.reload()
+        } else {
+            //alert("Something went wrong")
+        }
     }
 
     const selectFamilyMember = (familyMember) => {
@@ -105,9 +134,13 @@ const HealthPackages = () => {
                 </li>
                 <li className="list-group-item">
                     Subscription Status:&nbsp;
-                    {subscribedPackageStatus._id? 
-                    <span><span className="badge bg-primary"><b>{subscribedPackageStatus.status}</b></span> <span className="badge bg-primary"><b>{(new Date(subscribedPackageStatus.renewalDate)).toLocaleDateString("en-GB")}</b></span></span>: 
-                    <span className="badge bg-secondary"><b>UNSUBSCRIBED</b></span>}
+                    {(subscribedPackageStatus._id&&subscribedPackageStatus.status==="SUBSCRIBED")? 
+                        <span><span className="badge bg-primary"><b>{subscribedPackageStatus.status}</b></span> <span className="badge bg-primary"><b>renews {(new Date(subscribedPackageStatus.renewalDate)).toLocaleDateString("en-GB")}</b></span></span>
+                    :(subscribedPackageStatus._id&&subscribedPackageStatus.status==="CANCELLED")? 
+                        <span><span className="badge bg-danger"><b>{subscribedPackageStatus.status}</b></span> <span className="badge bg-danger"><b>ends {(new Date(subscribedPackageStatus.renewalDate)).toLocaleDateString("en-GB")}</b></span></span>
+                    :
+                        <span className="badge bg-secondary"><b>UNSUBSCRIBED</b></span>
+                    }
                 </li>
                 {familyMembers &&
                     familyMembers.map((familyMember) => (
@@ -122,16 +155,23 @@ const HealthPackages = () => {
                         </li>
                         <li className="list-group-item">
                             Subscription Status: &nbsp;
-                            {familyMember.healthPackage? 
-                            <span><span className="badge bg-primary"><b>{familyMember.healthPackage.status}</b></span> <span className="badge bg-primary"><b>{(new Date(familyMember.healthPackage.renewalDate)).toLocaleDateString("en-GB")}</b></span></span>: 
-                            <span className="badge bg-secondary"><b>UNSUBSCRIBED</b></span>}
+                            {(familyMember.healthPackage&&familyMember.healthPackage.status=="SUBSCRIBED")? 
+                                <span><span className="badge bg-primary"><b>{familyMember.healthPackage.status}</b></span> <span className="badge bg-primary"><b>renews {(new Date(familyMember.healthPackage.renewalDate)).toLocaleDateString("en-GB")}</b></span></span>
+                            :(familyMember.healthPackage&&familyMember.healthPackage.status=="CANCELLED")? 
+                                <span><span className="badge bg-danger"><b>{familyMember.healthPackage.status}</b></span> <span className="badge bg-danger"><b>ends {(new Date(familyMember.healthPackage.renewalDate)).toLocaleDateString("en-GB")}</b></span></span>
+                            : 
+                                <span className="badge bg-secondary"><b>UNSUBSCRIBED</b></span>
+                            }
                         </li></div>
                     ))}
             
             <br/><li className="list-group-item">
-            {subscribedPackage._id? <h4>Change or Cancel Current Health Package:</h4>: <h4>Subscribe to a Health Package:</h4> }
+            {subscribedPackage._id? 
+                <h4>Change or Cancel Current Health Package:</h4>: <h4>Subscribe to a Health Package:</h4> 
+            }
             <div>
-                {healthPackages && healthPackages.map((healthPackage) => (
+                {(discountedHealthPackages&&selectedFamilyMember)? 
+                discountedHealthPackages.map((healthPackage) => (
                     <div
                     onClick={() => setSelectedPackage(healthPackage)}
                     style={{cursor: "pointer"}}
@@ -141,15 +181,34 @@ const HealthPackages = () => {
                     <PackageDetails key={healthPackage._id} healthPackage={healthPackage} currentPlan={healthPackage._id===subscribedPackage._id} selected={false}/>}
                     <br/>
                     </div>
-                ))}
+                ))
+                :healthPackages?
+                healthPackages.map((healthPackage) => (
+                    <div
+                    onClick={() => setSelectedPackage(healthPackage)}
+                    style={{cursor: "pointer"}}
+                    >
+                    {selectedPackage._id===healthPackage._id?
+                    <PackageDetails key={healthPackage._id} healthPackage={healthPackage} currentPlan={healthPackage._id===subscribedPackage._id} selected={true}/>:
+                    <PackageDetails key={healthPackage._id} healthPackage={healthPackage} currentPlan={healthPackage._id===subscribedPackage._id} selected={false}/>}
+                    <br/>
+                    </div>
+                ))    
+                :<br/>}
                 {(selectedPackage._id && subscribedPackage._id!=selectedPackage._id)?
                     <button className="btn btn-success" onClick={() => handleSubmit()}>
                         Continue
-                    </button>:
+                    </button>
+                :
                     <button className="btn btn-success" disabled>
                         Continue
                     </button>
-                }
+                }&nbsp;
+                {(subscribedPackage._id&&( (selectedFamilyMember&&selectedFamilyMember.healthPackage.status!="CANCELLED")||(!selectedFamilyMember&&subscribedPackageStatus.status!="CANCELLED") )) &&
+                    <button className="btn btn-danger" onClick={() => handleDelete()}>
+                        Cancel Subscription
+                    </button>
+                }    
             </div></li>
             </ul>
         </div>

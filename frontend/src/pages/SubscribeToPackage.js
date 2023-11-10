@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 const SubscribeToPackage = () => {
     const [selectedPackage, setSelectedPackage] = useState(null)
     const [selectedFamilyMember, setSelectedFamilyMember] = useState(null)
     const [paymentMethod, setPaymentMethod] = useState(null)
+    const navigate = useNavigate()
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -19,7 +21,15 @@ const SubscribeToPackage = () => {
     const handleSubmit = async () => {
         const response = await fetch(`http://localhost:3000/api/patient/payForSubscription/${selectedFamilyMember}/${selectedPackage}/${paymentMethod}`)
         const session = await response.json()
-        window.location.href = session.url;
+        if(paymentMethod==="credit_card"){
+            window.location.href = session.url;
+        } else {
+            if(response.ok){
+                navigate('/HealthPackages/Subscribe/Success')
+            } else {
+                alert(session.error)
+            }
+        }
     }
 
     return (

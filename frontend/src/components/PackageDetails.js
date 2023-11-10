@@ -15,7 +15,11 @@ const PackageDetails =({healthPackage, currentPlan, selected}) =>{
                     {healthPackage.medicineDiscount*100}% off any medicine ordered from pharmacy platform and&nbsp;
                     {healthPackage.familyDiscount*100}% discount on the subscribtion of any of your family members in any package.
                 </div>
-                <div className="card-footer">EGP{healthPackage.yearlySubscription}/year</div>
+                {healthPackage.discountedYearlySubscription?
+                    <div className="card-footer"><s>EGP{healthPackage.yearlySubscription}/year</s> EGP{healthPackage.discountedYearlySubscription}/year</div>
+                :
+                    <div className="card-footer">EGP{healthPackage.yearlySubscription}/year</div>
+                }
         </div>
     );
 }

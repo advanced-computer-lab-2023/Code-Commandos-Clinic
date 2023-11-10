@@ -2,6 +2,7 @@
 const asyncHandler = require('express-async-handler')
 const HealthPackagePatientModel = require('../model/HealthPackagePatient');
 const HealthPackageModel = require('../model/HealthPackage')
+const FamilyMemberModel = require('../model/FamilyMember')
 const { default: mongoose } = require('mongoose');
 
 //Req ID #11 in VC(add/update/delete health packages)
@@ -90,5 +91,31 @@ const getPatientPackages = asyncHandler(async(req,res) => {
   }
 })
 
-module.exports = {subscribeToPackage, getSubscribedPackage, getPatientPackages, getSubscribedPackageStatus};
+//cancel subscription
+const cancelSubscription = asyncHandler(async(req,res) => {
+  const { id } = req.user
+  const { familyMemberID } = req.params
+  try{
+    if(familyMemberID==="user"){
+      const HealthPackagePatient = await HealthPackagePatientModel.findOneAndUpdate({patientID: id},{status:"CANCELLED"})
+      if(!HealthPackagePatient){
+        return res.status(400).json({error: 'Package not found'})
+      }
+      res.status(200).json(HealthPackagePatient)
+    } else {
+      const familyMember = await FamilyMemberModel.findOne({_id: familyMemberID})
+      if(!familyMember || !(familyMember.healthPackage)){
+        return res.status(400).json({error: 'Package not found'})
+      }
+      const newFamilyMember = await FamilyMemberModel.findOneAndUpdate({_id: familyMemberID},{healthPackage:{status:"CANCELLED", renewalDate:familyMember.healthPackage.renewalDate, healthPackageID:familyMember.healthPackage.healthPackageID}})
+      res.status(200).json(newFamilyMember)
+    }
+  }
+  catch (error) {
+    res.status(400);
+    throw new Error(error.message);
+  }
+})
+
+module.exports = {subscribeToPackage, getSubscribedPackage, getPatientPackages, getSubscribedPackageStatus, cancelSubscription};
 

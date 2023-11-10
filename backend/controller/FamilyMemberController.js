@@ -40,12 +40,6 @@ const getSubscribedPackagesForFamilyMembers =  asyncHandler(async(req,res) => {
       res.status(404)
       throw new Error('No registered family members')
   }
-  // for(const familyMember in familyMembers){
-  //   if(familyMember.healthPackage){
-  //     const healthPackage = await HealthPackage.findOne({_id:familyMember.healthPackage.healthPackageID})
-  //     familyMember.healthPackage.healthPackageID = healthPackage
-  //   }
-  // }
   res.status(200).json(familyMembers)
 })
 

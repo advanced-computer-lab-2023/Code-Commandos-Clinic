@@ -5,7 +5,8 @@ const {
     subscribeToPackage,
     getSubscribedPackage,
     getPatientPackages,
-    getSubscribedPackageStatus
+    getSubscribedPackageStatus,
+    cancelSubscription
 } = require('../controller/HealthPackagePatientController')
 
 const {protect} = require('../middleware/AuthenticationHandler')
@@ -26,5 +27,7 @@ router.get('/getSubscribedPackageStatus', protect, checkPatientRole, getSubscrib
 
 //get all patient packages
 router.get('/getPatientPackages', getPatientPackages)
+
+router.delete('/cancelSubscription/:familyMemberID',protect, checkPatientRole, cancelSubscription)
 
 module.exports = router;
