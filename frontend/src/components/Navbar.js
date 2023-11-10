@@ -121,6 +121,9 @@ const Navbar = () => {
                                             <Link to="/CreateAppointment" className="dropdown-item">Create Appointment</Link>
                                         </li>
                                         <li>
+                                            <Link to="/CreateFollowUp" className="dropdown-item">Create Follow-Up</Link>
+                                        </li>
+                                        <li>
                                             <Link to="/CreateDoctor" className="dropdown-item">Create Doctor</Link>
                                         </li>
                                     </ul>

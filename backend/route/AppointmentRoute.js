@@ -6,7 +6,8 @@ const {
     getUpcomingPatientsOfDoctor,
     getAppointment,
     getAppointmentsByDateAndStatus,
-    getAppointments
+    getAppointments,
+    createFollowUp
 } = require('../controller/AppointmentController')
 
 const {
@@ -22,4 +23,5 @@ router.get('/getUpcomingPatientsOfDoctor/:doctorid',getUpcomingPatientsOfDoctor)
 router.get('/getAppointment/:patientid/:doctorid',getAppointment)
 router.get('/getAppointmentsByDateAndStatus/:appointmentDate/:status',protect, checkPatientRole ||checkDoctorRole , getAppointmentsByDateAndStatus)
 router.route('/getAppointments').get(getAppointments)
+router.post('/createFollowUp',protect,checkDoctorRole,createFollowUp)
 module.exports = router

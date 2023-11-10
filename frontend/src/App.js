@@ -26,6 +26,7 @@ import AddPrescription from "./pages/AddPrescription";
 import CreateAppointment from "./pages/CreateAppointment";
 import CreateDoctor from "./pages/CreateDoctor";
 import LinkFamilyMember from "./pages/linkFamilyMember";
+import CreateFollowUp from "./pages/CreateFollowUp";
 
 const App = () => {
     const logged = window.localStorage.getItem("logged");
@@ -61,6 +62,7 @@ const App = () => {
             <Route path="/FilterPrescriptions"  element={<FilterPrescriptions/>}/>
             <Route path="/AddPrescription"  element={<AddPrescription/>}/>
             <Route path="/CreateAppointment"  element={<CreateAppointment/>}/>
+            <Route path="/CreateFollowUp"  element={<CreateFollowUp/>}/>
             <Route path="/CreateDoctor"  element={<CreateDoctor/>}/>
             <Route path="/Login" element={logged ? <Navigate to="/Home" replace /> : <Login/>}/>
             <Route path="/Home" element={<Home/>}/>

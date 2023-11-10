@@ -25,7 +25,7 @@ const addFamilyMember = asyncHandler(async(req,res) => {
 const getFamilyMembers =  asyncHandler(async(req,res) => {
     console.log('from controller ',req.user.id)
     const patientId= req.user.id
-    const familyMembers = await FamilyMember.find({patient:patientId})
+    const familyMembers = await FamilyMemberModel.find({patient:patientId})
 
     if(familyMembers.length == 0){
         res.status(404)

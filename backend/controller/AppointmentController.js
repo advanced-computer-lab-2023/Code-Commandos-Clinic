@@ -154,10 +154,80 @@ const getAppointments = asyncHandler( async (req , res) => {
     res.status(200).json(appointmentsAvailable)
 })
 
+
+const createFollowUp = asyncHandler( async (req,res) => {
+    const {startTime,endTime,doctorpatient}=req.body;
+    const {doctorName,patientName,patient}=doctorpatient;
+    const doctor =req.user.id;
+
+    try {
+        operlappingAppointment = await AppointmentModel.findOne({
+            $and: [
+                {
+                    $or: [
+                        {
+                            doctor: doctor
+                        },
+                        {
+                            patient: patient
+                        }
+                    ]
+                },
+                {
+                    $or: [
+                        {
+                            startTime: {$lte: startTime},
+                            endTime: {$gte: startTime},
+                        },
+                        {
+                            startTime: {$gte: appointmentBody.startTime},
+                            endTime: {$lte: endTime},
+                        },
+                        {
+                            startTime: {$lte: endTime},
+                            endTime: {$gte: startTime},
+                        },
+                    ]
+                }
+                ,
+                {
+                    status: "PENDING",
+                }
+            ]
+        })
+    }
+    catch (error){
+        res.status(400)
+        throw new Error(error.message)
+    }
+    if (operlappingAppointment){
+        res.status(400)
+        throw new Error('The appointment overlapps with another appointment with the doctor/patient')
+    }
+
+    try {
+        const appointment = await AppointmentModel.create({
+            patient: patient,
+            doctor: doctor ,
+            doctorName: doctorName ,
+            patientName: patientName,
+            startTime: startTime,
+            endTime: endTime,
+          });
+          await appointment.save()
+          res.status(200).json(appointment);
+        
+    } catch (error) {
+        res.status(400)
+        throw new Error(error.message)
+    }
+})
+
 module.exports = {
     getUpcomingPatientsOfDoctor,
     createAppointment,
     getAppointment,
     getAppointments,
-    getAppointmentsByDateAndStatus
+    getAppointmentsByDateAndStatus,
+    createFollowUp
 };
