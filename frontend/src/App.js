@@ -26,6 +26,7 @@ import AddPrescription from "./pages/AddPrescription";
 import CreateAppointment from "./pages/CreateAppointment";
 import CreateDoctor from "./pages/CreateDoctor";
 import ViewpatientHealthRecord from './pages/ViewPatientHealthRecord';
+import AddHealthRecord  from './components/AddHealthRecord';
 
 const App = () => {
     const logged = window.localStorage.getItem("logged");
@@ -49,7 +50,8 @@ const App = () => {
             <Route path="/ViewAndRemovePatients" element={<ViewAndRemovePatients/>}/>
             <Route path="/AddAdmin" element={<AddAdmin />}/>
             <Route path="/ViewPatientHealthRecord" element={<ViewpatientHealthRecord />}/>
-           
+            <Route path="/AddHealthRecord/:id" element={<AddHealthRecord />}/>
+            
             <Route path="/ShowAndRemoveAdmins" element={<ShowAndRemoveAdmins />}/>
             <Route path="/ViewAndRemoveDoctors" element={<ViewAndRemoveDoctors />}/>
             <Route path="/ViewPatientsOfDoctor" element={<ViewPatientsOfDoctor/>}/>
