@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import HealthRecordDetails from './HealthRecordDetails';
-
+import { Link } from 'react-router-dom';
 const PatientInfo = ({ patient }) => {
     const [healthRecord, setHealthRecord] = useState(null);
     useEffect(() => {
@@ -34,6 +34,20 @@ const PatientInfo = ({ patient }) => {
                 <p className="card-text">Emergency Contact: {patient.emergencyContact.fullName}</p>
             </div>
             {healthRecord && <HealthRecordDetails healthRecord={healthRecord} />}
+            <Link to={`/AddHealthRecord/${patient._id}`}>
+                    <button
+                        className="btn btn-success"
+                        style={{
+                            position: 'absolute',
+                            top: 10,
+                            bottom: 10,
+                            right: 10,
+                        }}
+                    >
+                        Add health record
+                    </button>
+            </Link>
+  
         </div>
     );
 };

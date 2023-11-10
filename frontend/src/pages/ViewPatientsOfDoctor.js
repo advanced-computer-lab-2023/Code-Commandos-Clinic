@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import PatientInfo from "../components/PatientInfo";
 
 const ViewPatientsOfDoctor = () =>{
-    const [hello , sethello] = useState([])
     const [patients , setPatients] = useState([])
     const [selectedPatient,setSelectedPatient] = useState(null)
     const [searchQuery, setSearchQuery] = useState("");
@@ -29,6 +28,7 @@ const ViewPatientsOfDoctor = () =>{
         else {
             url += `/${searchQuery}`
         }
+        url+='/651ef3b26c21aee2d43e6b9b'
         try {
             const response = await fetch(url, {
                 method: 'GET',
@@ -87,5 +87,4 @@ const ViewPatientsOfDoctor = () =>{
 }
 
 export default ViewPatientsOfDoctor;
-
 

@@ -34,6 +34,7 @@ import EnterEmailReset from "./components/EnterEmailReset";
 import ResetPassword from "./components/ResetPassword";
 import ChangePassword from "./pages/ChangePassword";
 import ViewpatientHealthRecord from './pages/ViewPatientHealthRecord';
+import AddHealthRecord  from './components/AddHealthRecord';
 
 const App = () => {
     const logged = window.localStorage.getItem("logged");
@@ -57,7 +58,8 @@ const App = () => {
             <Route path="/ViewAndRemovePatients" element={<ViewAndRemovePatients/>}/>
             <Route path="/AddAdmin" element={<AddAdmin />}/>
             <Route path="/ViewPatientHealthRecord" element={<ViewpatientHealthRecord />}/>
-           
+            <Route path="/AddHealthRecord/:id" element={<AddHealthRecord />}/>
+            
             <Route path="/ShowAndRemoveAdmins" element={<ShowAndRemoveAdmins />}/>
             <Route path="/ViewAndRemoveDoctors" element={<ViewAndRemoveDoctors />}/>
             <Route path="/ViewPatientsOfDoctor" element={<ViewPatientsOfDoctor/>}/>
