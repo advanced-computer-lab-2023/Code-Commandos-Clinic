@@ -9,6 +9,7 @@ const UploadDocument = () => {
 
   const handleFileSelect = (event) => {
     const file = event.target.files[0];
+    console.log(file.name)
     setSingleFile(file);
     setFileName(file.name);
   };
@@ -20,6 +21,7 @@ const UploadDocument = () => {
     }
     const formData = new FormData();
     formData.append('file', singleFile);
+    console.log(singleFile)
     try {
       const response = await fetch('/api/file/addSingleFile', {
         method: 'POST',

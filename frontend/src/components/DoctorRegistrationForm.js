@@ -1,3 +1,4 @@
+
 import { useState } from 'react'
 
 const DoctorRegistrationForm = () => {
@@ -11,23 +12,42 @@ const DoctorRegistrationForm = () => {
     const [educationalBackground, setEducationalBackground] = useState('')
     const [sessionPrice, setSessionPrice] = useState('')
     const [speciality, setSpeciality] = useState('')
-    const [medicalID, setMedicalID] = useState(null)
-    const [medicalLicenses, setMedicalLicenses] = useState(null)
-    const [medicalDegree, setMedicalDegree] = useState(null)
-    const [ID, setID] = useState('')
-    const [License, setLicenses] = useState('')
-    const [Degree, setDegree] = useState('')
+    const [medicalIDFile, setMedicalIDFile] = useState(null);
+    const [medicalLicensesFile, setMedicalLicensesFile] = useState(null);
+    const [medicalDegreeFile, setMedicalDegreeFile] = useState(null);
+
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const doctorRequest = { username: username, name: name, email: email, password: password, dateOfBirth: dateOfBirth, hourlyRate: hourlyRate, affiliation: affiliation, educationalBackground: educationalBackground, speciality: speciality, sessionPrice: sessionPrice, medicalID: medicalID, medicalLicenses: medicalLicenses, medicalDegree: medicalDegree }
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('username', username);
+        formData.append('email', email);
+        formData.append('password', password);
+        formData.append('dateOfBirth', dateOfBirth);
+        formData.append('hourlyRate', hourlyRate);
+        formData.append('affiliation', affiliation);
+        formData.append('educationalBackground', educationalBackground);
+        formData.append('speciality', speciality);
+        formData.append('sessionPrice', sessionPrice);
+        formData.append('medicalID', medicalIDFile);
+        formData.append('medicalLicenses', medicalLicensesFile);
+        formData.append('medicalDegree', medicalDegreeFile);
+
+        const jsonFormData = {};
+        formData.forEach((value, key) => {
+            jsonFormData[key] = value;
+            console.log(key, value)
+        });
+
+        
         const response = await fetch('/api/doctorRegistration/doctorRegistrationRequest', {
             method: 'POST',
-            body: JSON.stringify(doctorRequest),
+            body: JSON.stringify(jsonFormData),
             headers: {
-                'Content-Type': 'application/json'
-            }
-        })
+                'Content-Type': 'application/json',
+            },
+        });
 
         if (!response.ok) {
             const errorMessage = await response.text();
@@ -43,38 +63,36 @@ const DoctorRegistrationForm = () => {
             setAffiliation('')
             setSessionPrice('')
             setEducationalBackground('')
+            setMedicalIDFile(null);
+            setMedicalLicensesFile(null);
+            setMedicalDegreeFile(null);
+            setSpeciality('')
             alert('Request to register successful.')
             console.log('new doctor registration request added:', json)
         }
 
     }
-
-    const handleSelectID = (event) => {
-        console.log("Event",event)
-        const file = event.target.files[0];
-        setMedicalID(file);
-        setID(file.name);
+    const handleMedicalIDSubmit = async () => {
+        await handleFileSubmit( medicalIDFile);
     };
 
-    const handleSelectLicense = (event) => {
-        const file = event.target.files[0];
-        setMedicalLicenses(file);
-        setLicenses(file.name);
+    const handleMedicalLicensesSubmit = async () => {
+        await handleFileSubmit(medicalLicensesFile);
     };
 
-    const handleSelectDegree = (event) => {
-        const file = event.target.files[0];
-        setMedicalDegree(file);
-        setDegree(file.name);
+    const handleMedicalDegreeSubmit = async () => {
+        await handleFileSubmit( medicalDegreeFile);
     };
 
-    const SubmitFileID = async () => {
-        if (!medicalID) {
+    const handleFileSubmit = async ( file) => {
+        if (!file) {
             alert('Please select a file to upload');
             return;
         }
+      
         const formData = new FormData();
-        formData.append('file', medicalID);
+        formData.append('file', file);
+
         try {
             const response = await fetch('/api/file/addSingleFile', {
                 method: 'POST',
@@ -82,72 +100,18 @@ const DoctorRegistrationForm = () => {
             });
             if (!response.ok) {
                 const errorMessage = await response.text();
-                alert(errorMessage)
-                throw new Error(errorMessage)
+                alert(errorMessage);
+                throw new Error(errorMessage);
             } else {
                 alert('File is uploaded successfully');
             }
         } catch (error) {
-            alert(error.message)
+            alert(error.message);
         }
-        setID('');
-
     };
-
-    const SubmitFileLicense = async () => {
-        if (!medicalLicenses) {
-            alert('Please select a file to upload');
-            return;
-        }
-        const formData = new FormData();
-        formData.append('file', medicalLicenses);
-        try {
-            const response = await fetch('/api/file/addSingleFile', {
-                method: 'POST',
-                body: formData,
-            });
-            if (!response.ok) {
-                const errorMessage = await response.text();
-                alert(errorMessage)
-                throw new Error(errorMessage)
-            } else {
-                alert('File is uploaded successfully');
-            }
-        } catch (error) {
-            alert(error.message)
-        }
-        setLicenses('');
-
-    }
-
-    const SubmitFileDegree = async () => {
-        if (!medicalDegree) {
-            alert('Please select a file to upload');
-            return;
-        }
-        const formData = new FormData();
-        formData.append('file', medicalDegree);
-        try {
-            const response = await fetch('/api/file/addSingleFile', {
-                method: 'POST',
-                body: formData,
-            });
-            if (!response.ok) {
-                const errorMessage = await response.text();
-                alert(errorMessage)
-                throw new Error(errorMessage)
-            } else {
-                alert('File is uploaded successfully');
-            }
-        } catch (error) {
-            alert(error.message)
-        }
-        setDegree('');
-
-    }
 
     return (
-        <form className="create m-5"/* onSubmit={handleSubmit}*/>
+        <form className="create m-5" >
             <h2>Apply as a doctor to join the platform:</h2>
 
             <div className="mb-3">
@@ -319,36 +283,56 @@ const DoctorRegistrationForm = () => {
             </div>
 
             <hr />
-            <div>
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <button className="btn btn-secondary" style={{ width: 300 }} onClick={() => document.getElementById('fileInput').click()}>Upload Medical ID</button>
-                    <input id="fileInput" type="file" style={{ display: 'none' }} onChange={ handleSelectID} />
-                    {ID && <p>Selected file: {ID}</p>}
-                </div>
-                <button type="submit" className="btn btn-primary" onClick={SubmitFileID} style={{ marginTop: '10px' }}>submit</button>
+            <div className="mb-3">
+                <label htmlFor="medicalIDFile" className="form-label">
+                    Upload Medical ID:
+                </label>
+                <input
+                    type="file"
+                    className="form-control"
+                    id="medicalIDFile"
+                    onChange={  (e) => setMedicalIDFile(e.target.files[0])}
+                />
+                <button type="button" className="btn btn-primary" onClick={handleMedicalIDSubmit}>
+                    Submit Medical ID
+                </button>
             </div>
+
             <hr />
-            <div>
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <button className="btn btn-secondary" style={{ width: 300 }} onClick={() => document.getElementById('fileInput').click()}>Upload Medical License</button>
-                    <input id="fileInput" type="file" style={{ display: 'none' }} onChange={handleSelectLicense} />
-                    {License && <p>Selected file: {License}</p>}
-                </div>
-                <button type="submit" className="btn btn-primary" onClick={SubmitFileLicense} style={{ marginTop: '10px' }}>submit</button>
+            <div className="mb-3">
+                <label htmlFor="medicalLicensesFile" className="form-label">
+                    Upload Medical Licenses:
+                </label>
+                <input
+                    type="file"
+                    className="form-control"
+                    id="medicalLicensesFile"
+                    onChange={(e) => setMedicalLicensesFile(e.target.files[0])}
+                />
+                <button type="button" className="btn btn-primary" onClick={handleMedicalLicensesSubmit}>
+                    Submit Medical Licenses
+                </button>
             </div>
 
             <hr />
 
-            <div>
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <button className="btn btn-secondary" style={{ width: 300 }} onClick={() => document.getElementById('fileInput').click()}>Upload Medical Degree</button>
-                    <input id="fileInput" type="file" style={{ display: 'none' }} onChange={handleSelectDegree} />
-                    {Degree && <p>Selected file: {Degree}</p>}
-                </div>
-                <button type="submit" className="btn btn-primary" onClick={SubmitFileDegree} style={{ marginTop: '10px' }}>submit</button>
+            <div className="mb-3">
+                <label htmlFor="medicalDegreeFile" className="form-label">
+                    Upload Medical Degree:
+                </label>
+                <input
+                    type="file"
+                    className="form-control"
+                    id="medicalDegreeFile"
+                    onChange={(e) => setMedicalDegreeFile(e.target.files[0])}
+                />
+                <button type="button" className="btn btn-primary" onClick={handleMedicalDegreeSubmit}>
+                    Submit Medical Degree
+                </button>
             </div>
-            <hr/>
-            <button type="submit" className="btn btn-primary" >
+
+            <hr />
+            <button type="submit" className="btn btn-primary" onClick={handleSubmit} >
                 Register
             </button>
         </form>

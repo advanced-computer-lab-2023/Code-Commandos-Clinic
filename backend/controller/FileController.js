@@ -8,7 +8,6 @@ const singleFileUpload = async (req, res, next) => {
     try {
         const fileContent = fs.readFileSync(req.file.path);
         const fileHash = calculateFileHash(fileContent);
-
         // Check if a file with the same hash already exists
         const existingFile = await SingleFile.findOne({ fileHash });
 
@@ -27,6 +26,7 @@ const singleFileUpload = async (req, res, next) => {
             });
             await file.save();
             res.status(201).send('File Uploaded Successfully');
+            return file;
         }
     } catch (error) {
         res.status(400).send(error.message);
