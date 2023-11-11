@@ -54,7 +54,7 @@ const acceptDoctorRequests = asyncHandler(async (req, res) => {
     const {id} = req.params
     console.log(id)
     try {
-        const request = await DoctorRegistrationModel.findOneAndDelete(id)
+        const request = await DoctorRegistrationModel.findByIdAndDelete(id)
         const user = await UserModel.create({username: request.username,password: request.password,role:'DOCTOR'})
         const addDoctor =await DoctorModel.create({username: request.username,name: request.name,email:  request.email,password: request.password,dateOfBirth:  request.dateOfBirth,hourlyRate: request.hourlyRate,affiliation: request.affiliation,educationalBackground: request.educationalBackground,speciality: request.speciality,sessionPrice: request.sessionPrice})
         res.status(200).json(addDoctor)
