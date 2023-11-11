@@ -27,6 +27,8 @@ const ViewMyWalletAsPatient = () => {
         };
 
         fetchAmount();
+
+        
     }, []);
     return (
         <div className="container mt-4">
