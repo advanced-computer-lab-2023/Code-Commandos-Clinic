@@ -2,6 +2,7 @@
 const asyncHandler = require('express-async-handler')
 const PatientModel = require("../model/Patient");
 const HealthPackageModel = require('../model/HealthPackage');
+const HealthPackagePatientModel = require('../model/HealthPackagePatient')
 const { default: mongoose } = require('mongoose');
 
 //Req ID #11 in VC(add/update/delete health packages)
@@ -51,8 +52,42 @@ const getPackage = asyncHandler(async(req,res) => {
 //get all packages
 const getPackages = asyncHandler(async(req,res) => {
   try{
-    const HealthPackage = await HealthPackageModel.find({}).sort({createdAt: -1})
+    const HealthPackage = await HealthPackageModel.find({}).sort({yearlySubscription: 1})
     res.status(200).json(HealthPackage)
+  }
+  catch (error){
+    res.status(400);
+    throw new Error(error.message);
+  }
+})
+
+//gets all packages and adds discountedYearlySubscription attribute, returns nothing if no discount
+const getPackagesWithDiscount =  asyncHandler(async(req,res) => {
+  const { id } = req.user
+  try {
+    const HealthPackagePatient = await HealthPackagePatientModel.findOne({patientID: id})
+    if(!HealthPackagePatient){
+      res.status(404)
+      throw new Error('No subscribed package');
+    }
+    const subscribedHealthPackage = await HealthPackageModel.findOne({_id:HealthPackagePatient.healthPackageID})
+    const discount = subscribedHealthPackage.familyDiscount
+    const healthPackages = await HealthPackageModel.find({}).sort({yearlySubscription: 1})
+    let healthPackageList = []
+    for(const healthPackage of healthPackages){
+      const { _id, packageName, yearlySubscription, doctorSessionDiscount, medicineDiscount, familyDiscount } = healthPackage;
+      const discountedYearlySubscription = healthPackage.yearlySubscription*(1-discount)
+      healthPackageList.push({
+        _id:_id, 
+        packageName:packageName, 
+        yearlySubscription:yearlySubscription, 
+        doctorSessionDiscount:doctorSessionDiscount, 
+        medicineDiscount:medicineDiscount, 
+        familyDiscount:familyDiscount, 
+        discountedYearlySubscription:discountedYearlySubscription 
+      })
+    }
+    res.status(200).json(healthPackageList)
   }
   catch (error){
     res.status(400);
@@ -100,5 +135,5 @@ const deletePackage = asyncHandler(async(req,res) => {
     }
 })
 
-module.exports = {addPackage, getPackage, getPackages, updatePackage, deletePackage};
+module.exports = {addPackage, getPackage, getPackages, getPackagesWithDiscount, updatePackage, deletePackage};
 

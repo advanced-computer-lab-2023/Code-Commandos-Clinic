@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 const DoctorUpdateForm = () => {
-  const [username, setUsername] = useState('')
+  //const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [hourlyRate, setHourlyRate] = useState('')
   const [affiliation, setAffiliation] = useState('')
@@ -10,9 +10,9 @@ const DoctorUpdateForm = () => {
     e.preventDefault()
 
     let doctor = {}
-    if(username.length !== 0){
-      doctor.username = username;
-    }
+    // if(username.length !== 0){
+    //   doctor.username = username;
+    // }
     if(email.length !== 0){
       doctor.email = email;
     }
@@ -49,7 +49,7 @@ const DoctorUpdateForm = () => {
         <form className="create m-5" onSubmit={handleSubmit}>
             <h2>Update your information:</h2>
 
-            <div className="mb-3">
+            {/* <div className="mb-3">
                 <label htmlFor="username" className="form-label">
                     Confirm your username:
                 </label>
@@ -60,7 +60,7 @@ const DoctorUpdateForm = () => {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                 />
-            </div>
+            </div> */}
 
             <div className="mb-3">
                 <label htmlFor="email" className="form-label">

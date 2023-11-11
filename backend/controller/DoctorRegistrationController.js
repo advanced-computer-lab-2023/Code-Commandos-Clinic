@@ -79,7 +79,6 @@ const rejectDoctorRequests = asyncHandler(async (req, res) => {
 })
 
 
-
 module.exports = {
     doctorRegistrationRequest,
     getDoctorRequests,

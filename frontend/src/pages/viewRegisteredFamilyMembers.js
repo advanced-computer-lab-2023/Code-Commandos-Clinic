@@ -5,7 +5,14 @@ const RegisteredFamilyMembers = () =>{
     const [registeredFamilyMembers, setRegisteredFamilyMembers] = useState(null)
 
     useEffect(() => {
+        const fetchRegisteredFamilyMembers = async () => {
+            const response = await fetch('api/familyMember/getFamilyMembers/')
+            const json = await response.json()
 
+            if(response.ok){
+                setRegisteredFamilyMembers(json)
+            }
+        }
         fetchRegisteredFamilyMembers()
     }, [])
 

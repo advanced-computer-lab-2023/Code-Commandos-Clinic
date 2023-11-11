@@ -27,6 +27,22 @@ const FamilyMemberSchema = new mongoose.Schema({
     patient:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Patient',
+    },
+    healthPackage:{
+        healthPackageID:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'HealthPackage',
+            required: false
+        },
+        status: {
+            type: String,
+            enum: [ 'SUBSCRIBED', 'CANCELLED' ],
+            required: false,
+        },
+        renewalDate: {
+            type: Date,
+            required: false
+        },
     }
 },
 { timestamps: true });

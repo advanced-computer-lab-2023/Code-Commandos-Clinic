@@ -1,5 +1,6 @@
 const DoctorPatient = require('../model/DoctorPatient');
 const DoctorModel = require('../model/Doctor')
+const UserModel = require('../model/User')
 const mongoose = require('mongoose')
 const asyncHandler = require('express-async-handler')
 const HealthPackageModel = require('../model/HealthPackage')
@@ -77,6 +78,7 @@ const createDoctor = asyncHandler(async (req,res) =>{
     const doctorBody = req.body
     try {
         const doctor = await DoctorModel.create(doctorBody)
+        const user = await UserModel.create({username: doctorBody.username, password: doctorBody.password, role:"DOCTOR"})
         res.status(200).json(doctor)
     }
     catch (error){
@@ -131,7 +133,8 @@ const viewDoctor = asyncHandler(async(req,res) => {
 //update doctor's email, hourlyRate, affiliation
 //function updates a doctor's info using an ID or username
 const updateDoctor = asyncHandler(async (req, res) => {
-    const {id, username, email, hourlyRate, affiliation } = req.body
+    const { email, hourlyRate, affiliation } = req.body
+    const id  = req.user.id
     try{
         let query = {}
         if(email){
@@ -147,12 +150,7 @@ const updateDoctor = asyncHandler(async (req, res) => {
             throw new Error('You need to provide a new email, hourly rate or affiliation to continue')
         }
         var doctor;
-        if(id) {
-            doctor = await DoctorModel.findOneAndUpdate({_id: id}, {...query})
-        }
-        else {
-            doctor = await DoctorModel.findOneAndUpdate({username: username}, {...query})
-        }    
+        doctor = await DoctorModel.findOneAndUpdate({_id: id}, {...query})    
         if (!doctor) {
             res.status(400)
             throw new Error('Doctor not found')
@@ -181,7 +179,7 @@ const getDoctors = asyncHandler(async (req, res) => {
 // req ID #37
 // get the doctor's session price depending on the patient's health package
 const getDoctorsSessionPrice = asyncHandler(async (req, res) => {
-    const{ id } = req.params
+    const { id } = req.user
 
     try {
         // Retrieve all doctors from the database

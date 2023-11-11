@@ -10,6 +10,7 @@ const nodemailer = require('nodemailer');
 const Mailgen =  require('mailgen');
 const dotenv = require("dotenv").config();
 
+
 const register = asyncHandler(async (req,res) => {
     const {username,password} = req.body
     if(!username || !password){

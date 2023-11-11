@@ -1,6 +1,13 @@
 const express = require('express');
 const router = express.Router()
 
+const {protect} = require('../middleware/AuthenticationHandler')
+const {
+  checkPatientRole,
+  checkDoctorRole,
+  checkAdminRole
+} = require('../middleware/AccessHandler')
+
 const {
     searchByNameAndOrSpeciality,
     createDoctor,
@@ -13,17 +20,15 @@ const {
     createDoctorPatients,
     getPatientDoctors
 } = require('../controller/DoctorController')
-const {protect} = require("../middleware/AuthenticationHandler");
-const {checkPatientRole,checkAdminRole} = require("../middleware/AccessHandler");
 
-router.route('/searchByNameAndOrSpeciality/:name/:speciality',protect,checkPatientRole).get(searchByNameAndOrSpeciality)
+router.get('/searchByNameAndOrSpeciality/:name/:speciality',protect,checkPatientRole,searchByNameAndOrSpeciality)
 router.route('/createDoctor').post(createDoctor)
 router.route('/viewDoctor/:id').get(viewDoctor)
 router.delete('/removeDoctor/:id',protect,checkAdminRole,removeDoctor)
 router.get('/filterBySpecialityAndDate/:speciality/:date',protect,checkPatientRole,filterBySpecialityAndDate)
 router.get('/getDoctors',protect,checkAdminRole,getDoctors)
-router.route('/updateDoctor').put(updateDoctor)
-router.route('/getSessionPrice/:id').get(getDoctorsSessionPrice)
+router.put('/updateDoctor',protect,checkDoctorRole,updateDoctor)
+router.get('/getSessionPrice',protect,checkPatientRole,getDoctorsSessionPrice)
 router.post('/createDoctorPatients',createDoctorPatients)
 router.get('/getPatientDoctors',protect,checkPatientRole,getPatientDoctors)
 module.exports = router

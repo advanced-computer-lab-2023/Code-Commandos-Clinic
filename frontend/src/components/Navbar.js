@@ -30,6 +30,7 @@ const Navbar = () => {
         }
         window.localStorage.removeItem("logged");
         navigate('/Login')
+        window.location.reload()
     }
 
     return (
@@ -79,6 +80,9 @@ const Navbar = () => {
                                         </li>
                                         <li>
                                             <Link to="/AddHealthPackage" className="dropdown-item">Add Health Package</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/HealthPackages" className="dropdown-item">View Health Packages</Link>
                                         </li>
                                         <li>
                                             <Link to="/ViewDoctorsWithSessionPrice" className="dropdown-item">View Doctors With Session Price</Link>

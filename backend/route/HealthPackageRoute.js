@@ -6,10 +6,15 @@ const {
     getPackage,
     getPackages,
     updatePackage,
-    deletePackage
+    deletePackage,
+    getPackagesWithDiscount
 } = require('../controller/HealthPackageController')
 const {protect} = require("../middleware/AuthenticationHandler");
-const {checkAdminRole} = require("../middleware/AccessHandler");
+
+const {
+  checkPatientRole,
+  checkAdminRole
+} = require('../middleware/AccessHandler')
 
 //post a new package
 router.post('/addPackage',protect,checkAdminRole, addPackage)
@@ -18,12 +23,14 @@ router.post('/addPackage',protect,checkAdminRole, addPackage)
 router.get('/getPackage/:id', getPackage)
 
 //get all packages
-router.get('/getPackages', getPackages)
+router.get('/getPackages',protect, getPackages)
 
 //update a package
 router.put('/updatePackage/:id', protect,checkAdminRole,updatePackage)
 
 //delete a  package(done)
 router.delete('/deletePackage/:id', protect,checkAdminRole,deletePackage)
+
+router.get('/getPackagesWithDiscount', protect, checkPatientRole, getPackagesWithDiscount)
 
 module.exports = router;

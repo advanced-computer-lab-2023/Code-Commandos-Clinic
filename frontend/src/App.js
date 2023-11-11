@@ -34,9 +34,12 @@ import EnterEmailReset from "./components/EnterEmailReset";
 import ResetPassword from "./components/ResetPassword";
 import ChangePassword from "./pages/ChangePassword";
 import DoctorContract from "./pages/DoctorContract";
-
 import LinkFamilyMember from "./pages/linkFamilyMember";
 import CreateFollowUp from "./pages/CreateFollowUp";
+import HealthPackages from './pages/ViewHealthPackages';
+import SubscribeToPackage from './pages/SubscribeToPackage';
+import PaymentSuccess from './pages/PaymentSuccess';
+import PaymentCancel from './pages/PaymentCancel';
 
 const App = () => {
     const logged = window.localStorage.getItem("logged");
@@ -84,8 +87,11 @@ const App = () => {
             <Route path="/DoctorContract" element={<DoctorContract/>}/>
             <Route path="/LinkFamilyMember" element={<LinkFamilyMember/>}/>
             <Route path="/CreateFollowUp" element={<CreateFollowUp/>}/>
-
-            <Route path="/Login" element={logged ? <Navigate to="/Home" replace /> : <Login/>}/>
+            <Route path="/HealthPackages" element={<HealthPackages/>}/>
+            <Route path="/HealthPackages/Subscribe" element={<SubscribeToPackage/>}/>
+            <Route path="/HealthPackages/Subscribe/Success" element={<PaymentSuccess/>}/>
+            <Route path="/HealthPackages/Subscribe/Cancel" element={<PaymentCancel/>}/>
+            <Route path="/Login" element={logged ? <Navigate to="/Home" replace /> : <Navigate to="/Login" replace /> }/>
             <Route path="/Home" element={<Home/>}/>
         </Routes>
        </div>

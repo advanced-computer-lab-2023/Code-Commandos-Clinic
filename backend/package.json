@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@stripe/stripe-js": "^2.1.11",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
@@ -22,6 +23,7 @@
     "mailgen": "^2.0.28",
     "mongoose": "^7.5.3",
     "nodemailer": "^6.9.7",
-    "otp-generator": "^4.0.1"
+    "otp-generator": "^4.0.1",
+    "stripe": "^14.4.0"
   }
 }

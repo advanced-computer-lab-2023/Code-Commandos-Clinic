@@ -18,13 +18,13 @@ const Login = () => {
         if(response.ok){
             window.localStorage.setItem("logged",true)
             navigate('/Home')
+            window.location.reload()
         }
         if (!response.ok) {
             alert(await response.text())
         }
     };
 
-    // if (!isLogged) {
         return (
             <div className="container">
                 <div className="row justify-content-center">
@@ -74,13 +74,6 @@ const Login = () => {
                 </div>
             </div>
         );
-    // } else {
-    //     return (
-    //         <div>
-    //             <Home />
-    //         </div>
-    //     );
-    // }
 };
 
 export default Login;
