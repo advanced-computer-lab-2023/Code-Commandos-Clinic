@@ -2,8 +2,10 @@ const DoctorPatientModel = require('../model/DoctorPatient.js');
 const HealthRecord = require ('../model/HealthRecord.js');
 const PatientModel = require('../model/Patient')
 const mongoose = require('mongoose')
+const User = require("../model/User");
 const asyncHandler = require('express-async-handler')
-
+const express = require("express");
+const router = express.Router();
 
 //requirement-33 Nour
 const getPatientsOfADoctor = asyncHandler ( async (req,res) =>{
@@ -71,10 +73,9 @@ const getPatient = asyncHandler(async (req, res) => {
 // create a new patient
 const createPatient = asyncHandler(async (req, res) => {
   const patientBody = req.body
-  const {username} = req.body
   try {
     const patient = await PatientModel.create(patientBody)
-    res.status(200).json({ patient, wallet });
+    res.status(200).json(patient );
   } catch (error) {
     res.status(400)
     throw new Error(error.message)
@@ -159,19 +160,17 @@ const searchByName = asyncHandler( async (req,res) =>{
 
 //requirement 67  -> akram
 const getAmount = asyncHandler(async (req, res) => {
-  const { username } = req.params;
   try {
-    const wallet = await PatientModel.findOne({ username });
-    if (!wallet) {
-      res.status(400)
-      throw new Error('Wallet not found')
+    un = req.user.username;
+    const patient = await PatientModel.findOne({username: un});
+    if (!patient) {
+      res.status(404).json({ message: 'Patient not found', userId: un });
+      return;
     }
-
-    res.status(200).json(wallet) 
-  }
-  catch (error) {
-    res.status(400)
-    throw new Error(error.message)
+    res.status(200).json(patient.wallet);
+  } catch (error) {
+    res.status(400);
+    throw new Error(error.message);
   }
 });
 

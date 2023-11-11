@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const ViewMyWallet = () => {
+const ViewMyWalletAsPatient = () => {
     const [wallet, setWallet] = useState(0);
 
     useEffect(() => {
@@ -31,10 +31,10 @@ const ViewMyWallet = () => {
     return (
         <div className="container mt-4">
             <h2>Your Wallet Amount:</h2>
-            <h4>${wallet.amount}</h4>
+            <h4>${wallet}</h4>
         </div>
 
     );
 }
 
-export default ViewMyWallet;
+export default ViewMyWalletAsPatient;

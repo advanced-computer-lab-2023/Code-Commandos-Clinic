@@ -9,15 +9,16 @@ const AppointmentModel = require('../model/Appointment')
 
 //requirement 67  -> akram
 const getAmount = asyncHandler(async (req, res) => {
-    const { username } = req.params;
+    
     try {
-      const wallet = await DoctorModel.findOne({ username });
-      if (!wallet) {
+      un = req.user.username;  
+      const doctor = await DoctorModel.findOne({ username : un });
+      if (!doctor) {
         res.status(400)
-        throw new Error('Wallet not found')
+        throw new Error('Doctor not found')
       }
   
-      res.status(200).json(wallet) 
+      res.status(200).json(doctor.wallet) 
     }
     catch (error) {
       res.status(400)
@@ -95,7 +96,7 @@ const createDoctor = asyncHandler(async (req,res) =>{
     const doctorBody = req.body
     try {
         const doctor = await DoctorModel.create(doctorBody)
-        res.status(200).json({ doctor, wallet });
+        res.status(200).json(doctor);
     }
     catch (error){
         res.status(400)

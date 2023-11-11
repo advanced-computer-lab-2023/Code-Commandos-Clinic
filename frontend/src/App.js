@@ -24,7 +24,8 @@ import PrescriptionContainer from "./pages/PrescriptionContainer";
 import FilterPrescriptions from "./pages/FilterPrescriptions";
 import AddPrescription from "./pages/AddPrescription";
 import CreateAppointment from "./pages/CreateAppointment";
-import ViewMyWallet from "./pages/ViewMyWallet";
+import ViewMyWalletAsPatient from "./pages/ViewMyWalletAsPatient";
+import ViewMyWalletAsDoctor from "./pages/ViewMyWalletAsDoctor";
 import CreateDoctor from "./pages/CreateDoctor";
 import UploadDocument from "./pages/UploadDocument";
 import RemoveDocument from './pages/RemoveDocument';
@@ -53,7 +54,8 @@ const App = () => {
             <Route path="/ShowAndRemoveAdmins" element={<ShowAndRemoveAdmins />}/>
             <Route path="/ViewAndRemoveDoctors" element={<ViewAndRemoveDoctors />}/>
             <Route path="/ViewPatientsOfDoctor" element={<ViewPatientsOfDoctor/>}/>
-            <Route path="/ViewMyWallet" element={<ViewMyWallet/>}/>
+            <Route path="/ViewMyWalletAsPatient" element={<ViewMyWalletAsPatient/>}/>
+            <Route path="/ViewMyWalletAsDoctor" element={<ViewMyWalletAsDoctor/>}/>
             <Route path="/UploadDocument" element={<UploadDocument/>}/>
             <Route path="/RemoveDocument" element={<RemoveDocument/>}/>
             <Route path="/FilterPatientsWithUpcomingAppointments" element={<FilterPatientsWithUpcomingAppointments/>}/>
