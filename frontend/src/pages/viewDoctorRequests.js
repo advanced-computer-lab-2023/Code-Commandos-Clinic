@@ -20,9 +20,10 @@ const DoctorRegistrationRequests = () => {
 
         fetchDoctorRequests()
     }, [])
+    
 
     return (
-        <div className="doctorRegistrationRequests">
+        <div className="doctorRegistrationRequests m-5">
             <h2>Doctors applying to join the platform:</h2>
             <div>
                 {doctorRequests && doctorRequests.map((doctorRequest) => (

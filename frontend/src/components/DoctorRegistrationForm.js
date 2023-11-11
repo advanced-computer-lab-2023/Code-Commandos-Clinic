@@ -9,12 +9,13 @@ const DoctorRegistrationForm = () => {
   const [hourlyRate, setHourlyRate] = useState('')
   const [affiliation, setAffiliation] = useState('')
   const [educationalBackground, setEducationalBackground] = useState('')
+    const [sessionPrice, setSessionPrice] = useState('')
     const [speciality, setSpeciality] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const doctorRequest = {username: username, name: name, email: email, password: password, dateOfBirth: dateOfBirth, hourlyRate: hourlyRate, affiliation: affiliation, educationalBackground: educationalBackground,speciality:speciality}
+    const doctorRequest = {username: username, name: name, email: email, password: password, dateOfBirth: dateOfBirth, hourlyRate: hourlyRate, affiliation: affiliation, educationalBackground: educationalBackground,speciality:speciality,sessionPrice:sessionPrice}
     const response = await fetch('/api/doctorRegistration/doctorRegistrationRequest', {
       method: 'POST',
       body: JSON.stringify(doctorRequest),
@@ -35,7 +36,9 @@ const DoctorRegistrationForm = () => {
       setPassword('')
       setHourlyRate('')
       setAffiliation('')
+      setSessionPrice('')
       setEducationalBackground('')
+      alert('Request to register successful.')
       console.log('new doctor registration request added:', json)
     }
 
@@ -122,7 +125,18 @@ const DoctorRegistrationForm = () => {
                     onChange={(e) => setHourlyRate(e.target.value)}
                 />
             </div>
-
+            <div className="mb-3">
+                <label htmlFor="sessionPrice" className="form-label">
+                    Session Price:
+                </label>
+                <input
+                    type="number"
+                    className="form-control"
+                    id="sessionPrice"
+                    value={sessionPrice}
+                    onChange={(e) => setSessionPrice(e.target.value)}
+                />
+            </div>
             <div className="mb-3">
                 <label htmlFor="affiliation" className="form-label">
                     Affiliation:
@@ -150,16 +164,56 @@ const DoctorRegistrationForm = () => {
             </div>
 
             <div className="mb-3">
-                <label htmlFor="speciality" className="form-label">
+                <label htmlFor="specialty" className="form-label">
                     Speciality:
                 </label>
-                <input
-                    type="text"
-                    className="form-control"
+                <select
                     id="speciality"
+                    name="speciality"
+                    className="form-select"
                     value={speciality}
                     onChange={(e) => setSpeciality(e.target.value)}
-                />
+                >
+                    <option value="">Select a specialty</option>
+                    <option value="ALLERGISTS/IMMUNOLOGISTS">Allergists/Immunologists</option>
+                    <option value="ANESTHESIOLOGISTS">Anesthesiologists</option>
+                    <option value="CARDIOLOGISTS">Cardiologists</option>
+                    <option value="COLON AND RECTAL SURGEONS">Colon and Rectal Surgeons</option>
+                    <option value="CRITICAL CARE MEDICINE SPECIALISTS">Critical Care Medicine Specialists</option>
+                    <option value="DERMATOLOGISTS">Dermatologists</option>
+                    <option value="ENDOCRINOLOGISTS">Endocrinologists</option>
+                    <option value="EMERGENCY MEDICINE SPECIALISTS">Emergency Medicine Specialists</option>
+                    <option value="FAMILY PHYSICIANS">Family Physicians</option>
+                    <option value="GASTROENTEROLOGISTS">Gastroenterologists</option>
+                    <option value="GERIATRIC MEDICINE SPECIALISTS">Geriatric Medicine Specialists</option>
+                    <option value="HEMATOLOGISTS">Hematologists</option>
+                    <option value="HOSPICE AND PALLIATIVE MEDICINE SPECIALISTS">Hospice and Palliative Medicine Specialists</option>
+                    <option value="INFECTIOUS DISEASE SPECIALISTS">Infectious Disease Specialists</option>
+                    <option value="INTERNISTS">Internists</option>
+                    <option value="MEDICAL GENETICISTS">Medical Geneticists</option>
+                    <option value="NEPHROLOGISTS">Nephrologists</option>
+                    <option value="NEUROLOGISTS">Neurologists</option>
+                    <option value="OBSTETRICIANS AND GYNECOLOGISTS">Obstetricians and Gynecologists</option>
+                    <option value="ONCOLOGISTS">Oncologists</option>
+                    <option value="OPHTHALMOLOGISTS">Ophthalmologists</option>
+                    <option value="OSTEOPATHS">Osteopaths</option>
+                    <option value="OTOLARYNGOLOGISTS">Otolaryngologists</option>
+                    <option value="PATHOLOGISTS">Pathologists</option>
+                    <option value="PEDIATRICIANS">Pediatricians</option>
+                    <option value="PHYSIATRISTS">Physiatrists</option>
+                    <option value="PLASTIC SURGEONS">Plastic Surgeons</option>
+                    <option value="PODIATRISTS">Podiatrists</option>
+                    <option value="PREVENTIVE MEDICINE SPECIALISTS">Preventive Medicine Specialists</option>
+                    <option value="PSYCHIATRISTS">Psychiatrists</option>
+                    <option value="PULMONOLOGISTS">Pulmonologists</option>
+                    <option value="RADIOLOGISTS">Radiologists</option>
+                    <option value="RHEUMATOLOGISTS">Rheumatologists</option>
+                    <option value="SLEEP MEDICINE SPECIALISTS">Sleep Medicine Specialists</option>
+                    <option value="SPORTS MEDICINE SPECIALISTS">Sports Medicine Specialists</option>
+                    <option value="GENERAL SURGEONS">General Surgeons</option>
+                    <option value="UROLOGISTS">Urologists</option>
+                    <option value="DENTIST">Dentist</option>
+                </select>
             </div>
 
             <button type="submit" className="btn btn-primary" >

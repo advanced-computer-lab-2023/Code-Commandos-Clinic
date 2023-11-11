@@ -2,14 +2,27 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from '../images/logo.png';
 import '../css/navbar.css';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useCookies } from "react-cookie";
 
 
 const Navbar = () => {
+    const navigate = useNavigate();
+    const [cookies, removeCookie] = useCookies([]);
+
+    const handleLogout = async () =>{
+        console.log("in handle logout")
+        removeCookie("token",{path:'/'});
+        window.localStorage.removeItem("logged");
+        navigate('/Login')
+        window.location.reload()
+    }
+
     return (
         <header>
             <nav className="navbar navbar-expand-md navbar-dark bg-light fixed-top">
                 <div className="container">
-                    <a className="navbar-brand col-4" href="#">
+                    <a className="navbar-brand col-4">
                         <img src={logo} class="logo" alt="Logo"/>
                     </a>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,12 +36,9 @@ const Navbar = () => {
                                 <li className="nav-item">
                                     <a className="nav-link" href="#">Services</a>
                                 </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="#">Blog</a>
-                                </li>
                                 <li className="nav-item dropdown">
                                     <a className="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Virtual Clinic
+                                        Services
                                     </a>
                                     <ul className="dropdown-menu" aria-labelledby="servicesDropdown">
 
@@ -50,13 +60,77 @@ const Navbar = () => {
                                         <li>
                                             <Link to="/FilterBySpecialityAndDate" className="dropdown-item">Filter By Speciality And Date</Link>
                                         </li>
+                                        <li>
+                                            <Link to="/HealthPackageUpdate" className="dropdown-item">Health Package Update</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/AddHealthPackage" className="dropdown-item">Add Health Package</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/HealthPackages" className="dropdown-item">View Health Packages</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/ViewDoctorsWithSessionPrice" className="dropdown-item">View Doctors With Session Price</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/AddAdmin" className="dropdown-item">Add Admin</Link>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li className="nav-item dropdown">
+                                    <a className="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Virtual Clinic
+                                    </a>
+                                    <ul className="dropdown-menu" aria-labelledby="servicesDropdown">
+                                        <li>
+                                            <Link to="/ViewAndRemovePatients" className="dropdown-item">View And Remove Patients</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/ShowAndRemoveAdmins" className="dropdown-item">View And Remove Admins</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/ViewAndRemoveDoctors" className="dropdown-item">View And Remove Doctors</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/ViewPatientsOfDoctor" className="dropdown-item">Your Patients</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/FilterPatientsWithUpcomingAppointments" className="dropdown-item">Patients whom you have upcoming appointments with</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/RegisterPatientWithDoctor" className="dropdown-item">Register Patient With Doctor</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/AddFamilyMember" className="dropdown-item">Add Family Member</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/RegisteredFamilyMembers" className="dropdown-item">Registered Family Members</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/FilteredAppointments" className="dropdown-item">Filtered Appointments</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/PrescriptionContainer" className="dropdown-item">Your Prescriptions</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/FilterPrescriptions" className="dropdown-item">Filter Prescriptions</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/AddPrescription" className="dropdown-item">Add Prescription</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/CreateAppointment" className="dropdown-item">Create Appointment</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/CreateDoctor" className="dropdown-item">Create Doctor</Link>
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>
 
                             <ul class="navbar-nav">
                                 <li>
-                                    <a href="" className="nav-link font">Log in</a>
+                                    <button onClick={handleLogout} className="buttonNav logout">Log out</button>
                                 </li>
                                 <li>
                                     <button className="buttonNav">Sign Up</button>
