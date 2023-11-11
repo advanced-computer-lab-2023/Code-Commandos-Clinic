@@ -22,7 +22,11 @@ const singleFileSchema = new Schema({
     fileHash: {
         type: String,
         required: true
-    }
+    },
+    fileOwner: {
+        type: String,
+        required: true
+    },
 }, { timestamps: true });
 
 

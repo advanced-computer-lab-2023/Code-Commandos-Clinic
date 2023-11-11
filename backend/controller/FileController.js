@@ -22,7 +22,8 @@ const singleFileUpload = async (req, res, next) => {
                 filePath: req.file.path,
                 fileType: req.file.mimetype,
                 fileSize: fileSizeFormatter(req.file.size, 2),
-                fileHash,
+                fileHash : fileHash,
+                fileOwner: req.user.username
             });
             await file.save();
             res.status(201).json(file._id);
@@ -54,7 +55,7 @@ const deleteSingleFile = async (req, res) => {
 
 const deleteAllSingleFiles = async (req, res) => {
     try {
-        const files = await SingleFile.find();
+        const files = await SingleFile.find({fileOwner: req.user.username});
         files.forEach(async file => {
             const filePath = file.filePath;
             fs.unlink(filePath, (err) => {
@@ -73,13 +74,17 @@ const deleteAllSingleFiles = async (req, res) => {
 
 const multipleFileUpload = async (req, res) => {
     try {
+        const fileContent = fs.readFileSync(req.file.path);
+        const fileHash = calculateFileHash(fileContent);
         let filesArray = [];
         req.files.forEach(element => {
             const file = {
                 fileName: element.originalname,
                 filePath: element.path,
                 fileType: element.mimetype,
-                fileSize: fileSizeFormatter(element.size, 2)
+                fileSize: fileSizeFormatter(element.size, 2),
+                fileHash : fileHash,
+                fileOwner: req.user.username
             }
             filesArray.push(file);
         });
@@ -96,7 +101,7 @@ const multipleFileUpload = async (req, res) => {
 
 const getallSingleFiles = async (req, res) => {
     try {
-        const files = await SingleFile.find();
+        const files = await SingleFile.find({fileOwner: req.user.username});
         res.status(200).send(files);
     } catch (error) {
         res.status(400).send(error.message);
@@ -105,7 +110,7 @@ const getallSingleFiles = async (req, res) => {
 
 const getallMultipleFiles = async (req, res, next) => {
     try {
-        const files = await MultipleFile.find();
+        const files = await MultipleFile.find({fileOwner: req.user.username});
         res.status(200).send(files);
     } catch (error) {
         res.status(400).send(error.message);
