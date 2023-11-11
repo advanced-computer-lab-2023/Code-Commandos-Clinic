@@ -6,6 +6,7 @@ const crypto = require('crypto');
 
 const singleFileUpload = async (req, res, next) => {
     try {
+
         const fileContent = fs.readFileSync(req.file.path);
         const fileHash = calculateFileHash(fileContent);
         // Check if a file with the same hash already exists
@@ -22,7 +23,7 @@ const singleFileUpload = async (req, res, next) => {
                 filePath: req.file.path,
                 fileType: req.file.mimetype,
                 fileSize: fileSizeFormatter(req.file.size, 2),
-                fileHash : fileHash,
+                fileHash: fileHash,
                 fileOwner: req.user.username
             });
             await file.save();
@@ -32,6 +33,51 @@ const singleFileUpload = async (req, res, next) => {
         res.status(400).send(error.message);
     }
 }
+const singleFileUploadGuest = async (req, res, next) => {
+    try {
+        const fileContent = fs.readFileSync(req.file.path);
+        const fileHash = calculateFileHash(fileContent);
+        // Check if a file with the same hash already exists
+        const existingFile = await SingleFile.findOne({ fileHash });
+
+        if (existingFile) {
+            // File with the same content already exists
+            fs.unlinkSync(req.file.path);
+            res.status(400).send('File already exists');
+        } else {
+            // File is unique, save it
+            const file = new SingleFile({
+                fileName: req.file.originalname,
+                filePath: req.file.path,
+                fileType: req.file.mimetype,
+                fileSize: fileSizeFormatter(req.file.size, 2),
+                fileHash: fileHash,
+                fileOwner: req.params.username
+            });
+            await file.save();
+            res.status(201).json(file._id);
+        }
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+}
+
+const getFileById = async (req, res) => {
+    try {
+        const file = await SingleFile.findById(req.params.id);
+        if (!file) {
+            return res.status(404).send('File not found');
+        }
+
+        res.status(200).json({
+            fileName: file.fileName,
+            filePath: `/uploads/${file.fileName}`
+        });
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}
+
 
 const deleteSingleFile = async (req, res) => {
     try {
@@ -55,16 +101,16 @@ const deleteSingleFile = async (req, res) => {
 
 const deleteAllSingleFiles = async (req, res) => {
     try {
-        const files = await SingleFile.find({fileOwner: req.user.username});
+        const files = await SingleFile.find({ fileOwner: req.user.username });
         files.forEach(async file => {
             const filePath = file.filePath;
             fs.unlink(filePath, (err) => {
                 if (err) {
                     console.error(err);
                     return res.status(500).send(err.message);
-                }  
+                }
             });
-            await file.deleteOne(); 
+            await file.deleteOne();
         });
         res.status(200).send('All single files deleted successfully');
     } catch (error) {
@@ -83,7 +129,7 @@ const multipleFileUpload = async (req, res) => {
                 filePath: element.path,
                 fileType: element.mimetype,
                 fileSize: fileSizeFormatter(element.size, 2),
-                fileHash : fileHash,
+                fileHash: fileHash,
                 fileOwner: req.user.username
             }
             filesArray.push(file);
@@ -101,7 +147,7 @@ const multipleFileUpload = async (req, res) => {
 
 const getallSingleFiles = async (req, res) => {
     try {
-        const files = await SingleFile.find({fileOwner: req.user.username});
+        const files = await SingleFile.find({ fileOwner: req.user.username });
         res.status(200).send(files);
     } catch (error) {
         res.status(400).send(error.message);
@@ -110,7 +156,7 @@ const getallSingleFiles = async (req, res) => {
 
 const getallMultipleFiles = async (req, res, next) => {
     try {
-        const files = await MultipleFile.find({fileOwner: req.user.username});
+        const files = await MultipleFile.find({ fileOwner: req.user.username });
         res.status(200).send(files);
     } catch (error) {
         res.status(400).send(error.message);
@@ -128,6 +174,7 @@ const fileSizeFormatter = (bytes, decimal) => {
 
 }
 
+
 const calculateFileHash = (fileContent) => {
     const hash = crypto.createHash('sha256');
     hash.update(fileContent);
@@ -140,5 +187,7 @@ module.exports = {
     multipleFileUpload,
     getallMultipleFiles,
     deleteSingleFile,
-    deleteAllSingleFiles
+    deleteAllSingleFiles,
+    getFileById,
+    singleFileUploadGuest
 }

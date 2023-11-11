@@ -24,8 +24,7 @@ const singleFileSchema = new Schema({
         required: true
     },
     fileOwner: {
-        type: String,
-        required: true
+        type: String
     },
 }, { timestamps: true });
 

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-
 const RemoveDocument = () => {
-  const [files, setFiles] = useState([]);
+  const [singleFiles, setSingleFiles] = useState([]);
+
   useEffect(() => {
-    fetchFiles();
+    fetchSingleFiles();
   }, []);
 
-  const fetchFiles = async () => {
+  const fetchSingleFiles = async () => {
     try {
       const response = await fetch('/api/file/getSingleFiles', {
         method: 'GET',
@@ -16,7 +16,7 @@ const RemoveDocument = () => {
       });
       if (response.ok) {
         const data = await response.json();
-        setFiles(data);
+        setSingleFiles(data);
       } else {
         const errorMessage = await response.text();
         alert(errorMessage);
@@ -27,10 +27,6 @@ const RemoveDocument = () => {
     }
   };
 
-  const openFile = (filepath) => {
-    // Open the file in a new Chrome window
-    window.open(`http://localhost:4000/${filepath}`, '_blank');
-  };
 
   const handleRemove = async (id) => {
     try {
@@ -38,7 +34,7 @@ const RemoveDocument = () => {
         method: 'DELETE'
       });
       if (response.ok) {
-        fetchFiles();
+        fetchSingleFiles();
       } else {
         const errorMessage = await response.text();
         alert(errorMessage);
@@ -56,7 +52,7 @@ const RemoveDocument = () => {
       });
       if (response.ok) {
         alert('All files deleted successfully');
-        setFiles([]);
+        setSingleFiles([]);
       } else {
         const errorMessage = await response.text();
         alert(errorMessage);
@@ -69,21 +65,18 @@ const RemoveDocument = () => {
 
   return (
     <div>
-      <h1>Remove Documents</h1>
-      <ul>
-        {files.map((file) => (
-          <li key={file._id}>
-            <span>{file.fileName}</span>
-            <p>  </p>
-            <button className="btn btn-primary"     onClick={() => openFile(file.filePath)}>Open</button>
-            {'   '}
-            <button className="btn btn-secondary"   onClick={() => handleRemove(file._id)}>Remove</button>
-            <p>  </p>
-          </li>
-        ))}
+      <h1>Single Files</h1>
+      {singleFiles.map(file => (
+        <div key={file._id}>
+          <p>{file.fileName}</p>
+          <button className="btn btn-secondary" onClick={() => handleRemove(file._id)}>Remove</button>
+        </div>
+      ))}
+      <div>
 
-      </ul>
-      {files.length > 0 && <button className="btn btn-danger" onClick={handleRemoveAll}>Remove All</button>}
+
+      </div>
+      <button className="btn btn-danger" onClick={() => handleRemoveAll()}>Remove All</button>
     </div>
   );
 };

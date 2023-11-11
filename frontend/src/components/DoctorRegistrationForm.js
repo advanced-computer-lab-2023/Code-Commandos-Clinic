@@ -99,7 +99,7 @@ const DoctorRegistrationForm = () => {
         formData.append('file', file);
 
         try {
-            const response = await fetch('/api/file/addSingleFile', {
+            const response = await fetch(`/api/file/addSingleFileGuest/${username}`, {
                 method: 'POST',
                 body: formData,
             });
