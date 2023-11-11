@@ -210,6 +210,15 @@ const payForSubscription = asyncHandler(async (req, res) => {
           const familyMember = await FamilyMemberModel.findOneAndUpdate({_id:familyMemberID},{healthPackage:{healthPackageID:packageID, status:"SUBSCRIBED", renewalDate:renewalDate}})
           if(!familyMember)
             return res.status(404).json({error:"Family member not found"})
+          //======checks if the family member has a linked account======
+          if(familyMember.account){
+            var existingPackage = await HealthPackagePatientModel.findOne({ patientID: familyMember.account });
+            if (existingPackage) {
+              existingPackage = await HealthPackagePatientModel.findOneAndDelete({ patientID: familyMember.account });
+            }
+            const healthPackagePatient = await HealthPackagePatientModel.create({patientID:familyMember.account, healthPackageID:packageID, status:"SUBSCRIBED", renewalDate:renewalDate})
+          }
+          //============================================================
           res.status(200).json(familyMember)
         }     
       }
@@ -285,6 +294,17 @@ const subscribeToPackage = asyncHandler(async (req, res) => {
         res.status(200).json(healthPackagePatient)
       } else {
         const familyMember = await FamilyMemberModel.findOneAndUpdate({_id:familyMemberID},{healthPackage:{healthPackageID:packageID, status:"SUBSCRIBED", renewalDate:renewalDate}})
+        if(!familyMember)
+            return res.status(404).json({error:"Family member not found"})
+        //======checks if the family member has a linked account======
+        if(familyMember.account){
+          var existingPackage = await HealthPackagePatientModel.findOne({ patientID: familyMember.account });
+          if (existingPackage) {
+            existingPackage = await HealthPackagePatientModel.findOneAndDelete({ patientID: familyMember.account });
+          }
+          const healthPackagePatient = await HealthPackagePatientModel.create({patientID:familyMember.account, healthPackageID:packageID, status:"SUBSCRIBED", renewalDate:renewalDate})
+        }
+        //============================================================
         res.status(200).json(familyMember)
       }
     }
