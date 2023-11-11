@@ -33,7 +33,7 @@ const DoctorRequestDetails = ({ doctorRequest }) => {
             if (response.ok) {
                 alert('Doctor request rejected successfully!');
             } else {
-                alert('Failed to reject doctor request. Please try again.');
+                alert(await response.text());
             }
         } catch (error) {
             console.error('Error rejecting doctor request:', error);
