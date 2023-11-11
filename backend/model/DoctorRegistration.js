@@ -87,6 +87,21 @@ const DoctorRegistrationSchema = new mongoose.Schema({
     type: String,
     default: 'PENDING',
     enum: ['PENDING','ACCEPTED','REJECTED']
+  },
+  medicalID: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'File',
+    required: true,
+  },
+  medicalLicenses: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'File',
+    required: true,
+  },
+  medicalDegree: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'File',
+    required: true,
   }
 },{ timestamps: true });
 

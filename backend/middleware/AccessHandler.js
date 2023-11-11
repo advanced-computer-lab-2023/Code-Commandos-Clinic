@@ -36,6 +36,7 @@ const checkPatientDoctorRole = asyncHandler(async (req, res, next) => {
     }
 })
 
+
 module.exports = {
     checkPatientRole,
     checkDoctorRole,

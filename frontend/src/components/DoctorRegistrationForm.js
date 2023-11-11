@@ -1,51 +1,124 @@
+
 import { useState } from 'react'
 
 const DoctorRegistrationForm = () => {
-  const [name, setName] = useState('')
-  const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [dateOfBirth, setDateOfBirth] = useState('')
-  const [hourlyRate, setHourlyRate] = useState('')
-  const [affiliation, setAffiliation] = useState('')
-  const [educationalBackground, setEducationalBackground] = useState('')
+    const [name, setName] = useState('')
+    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [dateOfBirth, setDateOfBirth] = useState('')
+    const [hourlyRate, setHourlyRate] = useState('')
+    const [affiliation, setAffiliation] = useState('')
+    const [educationalBackground, setEducationalBackground] = useState('')
     const [sessionPrice, setSessionPrice] = useState('')
     const [speciality, setSpeciality] = useState('')
+    const [medicalIDFile, setMedicalIDFile] = useState(null);
+    const [medicalLicensesFile, setMedicalLicensesFile] = useState(null);
+    const [medicalDegreeFile, setMedicalDegreeFile] = useState(null);
+    const [IDID, setIDID] = useState(null);
+    const [LicenseID, setLicenseID] = useState(null);
+    const [DegreeID, setDegreeID] = useState(null);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+    const handleSubmit = async (e) => {
+        e.preventDefault()
 
-    const doctorRequest = {username: username, name: name, email: email, password: password, dateOfBirth: dateOfBirth, hourlyRate: hourlyRate, affiliation: affiliation, educationalBackground: educationalBackground,speciality:speciality,sessionPrice:sessionPrice}
-    const response = await fetch('/api/doctorRegistration/doctorRegistrationRequest', {
-      method: 'POST',
-      body: JSON.stringify(doctorRequest),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('username', username);
+        formData.append('email', email);
+        formData.append('password', password);
+        formData.append('dateOfBirth', dateOfBirth);
+        formData.append('hourlyRate', hourlyRate);
+        formData.append('affiliation', affiliation);
+        formData.append('educationalBackground', educationalBackground);
+        formData.append('speciality', speciality);
+        formData.append('sessionPrice', sessionPrice);
+        formData.append('medicalID', IDID);
+        formData.append('medicalLicenses',LicenseID );
+        formData.append('medicalDegree',DegreeID );
 
-    if (!response.ok) {
-        const errorMessage = await response.text();
-        alert(errorMessage);
+        const jsonFormData = {};
+        formData.forEach((value, key) => {
+            jsonFormData[key] = value;
+            console.log(key, value)
+        });
+
+        
+        const response = await fetch('/api/doctorRegistration/doctorRegistrationRequest', {
+            method: 'POST',
+            body: JSON.stringify(jsonFormData),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            alert(errorMessage);
+        }
+        if (response.ok) {
+            const json = await response.json()
+            setName('')
+            setUsername('')
+            setEmail('')
+            setPassword('')
+            setHourlyRate('')
+            setAffiliation('')
+            setSessionPrice('')
+            setEducationalBackground('')
+            setMedicalIDFile(null);
+            setMedicalLicensesFile(null);
+            setMedicalDegreeFile(null);
+            setSpeciality('')
+            alert('Request to register successful.')
+            console.log('new doctor registration request added:', json)
+        }
+
     }
-    if (response.ok) {
-        const json = await response.json()
-        setName('')
-      setUsername('')
-      setEmail('')
-      setPassword('')
-      setHourlyRate('')
-      setAffiliation('')
-      setSessionPrice('')
-      setEducationalBackground('')
-      alert('Request to register successful.')
-      console.log('new doctor registration request added:', json)
-    }
+    const handleMedicalIDSubmit = async () => {
+      setIDID( await handleFileSubmit( medicalIDFile));
+        
+    };
 
-  }
+    const handleMedicalLicensesSubmit = async () => {
+        setLicenseID (await handleFileSubmit(medicalLicensesFile));
+        
+    };
+
+    const handleMedicalDegreeSubmit = async () => {
+        setDegreeID( await handleFileSubmit( medicalDegreeFile));
+    };
+
+    const handleFileSubmit = async ( file) => {
+        if (!file) {
+            alert('Please select a file to upload');
+            return;
+        }
+      
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const response = await fetch(`/api/file/addSingleFileGuest/${username}`, {
+                method: 'POST',
+                body: formData,
+            });
+            if (!response.ok) {
+                const errorMessage = await response.text();
+                alert(errorMessage);
+                throw new Error(errorMessage);
+            } else {
+                alert('File is uploaded successfully');
+                const fileId = await response.json(); 
+                return fileId;
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    };
 
     return (
-        <form className="create m-5" onSubmit={handleSubmit}>
+        <form className="create m-5" >
             <h2>Apply as a doctor to join the platform:</h2>
 
             <div className="mb-3">
@@ -216,7 +289,57 @@ const DoctorRegistrationForm = () => {
                 </select>
             </div>
 
-            <button type="submit" className="btn btn-primary" >
+            <hr />
+            <div className="mb-3">
+                <label htmlFor="medicalIDFile" className="form-label">
+                    Upload Medical ID:
+                </label>
+                <input
+                    type="file"
+                    className="form-control"
+                    id="medicalIDFile"
+                    onChange={  (e) => setMedicalIDFile(e.target.files[0])}
+                />
+                <button type="button" className="btn btn-primary" onClick={handleMedicalIDSubmit}>
+                    Submit Medical ID
+                </button>
+            </div>
+
+            <hr />
+            <div className="mb-3">
+                <label htmlFor="medicalLicensesFile" className="form-label">
+                    Upload Medical Licenses:
+                </label>
+                <input
+                    type="file"
+                    className="form-control"
+                    id="medicalLicensesFile"
+                    onChange={(e) => setMedicalLicensesFile(e.target.files[0])}
+                />
+                <button type="button" className="btn btn-primary" onClick={handleMedicalLicensesSubmit}>
+                    Submit Medical Licenses
+                </button>
+            </div>
+
+            <hr />
+
+            <div className="mb-3">
+                <label htmlFor="medicalDegreeFile" className="form-label">
+                    Upload Medical Degree:
+                </label>
+                <input
+                    type="file"
+                    className="form-control"
+                    id="medicalDegreeFile"
+                    onChange={(e) => setMedicalDegreeFile(e.target.files[0])}
+                />
+                <button type="button" className="btn btn-primary" onClick={handleMedicalDegreeSubmit}>
+                    Submit Medical Degree
+                </button>
+            </div>
+
+            <hr />
+            <button type="submit" className="btn btn-primary" onClick={handleSubmit} >
                 Register
             </button>
         </form>

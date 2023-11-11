@@ -12,7 +12,7 @@ const dotenv = require("dotenv").config();
 
 
 const register = asyncHandler(async (req,res) => {
-    const {username,password} = req.body
+    const {username,password,role} = req.body
     if(!username || !password){
         res.status(400)
         throw new Error('Please provide username and password')
@@ -27,6 +27,7 @@ const register = asyncHandler(async (req,res) => {
     const user = await User.create({
         username: username,
         password: hashedPassword,
+        role : role
     })
     if (user){
         res.status(200).json(user)

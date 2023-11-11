@@ -8,6 +8,25 @@ const HealthPackagePatientModel = require('../model/HealthPackagePatient')
 const PatientModel = require('../model/Patient')
 const AppointmentModel = require('../model/Appointment')
 
+//requirement 67  -> akram
+const getAmount = asyncHandler(async (req, res) => {
+    
+    try {
+      un = req.user.username;  
+      const doctor = await DoctorModel.findOne({ username : un });
+      if (!doctor) {
+        res.status(400)
+        throw new Error('Doctor not found')
+      }
+  
+      res.status(200).json(doctor.wallet) 
+    }
+    catch (error) {
+      res.status(400)
+      throw new Error(error.message)
+    }
+  });
+
 const createDoctorPatients= asyncHandler( async(req,res) =>{
     const {patientUsername,doctorUsername} = req.body
     try{
@@ -80,6 +99,7 @@ const createDoctor = asyncHandler(async (req,res) =>{
         const doctor = await DoctorModel.create(doctorBody)
         const user = await UserModel.create({username: doctorBody.username, password: doctorBody.password, role:"DOCTOR"})
         res.status(200).json(doctor)
+
     }
     catch (error){
         res.status(400)
@@ -340,5 +360,6 @@ module.exports = {
     removeDoctor,
     createDoctorPatients,
     getDoctor,
-    getPatientDoctors
+    getPatientDoctors,
+    getAmount
 }

@@ -6,8 +6,10 @@ const HealthPackageModel = require('../model/HealthPackage')
 const HealthPackagePatientModel = require('../model/HealthPackagePatient')
 const FamilyMemberModel = require('../model/FamilyMember')
 const mongoose = require('mongoose')
+const User = require("../model/User");
 const asyncHandler = require('express-async-handler')
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+
 
 //requirement-33 Nour
 const getPatientsOfADoctor = asyncHandler ( async (req,res) =>{
@@ -50,6 +52,7 @@ const getPatients = asyncHandler(async (req, res) => {
   }
   
 })
+
 
 // get a single patient
 const getPatient = asyncHandler(async (req, res) => {
@@ -257,6 +260,22 @@ const payForSubscription = asyncHandler(async (req, res) => {
   }
 });
 
+//requirement 67  -> akram
+const getAmount = asyncHandler(async (req, res) => {
+  try {
+    un = req.user.username;
+    const patient = await PatientModel.findOne({username: un});
+    if (!patient) {
+      res.status(404).json({ message: 'Patient not found', userId: un });
+      return;
+    }
+    res.status(200).json(patient.wallet);
+  } catch (error) {
+    res.status(400);
+    throw new Error(error.message);
+  }
+});
+
 const subscribeToPackage = asyncHandler(async (req, res) => {
   const { sessionID } = req.params
   const session = await stripe.checkout.sessions.retrieve(
@@ -306,5 +325,6 @@ module.exports = {
     getInfoHealthPatient,
     searchByName,
     payForSubscription,
-    subscribeToPackage
+    subscribeToPackage,
+    getAmount
 }

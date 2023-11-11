@@ -23,6 +23,8 @@ import PrescriptionContainer from "./pages/PrescriptionContainer";
 import FilterPrescriptions from "./pages/FilterPrescriptions";
 import AddPrescription from "./pages/AddPrescription";
 import CreateAppointment from "./pages/CreateAppointment";
+import ViewMyWalletAsPatient from "./pages/ViewMyWalletAsPatient";
+import ViewMyWalletAsDoctor from "./pages/ViewMyWalletAsDoctor";
 import CreateDoctor from "./pages/CreateDoctor";
 import ViewAvailableAppointmentsOfDoctor from "./pages/ViewAvailableAppointmentsOfDoctor";
 import DoctorUpcomingPastAppointments from "./pages/DoctorUpcomingPastAppointments";
@@ -40,6 +42,8 @@ import HealthPackages from './pages/ViewHealthPackages';
 import SubscribeToPackage from './pages/SubscribeToPackage';
 import PaymentSuccess from './pages/PaymentSuccess';
 import PaymentCancel from './pages/PaymentCancel';
+import UploadDocument from "./pages/UploadDocument";
+import RemoveDocument from './pages/RemoveDocument';
 
 const App = () => {
     const logged = window.localStorage.getItem("logged");
@@ -65,6 +69,10 @@ const App = () => {
             <Route path="/ShowAndRemoveAdmins" element={<ShowAndRemoveAdmins />}/>
             <Route path="/ViewAndRemoveDoctors" element={<ViewAndRemoveDoctors />}/>
             <Route path="/ViewPatientsOfDoctor" element={<ViewPatientsOfDoctor/>}/>
+            <Route path="/ViewMyWalletAsPatient" element={<ViewMyWalletAsPatient/>}/>
+            <Route path="/ViewMyWalletAsDoctor" element={<ViewMyWalletAsDoctor/>}/>
+            <Route path="/UploadDocument" element={<UploadDocument/>}/>
+            <Route path="/RemoveDocument" element={<RemoveDocument/>}/>
             <Route path="/FilterPatientsWithUpcomingAppointments" element={<FilterPatientsWithUpcomingAppointments/>}/>
             <Route path="/RegisterPatientWithDoctor" element={<RegisterPatientWithDoctor/>}/>
             <Route path="/RegisteredFamilyMembers" element={<RegisteredFamilyMembers/>}/>
