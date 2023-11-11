@@ -200,7 +200,7 @@ const payForSubscription = asyncHandler(async (req, res) => {
         const renewalDate = yyyy+'/'+mm+'/'+dd
         if(familyMemberID==="user"){
           // Check if the patient already has a subscription
-          const existingPackage = await HealthPackagePatientModel.findOne({ patientID: id });
+          var existingPackage = await HealthPackagePatientModel.findOne({ patientID: id });
           if (existingPackage) {
             existingPackage = await HealthPackagePatientModel.findOneAndDelete({ patientID: id });
           }
