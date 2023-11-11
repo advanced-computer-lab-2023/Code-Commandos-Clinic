@@ -28,6 +28,11 @@ const FamilyMemberSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Patient',
     },
+    account:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Patient',
+        required: false
+    },
     healthPackage:{
         healthPackageID:{
             type: mongoose.Schema.Types.ObjectId,

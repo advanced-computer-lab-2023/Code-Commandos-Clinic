@@ -48,7 +48,7 @@ function LinkFamilyMember(){
                         id="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="form-select"
+                        
                     />
                 </div>
 

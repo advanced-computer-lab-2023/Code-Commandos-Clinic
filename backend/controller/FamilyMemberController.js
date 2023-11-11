@@ -64,7 +64,8 @@ const linkFamilyMember =asyncHandler( async (req,res) => {
             age: age,
             gender: patient.gender,
             relation: relation,
-            patient: req.user.id
+            patient: req.user.id,
+            account: patient.id
         }
         try {
             console.log(member)
