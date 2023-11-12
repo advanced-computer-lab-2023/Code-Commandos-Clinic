@@ -95,7 +95,9 @@ const DoctorRegistrationForm = () => {
             alert('Please select a file to upload');
             return;
         }
-
+        if(!username){
+            alert("You have to enter username before submitting the files")
+        }
         const formData = new FormData();
         formData.append('file', file);
 
