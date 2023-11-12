@@ -5,7 +5,7 @@ const PatientModel = require('../model/Patient')
 const DoctorModel = require('../model/Doctor')
 
 const getPrescriptionsbyPatient = asyncHandler(async (req, res) => {
-  const { patientId } = req.params;
+  const patientId  = req.user.id;
   if(!mongoose.Types.ObjectId.isValid(patientId) ){
     throw new Error('Invalid id format')
   }

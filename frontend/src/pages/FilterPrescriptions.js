@@ -12,7 +12,7 @@ const FilterPrescriptions = () => {
     useEffect(() => {
         const fetchPrescriptions = async () => {
             try {
-                const response = await fetch('/api/prescription/getPrescriptionsbyPatient/6526cce90cd9ec95a0c24b93',{
+                const response = await fetch('/api/prescription/getPrescriptionsbyPatient',{
                     method: 'GET',
                     headers: {
                         'Content-Type':'application/json',

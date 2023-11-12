@@ -109,14 +109,13 @@ const createDoctor = asyncHandler(async (req,res) =>{
 
 const removeDoctor =asyncHandler( async (req,res) => {
     const { id } =req.params
-    const {username} =await DoctorModel.findById(id);
     if (!mongoose.Types.ObjectId.isValid(id)) {
         res.status(400)
         throw new Error('Doctor not found')
     }
     try {
-        const user = await UserModel.findOneAndDelete({username:username})
         const doctor =await DoctorModel.findByIdAndDelete(id)
+        await UserModel.findOneAndDelete({username:doctor.username})
         if(!doctor){
             res.status(400)
             throw new Error('Doctor not found')
