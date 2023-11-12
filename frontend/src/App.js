@@ -44,6 +44,12 @@ import PaymentSuccess from './pages/PaymentSuccess';
 import PaymentCancel from './pages/PaymentCancel';
 import UploadDocument from "./pages/UploadDocument";
 import RemoveDocument from './pages/RemoveDocument';
+import ViewpatientHealthRecord from './pages/ViewPatientHealthRecord';
+import AddHealthRecord  from './components/AddHealthRecord';
+import HealthRecordUpload from './pages/viewUploadedHealthRecordPatient';
+import HealthRecordUploadPatientsDoctor from './pages/ViewUploadedHealthRecordPatientsOfDoctor';
+import AppointmentSuccess from './pages/AppointmentSuccess'
+import AppointmentFailure from './pages/AppointmentFailure';
 
 const App = () => {
     const logged = window.localStorage.getItem("logged");
@@ -66,6 +72,10 @@ const App = () => {
             <Route path="/ViewDoctorsWithSessionPrice" element={<ViewDoctorsWithSessionPrice/>}/>
             <Route path="/ViewAndRemovePatients" element={<ViewAndRemovePatients/>}/>
             <Route path="/AddAdmin" element={<AddAdmin />}/>
+            <Route path="/ViewPatientHealthRecord" element={<ViewpatientHealthRecord />}/>
+            <Route path="/AddHealthRecord/:id" element={<AddHealthRecord />}/>
+            <Route path="/viewUploadedHealthRecordPatient" element={<HealthRecordUpload />}/>
+            <Route path="/ViewUploadedHealthRecordPatientsOfDoctor" element={<HealthRecordUploadPatientsDoctor />}/>
             <Route path="/ShowAndRemoveAdmins" element={<ShowAndRemoveAdmins />}/>
             <Route path="/ViewAndRemoveDoctors" element={<ViewAndRemoveDoctors />}/>
             <Route path="/ViewPatientsOfDoctor" element={<ViewPatientsOfDoctor/>}/>
@@ -88,7 +98,7 @@ const App = () => {
             <Route path="/DoctorUpcomingPastAppointments"  element={<DoctorUpcomingPastAppointments/>}/>
             <Route path="/PatientUpcomingPastAppointments"  element={<PatientUpcomingPastAppointments/>}/>
             <Route path="/FilterAppointmentsByDateOrStatus"  element={<FilterAppointmentsByDateOrStatus/>}/>
-            <Route path="/ReserveAppointment/:id"  element={<ReserveAppointment/>}/>
+            <Route path="/ReserveAppointment/:id/"  element={<ReserveAppointment/>}/>
             <Route path="/EnterEmailReset"  element={<EnterEmailReset/>}/>
             <Route path="/ResetPassword"  element={<ResetPassword/>}/>
             <Route path="/ChangePassword"  element={<ChangePassword/>}/>
@@ -99,6 +109,8 @@ const App = () => {
             <Route path="/HealthPackages/Subscribe" element={<SubscribeToPackage/>}/>
             <Route path="/HealthPackages/Subscribe/Success" element={<PaymentSuccess/>}/>
             <Route path="/HealthPackages/Subscribe/Cancel" element={<PaymentCancel/>}/>
+            <Route path="/AppointmentSuccess" element={<AppointmentSuccess/>}/>
+            <Route path="/AppointmentFailure" element={<AppointmentFailure/>}/>
             <Route path="/Login" element={logged ? <Navigate to="/Home" replace /> : <Navigate to="/Login" replace /> }/>
             <Route path="/Home" element={<Home/>}/>
         </Routes>

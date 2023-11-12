@@ -4,6 +4,9 @@ const PatientModel = require('../model/Patient');
 const AppointmentModel = require('../model/Appointment');
 const FamilyMember = require("../model/FamilyMember");
 const EmploymentContract = require("../model/EmploymentContract");
+const HealthPackagePatientModel = require('../model/HealthPackagePatient');
+const HealthPackageModel=require("../model/HealthPackage")
+const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
 const createAppointment =asyncHandler( async (req,res) => {
     const contract = await EmploymentContract.findOne({doctor:req.user.id})
@@ -76,13 +79,13 @@ const createAppointment =asyncHandler( async (req,res) => {
 //requirement 35
 // get the upcoming appointments of a doctor
 const getUpcomingPatientsOfDoctor = asyncHandler (async (req,res)=>{
-    const {doctorid} = req.params
+    
     const currentDate = new Date();
     let query = {
         $and: [
             { startTime : { $gt : currentDate } },
-            { doctor : doctorid },
-            {status: "RESERVED"}
+            {status: "RESERVED"},
+            { doctor : req.user.id }
         ]
     }
     console.log(currentDate)
@@ -179,10 +182,101 @@ const reserveAppointment = asyncHandler(async (req,res) => {
     const {id , familyMemberId} = req.body
     try {
         const appointment = await AppointmentModel.findById(id)
-        const patient = await PatientModel.findById(req.user.id)
-        appointment.patient = req.user.id
-        appointment.patientName = patient.name
-        if(familyMemberId){
+        const doctorid=appointment.doctor
+        const doctor = await DoctorModel.findById(doctorid);
+        const healthPackagePatient = await HealthPackagePatientModel.findOne({ patientID: req.user.id });
+        let amount=0;
+        if(!healthPackagePatient){
+            amount  =doctor.hourlyRate + doctor.hourlyRate*0.1
+        }
+        else{
+            const healthPackageID = healthPackagePatient.healthPackageID
+            const healthPackage = await HealthPackageModel.findOne({ _id: healthPackageID });
+            amount  =doctor.hourlyRate + doctor.hourlyRate*0.1
+            amount = amount * ( 1 - healthPackage.doctorSessionDiscount);
+        }
+        const patient = await PatientModel.findById(req.user.id);
+        if(req.params.paymentMethod==='wallet'){
+            if(patient.wallet < amount){
+                return res.status(400).json({msg:"Wallet balance insufficient"})
+                // throw new Error("Wallet balance insufficient.")
+            }
+            else{
+                const newWallet = patient.wallet - amount;
+                const newPatient = await PatientModel.findOneAndUpdate({_id:req.user.id},{wallet:newWallet})
+            }
+            //update status of appoinmtent
+            appointment.patient = req.user.id
+            if(familyMemberId){
+                appointment.familyMember = familyMemberId
+                const member = await FamilyMember.findById(familyMemberId)
+                appointment.familyMemberName = member.name
+            }
+            appointment.status = 'RESERVED'
+            await appointment.save()
+            res.status(200).json(appointment)
+        }
+        else if (req.params.paymentMethod === 'credit_card') {
+            //create a stripe session
+            const session = await stripe.checkout.sessions.create({
+                billing_address_collection: 'auto',
+                line_items: [
+                    {
+                        price_data: {
+                            product_data: {
+                                name: 'appointment with doctor' + doctor.name ,
+                            },
+                            unit_amount: parseInt(amount*100,10),
+                            currency: 'egp',
+                            //remove recurring variable if not a subscription
+
+                        },
+                        quantity: 1,
+                    },
+                ],
+                //change mode to 'payment' if not a subscription
+                mode:'payment',
+                //redirection url after success, query contains session id
+                success_url: `http://localhost:3000/AppointmentSuccess?sessionID={CHECKOUT_SESSION_ID}`,
+                cancel_url: 'http://localhost:3000/AppointmentFailure',
+                //metadata containing your product's id and its purchaser (important for later)
+                metadata: {
+                    'patientID': req.user.id.toString(),
+                    'doctorId': doctor._id.toString(),
+                    'appointmentid':appointment._id.toString(),
+                    'familyMemberId':familyMemberId?familyMemberId.toString():"null"
+                }
+            });
+            console.log(session)
+            res.status(200).json(session)
+        }
+        else {
+            return res.status(400).json({ error: 'Invalid payment method' });
+        }
+    }
+    catch (error){
+        res.status(400)
+        throw new Error(error.message)
+    }
+})
+
+
+const success = asyncHandler(async (req,res) =>{
+
+    const { sessionID } = req.params
+    const session = await stripe.checkout.sessions.retrieve(
+      sessionID,
+      {
+        expand: ['line_items'],
+      }
+    );
+    if(session.payment_status==="paid"){
+      const appointmentid = session.metadata.appointmentid
+      const familyMemberId=session.metadata.familyMemberId
+      const appointment = await AppointmentModel.findById(appointmentid)
+
+      try{
+        if(familyMemberId!="null"){
             appointment.familyMember = familyMemberId
             const member = await FamilyMember.findById(familyMemberId)
             appointment.familyMemberName = member.name
@@ -190,14 +284,21 @@ const reserveAppointment = asyncHandler(async (req,res) => {
         appointment.status = 'RESERVED'
         await appointment.save()
         res.status(200).json(appointment)
-    }
-    catch (error){
-        res.status(400)
-        throw new Error(error.message)
+        
+      }
+      catch (error) {
+        res.status(400).json(error.message)
+      }
+    } else {
+      res.status(400).json({error:"payment unsuccessful"})
     }
 
 
 })
+
+
+
+
 
 const upcomingPastAppointmentsOfDoctor = asyncHandler(async (req,res) => {
     try {
@@ -306,10 +407,7 @@ const scheduleFollowUp = asyncHandler(async (req,res) => {
     }
     try {
         appointmentBody.doctor = req.user.id
-        console.log("doctor id from back ",req.user.id)
-        console.log("patient id from backend ",patientId)
         const appointment = await AppointmentModel.create(appointmentBody)
-        console.log("after create app")
         const doctor = await DoctorModel.findById(req.user.id)
         const patient = await PatientModel.findById(patientId)
         appointment.doctorName = doctor.name
@@ -338,5 +436,6 @@ module.exports = {
     upcomingPastAppointmentsOfDoctor,
     upcomingPastAppointmentsOfPatient,
     filterAppointmentsByDateOrStatus,
-    scheduleFollowUp
+    scheduleFollowUp,
+    success
 };
