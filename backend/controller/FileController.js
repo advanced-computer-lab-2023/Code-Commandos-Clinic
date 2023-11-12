@@ -64,9 +64,11 @@ const singleFileUploadGuest = async (req, res, next) => {
 
 const getFileById = async (req, res) => {
     try {
-        const file = await SingleFile.findById(req.params.id);
+        const {id} = req.params
+        console.log("file id is ",id)
+        const file = await SingleFile.findById(id);
         if (!file) {
-            return res.status(404).send('File not found');
+            res.status(404).send('File not found');
         }
 
         res.status(200).json({

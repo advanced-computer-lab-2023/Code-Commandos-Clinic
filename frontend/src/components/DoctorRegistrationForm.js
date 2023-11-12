@@ -21,7 +21,10 @@ const DoctorRegistrationForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-
+        if(!IDID || !LicenseID || !DegreeID){
+            alert("You need to submit the three files before you confirm registration")
+            return
+        }
         const formData = new FormData();
         formData.append('name', name);
         formData.append('username', username);
@@ -36,14 +39,12 @@ const DoctorRegistrationForm = () => {
         formData.append('medicalID', IDID);
         formData.append('medicalLicenses',LicenseID );
         formData.append('medicalDegree',DegreeID );
-
         const jsonFormData = {};
         formData.forEach((value, key) => {
             jsonFormData[key] = value;
             console.log(key, value)
         });
 
-        
         const response = await fetch('/api/doctorRegistration/doctorRegistrationRequest', {
             method: 'POST',
             body: JSON.stringify(jsonFormData),
@@ -76,13 +77,13 @@ const DoctorRegistrationForm = () => {
 
     }
     const handleMedicalIDSubmit = async () => {
-      setIDID( await handleFileSubmit( medicalIDFile));
-        
+        setIDID( await handleFileSubmit( medicalIDFile));
+
     };
 
     const handleMedicalLicensesSubmit = async () => {
         setLicenseID (await handleFileSubmit(medicalLicensesFile));
-        
+
     };
 
     const handleMedicalDegreeSubmit = async () => {
@@ -94,7 +95,7 @@ const DoctorRegistrationForm = () => {
             alert('Please select a file to upload');
             return;
         }
-      
+
         const formData = new FormData();
         formData.append('file', file);
 
@@ -109,7 +110,7 @@ const DoctorRegistrationForm = () => {
                 throw new Error(errorMessage);
             } else {
                 alert('File is uploaded successfully');
-                const fileId = await response.json(); 
+                const fileId = await response.json();
                 return fileId;
             }
         } catch (error) {
@@ -295,6 +296,7 @@ const DoctorRegistrationForm = () => {
                     Upload Medical ID:
                 </label>
                 <input
+                    required={true}
                     type="file"
                     className="form-control"
                     id="medicalIDFile"
@@ -311,6 +313,7 @@ const DoctorRegistrationForm = () => {
                     Upload Medical Licenses:
                 </label>
                 <input
+                    required={true}
                     type="file"
                     className="form-control"
                     id="medicalLicensesFile"
@@ -328,6 +331,7 @@ const DoctorRegistrationForm = () => {
                     Upload Medical Degree:
                 </label>
                 <input
+                    required={true}
                     type="file"
                     className="form-control"
                     id="medicalDegreeFile"

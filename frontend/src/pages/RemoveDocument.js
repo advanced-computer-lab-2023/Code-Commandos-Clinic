@@ -79,6 +79,7 @@ const RemoveDocument = () => {
             {'   '}
             <button className="btn btn-secondary"   onClick={() => handleRemove(file._id)}>Remove</button>
             <p>  </p>
+            <hr/>
           </li>
         ))}
 

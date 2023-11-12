@@ -49,7 +49,7 @@ const DoctorRequestDetails = ({ doctorRequest }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                console.log("p0")
+                console.log(doctorRequest)
                 // Fetch file names based on file IDs
                 const idFileInfoResponse = await axios.get(`/api/file/getFileById/${doctorRequest.medicalID}`);
                 const licenseFileInfoResponse = await axios.get(`/api/file/getFileById/${doctorRequest.medicalLicenses}`);
