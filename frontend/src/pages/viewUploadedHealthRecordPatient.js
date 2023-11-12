@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const HealthRecordUpload = () => {
   const [healthRecord, setHealthRecord] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchHealthRecord = async () => {
@@ -10,29 +11,39 @@ const HealthRecordUpload = () => {
         const response = await axios.get("/api/healthRecord/getHealthRecordOfPatient");
         setHealthRecord(response.data);
       } catch (error) {
-        console.error('Error fetching health record:', error.message);
+        if ((error.response && error.response.status === 401 )   ||( error.response && error.response.status === 403)) {
+          // Handle unauthorized access, e.g., redirect to login
+          alert('Unauthorized access. ');
+        } else {
+          alert('Error fetching health record:', error.message);
+        }
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchHealthRecord();
-  }, );
+  }, []); // Empty dependency array to run only once
 
   return (
     <div>
-      {healthRecord&& healthRecord  (
+      {loading ? (
+        <p>Loading...</p>
+      ) : healthRecord ? (
         <div>
           <h1>Your Health Record</h1>
           
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh' }}>
-            <img
+            <iframe
+              title="Health Record"
               src={healthRecord.urlName}
-              alt="Health Record"
-              style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
+              style={{ width: '100%', height: '100%' }}
             />
           </div>
-
         </div>
-      ) }
+      ) : (
+        <p>Error loading health record.</p>
+      )}
     </div>
   );
 };

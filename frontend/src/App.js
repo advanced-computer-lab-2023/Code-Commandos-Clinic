@@ -37,6 +37,8 @@ import ViewpatientHealthRecord from './pages/ViewPatientHealthRecord';
 import AddHealthRecord  from './components/AddHealthRecord';
 import HealthRecordUpload from './pages/viewUploadedHealthRecordPatient';
 import HealthRecordUploadPatientsDoctor from './pages/ViewUploadedHealthRecordPatientsOfDoctor';
+import AppointmentSuccess from './pages/AppointmentSuccess'
+import AppointmentFailure from './pages/AppointmentFailure';
 
 const App = () => {
     const logged = window.localStorage.getItem("logged");
@@ -80,11 +82,12 @@ const App = () => {
             <Route path="/DoctorUpcomingPastAppointments"  element={<DoctorUpcomingPastAppointments/>}/>
             <Route path="/PatientUpcomingPastAppointments"  element={<PatientUpcomingPastAppointments/>}/>
             <Route path="/FilterAppointmentsByDateOrStatus"  element={<FilterAppointmentsByDateOrStatus/>}/>
-            <Route path="/ReserveAppointment/:id"  element={<ReserveAppointment/>}/>
+            <Route path="/ReserveAppointment/:id/"  element={<ReserveAppointment/>}/>
             <Route path="/EnterEmailReset"  element={<EnterEmailReset/>}/>
             <Route path="/ResetPassword"  element={<ResetPassword/>}/>
             <Route path="/ChangePassword"  element={<ChangePassword/>}/>
-
+            <Route path="/AppointmentSuccess" element={<AppointmentSuccess/>}/>
+            <Route path="/AppointmentFailure" element={<AppointmentFailure/>}/>
             <Route path="/Login" element={logged ? <Navigate to="/Home" replace /> : <Login/>}/>
             <Route path="/Home" element={<Home/>}/>
         </Routes>

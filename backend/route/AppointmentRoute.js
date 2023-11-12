@@ -11,7 +11,8 @@ const {
     reserveAppointment,
     upcomingPastAppointmentsOfDoctor,
     upcomingPastAppointmentsOfPatient,
-    filterAppointmentsByDateOrStatus
+    filterAppointmentsByDateOrStatus,
+    success
 
 } = require('../controller/AppointmentController')
 const {protect} = require("../middleware/AuthenticationHandler");
@@ -24,7 +25,8 @@ router.get('/getAppointment/:patientid/:doctorid',getAppointment)
 router.route('/getAppointmentsByDateAndStatus/:appointmentDate/:status').get(getAppointmentsByDateAndStatus)
 router.route('/getAppointments').get(getAppointments)
 router.get('/viewAvailableAppointmentsOfDoctor/:doctorId',protect,checkPatientRole,viewAvailableAppointmentsOfDoctor)
-router.put('/reserveAppointment',protect,checkPatientRole,reserveAppointment)
+router.put('/reserveAppointment/:paymentMethod',protect,checkPatientRole,reserveAppointment)
+router.post('/success/:sessionID',protect,checkPatientRole,success)
 router.get('/upcomingPastAppointmentsOfDoctor',protect,checkDoctorRole,upcomingPastAppointmentsOfDoctor)
 router.get('/upcomingPastAppointmentsOfPatient',protect,checkPatientRole,upcomingPastAppointmentsOfPatient)
 router.get('/filterAppointmentsByDateOrStatus/:date/:status',protect,checkPatientDoctorRole,filterAppointmentsByDateOrStatus)

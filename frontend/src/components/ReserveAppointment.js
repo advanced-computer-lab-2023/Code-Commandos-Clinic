@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import {useParams} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ReserveAppointment = () => {
-    const {id} = useParams()
+    const { id} = useParams()
     console.log("app id is ",id)
     const [members,setMembers] = useState([])
+    const [paymentMethod, setPaymentMethod] = useState(null)
     const [selectedMemberId,setSelectedMemberId] = useState(null)
+    const navigate = useNavigate()
     useEffect(() => {
         fetchMembers()
     }, []);
@@ -29,13 +32,26 @@ const ReserveAppointment = () => {
     const handleReserve = async () => {
         const body = {id: id, familyMemberId: selectedMemberId}
         console.log("member id is ",selectedMemberId)
+        console.log(body.id)
         try {
-            const response = await axios.put('/api/appointment/reserveAppointment', body)
-            if (response.status === 200) {
-                alert("Appointment reserved successfully")
+            const response = await axios.put(`/api/appointment/reserveAppointment/${paymentMethod}`, body)
+            
+            
+            if(paymentMethod==="credit_card"){
+                if(response.status===200){
+                    const session = response.data
+                    window.location.href = session.url;
+                } else {
+                    alert(response.data)
+                }
             } else {
-                alert(response.data)
+                if(response.status===200){
+                    navigate('/AppointmentSuccess')
+                } else {
+                    alert(response.data)
+                }
             }
+            
         }
         catch (error){
             alert(error.message)
@@ -71,6 +87,33 @@ const ReserveAppointment = () => {
                 </select>
             </div>
             <br/>
+            <div className="healthPackages m-5">
+            <h2>Select Payment Method:</h2>
+            <ul className="list-group">
+                <li className="list-group-item">
+                <button
+                    className="btn btn-link"
+                    onClick={() => setPaymentMethod("wallet")} 
+                    style={{ fontSize: "20px", textDecoration:"none" }}>
+                    Pay with Wallet (Current balance: {}) {paymentMethod==="wallet" && <span>(selected)</span>}
+                </button>
+                </li>
+                <li className="list-group-item">
+                <button
+                    className="btn btn-link"
+                    onClick={() => setPaymentMethod("credit_card")} 
+                    style={{ fontSize: "20px", textDecoration:"none" }}>
+                    Pay with Credit Card (Stripe) {paymentMethod==="credit_card" && <span>(selected)</span>}
+                </button>
+                </li>
+            </ul>
+            <br/>
+            {paymentMethod &&
+                <button className="btn btn-success" onClick={() => handleReserve()}>
+                    Continue
+                </button>
+            }
+        </div>
             <button onClick={handleReserve} className="btn btn-success">
                 Confirm Reservation
             </button>

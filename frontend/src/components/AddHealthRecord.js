@@ -13,18 +13,25 @@ const AddHealthRecord =() =>{
     const submit = async event => {
       event.preventDefault()
       const formData = new FormData();
-      formData.append("image", file)
+      formData.append("file", file)
       formData.append("caption", caption)
       formData.append("allergicHistory", allergicHistory);
       formData.append("bloodType", bloodType);
       formData.append("mainComplaint", mainComplaint);
-     
+     try{
      const response= await axios.post(url, formData, { headers: {'Content-Type': 'multipart/form-data'}})
+    if(!response.ok) {
+      alert(response.data)
+    }
+     
+    }catch(err){
+      alert(err.message)
+     }
     }
   
     return (
        <form onSubmit={submit}>
-         <input onChange={e => setFile(e.target.files[0])} type="file" accept="image/*"></input>
+         <input onChange={e => setFile(e.target.files[0])} type="file"  accept=".pdf" ></input>
          <input value={caption} onChange={e => setCaption(e.target.value)} type="text" placeholder='Caption'></input>
          <input
         value={allergicHistory}

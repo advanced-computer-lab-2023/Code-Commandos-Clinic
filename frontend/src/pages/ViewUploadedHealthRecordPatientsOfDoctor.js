@@ -7,31 +7,38 @@ const HealthRecordUploadPatientsDoctor = () => {
   useEffect(() => {
     const fetchHealthRecord = async () => {
       try {
-        const response = await axios.get("/api/healthRecord/getHealthRecordOfPatients");
-        console.log(response)
-        setHealthRecord(response.data);
+        // Fetch the access token from your authentication service
+        
+        const response = await axios.get('/api/healthRecord/getHealthRecordOfPatients')
+
+        if (response.status === 200) {
+          setHealthRecord(response.data);
+        } 
       } catch (error) {
-        console.error('Error fetching health record:', error.message);
+        if ((error.response && error.response.status === 401 )   ||( error.response && error.response.status === 403)) {
+          // Handle unauthorized access, e.g., redirect to login
+          alert('Unauthorized access. ');
+        } else {
+          alert('Error fetching health record:', error.message);
+        }
       }
     };
 
     fetchHealthRecord();
-  }, );
+  }, []); // The empty dependency array ensures that this effect runs once when the component mounts
 
   return (
     <div>
       <h1>Health Records List</h1>
-      {healthRecord &&healthRecord.length > 0 ? (
+      {healthRecord && healthRecord.length > 0 ? (
         <ul>
           {healthRecord.map((record) => (
             <li key={record._id}>
               <h2>{record.patient}</h2>
               {/* Display other health record details as needed */}
-              <img
-                src={record.urlName}
-                alt={`Health Record of ${record.patient}`}
-                style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
-              />
+              
+              <a href={record.urlName} target="_blank" rel="noopener noreferrer">Open PDF</a>
+         
             </li>
           ))}
         </ul>
@@ -42,4 +49,4 @@ const HealthRecordUploadPatientsDoctor = () => {
   );
 };
 
-export default HealthRecordUploadPatientsDoctor
+export default HealthRecordUploadPatientsDoctor;

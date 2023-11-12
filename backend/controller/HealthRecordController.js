@@ -32,13 +32,14 @@ const s3 = new S3Client({
   })
 const randomImageName=(bytes=32)=>crypto.randomBytes(bytes).toString('hex')
 const createHealthRecord = asyncHandler( async (req,res)=>{
+    try{
     const HealthRecord= new HealthRecordModel({
         patient: req.body.patient,
         AllergicHistory: req.body.AllergicHistory,
         Maincomplaint: req.body.Maincomplaint,
         BloodType: req.body.BloodType
     })
-    try{
+ 
         const newHealthRecord=await HealthRecord.save();
         res.status(200).json(newHealthRecord)
     } catch(err) {
@@ -52,7 +53,7 @@ const createHealthRecord = asyncHandler( async (req,res)=>{
 const addHealthRecordByDoctor = async(req,res)=>{
     console.log("req.body",req.body)
     console.log("req.file",req.file)
-    
+    try{
     const imageName=randomImageName()+"healthrecord"
     const params ={
         Bucket:bucketName,
@@ -69,7 +70,7 @@ const addHealthRecordByDoctor = async(req,res)=>{
         BloodType: req.body.BloodType,
         imageName:req.file.originalname
     })
-    try{
+   
         const healthrecord = await HealthRecordModel.findOne({patient:req.params.patientid})
         if(healthrecord){
             throw new Error("patient you are trying to add to it health redord have already one ")
@@ -106,6 +107,7 @@ const getHealthRecordsPatient = asyncHandler ( async (req,res) =>{
 
 
         if(!healthRecord){
+            res.status(400)
             throw new Error("No health record found")
         }
         const command = new GetObjectCommand(getObjectParams)

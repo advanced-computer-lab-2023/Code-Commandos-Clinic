@@ -20,7 +20,7 @@ const {checkPatientRole, checkDoctorRole} = require("../middleware/AccessHandler
 router.post('/createHealthRecord',createHealthRecord)
 router.get('/getHealthRecordOfPatient',protect,checkPatientRole,getHealthRecordsPatient)
 router.get('/getHealthRecordOfPatients',protect,checkDoctorRole,getHealthRecordPatientsOfDoctor)
-router.post('/AddHealthRecord/:patientid',upload.single('image'),addHealthRecordByDoctor)
+router.post('/AddHealthRecord/:patientid',protect,checkDoctorRole,upload.single('file'),addHealthRecordByDoctor)
 
 module.exports = router
 
