@@ -101,6 +101,7 @@ const deletePatient = asyncHandler(async (req, res) => {
       res.status(400)
       throw new Error('Patient not found')
     }
+    await User.findOneAndDelete({username:patient.username})
     res.status(200).json(patient)
   } catch (error){
     res.status(400)

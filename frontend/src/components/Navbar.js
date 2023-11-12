@@ -106,6 +106,9 @@ const Navbar = () => {
                                             <Link to="/DoctorContract" className="dropdown-item">My contract</Link>
                                         </li>
                                         <li>
+                                            <Link to="/CreateContract" className="dropdown-item">Create contract</Link>
+                                        </li>
+                                        <li>
                                             <Link to="/LinkFamilyMember" className="dropdown-item">Link Family Member</Link>
                                         </li>
                                         <li>

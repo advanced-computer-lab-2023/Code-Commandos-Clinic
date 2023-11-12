@@ -13,7 +13,7 @@ const {
 const {protect} = require("../middleware/AuthenticationHandler");
 
 // Create a new employment contract
-router.post('/createContracts', createEmploymentContract);
+router.post('/createContracts',protect,checkAdminRole, createEmploymentContract);
 
 // Retrieve all employment contracts
 router.get('/getContracts', protect,checkAdminRole,getAllEmploymentContracts);

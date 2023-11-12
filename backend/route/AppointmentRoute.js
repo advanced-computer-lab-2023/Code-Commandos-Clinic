@@ -22,7 +22,7 @@ const {checkDoctorRole, checkPatientRole, checkPatientDoctorRole} = require("../
 router.post('/createAppointment',protect,checkDoctorRole,createAppointment)
 router.get('/getUpcomingPatientsOfDoctor',protect,checkDoctorRole,getUpcomingPatientsOfDoctor)
 router.get('/getAppointment/:patientid/:doctorid',getAppointment)
-router.get('/getAppointmentsByDateAndStatus/:appointmentDate/:status',protect, checkPatientRole ||checkDoctorRole , getAppointmentsByDateAndStatus)
+router.get('/getAppointmentsByDateAndStatus/:appointmentDate/:status',protect, checkPatientDoctorRole, getAppointmentsByDateAndStatus)
 router.get('/getAppointments',getAppointments)
 router.get('/viewAvailableAppointmentsOfDoctor/:doctorId',protect,checkPatientRole,viewAvailableAppointmentsOfDoctor)
 router.put('/reserveAppointment/:paymentMethod',protect,checkPatientRole,reserveAppointment)
