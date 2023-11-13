@@ -8,6 +8,7 @@ const FamilyMemberModel = require('../model/FamilyMember')
 const mongoose = require('mongoose')
 const User = require("../model/User");
 const asyncHandler = require('express-async-handler')
+const bcrypt = require("bcryptjs");
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
 
@@ -79,8 +80,14 @@ const createPatient = asyncHandler(async (req, res) => {
   const patientBody = req.body
   patientBody.wallet = 0.00
   try {
+    if (patientBody.password.search(/[a-z]/) < 0 || patientBody.password.search(/[A-Z]/) < 0 || patientBody.password.search(/[0-9]/) < 0) {
+      res.status(400)
+      throw new Error("Password must contain at least one number, one capital letter and one small letter")
+    }
+    const salt = await bcrypt.genSalt(10)
+    const hashedPassword = await bcrypt.hash(patientBody.password,salt)
     const patient = await PatientModel.create(patientBody)
-    const user = await UserModel.create({username: patientBody.username, password: patientBody.password, role:"PATIENT"})
+    const user = await UserModel.create({username: patientBody.username, password: hashedPassword, role:"PATIENT"})
     res.status(200).json(patient)
   } catch (error) {
     res.status(400)

@@ -7,7 +7,8 @@ const {errorHandler} = require('./middleware/ErrorHandler')
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const port = process.env.PORT
-
+const bcrypt = require("bcryptjs");
+const User = require("./model/User");
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 server.use(cookieParser());
@@ -35,6 +36,7 @@ const userRoutes= require('./route/UserRoute')
 const employmentContractRoutes = require('./route/employmentContractRoutes')
 const fileRoutes = require('./route/FileRoute')
 const updateAppointmentStatus = require('./middleware/SyncAppointmentMiddleware')
+
 
 updateAppointmentStatus()
 

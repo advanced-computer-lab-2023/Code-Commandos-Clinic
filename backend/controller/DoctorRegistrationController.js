@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const asyncHandler = require('express-async-handler')
 const DoctorModel = require('../model/Doctor')
 const UserModel = require('../model/User')
+const bcrypt = require("bcryptjs");
 //ziad: requirement 3
 //submit a request to register as a doctor using username, name, email, password, date of birth, hourly rate, affiliation, educational background
 const doctorRegistrationRequest = asyncHandler(async (req,res) =>{
@@ -55,7 +56,13 @@ const acceptDoctorRequests = asyncHandler(async (req, res) => {
     console.log(id)
     try {
         const request = await DoctorRegistrationModel.findByIdAndDelete(id)
-        const user = await UserModel.create({username: request.username,password: request.password,role:'DOCTOR'})
+        if (request.password.search(/[a-z]/) < 0 || request.password.search(/[A-Z]/) < 0 || request.password.search(/[0-9]/) < 0) {
+            res.status(400)
+            throw new Error("Password must contain at least one number, one capital letter and one small letter")
+        }
+        const salt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(request.password,salt)
+        const user = await UserModel.create({username: request.username,password: hashedPassword,role:'DOCTOR'})
         const addDoctor =await DoctorModel.create({username: request.username,name: request.name,email:  request.email,password: request.password,dateOfBirth:  request.dateOfBirth,hourlyRate: request.hourlyRate,affiliation: request.affiliation,educationalBackground: request.educationalBackground,speciality: request.speciality,sessionPrice: request.sessionPrice})
         res.status(200).json(addDoctor)
         

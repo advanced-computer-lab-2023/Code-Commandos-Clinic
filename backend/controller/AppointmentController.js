@@ -10,7 +10,7 @@ const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
 const createAppointment =asyncHandler( async (req,res) => {
     const contract = await EmploymentContract.findOne({doctor:req.user.id})
-    if(!contract || contract.status === "REJECTED"){
+    if(!contract || contract.status === "REJECTED" || contract.status === 'PENDING'){
         res.status(400)
         throw new Error("You can add your slots only if your contract is accepted")
     }

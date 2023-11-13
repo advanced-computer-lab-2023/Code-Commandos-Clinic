@@ -57,6 +57,7 @@ const PatientRegistrationForm = () => {
                     Username:
                 </label>
                 <input
+                    required={true}
                     type="text"
                     className="form-control"
                     id="username"
@@ -70,6 +71,7 @@ const PatientRegistrationForm = () => {
                     Name:
                 </label>
                 <input
+                    required={true}
                     type="text"
                     className="form-control"
                     id="name"
@@ -83,6 +85,7 @@ const PatientRegistrationForm = () => {
                     E-mail:
                 </label>
                 <input
+                    required={true}
                     type="email"
                     className="form-control"
                     id="email"
@@ -96,6 +99,7 @@ const PatientRegistrationForm = () => {
                     Password:
                 </label>
                 <input
+                    required={true}
                     type="password"
                     className="form-control"
                     id="password"
@@ -109,6 +113,7 @@ const PatientRegistrationForm = () => {
                     Date of Birth:
                 </label>
                 <input
+                    required={true}
                     type="date"
                     className="form-control"
                     id="dateOfBirth"
@@ -121,6 +126,7 @@ const PatientRegistrationForm = () => {
                 <label className="form-label">Gender:</label><br />
                 <div className="form-check form-check-inline">
                     <input
+                        required={true}
                         type="radio"
                         className="form-check-input"
                         id="MALE"
@@ -131,6 +137,7 @@ const PatientRegistrationForm = () => {
                 </div>
                 <div className="form-check form-check-inline">
                     <input
+                        required={true}
                         type="radio"
                         className="form-check-input"
                         id="FEMALE"
@@ -146,6 +153,7 @@ const PatientRegistrationForm = () => {
                     Mobile Number:
                 </label>
                 <input
+                    required={true}
                     type="number"
                     className="form-control"
                     id="mobileNumber"
@@ -159,6 +167,7 @@ const PatientRegistrationForm = () => {
                     Emergency Contact Full Name:
                 </label>
                 <input
+                    required={true}
                     type="text"
                     className="form-control"
                     id="ecFullName"
@@ -172,6 +181,7 @@ const PatientRegistrationForm = () => {
                     Emergency Contact Mobile Number:
                 </label>
                 <input
+                    required={true}
                     type="number"
                     className="form-control"
                     id="ecMobileNumber"

@@ -26,6 +26,7 @@ const ChangePassword = () => {
                 window.localStorage.removeItem("logged");
                 alert(responseData);
                 navigate('/Login')
+                window.location.reload()
             } else {
                 alert(responseData.error);
             }

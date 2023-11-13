@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 const EnterEmailReset = () => {
     const [otp, setOtp] = useState(null);
     const [username, setUsername] = useState('');
     const [newPassword, setNewPassword] = useState('');
-
+    const navigate = useNavigate()
 
 
     const handleSubmit = async () => {
@@ -20,6 +21,7 @@ const EnterEmailReset = () => {
             });
             if(response.ok){
                 alert(await response.json())
+                navigate('/Login')
             }
             else {
                 alert(await response.text())

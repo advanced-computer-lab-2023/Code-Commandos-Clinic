@@ -129,6 +129,7 @@ const DoctorRegistrationForm = () => {
                     Username:
                 </label>
                 <input
+                    required={true}
                     type="text"
                     className="form-control"
                     id="username"
@@ -142,6 +143,7 @@ const DoctorRegistrationForm = () => {
                     Name:
                 </label>
                 <input
+                    required={true}
                     type="text"
                     className="form-control"
                     id="name"
@@ -155,6 +157,7 @@ const DoctorRegistrationForm = () => {
                     E-mail:
                 </label>
                 <input
+                    required={true}
                     type="email"
                     className="form-control"
                     id="email"
@@ -168,6 +171,7 @@ const DoctorRegistrationForm = () => {
                     Password:
                 </label>
                 <input
+                    required={true}
                     type="password"
                     className="form-control"
                     id="password"
@@ -181,6 +185,7 @@ const DoctorRegistrationForm = () => {
                     Date of Birth:
                 </label>
                 <input
+                    required={true}
                     type="date"
                     className="form-control"
                     id="dateOfBirth"
@@ -194,6 +199,7 @@ const DoctorRegistrationForm = () => {
                     Hourly Rate:
                 </label>
                 <input
+                    required={true}
                     type="number"
                     className="form-control"
                     id="hourlyRate"
@@ -206,6 +212,7 @@ const DoctorRegistrationForm = () => {
                     Session Price:
                 </label>
                 <input
+                    required={true}
                     type="number"
                     className="form-control"
                     id="sessionPrice"
@@ -218,6 +225,7 @@ const DoctorRegistrationForm = () => {
                     Affiliation:
                 </label>
                 <input
+                    required={true}
                     type="text"
                     className="form-control"
                     id="affiliation"
@@ -231,6 +239,7 @@ const DoctorRegistrationForm = () => {
                     Educational Background:
                 </label>
                 <input
+                    required={true}
                     type="text"
                     className="form-control"
                     id="educationalBackground"
@@ -244,6 +253,7 @@ const DoctorRegistrationForm = () => {
                     Speciality:
                 </label>
                 <select
+                    required={true}
                     id="speciality"
                     name="speciality"
                     className="form-select"

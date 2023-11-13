@@ -2,6 +2,7 @@ const AdminModel = require('../model/Admin')
 const UserModel = require('../model/User')
 const mongoose = require('mongoose')
 const asyncHandler = require('express-async-handler')
+const bcrypt = require("bcryptjs");
 
 //requirement  7
 // add another adminstrator with a set username and password
@@ -9,8 +10,14 @@ const addAdmin = asyncHandler(async(req,res) => {
     const{username,password}= req.body
     //add admin to db
     try{
-        const user = await UserModel.create({username,password,'role':'ADMIN'})
-        const admin =await AdminModel.create({username,password})
+        if (password.search(/[a-z]/) < 0 || password.search(/[A-Z]/) < 0 || password.search(/[0-9]/) < 0) {
+            res.status(400)
+            throw new Error("Password must contain at least one number, one capital letter and one small letter")
+        }
+        const salt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(password,salt)
+        const user = await UserModel.create({username,password:hashedPassword,'role':'ADMIN'})
+        const admin =await AdminModel.create({username,password:password})
         res.status(200).json(admin)
     }
     catch(error) {

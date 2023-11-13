@@ -116,7 +116,7 @@ const App = () => {
             <Route path="/AppointmentFailure" element={<AppointmentFailure/>}/>
             <Route path="/CreateContract" element={<CreateContract/>}/>
             <Route path="/Register" element={<Register/>}/>
-            <Route path="/Login" element={<Login/>}/>
+            <Route path="/Login" element={logged ? <Navigate to="/Home" replace /> : <Login/> }/>
             <Route path="/Home" element={<Home/>}/>
         </Routes>
        </div>

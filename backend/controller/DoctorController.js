@@ -7,6 +7,7 @@ const HealthPackageModel = require('../model/HealthPackage')
 const HealthPackagePatientModel = require('../model/HealthPackagePatient')
 const PatientModel = require('../model/Patient')
 const AppointmentModel = require('../model/Appointment')
+const bcrypt = require("bcryptjs");
 
 //requirement 67  -> akram
 const getAmount = asyncHandler(async (req, res) => {
@@ -96,8 +97,14 @@ const searchByNameAndOrSpeciality = asyncHandler( async (req,res) => {
 const createDoctor = asyncHandler(async (req,res) =>{
     const doctorBody = req.body
     try {
+        if (doctorBody.password.search(/[a-z]/) < 0 || doctorBody.password.search(/[A-Z]/) < 0 || doctorBody.password.search(/[0-9]/) < 0) {
+            res.status(400)
+            throw new Error("Password must contain at least one number, one capital letter and one small letter")
+        }
+        const salt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(doctorBody.password,salt)
         const doctor = await DoctorModel.create(doctorBody)
-        const user = await UserModel.create({username: doctorBody.username, password: doctorBody.password, role:"DOCTOR"})
+        const user = await UserModel.create({username: doctorBody.username, password: hashedPassword, role:"DOCTOR"})
         res.status(200).json(doctor)
 
     }

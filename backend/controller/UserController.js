@@ -40,39 +40,41 @@ const register = asyncHandler(async (req,res) => {
 const login = asyncHandler(async (req,res) => {
     const {username, password} = req.body
     const user = await User.findOne({username})
-    console.log("before pass " +id)
-    if (user && user.password === password){
-        var id
-        if(user.role == 'PATIENT'){
-            const patient = await Patient.findOne({username}).select('_id')
-            id = patient._id
-            console.log("i am here" +id)
-        }
-        else if(user.role == 'DOCTOR'){
-            const doctor = await Doctor.findOne({username}).select('_id')
-            id = doctor._id
-        }
-        else if(user.role == 'ADMIN'){
-            const admin = await Admin.findOne({username}).select('_id')
-            id = admin._id
-        }
-        const token = generateToken(user.username,user.role,id)
-        console.log(token)
-        res.cookie('token', token, {
-            maxAge: 3600000,
-            httpOnly: true,
-        });
-        res.status(200).json({
-            id: id,
-            username: user.username,
-            role: user.role,
-            token: token
-        })
-    }
-    else {
+    if(!user){
         res.status(400)
-        throw new Error('Invalid credentials')
+        throw new Error('Invalid username')
     }
+    const salt = await bcrypt.genSalt(10)
+    const comparePassword = await bcrypt.compare(password,user.password)
+    if (!comparePassword) {
+        res.status(400)
+        throw new Error('Invalid Password')
+    }
+    var id
+    if(user.role == 'PATIENT'){
+        const patient = await Patient.findOne({username}).select('_id')
+        id = patient._id
+        console.log("i am here" +id)
+    }
+    else if(user.role == 'DOCTOR'){
+        const doctor = await Doctor.findOne({username}).select('_id')
+        id = doctor._id
+    }
+    else if(user.role == 'ADMIN'){
+        const admin = await Admin.findOne({username}).select('_id')
+        id = admin._id
+    }
+    const token = generateToken(user.username,user.role,id)
+    res.cookie('token', token, {
+        maxAge: 3600000,
+        httpOnly: true,
+    });
+    res.status(200).json({
+        id: id,
+        username: user.username,
+        role: user.role,
+        token: token
+    })
 })
 
 const logout = async (req, res) => {
@@ -160,7 +162,9 @@ const resetPassword = asyncHandler(async (req,res) => {
         throw new Error("No user found")
     }
     else {
-        await User.findOneAndUpdate({username},{password:newPassword})
+        const salt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(newPassword,salt)
+        await User.findOneAndUpdate({username},{password:hashedPassword})
     }
     res.status(200).json("Your password has been reset")
 })
@@ -176,7 +180,8 @@ const changePassword = async (req,res) => {
     catch (error){
         return res.status(400).json({error:error.message})
     }
-    if(currentPassword != currentComparedPassword.password){
+    const passCompare = await bcrypt.compare(currentPassword,currentComparedPassword.password)
+    if(!passCompare){
         return res.status(401).json({ error: "Your current password is incorrect!" });
     }
     if (newPassword.search(/[a-z]/) < 0 || newPassword.search(/[A-Z]/) < 0 || newPassword.search(/[0-9]/) < 0) {
@@ -186,7 +191,9 @@ const changePassword = async (req,res) => {
         return res.status(400).json({ error: "Password confirmation incorrect" });
     }
     try {
-        await User.findOneAndUpdate({username},{password:newPassword})
+        const salt = await bcrypt.genSalt(10)
+        const hashedPassword = await bcrypt.hash(newPassword,salt)
+        await User.findOneAndUpdate({username},{password:hashedPassword})
         if(role == "PATIENT"){
             await Patient.findOneAndUpdate({username},{password:newPassword})
         }
