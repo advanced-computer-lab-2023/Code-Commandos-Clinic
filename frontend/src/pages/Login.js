@@ -66,6 +66,9 @@ const Login = () => {
                                     <p className="text-center">
                                         <Link to="/EnterEmailReset">Forgot Password?</Link>
                                     </p>
+                                    <p className="text-center">
+                                        <Link to="/Register">Sign Up</Link>
+                                    </p>
 
                                 </form>
                             </div>
