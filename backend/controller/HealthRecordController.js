@@ -50,43 +50,48 @@ const createHealthRecord = asyncHandler( async (req,res)=>{
 
 
 
-const addHealthRecordByDoctor = async(req,res)=>{
+const addHealthRecordByDoctor = asyncHandler (async(req,res)=>{
+    console.log("hello")
     console.log("req.body",req.body)
     console.log("req.file",req.file)
-    try{
+
     const imageName=randomImageName()+"healthrecord"
-    const params ={
-        Bucket:bucketName,
-        Key:req.file.originalname,
-        Body : req.file.buffer,
-        ContentType :req.file.mimetype
-    }
-    const command = new PutObjectCommand(params)
-    console.log(req.params.patientid)
-    const HealthRecord= new HealthRecordModel({
-        patient: req.params.patientid,
-        AllergicHistory: req.body.AllergicHistory,
-        Maincomplaint: req.body.Maincomplaint,
-        BloodType: req.body.BloodType,
-        imageName:req.file.originalname
-    })
-   
-        const healthrecord = await HealthRecordModel.findOne({patient:req.params.patientid})
-        console.log("obj ",healthrecord)
+    const healthrecord = await HealthRecordModel.findOne({patient:req.params.patientid})
+    console.log()
+
+    try{
         if(healthrecord){
             res.status(400)
-            throw new Error("patient you are trying to add to it health redord have already one ")
+            throw new Error("patient you are trying to add has an already existing health record ")
         }
-        await s3.send(command)
-        const newHealthRecord=await HealthRecord.save();
-        res.status(200).json(newHealthRecord)
-    } catch(err) {
+        else{
+            const params ={
+                Bucket:bucketName,
+                Key:req.file.originalname,
+                Body : req.file.buffer,
+                ContentType :req.file.mimetype
+            }
+            const command = new PutObjectCommand(params)
+            console.log(req.params.patientid)
+            const HealthRecord= new HealthRecordModel({
+                patient: req.params.patientid,
+                AllergicHistory: req.body.allergicHistory,
+                MainComplaint: req.body.mainComplaint,
+                BloodType: req.body.bloodType,
+                imageName:req.file.originalname
+            })
+            console.log(req.body.AllergicHistory)
+            console.log(HealthRecord)
+            await s3.send(command)
+            const newHealthRecord=await HealthRecord.save();
+            res.status(200).json(newHealthRecord)
+        }}
+    catch(err){
         res.status(400)
         throw new Error(err.message)
+
     }
-
-
-}
+})
 
 
 
@@ -101,16 +106,14 @@ const getHealthRecordsPatient = asyncHandler ( async (req,res) =>{
     try{
         const healthRecord= await HealthRecordModel.findOne({ patient: req.user.id });
         console.log(healthRecord)
+        if(healthRecord==null){
+            console.log("hello from backend")
+            res.status(400)
+            throw new Error("No health record found")
+        }
         const getObjectParams={
             Bucket:bucketName,
             Key :healthRecord.imageName
-        }
-    
-
-
-        if(!healthRecord){
-            res.status(400)
-            throw new Error("No health record found")
         }
         const command = new GetObjectCommand(getObjectParams)
         const url = await getSignedUrl(s3,command,{expiresIn:3600})
@@ -129,6 +132,7 @@ const getHealthRecordPatientsOfDoctor = asyncHandler(async (req,res)=>{
     try{
         const patients = await DoctorPatientModel.find({doctor: req.user.id});
         if(patients.length==0){
+            res.status(400)
             throw new Error("you do not have any patients")
         }
         let healthRecords = []
@@ -136,27 +140,30 @@ const getHealthRecordPatientsOfDoctor = asyncHandler(async (req,res)=>{
             console.log(_patient)
             const currentDate = new Date();
             let query={
-            $and: [
-                { startTime : { $lt : currentDate } },
-                { endTime : { $lt : currentDate } },
-                { doctor : req.user.id },
-                { patient : _patient.patient},
-                { status : 'COMPLETED'}
-            ]
-        }
-           const previousAppointments = await AppointmentModel.findOne(query)
-           console.log(previousAppointments)
-           if(previousAppointments!==null){
-            console.log(_patient.patient)
-             healthRecords.push(await HealthRecordModel.findOne({patient: _patient.patient}))
-             console.log(healthRecords)
-           }
-        }
-        if(healthRecords==null){
-            throw new Error("no health records of patients")
+                $and: [
+                    { startTime : { $lt : currentDate } },
+                    { endTime : { $lt : currentDate } },
+                    { doctor : req.user.id },
+                    { patient : _patient.patient},
+                    { status : 'COMPLETED'}
+                ]
+            }
+            const previousAppointments = await AppointmentModel.findOne(query)
+            console.log(previousAppointments)
+            if(previousAppointments!==null){
+                console.log(_patient.patient)
+                const curHealthRecord=await HealthRecordModel.findOne({patient: _patient.patient})
+                if(curHealthRecord) {
+
+                    healthRecords.push(curHealthRecord)
+                }
+                console.log(healthRecords)
+            }
         }
 
+
         for(const healthRecord of healthRecords ){
+
             const getObjectParams={
                 Bucket:bucketName,
                 Key :healthRecord.imageName

@@ -27,7 +27,7 @@ router.put('/updatePatient/:id', updatePatient)
 router.get('/getPatientsOfADoctor',protect,checkDoctorRole,getPatientsOfADoctor);
 router.get('/getAmount',protect,checkPatientRole, getAmount)
 router.get('/getInfoHealthPatient/:id',getInfoHealthPatient);
-router.get('/searchByname/:name/:doctorId',searchByName)
+router.get('/searchByName/:name',protect,checkDoctorRole,searchByName)
 router.get('/payForSubscription/:familyMemberID/:packageID/:paymentMethod', protect, checkPatientRole, payForSubscription)
 router.post('/subscribeToPackage/:sessionID',protect,checkPatientRole,subscribeToPackage)
 

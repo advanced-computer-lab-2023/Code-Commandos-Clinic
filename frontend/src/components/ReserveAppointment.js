@@ -35,8 +35,6 @@ const ReserveAppointment = () => {
         console.log(body.id)
         try {
             const response = await axios.put(`/api/appointment/reserveAppointment/${paymentMethod}`, body)
-            
-            
             if(paymentMethod==="credit_card"){
                 if(response.status===200){
                     const session = response.data
@@ -48,13 +46,14 @@ const ReserveAppointment = () => {
                 if(response.status===200){
                     navigate('/AppointmentSuccess')
                 } else {
+                    alert(response.data.msg)
                     console.log(response.data)
                 }
             }
             
         }
         catch (error){
-            alert(error.message)
+            alert("Wallet balance insufficient")
         }
     }
 

@@ -28,7 +28,6 @@ const ViewPatientsOfDoctor = () =>{
         else {
             url += `/${searchQuery}`
         }
-        url+='/651ef3b26c21aee2d43e6b9b'
         try {
             const response = await fetch(url, {
                 method: 'GET',
