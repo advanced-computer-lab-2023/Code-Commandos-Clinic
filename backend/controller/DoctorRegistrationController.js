@@ -9,6 +9,10 @@ const bcrypt = require("bcryptjs");
 const doctorRegistrationRequest = asyncHandler(async (req,res) =>{
     const doctorBody = req.body
     try {
+        if (doctorBody.password.search(/[a-z]/) < 0 || doctorBody.password.search(/[A-Z]/) < 0 || doctorBody.password.search(/[0-9]/) < 0) {
+            res.status(400)
+            throw new Error("Password must contain at least one number, one capital letter and one small letter")
+        }
         const doctor = await DoctorRegistrationModel.create(doctorBody)
         res.status(200).json(doctor)
     }

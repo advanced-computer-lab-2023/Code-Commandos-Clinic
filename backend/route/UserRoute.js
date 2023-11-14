@@ -3,7 +3,6 @@ const router = express.Router();
 
 const {
     login,
-    register,
     logout,
     generateOTP,
     verifyOTP,
@@ -14,7 +13,6 @@ const {protect,localVariables} = require("../middleware/AuthenticationHandler");
 
 router.post('/login',login)
 router.post('/logout',protect,logout)
-router.post('/register',register)
 
 router.post('/generateOTP',localVariables,generateOTP)
 router.post('/resetPassword',verifyOTP,resetPassword)

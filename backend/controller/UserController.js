@@ -11,32 +11,6 @@ const Mailgen =  require('mailgen');
 const dotenv = require("dotenv").config();
 
 
-const register = asyncHandler(async (req,res) => {
-    const {username,password,role} = req.body
-    if(!username || !password){
-        res.status(400)
-        throw new Error('Please provide username and password')
-    }
-    const userExists = await User.findOne({username})
-    if (userExists){
-        res.status(400)
-        throw new Error('User exists already')
-    }
-    const salt = await bcrypt.genSalt(10)
-    const hashedPassword = await bcrypt.hash(password,salt)
-    const user = await User.create({
-        username: username,
-        password: hashedPassword,
-        role : role
-    })
-    if (user){
-        res.status(200).json(user)
-    }
-    else {
-        res.status(400)
-        throw new Error('Invalid user data')
-    }
-})
 const login = asyncHandler(async (req,res) => {
     const {username, password} = req.body
     const user = await User.findOne({username})
@@ -213,7 +187,6 @@ const changePassword = async (req,res) => {
 
 
 module.exports = {
-    register,
     login,
     logout,
     generateOTP,
