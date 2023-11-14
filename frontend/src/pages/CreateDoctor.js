@@ -9,13 +9,12 @@ const CreateDoctor = () => {
     const [hourlyRate, setHourlyRate] = useState('')
     const [affiliation, setAffiliation] = useState('')
     const [educationalBackground, setEducationalBackground] = useState('')
-    const [sessionPrice, setSessionPrice] = useState('')
     const [speciality, setSpeciality] = useState('')
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const doctorRequest = {username: username, name: name, email: email, password: password, dateOfBirth: dateOfBirth, hourlyRate: hourlyRate, affiliation: affiliation, educationalBackground: educationalBackground,speciality:speciality,sessionPrice:sessionPrice}
+        const doctorRequest = {username: username, name: name, email: email, password: password, dateOfBirth: dateOfBirth, hourlyRate: hourlyRate, affiliation: affiliation, educationalBackground: educationalBackground,speciality:speciality}
         const response = await fetch('/api/doctor/createDoctor', {
             method: 'POST',
             body: JSON.stringify(doctorRequest),
@@ -37,7 +36,6 @@ const CreateDoctor = () => {
             setHourlyRate('')
             setAffiliation('')
             setEducationalBackground('')
-            setSessionPrice(null)
             console.log('new doctor registration request added:', json)
         }
 
@@ -124,18 +122,7 @@ const CreateDoctor = () => {
                     onChange={(e) => setHourlyRate(e.target.value)}
                 />
             </div>
-            <div className="mb-3">
-                <label htmlFor="sessionPrice" className="form-label">
-                    Session Price:
-                </label>
-                <input
-                    type="number"
-                    className="form-control"
-                    id="sessionPrice"
-                    value={sessionPrice}
-                    onChange={(e) => setSessionPrice(e.target.value)}
-                />
-            </div>
+
             <div className="mb-3">
                 <label htmlFor="affiliation" className="form-label">
                     Affiliation:

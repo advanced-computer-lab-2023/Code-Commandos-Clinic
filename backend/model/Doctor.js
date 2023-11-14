@@ -79,10 +79,6 @@ const DoctorSchema = new mongoose.Schema({
         'DENTIST'
     ],
   },
-  sessionPrice: {
-    type: Number,
-    required: true,
-  },
   wallet: {
     type: Number,
     required: true,

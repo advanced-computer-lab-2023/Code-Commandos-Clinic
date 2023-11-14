@@ -25,6 +25,7 @@ const EnterEmailReset = () => {
             }
             else {
                 alert(await response.text())
+                navigate('/EnterEmailReset')
             }
         }
         catch (error){

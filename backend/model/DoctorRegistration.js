@@ -79,10 +79,6 @@ const DoctorRegistrationSchema = new mongoose.Schema({
       'DENTIST'
     ],
   },
-  sessionPrice: {
-    type: Number,
-    required: true,
-  },
   status: {
     type: String,
     default: 'PENDING',

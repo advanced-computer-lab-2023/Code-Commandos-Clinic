@@ -68,7 +68,7 @@ const RemoveDocument = () => {
   }
 
   return (
-    <div>
+    <div className="container">
       <h1>Remove Documents</h1>
       <ul>
         {files.map((file) => (

@@ -10,7 +10,6 @@ const DoctorRegistrationForm = () => {
     const [hourlyRate, setHourlyRate] = useState('')
     const [affiliation, setAffiliation] = useState('')
     const [educationalBackground, setEducationalBackground] = useState('')
-    const [sessionPrice, setSessionPrice] = useState('')
     const [speciality, setSpeciality] = useState('')
     const [medicalIDFile, setMedicalIDFile] = useState(null);
     const [medicalLicensesFile, setMedicalLicensesFile] = useState(null);
@@ -35,7 +34,6 @@ const DoctorRegistrationForm = () => {
         formData.append('affiliation', affiliation);
         formData.append('educationalBackground', educationalBackground);
         formData.append('speciality', speciality);
-        formData.append('sessionPrice', sessionPrice);
         formData.append('medicalID', IDID);
         formData.append('medicalLicenses',LicenseID );
         formData.append('medicalDegree',DegreeID );
@@ -65,7 +63,6 @@ const DoctorRegistrationForm = () => {
             setPassword('')
             setHourlyRate('')
             setAffiliation('')
-            setSessionPrice('')
             setEducationalBackground('')
             setMedicalIDFile(null);
             setMedicalLicensesFile(null);
@@ -205,19 +202,6 @@ const DoctorRegistrationForm = () => {
                     id="hourlyRate"
                     value={hourlyRate}
                     onChange={(e) => setHourlyRate(e.target.value)}
-                />
-            </div>
-            <div className="mb-3">
-                <label htmlFor="sessionPrice" className="form-label">
-                    Session Price:
-                </label>
-                <input
-                    required={true}
-                    type="number"
-                    className="form-control"
-                    id="sessionPrice"
-                    value={sessionPrice}
-                    onChange={(e) => setSessionPrice(e.target.value)}
                 />
             </div>
             <div className="mb-3">

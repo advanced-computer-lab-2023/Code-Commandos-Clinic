@@ -342,9 +342,12 @@ const getDoctor = asyncHandler(async (req, res) => {
 const getPatientDoctors = asyncHandler(async (req,res) => {
     try{
         const allPatientDoctors = await DoctorPatient.find({ patient: req.user.id });
+        console.log(allPatientDoctors)
         let allDoctors = []
         for(const doctor of allPatientDoctors){
-            allDoctors.push(await DoctorModel.findOne({_id: doctor.doctor}))
+            const doc = await DoctorModel.findOne({_id: doctor.doctor})
+            if(doc)
+                allDoctors.push(doc)
         }
         res.status(200).json(allDoctors);
     }

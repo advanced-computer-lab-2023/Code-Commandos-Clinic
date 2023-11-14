@@ -4,7 +4,6 @@ import DoctorSessionDetails from "../components/DoctorSessionDetails";
 const ViewDoctorsWithSessionPrice = ()=> {
     const [doctors, setDoctors] = useState(null)
     const [healthPackage, setHealthPackage] = useState(null)
-    //const patientID = "6521a435613bfae4cdcc4347"
 
     useEffect( () => {
         const fetchDoctors = async () => {

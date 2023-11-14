@@ -28,7 +28,6 @@ const login = asyncHandler(async (req,res) => {
     if(user.role == 'PATIENT'){
         const patient = await Patient.findOne({username}).select('_id')
         id = patient._id
-        console.log("i am here" +id)
     }
     else if(user.role == 'DOCTOR'){
         const doctor = await Doctor.findOne({username}).select('_id')

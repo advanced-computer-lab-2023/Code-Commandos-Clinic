@@ -44,7 +44,7 @@ const UploadDocument = () => {
 
 
   return (
-    <div>
+    <div className="container">
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <button className="btn btn-secondary" style={{width: 300}} onClick={() => document.getElementById('fileInput').click()}>Upload a single document</button>
         <input id="fileInput" type="file" style={{ display: 'none' }} onChange={handleFileSelect} />

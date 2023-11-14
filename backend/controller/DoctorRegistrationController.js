@@ -67,7 +67,7 @@ const acceptDoctorRequests = asyncHandler(async (req, res) => {
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(request.password,salt)
         const user = await UserModel.create({username: request.username,password: hashedPassword,role:'DOCTOR'})
-        const addDoctor =await DoctorModel.create({username: request.username,name: request.name,email:  request.email,password: request.password,dateOfBirth:  request.dateOfBirth,hourlyRate: request.hourlyRate,affiliation: request.affiliation,educationalBackground: request.educationalBackground,speciality: request.speciality,sessionPrice: request.sessionPrice})
+        const addDoctor =await DoctorModel.create({username: request.username,name: request.name,email:  request.email,password: request.password,dateOfBirth:  request.dateOfBirth,hourlyRate: request.hourlyRate,affiliation: request.affiliation,educationalBackground: request.educationalBackground,speciality: request.speciality})
         res.status(200).json(addDoctor)
         
     }
