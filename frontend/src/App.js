@@ -1,9 +1,12 @@
 import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
 import Login from "./pages/Login";
 import Home from "./pages/Home";
+
 import DoctorRegistrationRequests from "./pages/viewDoctorRequests";
 import DoctorRegistration from "./pages/registerAsDoctor";
 import PatientRegistration from "./pages/registerAsPatient";
+
+
 import DoctorUpdate from "./pages/updateDoctor";
 import SearchByNameAndOrSpeciality from "./pages/searchByNameAndOrSpeciality";
 import FilterBySpecialityAndDate from "./pages/filterBySpecialityAndDate";

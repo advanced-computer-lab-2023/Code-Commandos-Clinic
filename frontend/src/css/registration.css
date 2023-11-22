@@ -1,0 +1,14 @@
+body{
+    background-color: white;
+}
+h1{
+    background-color: #D21312;
+};
+.FEMALE{
+    background-color: red; /* Change the background color to red on hover */
+    border-color: red;
+}
+.form-check-input:hover {
+    background-color: red; /* Change the background color to red on hover */
+    border-color: red; /* Change the border color to red on hover */
+}
