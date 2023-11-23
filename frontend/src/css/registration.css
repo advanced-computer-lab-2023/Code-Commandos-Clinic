@@ -3,12 +3,43 @@ body{
 }
 h1{
     background-color: #D21312;
-};
-.FEMALE{
-    background-color: red; /* Change the background color to red on hover */
+}
+.buttons{
+    width: -webkit-fill-available;
+}
+
+.FEMALE {
+    background-color: red;
     border-color: red;
 }
+
+/* Hover styles */
+.FEMALE:hover {
+    background-color: red;
+    border-color: red;
+}
+
+/* Selected styles */
+.FEMALE:checked {
+    background-color: red;
+    border-color: red;
+}
+
 .form-check-input:hover {
-    background-color: red; /* Change the background color to red on hover */
-    border-color: red; /* Change the border color to red on hover */
+    background-color: red;
+    border-color: red;
+}
+
+.form-check-input:checked {
+    background-color: red;
+    border-color: red;
+}
+body {
+    /* Set the background image */
+    background-image: url('/Users/woaodhisham/Desktop/finall/Code-Commandos-Clinic/frontend/src/images/images (1) .jpeg'); /* Replace 'path/to/your/image.jpg' with your image file path */
+    /* Set background properties */
+    background-size: cover; /* Ensures the image covers the entire background */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    /* Additional properties */
+    /* You can add more styles as needed */
 }

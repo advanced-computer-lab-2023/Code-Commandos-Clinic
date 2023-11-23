@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import {useNavigate} from "react-router-dom";
+import '../css/registration.css';
 
 const PatientRegistrationForm = () => {
   const [name, setName] = useState('')
@@ -117,7 +118,7 @@ const PatientRegistrationForm = () => {
                 />
             </div>
             </div>
-           
+            <div className="row">
             <div className="col-md-4 mb-3">
                 <label htmlFor="dateOfBirth" className="form-label">
                     Date of Birth:
@@ -131,6 +132,21 @@ const PatientRegistrationForm = () => {
                     onChange={(e) => setDateOfBirth(e.target.value)}
                  
                 />
+            </div>
+           
+            <div className="col-md-4 mb-3">
+                <label htmlFor="mobileNumber" className="form-label">
+                    Mobile Number:
+                </label>
+                <input
+                    required={true}
+                    type="number"
+                    className="form-control"
+                    id="mobileNumber"
+                    value={mobileNumber}
+                    onChange={(e) => setMobileNumber(e.target.value)}
+                />
+            </div>
             </div>
             <div className="row">
             <div className="col-md-4 mb-3">
@@ -160,19 +176,7 @@ const PatientRegistrationForm = () => {
             </div>
             </div>
 
-            <div className="col-md-4 mb-3">
-                <label htmlFor="mobileNumber" className="form-label">
-                    Mobile Number:
-                </label>
-                <input
-                    required={true}
-                    type="number"
-                    className="form-control"
-                    id="mobileNumber"
-                    value={mobileNumber}
-                    onChange={(e) => setMobileNumber(e.target.value)}
-                />
-            </div>
+            
           
             <div className="col-md-4 mb-3">
                 <label htmlFor="ecFullName" className="form-label">
@@ -202,9 +206,9 @@ const PatientRegistrationForm = () => {
                 />
             </div>
 
-            <button type="submit" className="btn btn-primary">
-                Register
-            </button>
+            <div>
+          <button className="buttonNav">Register</button>
+             </div>
         </form>
      </div>
             </div>
