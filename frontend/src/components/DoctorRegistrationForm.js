@@ -118,38 +118,48 @@ const DoctorRegistrationForm = () => {
     };
 
     return (
-        <form className="create m-5" >
-            <h2>Apply as a doctor to join the platform:</h2>
+            
 
-            <div className="mb-3">
-                <label htmlFor="username" className="form-label">
-                    Username:
-                </label>
-                <input
-                    required={true}
-                    type="text"
-                    className="form-control"
-                    id="username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-            </div>
+            <div class="main-page">
+        <div className="container">
+        <div className="row justify-content-center">
+            <div className="col-lg-8">
 
-            <div className="mb-3">
-                <label htmlFor="name" className="form-label">
-                    Name:
-                </label>
-                <input
-                    required={true}
-                    type="text"
-                    className="form-control"
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-            </div>
+        <form className="create m-5" onSubmit={handleSubmit}>
+        <h2>Apply as a doctor to join the platform:</h2>
 
-            <div className="mb-3">
+            <div className="row">
+            <div className="col-md-4 mb-3">
+            <label htmlFor="username" className="form-label">
+                Username:
+            </label>
+            <input
+                required={true}
+                type="text"
+                className="form-control"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+            />
+        </div>
+
+        <div className="col-md-4 mb-3">
+            <label htmlFor="name" className="form-label">
+                Name:
+            </label>
+            <input
+                required={true}
+                type="text"
+                className="form-control"
+                id="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              
+            />
+        </div>
+    </div>
+    <div className="row">
+    <div className="col-md-4 mb-3">
                 <label htmlFor="email" className="form-label">
                     E-mail:
                 </label>
@@ -160,10 +170,11 @@ const DoctorRegistrationForm = () => {
                     id="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    placeholder='name@gmail.com'
                 />
             </div>
 
-            <div className="mb-3">
+            <div className="col-md-4 mb-3">
                 <label htmlFor="password" className="form-label">
                     Password:
                 </label>
@@ -174,10 +185,12 @@ const DoctorRegistrationForm = () => {
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                   
                 />
             </div>
-
-            <div className="mb-3">
+            </div> 
+            <div className="row">
+            <div className="col-md-4 mb-3">
                 <label htmlFor="dateOfBirth" className="form-label">
                     Date of Birth:
                 </label>
@@ -188,10 +201,11 @@ const DoctorRegistrationForm = () => {
                     id="dateOfBirth"
                     value={dateOfBirth}
                     onChange={(e) => setDateOfBirth(e.target.value)}
+                 
                 />
             </div>
 
-            <div className="mb-3">
+            <div className="col-md-4 mb-3">
                 <label htmlFor="hourlyRate" className="form-label">
                     Hourly Rate:
                 </label>
@@ -204,7 +218,9 @@ const DoctorRegistrationForm = () => {
                     onChange={(e) => setHourlyRate(e.target.value)}
                 />
             </div>
-            <div className="mb-3">
+            </div> 
+            <div className="row">
+            <div className="col-md-4 mb-3">
                 <label htmlFor="affiliation" className="form-label">
                     Affiliation:
                 </label>
@@ -218,7 +234,7 @@ const DoctorRegistrationForm = () => {
                 />
             </div>
 
-            <div className="mb-3">
+            <div className="col-md-4 mb-3">
                 <label htmlFor="educationalBackground" className="form-label">
                     Educational Background:
                 </label>
@@ -231,8 +247,8 @@ const DoctorRegistrationForm = () => {
                     onChange={(e) => setEducationalBackground(e.target.value)}
                 />
             </div>
-
-            <div className="mb-3">
+            </div>
+            <div className="col-md-4 mb-3">
                 <label htmlFor="specialty" className="form-label">
                     Speciality:
                 </label>
@@ -287,7 +303,7 @@ const DoctorRegistrationForm = () => {
             </div>
 
             <hr />
-            <div className="mb-3">
+            <div className="col-md-4 mb-3">
                 <label htmlFor="medicalIDFile" className="form-label">
                     Upload Medical ID:
                 </label>
@@ -298,13 +314,14 @@ const DoctorRegistrationForm = () => {
                     id="medicalIDFile"
                     onChange={  (e) => setMedicalIDFile(e.target.files[0])}
                 />
-                <button type="button" className="btn btn-primary" onClick={handleMedicalIDSubmit}>
-                    Submit Medical ID
-                </button>
+               <div>
+               <button className="custom-btn">Submit Medical ID</button>
+                </div>
             </div>
 
             <hr />
-            <div className="mb-3">
+            
+            <div className="col-md-4 mb-3">
                 <label htmlFor="medicalLicensesFile" className="form-label">
                     Upload Medical Licenses:
                 </label>
@@ -315,14 +332,15 @@ const DoctorRegistrationForm = () => {
                     id="medicalLicensesFile"
                     onChange={(e) => setMedicalLicensesFile(e.target.files[0])}
                 />
-                <button type="button" className="btn btn-primary" onClick={handleMedicalLicensesSubmit}>
-                    Submit Medical Licenses
-                </button>
+                <div>
+               <button className="custom-btn">Submit Medical Licenses</button>
+                </div>
+
             </div>
 
             <hr />
 
-            <div className="mb-3">
+            <div className="col-md-4 mb-3">
                 <label htmlFor="medicalDegreeFile" className="form-label">
                     Upload Medical Degree:
                 </label>
@@ -333,16 +351,21 @@ const DoctorRegistrationForm = () => {
                     id="medicalDegreeFile"
                     onChange={(e) => setMedicalDegreeFile(e.target.files[0])}
                 />
-                <button type="button" className="btn btn-primary" onClick={handleMedicalDegreeSubmit}>
-                    Submit Medical Degree
-                </button>
+            <div>
+               <button className="custom-btn">Submit Medical Degree</button>
+                </div>
+
             </div>
 
             <hr />
-            <button type="submit" className="btn btn-primary" onClick={handleSubmit} >
-                Register
-            </button>
+            <div>
+               <button className="buttons">Register</button>
+                </div>
         </form>
+        </div>
+            </div>
+        </div>
+        </div>
     );
 }
 

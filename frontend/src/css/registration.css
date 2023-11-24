@@ -1,11 +1,36 @@
 body{
     background-color: white;
 }
-h1{
-    background-color: #D21312;
-}
+
 .buttons{
-    width: -webkit-fill-available;
+    background-color: #D21312;
+    border-radius: 0.3rem;
+    padding: 0.6em 1.3em;
+    color: white;
+    font-size: 1.1rem;
+    transition-duration: 0.7s;
+    border: 1px solid transparent;
+    width: 120px; 
+    height: 60px; 
+    font-size: 17px; 
+    margin-left: 370px; 
+    
+}
+.custom-btn {
+    
+    background-color: #D21312;
+    border-radius: 0.3rem;
+    padding: 0.6em 1.3em;
+    color: white;
+    font-size: 1.1rem;
+    transition-duration: 0.7s;
+    border: 1px solid transparent;
+    margin-right:0.5rem ;
+    margin-top: 10px;
+    /* You can add more styles as needed */
+}
+.form-label {
+    margin-bottom: 10px; 
 }
 
 .FEMALE {
@@ -34,12 +59,10 @@ h1{
     background-color: red;
     border-color: red;
 }
-body {
-    /* Set the background image */
-    background-image: url('/Users/woaodhisham/Desktop/finall/Code-Commandos-Clinic/frontend/src/images/images (1) .jpeg'); /* Replace 'path/to/your/image.jpg' with your image file path */
-    /* Set background properties */
-    background-size: cover; /* Ensures the image covers the entire background */
-    background-repeat: no-repeat; /* Prevents the image from repeating */
-    /* Additional properties */
-    /* You can add more styles as needed */
+.main-page {
+    background-image: url('/Users/woaodhisham/Desktop/finall/Code-Commandos-Clinic/frontend/src/images/IMG.jpg');
+    background-size: 100%; 
+    background-repeat: no-repeat; 
+    
+ 
 }
