@@ -208,7 +208,7 @@ const PatientRegistrationForm = () => {
             </div>
 
             <div>
-          <button className="buttonNav">Register</button>
+          <button type="submit" button className="buttonNav">Register</button>
              </div>
         </form>
      </div>

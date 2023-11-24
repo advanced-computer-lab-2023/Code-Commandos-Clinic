@@ -315,7 +315,7 @@ const DoctorRegistrationForm = () => {
                     onChange={  (e) => setMedicalIDFile(e.target.files[0])}
                 />
                <div>
-               <button className="custom-btn">Submit Medical ID</button>
+               <button type="button" button className="custom-btn">Submit Medical ID</button>
                 </div>
             </div>
 
@@ -333,7 +333,7 @@ const DoctorRegistrationForm = () => {
                     onChange={(e) => setMedicalLicensesFile(e.target.files[0])}
                 />
                 <div>
-               <button className="custom-btn">Submit Medical Licenses</button>
+               <button type="button" button className="custom-btn">Submit Medical Licenses</button>
                 </div>
 
             </div>
@@ -352,14 +352,14 @@ const DoctorRegistrationForm = () => {
                     onChange={(e) => setMedicalDegreeFile(e.target.files[0])}
                 />
             <div>
-               <button className="custom-btn">Submit Medical Degree</button>
+               <button type="button" button className="custom-btn">Submit Medical Degree</button>
                 </div>
 
             </div>
 
             <hr />
             <div>
-               <button className="buttons">Register</button>
+               <button type="submit" button className="buttons">Register</button>
                 </div>
         </form>
         </div>
