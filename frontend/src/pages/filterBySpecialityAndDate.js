@@ -1,53 +1,73 @@
 import {useState} from "react";
+import Swal from 'sweetalert2';
 import DoctorDetails from "../components/DoctorDetails";
 
-const FilterBySpecialityAndDate = ()=> {
+const FilterBySpecialityAndDate = () => {
     const [speciality, setSpeciality] = useState(null);
     const [date, setDate] = useState(null);
     const [searchResults, setSearchResults] = useState([]);
-    const [selectedDoctor,setSelectedDoctor] = useState(null)
-
+    const [selectedDoctor, setSelectedDoctor] = useState(null);
+  
     const fetchResults = async () => {
+        // Check for empty fields
+        if (!speciality && !date) {
+          Swal.fire({
+            icon: 'warning',
+            title: 'Missing Information',
+            text: 'Please fill in either of the fields.',
+          });
+          return;
+        }
+      
         let url = '/api/doctor/filterBySpecialityAndDate';
         if (!speciality) {
-            url += "/none";
-        }
-        else {
-            url += `/${speciality}`
+          url += '/none';
+        } else {
+          url += `/${speciality}`;
         }
         if (!date) {
-            url += "/none";
-        }
-        else {
-            url += `/${date}:00.000+00:00`
+          url += '/none';
+        } else {
+          url += `/${date}:00.000+00:00`;
         }
         try {
-            const response = await fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+          const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+          if (response.ok) {
+            const results = await response.json();
+            setSearchResults(results);
+            setSelectedDoctor(null);
+      
+            // Display success message
+            Swal.fire({
+              icon: 'success',
+              title: 'Search Successful',
+              text: 'Doctors filtered successfully.',
             });
-            if (response.ok) {
-                const results = await response.json();
-                console.log(searchResults)
-                setSearchResults(results)
-            } else {
-                const errorMessage = await response.text();
-                alert(errorMessage)
-                throw new Error(errorMessage)
-            }
+          } else {
+            const errorMessage = await response.text();
+            // Display error message
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops! Something went wrong',
+              text: 'We encountered an issue while fetching the search results. Please try again later.',
+            });
+            throw new Error(errorMessage);
+          }
+        } catch (error) {
+          setSelectedDoctor(null);
         }
-        catch (error) {
-            setSelectedDoctor(null)
-        }
-    }
+    };
 
 
     return (
         <div className="container m-5">
-            <h1 className="mb-4">Filter By Speciality And Date</h1>
-            <div className="mb-3">
+            <h2 className="red-header"> Filter By Speciality And Date</h2>
+            <div className="col-md-2 mb-3">
                 <label htmlFor="specialty" className="form-label">
                     Speciality:
                 </label>
@@ -99,7 +119,7 @@ const FilterBySpecialityAndDate = ()=> {
                     <option value="DENTIST">Dentist</option>
                 </select>
             </div>
-            <div className="mb-3">
+            <div className="col-md-2 mb-3">
                 <label htmlFor="date" className="form-label">
                     Date:
                 </label>
@@ -111,7 +131,7 @@ const FilterBySpecialityAndDate = ()=> {
                     onChange={(e) => setDate(e.target.value)}
                 />
             </div>
-            <button className="btn btn-primary" onClick={fetchResults}>
+            <button className="custom-btn" onClick={fetchResults}>
                 Filter
             </button>
 

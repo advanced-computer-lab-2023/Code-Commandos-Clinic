@@ -5,7 +5,7 @@ import AddPackageForm from '../components/AddPackageForm'
 const AddHealthPackage = () => {
 
     return (
-        <div className="add-package m-5">
+        <div className="add-package">
             <AddPackageForm />
         </div>
     )

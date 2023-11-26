@@ -1,76 +1,88 @@
-import {useState} from "react";
-import DoctorDetails from "../components/DoctorDetails";
+import { useState } from 'react';
+import Swal from 'sweetalert2';
+import DoctorDetails from '../components/DoctorDetails';
 
-const SearchByNameAndOrSpeciality = ()=> {
-    const [name,setName] = useState(null);
-    const [speciality, setSpeciality] = useState(null);
-    const [searchResults, setSearchResults] = useState(null);
-    const [selectedDoctor,setSelectedDoctor] = useState(null)
-    const fetchResults = async () => {
-        try{
-            let url = '/api/doctor/searchByNameAndOrSpeciality';
-            if (!name) {
-                url += "/none";
-            }
-            else {
-                url += `/${name}`
-            }
-            if (!speciality) {
-                url += "/none";
-            }
-            else {
-                url += `/${speciality}`
-            }
-            const response = await fetch(url,{
-                method: 'GET',
-                headers: {
-                    'Content-Type':'application/json',
-                },
+const SearchByNameAndOrSpeciality = () => {
+  const [name, setName] = useState(null);
+  const [speciality, setSpeciality] = useState(null);
+  const [searchResults, setSearchResults] = useState(null);
+  const [selectedDoctor, setSelectedDoctor] = useState(null);
+  
+  const fetchResults = async () => {
+    try {
+        if (!name && !speciality) {
+            Swal.fire({
+              icon: 'warning',
+              title: 'Missing Information',
+              text: 'Please enter either a name or select a speciality to perform the search.',
             });
-            if (response.ok){
-                const results = await response.json();
-                setSearchResults(results)
-                setSelectedDoctor(null)
-            }
-            else {
-                const errorMessage = await response.text();
-                alert(errorMessage)
-                throw new Error(errorMessage)
-            }
-        }
-        catch (error){
-            setSelectedDoctor(null)
-        }
-    };
+            return;
+          }
+          
+      let url = '/api/doctor/searchByNameAndOrSpeciality';
+      if (!name) {
+        url += '/none';
+      } else {
+        url += `/${name}`;
+      }
+      if (!speciality) {
+        url += '/none';
+      } else {
+        url += `/${speciality}`;
+      }
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (response.ok) {
+        const results = await response.json();
+        setSearchResults(results);
+        setSelectedDoctor(null);
+      } else {
+        const errorMessage = await response.text();
+        // Replace alert with SweetAlert error message
+        Swal.fire({
+          icon: 'info',
+          title: 'No Doctors Found',
+          text:'Sorry, no doctors match your search criteria.',
+        });
+        setSearchResults([]); // Reset searchResults to an empty array
+        throw new Error(errorMessage);
+      }
+    } catch (error) {
+      setSelectedDoctor(null);
+    }
+  };
 
-
-    return (
-        <div className="container m-5">
-            <h1 className="mb-4">Search by Name and Speciality</h1>
-            <div className="mb-3">
-                <label htmlFor="name" className="form-label">
-                    Name:
-                </label>
-                <input
-                    type="text"
-                    id="name"
-                    className="form-control"
-                    value={name !== null ? name : ""}
-                    onChange={(e) => setName(e.target.value)}
-                />
-            </div>
-            <div className="mb-3">
-                <label htmlFor="specialty" className="form-label">
-                    Speciality:
-                </label>
-                <select
-                    id="speciality"
-                    name="speciality"
-                    className="form-select"
-                    value={speciality}
-                    onChange={(e) => setSpeciality(e.target.value)}
-                >
-                    <option value="">Select a specialty</option>
+  return (
+    <div className="container m-5">
+      <h2 className="red-header"> Search by Name and Speciality</h2>
+      <div className="col-md-2 mb-3">
+        <label htmlFor="name" className="form-label">
+          Name:
+        </label>
+        <input
+          type="text"
+          id="name"
+          className="form-control"
+          value={name !== null ? name : ''}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </div>
+      <div className="col-md-2 mb-3">
+        <label htmlFor="specialty" className="form-label">
+          Speciality:
+        </label>
+        <select
+          id="speciality"
+          name="speciality"
+          className="form-select"
+          value={speciality}
+          onChange={(e) => setSpeciality(e.target.value)}
+        >
+ <option value="">Select a specialty</option>
                     <option value="ALLERGISTS/IMMUNOLOGISTS">Allergists/Immunologists</option>
                     <option value="ANESTHESIOLOGISTS">Anesthesiologists</option>
                     <option value="CARDIOLOGISTS">Cardiologists</option>
@@ -108,29 +120,28 @@ const SearchByNameAndOrSpeciality = ()=> {
                     <option value="SPORTS MEDICINE SPECIALISTS">Sports Medicine Specialists</option>
                     <option value="GENERAL SURGEONS">General Surgeons</option>
                     <option value="UROLOGISTS">Urologists</option>
-                    <option value="DENTIST">Dentist</option>
-                </select>
-            </div>
-            <button className="btn btn-primary" onClick={fetchResults}>
-                Search
-            </button>
+                    <option value="DENTIST">Dentist</option>        </select>
+      </div>
+      <button className="custom-btn" onClick={fetchResults}>
+        Search
+      </button>
 
-            <div className="results mt-4">
-                {searchResults &&
-                    searchResults.map((doctor) => (
-                        <button
-                            key={doctor._id}
-                            className="btn btn-link"
-                            onClick={() => setSelectedDoctor(doctor)}
-                        >
-                            {doctor.name}
-                            <br/>
-                        </button>
-                    ))}
-            </div>
-            {selectedDoctor && <DoctorDetails key={selectedDoctor._id} doctor={selectedDoctor} />}
-        </div>
-    );
+      <div className="results mt-4">
+        {searchResults &&
+          searchResults.map((doctor) => (
+            <button
+              key={doctor._id}
+              className="btn btn-link"
+              onClick={() => setSelectedDoctor(doctor)}
+            >
+              {doctor.name}
+              <br />
+            </button>
+          ))}
+      </div>
+      {selectedDoctor && <DoctorDetails key={selectedDoctor._id} doctor={selectedDoctor} />}
+    </div>
+  );
 };
 
-export default SearchByNameAndOrSpeciality
+export default SearchByNameAndOrSpeciality;

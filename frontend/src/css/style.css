@@ -43,3 +43,83 @@ body{
     text-align: center;
     align-items: center;
 }
+
+.red-header {
+    color: #D21312;
+}
+
+.custom-btn {
+    background-color: #D21312; /* Change this to your desired color */
+    color: #fff; /* Text color on the button, adjust as needed */
+    border: none; /* Remove button border if necessary */
+    padding: 10px 20px; /* Adjust padding as needed */
+    border-radius: 5px; /* Optional: Add border-radius for a rounded button */
+  }
+
+  .edit-btn {
+    background-color: #354E6A;
+    color: #fff; /* Set text color to white or another contrasting color */
+    /* Add any other styling you need */
+  }
+  
+/* body{
+    background-color: white;
+}
+
+.buttons{
+    background-color: #D21312;
+    border-radius: 0.3rem;
+    padding: 0.6em 1.3em;
+    color: white;
+    font-size: 1.1rem;
+    transition-duration: 0.7s;
+    border: 1px solid transparent;
+    width: 120px; 
+    height: 60px; 
+    font-size: 17px; 
+    margin-left: 370px; 
+
+}
+.custom-btn {
+
+    background-color: #D21312;
+    border-radius: 0.3rem;
+    padding: 0.6em 1.3em;
+    color: white;
+    font-size: 1.1rem;
+    transition-duration: 0.7s;
+    border: 1px solid transparent;
+    margin-right:0.5rem ;
+    margin-top: 10px;
+}
+.form-label {
+    margin-bottom: 10px; 
+}
+
+.FEMALE {  
+    background-color: red;
+    border-color: red;
+}
+.FEMALE:hover {
+    background-color: red;
+    border-color: red;
+}
+
+.FEMALE:checked {
+    background-color: red;
+    border-color: red;
+}
+.form-check-input:hover {
+    background-color: red;
+    border-color: red;
+}
+.form-check-input:checked {
+    background-color: red;
+    border-color: red;
+}
+.main-page {
+    background-image: url('C:\Users\Lenovo\git\Code-Commandos-Clinic\frontend\src\images\IMG.jpg');
+    background-size: 100%; 
+    background-repeat: no-repeat; 
+
+} */

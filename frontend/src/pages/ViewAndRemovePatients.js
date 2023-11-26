@@ -1,5 +1,7 @@
 import {useState,useEffect} from "react";
 import PatientDetails from "../components/PatientDetails";
+import Swal from 'sweetalert2';
+
 
 const ViewAndRemovePatients = ()=> {
     const [patients, setPatients] = useState([]);
@@ -25,7 +27,11 @@ const ViewAndRemovePatients = ()=> {
             }
             else {
                 const errorMessage = await response.text();
-                alert(errorMessage)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Could not fetch results. Please try again later.',
+                });
                 throw new Error(errorMessage)
             }
         }
@@ -41,10 +47,21 @@ const ViewAndRemovePatients = ()=> {
             });
             if (response.ok) {
                 fetchResults();
-                setSelectedPatient(null)
+                setSelectedPatient(null);
+                fetchResults();
+                setSelectedPatient(null);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'The patient has been removed successfully.',
+                });
             } else {
                 const errorMessage = await response.text();
-                alert(errorMessage);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: errorMessage,
+                });
                 throw new Error(errorMessage);
             }
         } catch (error) {
@@ -52,10 +69,9 @@ const ViewAndRemovePatients = ()=> {
         }
     };
 
-
     return (
         <div className="container mt-4">
-            <h1 className="mb-4">System patients</h1>
+            <h2 className= "red-header"> System patients</h2>
             <ul className="list-group">
                 {patients.map((patient) => (
                     <li key={patient._id} className="list-group-item">
@@ -73,7 +89,7 @@ const ViewAndRemovePatients = ()=> {
             {selectedPatient &&(
                 <>
                     <PatientDetails patient={selectedPatient} />
-                    <button className="btn btn-danger" onClick={() => handleRemovePatient(selectedPatient._id)}>Remove</button>
+                    <button className="custom-btn" style={{ marginTop: '5px'}} onClick={() => handleRemovePatient(selectedPatient._id)}>Remove</button>
                 </>
             )}
         </div>

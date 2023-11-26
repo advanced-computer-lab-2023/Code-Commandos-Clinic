@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Swal from 'sweetalert2';
 
 const AddPackageForm = () => {
 
@@ -27,11 +28,19 @@ const AddPackageForm = () => {
     })
 
     if (!response.ok) {
-      alert(await response.text())
+      const errorMessage = await response.text();
+      Swal.fire({
+        icon: 'warning',
+        title: 'Warning!',
+        text: 'Please fill in all fields.',
+      });
     }
     if (response.ok) {
-      const json = await response.json()
-      alert('Successfully added!')
+      const json = await response.json();
+      Swal.fire({
+        icon: 'success',
+        title: 'Successfully added!',
+      });
       setPackageName('')
       setYearlySubscription('')
       setDoctorSessionDiscount('')
@@ -45,8 +54,8 @@ const AddPackageForm = () => {
   return (
       <div>
         <form className="create m-5" onSubmit={handleSubmit}>
-          <h2>Add a new package:</h2>
-          <div className="mb-3">
+          <h2 className= "red-header"> Add a new package</h2>
+          <div className="col-md-2 mb-3">
             <label htmlFor="packageName" className="form-label">
               Name:
             </label>
@@ -59,7 +68,7 @@ const AddPackageForm = () => {
             />
           </div>
 
-          <div className="mb-3">
+          <div className="col-md-2 mb-3">
             <label htmlFor="yearlySubscription" className="form-label">
               Yearly Subscription (in EGP):
             </label>
@@ -72,7 +81,7 @@ const AddPackageForm = () => {
             />
           </div>
 
-          <div className="mb-3">
+          <div className="col-md-2 mb-3">
             <label htmlFor="doctorSessionDiscount" className="form-label">
               Discount for doctor sessions:
             </label>
@@ -85,7 +94,7 @@ const AddPackageForm = () => {
             />
           </div>
 
-          <div className="mb-3">
+          <div className="col-md-2 mb-3">
             <label htmlFor="medicineDiscount" className="form-label">
               Discount for medicine:
             </label>
@@ -98,7 +107,7 @@ const AddPackageForm = () => {
             />
           </div>
 
-          <div className="mb-3">
+          <div className="col-md-2 mb-3">
             <label htmlFor="familyDiscount" className="form-label">
               Discount for family members:
             </label>
@@ -111,7 +120,7 @@ const AddPackageForm = () => {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="custom-btn">
             Submit
           </button>
         </form>

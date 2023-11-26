@@ -33,13 +33,20 @@ const Navbar = () => {
         window.location.reload()
     }
 
+    const handleLogoClick = () => {
+        // Navigate to the home page
+        navigate('/');
+        // Reload the home page
+        window.location.href = '/home';
+      };
+
     return (
         <header>
             <nav className="navbar navbar-expand-md navbar-dark bg-light fixed-top">
                 <div className="container">
-                    <a className="navbar-brand col-4">
+                    <Link to ="/" className="navbar-brand col-4" onClick={handleLogoClick}>
                         <img src={logo} class="logo" alt="Logo"/>
-                    </a>
+                    </Link>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
