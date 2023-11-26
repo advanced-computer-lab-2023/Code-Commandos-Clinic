@@ -20,7 +20,19 @@ const PrescriptionSchema = new mongoose.Schema({
     type: String,
     enum: ['FILLED','UNFILLED'],
     default: 'UNFILLED'
-  }
+  },
+  medicines: [
+    {
+      name: {
+        type: String,
+        required: true,
+      },
+      dosage: {
+        type: Number,
+        required: true,
+      },
+    },
+  ],
 
 },{ timestamps: true });
 

@@ -85,11 +85,62 @@ const filterbyDoctor = asyncHandler(async (req, res) => {
   }
 });
 
+const addMedicineToPrescription = asyncHandler(async (req,res) => {
+  const {name,dosage,prescriptionId} = req.body
+  try {
+    const prescription = await PrescriptionModel.findById(prescriptionId);
+    if (!prescription) {
+      return res.status(404)
+      throw new Error("Prescription not found")
+    }
+
+    const existingMedicine = prescription.medicines.find(
+        (medicine) => medicine.name === name
+    );
+
+    if (existingMedicine) {
+      res.status(400)
+      throw new Error("Medicine exists already")
+    }
+
+    prescription.medicines.push({ name, dosage });
+    await prescription.save();
+
+    res.status(200).json(prescription);
+  } catch (error) {
+    res.status(400)
+    throw new Error(error.message)
+  }
+})
+
+const deleteMedicineFromPrescription = asyncHandler(async (req, res) => {
+  const { name, prescriptionId } = req.body;
+
+  try {
+    const prescription = await PrescriptionModel.findByIdAndUpdate(
+        prescriptionId,
+        { $pull: { medicines: { name } } },
+        { new: true }
+    );
+    if (!prescription) {
+      return res.status(404)
+      throw new Error("Prescription not found")
+    }
+    res.status(200).json(prescription);
+  } catch (error) {
+    res.status(400)
+    throw new Error(error.message)
+  }
+});
+
+
 module.exports = {
   getPrescriptionsbyPatient,
   addPrescription ,
   getPrescriptionbyId,
   filterbyDate,
   filterbyStatus,
-  filterbyDoctor
+  filterbyDoctor,
+  addMedicineToPrescription,
+  deleteMedicineFromPrescription
 };
