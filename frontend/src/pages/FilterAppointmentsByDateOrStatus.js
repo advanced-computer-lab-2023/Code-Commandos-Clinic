@@ -5,7 +5,7 @@ const FilterAppointmentsByDateOrStatus = () =>{
     const [date, setDate] = useState(null);
     const [status,setStatus]=useState(null);
     const [searchResults, setSearchResults] = useState(null);
-
+    const role = window.localStorage.getItem("role")
     const fetchFilteredAppointments = async () => {
 
         try {
@@ -67,14 +67,19 @@ const FilterAppointmentsByDateOrStatus = () =>{
                 onChange={(e) => setStatus(e.target.id)}
             />
             <label>Reserved</label><br />
-            <input
-                required={true}
-                type="radio"
-                id="FREE"
-                name="status"
-                onChange={(e) => setStatus(e.target.id)}
-            />
-            <label>Free</label><br />
+            {role === "DOCTOR" && (
+                <div>
+                    <input
+                        required={true}
+                        type="radio"
+                        id="FREE"
+                        name="status"
+                        onChange={(e) => setStatus(e.target.id)}
+                    />
+                    <label>Free</label>
+                    <br />
+                </div>
+            )}
             <input
                 type="radio"
                 id="COMPLETED"

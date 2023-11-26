@@ -29,6 +29,8 @@ const Navbar = () => {
             alert(error.message)
         }
         window.localStorage.removeItem("logged");
+        window.localStorage.removeItem("role");
+
         navigate('/Login')
         window.location.reload()
     }

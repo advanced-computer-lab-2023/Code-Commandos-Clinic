@@ -16,7 +16,9 @@ const Login = () => {
             }
         })
         if(response.ok){
+            const result = await response.json()
             window.localStorage.setItem("logged",true)
+            window.localStorage.setItem("role",result.role)
             navigate('/Home')
             window.location.reload()
         }
