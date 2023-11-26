@@ -31,6 +31,7 @@ const CreateContract = () => {
     }
 
     const handleSubmit = async (e) => {
+        console.log(selectedDoctorId)
         e.preventDefault();
             try {
                 const contractData = {
