@@ -53,7 +53,7 @@ const ReserveAppointment = () => {
             
         }
         catch (error){
-            alert("Wallet balance insufficient")
+            alert(error.message)
         }
     }
 

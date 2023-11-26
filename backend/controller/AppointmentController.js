@@ -6,6 +6,11 @@ const FamilyMember = require("../model/FamilyMember");
 const EmploymentContract = require("../model/EmploymentContract");
 const HealthPackagePatientModel = require('../model/HealthPackagePatient');
 const HealthPackageModel=require("../model/HealthPackage")
+const Patient = require("../model/Patient");
+const Doctor = require("../model/Doctor");
+const Admin = require("../model/Admin");
+const otpGenerator = require("otp-generator");
+const nodemailer = require("nodemailer");
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
 const createAppointment =asyncHandler( async (req,res) => {
@@ -191,12 +196,15 @@ const reserveAppointment = asyncHandler(async (req,res) => {
         }
         else{
             const healthPackageID = healthPackagePatient.healthPackageID
+            console.log(healthPackageID)
             const healthPackage = await HealthPackageModel.findOne({ _id: healthPackageID });
+            console.log(healthPackage)
             amount  =doctor.hourlyRate + doctor.hourlyRate*0.1
             amount = amount * ( 1 - healthPackage.doctorSessionDiscount);
         }
         const patient = await PatientModel.findById(req.user.id);
         if(req.params.paymentMethod==='wallet'){
+            console.log(amount)
             if(patient.wallet < amount){
                 return res.status(400).json({msg:"Wallet balance insufficient"})
                 // throw new Error("Wallet balance insufficient.")
@@ -214,6 +222,15 @@ const reserveAppointment = asyncHandler(async (req,res) => {
             }
             appointment.status = 'RESERVED'
             await appointment.save()
+            try {
+                const emailObject = await Patient.findOne({username:req.user.username}).select("email")
+                const email = emailObject.email
+                sendEmail(email,"Your Appointment has been confirmed from "+appointment.startTime+ " to "+ appointment.endTime)
+            }
+            catch (error){
+                res.status(400)
+                throw new Error("Error sending the appointment confirmation email")
+            }
             res.status(200).json(appointment)
         }
         else if (req.params.paymentMethod === 'credit_card') {
@@ -283,6 +300,15 @@ const success = asyncHandler(async (req,res) =>{
         }
         appointment.status = 'RESERVED'
         await appointment.save()
+          try {
+              const emailObject = await Patient.findOne({username:req.user.username}).select("email")
+              const email = emailObject.email
+              sendEmail(email,"Your Appointment has been confirmed from "+appointment.startTime+ " to "+ appointment.endTime)
+          }
+          catch (error){
+              res.status(400)
+              throw new Error("Error sending the appointment confirmation email")
+          }
         res.status(200).json(appointment)
         
       }
@@ -423,6 +449,44 @@ const scheduleFollowUp = asyncHandler(async (req,res) => {
         res.status(400)
         throw new Error(error.message)
     }
+})
+
+const sendEmail =  asyncHandler(async (email,content) => {
+    const patient = await Patient.findOne({email})
+    const doctor = await Doctor.findOne({email})
+    const admin = await Admin.findOne({email})
+
+    let nodeConfig = {
+        service: "gmail",
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false,
+        auth: {
+            user: process.env.APP_EMAIL,
+            pass: process.env.APP_PASSWORD,
+
+        }
+    }
+
+    let transporter = nodemailer.createTransport(nodeConfig);
+
+    let message = {
+        from : {
+            name: "Code Commandos",
+            address: process.env.ETHEREAL_EMAIL
+        },
+        to: email,
+        subject : "Appointment status",
+        text: content,
+    }
+
+    try {
+        const response = await transporter.sendMail(message)
+    }
+    catch (error){
+        throw new Error(error.message)
+    }
+
 })
 
 module.exports = {
