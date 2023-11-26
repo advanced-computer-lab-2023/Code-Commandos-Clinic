@@ -223,9 +223,12 @@ const reserveAppointment = asyncHandler(async (req,res) => {
             appointment.status = 'RESERVED'
             await appointment.save()
             try {
-                const emailObject = await Patient.findOne({username:req.user.username}).select("email")
-                const email = emailObject.email
-                sendEmail(email,"Your Appointment has been confirmed from "+appointment.startTime+ " to "+ appointment.endTime)
+                const patientEmailObject = await Patient.findOne({username:req.user.username}).select("email")
+                const patientEmail = patientEmailObject.email
+                const doctorEmailObject = await DoctorModel.findOne({_id:appointment.doctor}).select("email")
+                const doctorEmail = doctorEmailObject.email
+                sendEmail(patientEmail,"Your Appointment has been confirmed from "+appointment.startTime+ " to "+ appointment.endTime)
+                sendEmail(doctorEmail,"Your Appointment has been confirmed from "+appointment.startTime+ " to "+ appointment.endTime)
             }
             catch (error){
                 res.status(400)
@@ -301,9 +304,12 @@ const success = asyncHandler(async (req,res) =>{
         appointment.status = 'RESERVED'
         await appointment.save()
           try {
-              const emailObject = await Patient.findOne({username:req.user.username}).select("email")
-              const email = emailObject.email
-              sendEmail(email,"Your Appointment has been confirmed from "+appointment.startTime+ " to "+ appointment.endTime)
+              const patientEmailObject = await Patient.findOne({username:req.user.username}).select("email")
+              const patientEmail = patientEmailObject.email
+              const doctorEmailObject = await DoctorModel.findOne({_id:appointment.doctor}).select("email")
+              const doctorEmail = doctorEmailObject.email
+              sendEmail(patientEmail,"Your Appointment has been confirmed from "+appointment.startTime+ " to "+ appointment.endTime)
+              sendEmail(doctorEmail,"Your Appointment has been confirmed from "+appointment.startTime+ " to "+ appointment.endTime)
           }
           catch (error){
               res.status(400)
