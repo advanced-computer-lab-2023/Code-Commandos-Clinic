@@ -7,7 +7,7 @@ const bcrypt = require("bcryptjs");
 //requirement  7
 // add another adminstrator with a set username and password
 const addAdmin = asyncHandler(async(req,res) => {
-    const{username,password}= req.body
+    const{username,password,email}= req.body
     //add admin to db
     try{
         if (password.search(/[a-z]/) < 0 || password.search(/[A-Z]/) < 0 || password.search(/[0-9]/) < 0) {
@@ -17,7 +17,7 @@ const addAdmin = asyncHandler(async(req,res) => {
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(password,salt)
         const user = await UserModel.create({username,password:hashedPassword,'role':'ADMIN'})
-        const admin =await AdminModel.create({username,password:password})
+        const admin =await AdminModel.create({username,password:password,email:email})
         res.status(200).json(admin)
     }
     catch(error) {

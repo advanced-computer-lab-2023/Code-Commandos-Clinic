@@ -67,6 +67,7 @@ const App = () => {
             <Route path="/DoctorRegistrationRequests" element={<DoctorRegistrationRequests />}/>
             <Route path="/DoctorRegistration" element={<DoctorRegistration />}/>
             <Route path="/PatientRegistration" element={<PatientRegistration />}/>
+
             <Route path="/DoctorUpdate" element={<DoctorUpdate />}/>
             <Route path="/SearchByNameAndOrSpeciality" element={<SearchByNameAndOrSpeciality />}/>
             <Route path="/FilterBySpecialityAndDate" element={<FilterBySpecialityAndDate/>}/>
@@ -76,6 +77,7 @@ const App = () => {
             <Route path="/ViewAndRemovePatients" element={<ViewAndRemovePatients/>}/>
             <Route path="/AddAdmin" element={<AddAdmin />}/>
             <Route path="/ViewPatientHealthRecord" element={<ViewpatientHealthRecord />}/>
+
             <Route path="/AddHealthRecord/:id" element={<AddHealthRecord />}/>
             <Route path="/viewUploadedHealthRecordPatient" element={<HealthRecordUpload />}/>
             <Route path="/ViewUploadedHealthRecordPatientsOfDoctor" element={<HealthRecordUploadPatientsDoctor />}/>
@@ -85,6 +87,7 @@ const App = () => {
             <Route path="/ViewMyWalletAsPatient" element={<ViewMyWalletAsPatient/>}/>
             <Route path="/ViewMyWalletAsDoctor" element={<ViewMyWalletAsDoctor/>}/>
             <Route path="/UploadDocument" element={<UploadDocument/>}/>
+
             <Route path="/RemoveDocument" element={<RemoveDocument/>}/>
             <Route path="/FilterPatientsWithUpcomingAppointments" element={<FilterPatientsWithUpcomingAppointments/>}/>
             <Route path="/RegisterPatientWithDoctor" element={<RegisterPatientWithDoctor/>}/>
@@ -95,7 +98,7 @@ const App = () => {
             <Route path="/FilterPrescriptions"  element={<FilterPrescriptions/>}/>
             <Route path="/AddPrescription"  element={<AddPrescription/>}/>
             <Route path="/CreateAppointment"  element={<CreateAppointment/>}/>
-            <Route path="/CreateFollowUp"  element={<CreateFollowUp/>}/>
+
             <Route path="/CreateDoctor"  element={<CreateDoctor/>}/>
             <Route path="/ViewAvailableAppointmentsOfDoctor"  element={<ViewAvailableAppointmentsOfDoctor/>}/>
             <Route path="/DoctorUpcomingPastAppointments"  element={<DoctorUpcomingPastAppointments/>}/>
@@ -103,11 +106,12 @@ const App = () => {
             <Route path="/FilterAppointmentsByDateOrStatus"  element={<FilterAppointmentsByDateOrStatus/>}/>
             <Route path="/ReserveAppointment/:id/"  element={<ReserveAppointment/>}/>
             <Route path="/EnterEmailReset"  element={<EnterEmailReset/>}/>
-            <Route path="/ResetPassword"  element={<ResetPassword/>}/>
+            <Route path="/ResetPassword/:email"  element={<ResetPassword/>}/>
             <Route path="/ChangePassword"  element={<ChangePassword/>}/>
             <Route path="/DoctorContract" element={<DoctorContract/>}/>
             <Route path="/LinkFamilyMember" element={<LinkFamilyMember/>}/>
             <Route path="/CreateFollowUp" element={<CreateFollowUp/>}/>
+
             <Route path="/HealthPackages" element={<HealthPackages/>}/>
             <Route path="/HealthPackages/Subscribe" element={<SubscribeToPackage/>}/>
             <Route path="/HealthPackages/Subscribe/Success" element={<PaymentSuccess/>}/>

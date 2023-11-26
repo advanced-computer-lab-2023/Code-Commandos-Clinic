@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
-const EnterEmailReset = () => {
+const ResetPassword = () => {
     const [otp, setOtp] = useState(null);
-    const [username, setUsername] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const navigate = useNavigate()
-
+    const {email} = useParams();
 
     const handleSubmit = async () => {
-        const body = {otp:otp,username:username,newPassword:newPassword}
+        const body = {otp:otp,email:email,newPassword:newPassword}
         try{
             const response = await fetch('/api/user/resetPassword', {
                 method: 'POST',
@@ -20,7 +19,7 @@ const EnterEmailReset = () => {
                 body: JSON.stringify(body),
             });
             if(response.ok){
-                alert(await response.json())
+                alert("Your password has been reset")
                 navigate('/Login')
             }
             else {
@@ -54,18 +53,6 @@ const EnterEmailReset = () => {
                                 </div>
                                 <br />
                                 <div className="form-group">
-                                    <label htmlFor="otp">username</label>
-                                    <input
-                                        required={true}
-                                        type="text"
-                                        className="form-control input-danger fontMed"
-                                        id="username"
-                                        value={username}
-                                        onChange={(e) => setUsername(e.target.value)}
-                                    />
-                                </div>
-                                <br />
-                                <div className="form-group">
                                     <label htmlFor="otp">New password</label>
                                     <input
                                         required={true}
@@ -93,4 +80,4 @@ const EnterEmailReset = () => {
     );
 };
 
-export default EnterEmailReset;
+export default ResetPassword;

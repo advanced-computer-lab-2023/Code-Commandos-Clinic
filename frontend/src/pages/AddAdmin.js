@@ -4,11 +4,12 @@ import AdminDetails from "../components/AdminDetails";
 const AddAdmin = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+    const [email, setEmail] = useState('')
     const [admin,setAdmin] = useState(null)
 
   const handleAddAdmin = async (e) => {
     e.preventDefault()
-    const admin = {username: username, password: password}
+    const admin = {username: username, password: password,email:email}
     const response = await fetch('/api/admin/addAdmin', {
       method: 'POST',
       body: JSON.stringify(admin),
@@ -24,6 +25,7 @@ const AddAdmin = () => {
         setAdmin(json)
       setUsername('')
       setPassword('')
+        setEmail('')
       console.log('another admin is added:', json)
     }
   }
@@ -36,6 +38,7 @@ const AddAdmin = () => {
                     Username:
                 </label>
                 <input
+                    required={true}
                     type="text"
                     id="name"
                     className="form-control"
@@ -48,11 +51,25 @@ const AddAdmin = () => {
                     Password:
                 </label>
                 <input
+                    required={true}
                     type="password"
                     id="password"
                     className="form-control"
                     value={password !== null ? password : ""}
                     onChange={(e) => setPassword(e.target.value)}
+                />
+            </div>
+            <div className="mb-3">
+                <label htmlFor="email" className="form-label">
+                    Email:
+                </label>
+                <input
+                    required={true}
+                    type="email"
+                    id="email"
+                    className="form-control"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
             </div>
             <button className="btn btn-primary" onClick={handleAddAdmin}>
