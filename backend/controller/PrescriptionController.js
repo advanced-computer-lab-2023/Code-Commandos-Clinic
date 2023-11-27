@@ -38,10 +38,13 @@ const getPrescriptionbyId = asyncHandler(async (req, res) => {
 
 const addPrescription = asyncHandler(async (req, res) => {
   try {
-    const newPrescription = await PrescriptionModel.create(req.body);
+    const prescriptionBody = {
+      patient: req.body.patient,
+      doctor: req.user.id
+    }
+    const newPrescription = await PrescriptionModel.create(prescriptionBody);
     const patient = await PatientModel.findById(newPrescription.patient)
     const doctor = await DoctorModel.findById(newPrescription.doctor)
-    console.log(newPrescription)
     newPrescription.patientName = patient.name
     newPrescription.doctorName = doctor.name
     await newPrescription.save()
@@ -133,6 +136,27 @@ const deleteMedicineFromPrescription = asyncHandler(async (req, res) => {
   }
 });
 
+const updateMedicineDosage = async (req, res) => {
+  const { prescriptionId, name, newDosage } = req.body;
+
+  try {
+    const prescription = await PrescriptionModel.findById(prescriptionId);
+    if (!prescription) {
+      return res.status(404).json({ message: 'Prescription not found' });
+    }
+    const medicineToUpdate = prescription.medicines.find(
+        (medicine) => medicine.name === name
+    );
+    if (!medicineToUpdate) {
+      return res.status(404).json({ message: 'Medicine not found in prescription' });
+    }
+    medicineToUpdate.dosage = newDosage;
+    await prescription.save();
+    res.status(200).json(prescription);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
 
 module.exports = {
   getPrescriptionsbyPatient,
@@ -142,5 +166,6 @@ module.exports = {
   filterbyStatus,
   filterbyDoctor,
   addMedicineToPrescription,
-  deleteMedicineFromPrescription
+  deleteMedicineFromPrescription,
+  updateMedicineDosage
 };

@@ -2,27 +2,39 @@ import React, { useState, useEffect } from 'react';
 
 const AddPrescription = () => {
     const [patientId, setPatientId] = useState('');
-    const [doctorId, setDoctorId] = useState('');
     const [patients, setPatients] = useState([]);
-    const [doctors, setDoctors] = useState([]);
+    const [medicines, setMedicines] = useState([])
+
+    const fetchPatients = async () => {
+        try {
+            const response = await fetch('/api/patient/getPatients');
+            const data = await response.json();
+            setPatients(data);
+        } catch (error) {
+            console.error('Error fetching patients:', error);
+        }
+    };
+
+    const fetchMedicines = async () => {
+        try {
+            const response = await fetch('http://localhost:8090/api/medicine/viewAvailableMedicines');
+            const data = await response.json();
+            setMedicines(data);
+        } catch (error) {
+            console.error('Error fetching medicines:', error);
+        }
+    };
 
     useEffect(() => {
-        fetch('/api/patient/getPatients')
-            .then((response) => response.json())
-            .then((data) => setPatients(data));
-
-        fetch('/api/doctor/getDoctors')
-            .then((response) => response.json())
-            .then((data) => setDoctors(data));
+        fetchPatients();
+        fetchMedicines();
     }, []);
 
     const handlePatientChange = (event) => {
         setPatientId(event.target.value);
     };
 
-    const handleDoctorChange = (event) => {
-        setDoctorId(event.target.value);
-    };
+
 
     const handleSubmit = async () => {
         try{
@@ -31,7 +43,7 @@ const AddPrescription = () => {
                 headers: {
                     'Content-Type':'application/json',
                 },
-                body: JSON.stringify({patient: patientId,doctor: doctorId})
+                body: JSON.stringify({patient: patientId})
             });
             if(! response.ok) {
                 const errorMessage = await response.text();
@@ -44,8 +56,12 @@ const AddPrescription = () => {
         }
     };
 
+    function handleMedicineChange() {
+
+    }
+
     return (
-        <div>
+        <div className="container">
             <h2>Add Prescription</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
@@ -66,26 +82,23 @@ const AddPrescription = () => {
                         ))}
                     </select>
                 </div>
-
                 <div className="form-group">
-                    <label htmlFor="doctor">Select Doctor</label>
+                    <label htmlFor="medicine">Select Medicine</label>
                     <select
-                        id="doctor"
-                        name="doctor"
-                        value={doctorId}
-                        onChange={handleDoctorChange}
+                        id="medicine"
+                        name="medicine"
+                        onChange={handleMedicineChange}
                         className="form-control"
                         required
                     >
-                        <option value="">Select a doctor</option>
-                        {doctors.map((doctor) => (
-                            <option key={doctor._id} value={doctor._id}>
-                                {doctor.name}
+                        <option value="">Select a medicine</option>
+                        {medicines && medicines.map((medicine) => (
+                            <option key={medicine._id} value={medicine._id}>
+                                {medicine.name}
                             </option>
                         ))}
                     </select>
                 </div>
-
                 <button type="submit" className="btn btn-primary">
                     Add Prescription
                 </button>
