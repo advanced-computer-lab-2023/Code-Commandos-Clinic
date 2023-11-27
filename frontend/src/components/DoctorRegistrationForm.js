@@ -117,20 +117,17 @@ const DoctorRegistrationForm = () => {
         }
     };
 
-    return (
-            
-
-            <div class="main-page">
+     return (
+        <div class="doctor-page">
         <div className="container">
-        <div className="row justify-content-center">
-            <div className="col-lg-8">
+        <div className="col-lg-8">
 
-        <form className="create m-5" onSubmit={handleSubmit}>
-        <h2>Apply as a doctor to join the platform:</h2>
+        <form className="create m-5" >
+            <h2>Apply as a doctor to join the platform:</h2>
 
-            <div className="row">
-            <div className="col-md-4 mb-3">
-            <label htmlFor="username" className="form-label">
+               <div className="row">
+            <div className="col-md-5 mb-3">
+            <label htmlFor="username" className="form-label"style={{ marginTop: '30px' }}>
                 Username:
             </label>
             <input
@@ -143,8 +140,8 @@ const DoctorRegistrationForm = () => {
             />
         </div>
 
-        <div className="col-md-4 mb-3">
-            <label htmlFor="name" className="form-label">
+        <div className="col-md-5 mb-3">
+            <label htmlFor="name" className="form-label"style={{ marginTop: '30px' }}>
                 Name:
             </label>
             <input
@@ -158,8 +155,10 @@ const DoctorRegistrationForm = () => {
             />
         </div>
     </div>
+
+
     <div className="row">
-    <div className="col-md-4 mb-3">
+    <div className="col-md-5 mb-3">
                 <label htmlFor="email" className="form-label">
                     E-mail:
                 </label>
@@ -174,7 +173,7 @@ const DoctorRegistrationForm = () => {
                 />
             </div>
 
-            <div className="col-md-4 mb-3">
+            <div className="col-md-5 mb-3">
                 <label htmlFor="password" className="form-label">
                     Password:
                 </label>
@@ -189,8 +188,10 @@ const DoctorRegistrationForm = () => {
                 />
             </div>
             </div> 
+
+
             <div className="row">
-            <div className="col-md-4 mb-3">
+            <div className="col-md-5 mb-3">
                 <label htmlFor="dateOfBirth" className="form-label">
                     Date of Birth:
                 </label>
@@ -205,7 +206,7 @@ const DoctorRegistrationForm = () => {
                 />
             </div>
 
-            <div className="col-md-4 mb-3">
+            <div className="col-md-5 mb-3">
                 <label htmlFor="hourlyRate" className="form-label">
                     Hourly Rate:
                 </label>
@@ -219,8 +220,9 @@ const DoctorRegistrationForm = () => {
                 />
             </div>
             </div> 
+
             <div className="row">
-            <div className="col-md-4 mb-3">
+            <div className="col-md-5 mb-3">
                 <label htmlFor="affiliation" className="form-label">
                     Affiliation:
                 </label>
@@ -234,7 +236,7 @@ const DoctorRegistrationForm = () => {
                 />
             </div>
 
-            <div className="col-md-4 mb-3">
+            <div className="col-md-5 mb-3">
                 <label htmlFor="educationalBackground" className="form-label">
                     Educational Background:
                 </label>
@@ -248,7 +250,9 @@ const DoctorRegistrationForm = () => {
                 />
             </div>
             </div>
-            <div className="col-md-4 mb-3">
+
+
+            <div className="col-md-6 mb-3">
                 <label htmlFor="specialty" className="form-label">
                     Speciality:
                 </label>
@@ -302,8 +306,7 @@ const DoctorRegistrationForm = () => {
                 </select>
             </div>
 
-            <hr />
-            <div className="col-md-4 mb-3">
+            <div className="col-md-6 mb-3">
                 <label htmlFor="medicalIDFile" className="form-label">
                     Upload Medical ID:
                 </label>
@@ -314,14 +317,12 @@ const DoctorRegistrationForm = () => {
                     id="medicalIDFile"
                     onChange={  (e) => setMedicalIDFile(e.target.files[0])}
                 />
-               <div>
-               <button type="button" button className="custom-btn">Submit Medical ID</button>
-                </div>
+                <button type="button" className="custom-btn" onClick={handleMedicalIDSubmit}>
+                    Submit Medical ID
+                </button>
             </div>
 
-            <hr />
-            
-            <div className="col-md-4 mb-3">
+            <div className="col-md-6 mb-3">
                 <label htmlFor="medicalLicensesFile" className="form-label">
                     Upload Medical Licenses:
                 </label>
@@ -332,15 +333,14 @@ const DoctorRegistrationForm = () => {
                     id="medicalLicensesFile"
                     onChange={(e) => setMedicalLicensesFile(e.target.files[0])}
                 />
-                <div>
-               <button type="button" button className="custom-btn">Submit Medical Licenses</button>
-                </div>
-
+                <button type="button" className="custom-btn" onClick={handleMedicalLicensesSubmit}>
+                    Submit Medical Licenses
+                </button>
             </div>
 
-            <hr />
+            
 
-            <div className="col-md-4 mb-3">
+            <div className="col-md-6 mb-3">
                 <label htmlFor="medicalDegreeFile" className="form-label">
                     Upload Medical Degree:
                 </label>
@@ -351,19 +351,17 @@ const DoctorRegistrationForm = () => {
                     id="medicalDegreeFile"
                     onChange={(e) => setMedicalDegreeFile(e.target.files[0])}
                 />
-            <div>
-               <button type="button" button className="custom-btn">Submit Medical Degree</button>
-                </div>
-
+                <button type="button" className="custom-btn" onClick={handleMedicalDegreeSubmit}>
+                    Submit Medical Degree
+                </button>
             </div>
 
-            <hr />
-            <div>
-               <button type="submit" button className="buttons">Register</button>
-                </div>
+          
+            <button type="submit" className="button-reg" onClick={handleSubmit} >
+                Register
+            </button>
         </form>
         </div>
-            </div>
         </div>
         </div>
     );

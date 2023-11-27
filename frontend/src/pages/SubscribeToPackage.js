@@ -33,34 +33,44 @@ const SubscribeToPackage = () => {
     }
 
     return (
-        <div className="healthPackages m-5">
-            <h2>Select Payment Method:</h2>
-            <ul className="list-group">
-                <li className="list-group-item">
-                <button
-                    className="btn btn-link"
-                    onClick={() => setPaymentMethod("wallet")} 
-                    style={{ fontSize: "20px", textDecoration:"none" }}>
-                    Pay with Wallet (Current balance: {}) {paymentMethod==="wallet" && <span>(selected)</span>}
-                </button>
-                </li>
-                <li className="list-group-item">
-                <button
-                    className="btn btn-link"
-                    onClick={() => setPaymentMethod("credit_card")} 
-                    style={{ fontSize: "20px", textDecoration:"none" }}>
-                    Pay with Credit Card (Stripe) {paymentMethod==="credit_card" && <span>(selected)</span>}
-                </button>
-                </li>
-            </ul>
-            <br/>
-            {paymentMethod &&
-                <button className="btn btn-success" onClick={() => handleSubmit()}>
-                    Continue
-                </button>
-            }
+       
+       
+         <div className="container">
+          <h2>Select Payment Method:</h2>
+          <div className="row">
+          <div class="pay-page">
+          <div className="col-md-6 mb-3">
+              <button
+                className={`cash-btn ${paymentMethod === 'wallet' ? 'btn-primary' : 'btn-secondary'}`}
+                onClick={() => setPaymentMethod('wallet')}
+              >
+                Pay with Wallet (Current balance: {}) {paymentMethod === 'wallet' && <span>(selected)</span>}
+              </button>
+            </div>
+            
+            
+            <div class="pay1-page">
+            
+              <button
+                className={`credit-btn ${paymentMethod === 'credit_card' ? 'btn-primary' : 'btn-secondary'}`}
+                onClick={() => setPaymentMethod('credit_card')}
+              >
+                Pay with Credit Card (Stripe) {paymentMethod === 'credit_card' && <span>(selected)</span>}
+              </button>
+              
+            </div>
+          </div>
+         
+        
+          {paymentMethod && (
+            <button className="con-btn" onClick={() => handleSubmit()}>
+              Continue
+            </button>
+          )}
         </div>
-    )
-}
-
-export default SubscribeToPackage;
+        </div>
+        
+      );
+    };
+    
+    export default SubscribeToPackage;

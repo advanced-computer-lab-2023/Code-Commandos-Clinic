@@ -1,8 +1,12 @@
 body{
     background-color: white;
 }
+h2 {
+    color: #D21312; /* Red color */
+    font-weight: bold; /* Bold font */
+}
 
-.buttons{
+.button-reg{
     background-color: #D21312;
     border-radius: 0.3rem;
     padding: 0.6em 1.3em;
@@ -17,7 +21,6 @@ body{
     
 }
 .custom-btn {
-    
     background-color: #D21312;
     border-radius: 0.3rem;
     padding: 0.6em 1.3em;
@@ -26,8 +29,63 @@ body{
     transition-duration: 0.7s;
     border: 1px solid transparent;
     margin-right:0.5rem ;
-    margin-top: 10px;
-    /* You can add more styles as needed */
+    
+    height: 60px; 
+  
+}
+.patient-btn{
+    background-color: #D21312;
+    border-radius: 0.3rem;
+    padding: 0.6em 1.3em;
+    color: white;
+    font-size: 1.1rem;
+    transition-duration: 0.7s;
+    border: 1px solid transparent;
+    margin-right:0.5rem ;
+    margin-top: 75px;
+    height: 60px; 
+}
+.cash-btn{
+    background-color: #D21312;
+    border-radius: 0.3rem;
+    padding: 0.6em 1.3em;
+    color: white;
+    font-size: 1.1rem;
+    transition-duration: 0.7s;
+    border: 1px solid transparent;
+    margin-right:0.5rem ;
+    margin-top: 25rem;
+    height: 60px; 
+    width: 320px;
+}
+.credit-btn{
+    background-color: #D21312;
+    border-radius: 0.3rem;
+    padding: 0.6em 1.3em;
+    color: white;
+    font-size: 1.1rem;
+    transition-duration: 0.7s;
+    border: 1px solid transparent;
+    margin-right:0.5rem ;
+    margin-top: 25rem;
+    height: 60px; 
+    width: 320px;
+  
+}
+.con-btn{
+    background-color: #D21312;
+    border-radius: 0.3rem;
+    padding: 0.6em 1.3em;
+    color: white;
+    font-size: 1.1rem;
+    transition-duration: 0.7s;
+    border: 1px solid transparent;
+    margin-right:0.5rem ;
+    margin-top: 25rem;
+    height: 60px; 
+    width: 320px;
+  
+    
 }
 .form-label {
     margin-bottom: 10px; 
@@ -59,10 +117,59 @@ body{
     background-color: red;
     border-color: red;
 }
-.main-page {
-    background-image: url('/Users/woaodhisham/Desktop/finall/Code-Commandos-Clinic/frontend/src/images/IMG.jpg');
-    background-size: 100%; 
-    background-repeat: no-repeat; 
+.patient-page {
+    background-image: url('/Users/woaodhisham/Desktop/finall/Code-Commandos-Clinic/frontend/src/images/patient.jpeg');
+    background-size: 40%; 
+    background-repeat: no-repeat;
+    background-position: right; 
+    background-position: 80% top;  
+   
     
- 
+}
+.contract-page {
+    background-image: url('/Users/woaodhisham/Desktop/finall/Code-Commandos-Clinic/frontend/src/images/contract.png');
+    background-size: 35%; 
+    background-repeat: no-repeat; 
+    background-position: right; 
+  
+    background-position-y: 90px; 
+    
+}
+.pay-page {
+    background-image: url('/Users/woaodhisham/Desktop/finall/Code-Commandos-Clinic/frontend/src/images/wallet.png');
+    background-size: 35%; 
+    background-repeat: no-repeat; 
+    background-position: left; 
+    background-position-y: 70px; 
+    background-position-x: 70px; 
+    width: 40rem; /* Adjust width as needed */
+    height: 400rem; /* Adjust height as needed */
+    margin: 0.5rem; /* Adjust margin between elements */
+}
+.pay1-page {
+    background-image: url('/Users/woaodhisham/Desktop/finall/Code-Commandos-Clinic/frontend/src/images/creditcard.png');
+    background-size: 35%; 
+    background-repeat: no-repeat; 
+    background-position: left; 
+    background-position-y: 70px; 
+    background-position-x: 70px; 
+    width: 40rem; /* Adjust width as needed */
+    height: 400rem; /* Adjust height as needed */
+    margin: 0.5rem; /* Adjust margin between elements */
+}
+
+
+.req-page {
+    background-image: url('/Users/woaodhisham/Desktop/finall/Code-Commandos-Clinic/frontend/src/images/req.jpeg');
+    background-size: 30%; 
+    background-repeat: no-repeat; 
+    background-position: right; 
+    
+}
+.doctor-page {
+    background-image: url('/Users/woaodhisham/Desktop/finall/Code-Commandos-Clinic/frontend/src/images/doc.png');
+    background-size: 40%; 
+    background-repeat: no-repeat; 
+    background-position:  right ; 
+    
 }

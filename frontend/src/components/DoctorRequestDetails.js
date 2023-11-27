@@ -87,9 +87,11 @@ const DoctorRequestDetails = ({ doctorRequest }) => {
 
 
     return (
+       
         <div className="card">
+             <div class="req-page">
             <div className="card-body">
-                <h5 className="card-title" style={{ color: '#1aac83' }}>{doctorRequest.name}</h5>
+                <h5 className="card-title" style={{ color: '#D21312' }}>{doctorRequest.name}</h5>
                 <p className="card-text">Username: {doctorRequest.username}</p>
                 <p className="card-text">Email: {doctorRequest.email}</p>
                 <p className="card-text">Date of Birth: {doctorRequest.dateOfBirth}</p>
@@ -102,9 +104,10 @@ const DoctorRequestDetails = ({ doctorRequest }) => {
                 <p className="card-text">Medical Degree: {createFileLink(degreeFileInfo)}</p>
                 <p className="card-text">Request Status: {doctorRequest.status}</p>
                 <p className="card-text">Created At: {doctorRequest.createdAt}</p>
-                <button className="btn btn-success" onClick={handleAccept}>Accept</button>
-                <button className="btn btn-danger" onClick={handleReject}>Reject</button>
+                <button className="custom-btn" onClick={handleAccept}>Accept</button>
+                <button className="custom-btn" onClick={handleReject}>Reject</button>
             </div>
+        </div>
         </div>
     );
 };

@@ -64,14 +64,14 @@ const CreateContract = () => {
     };
 
     return (
-        <div class="main-page">
+        <div class="contract-page">
         <div className="container">
-        <div className="row justify-content-center">
+      
             <div className="col-lg-8">
         <div className="container">
                 <h2>Create Employment Contract</h2>
                 <form onSubmit={handleSubmit}>
-                <div className="col-md-4 mb-3">
+                <div className="col-md-8 mb-3">
                         <label htmlFor="doctor" className="form-label">
                             Select Doctor:
                         </label>
@@ -92,7 +92,7 @@ const CreateContract = () => {
                             ))}
                         </select>
                     </div>
-                    <div className="col-md-4 mb-3">
+                    <div className="col-md-8 mb-3">
                         <label htmlFor="monthlySalary" className="form-label">
                             Monthly Salary:
                         </label>
@@ -105,7 +105,7 @@ const CreateContract = () => {
                             required
                         />
                     </div>
-                    <div className="col-md-4 mb-3">
+                    <div className="col-md-8 mb-3">
                         <label htmlFor="startDate" className="form-label">
                             Start Date:
                         </label>
@@ -119,7 +119,7 @@ const CreateContract = () => {
                         />
                     </div>
 
-                    <div className="col-md-4 mb-3">
+                    <div className="col-md-8 mb-3">
                         <label htmlFor="endDate" className="form-label">
                             End Date:
                         </label>
@@ -133,7 +133,7 @@ const CreateContract = () => {
                         />
                     </div>
 
-                    <div className="col-md-4 mb-3">
+                    <div className="col-md-8 mb-3">
                         <label htmlFor="responsibilities" className="form-label">
                             Responsibilities:
                         </label>
@@ -146,7 +146,7 @@ const CreateContract = () => {
                         ></textarea>
                     </div>
 
-                    <div className="col-md-4 mb-3">
+                    <div className="col-md-8 mb-3">
                         <label htmlFor="termsAndConditions" className="form-label">
                             Terms and Conditions:
                         </label>
@@ -159,7 +159,7 @@ const CreateContract = () => {
                         ></textarea>
                     </div>
 
-                    <div className="col-md-4 mb-3">
+                    <div className="col-md-8 mb-3">
                         <label htmlFor="markup" className="form-label">
                             Markup:
                         </label>
@@ -181,7 +181,7 @@ const CreateContract = () => {
         </div>
             </div>
         </div>
-        </div>
+       
     );
 };
 

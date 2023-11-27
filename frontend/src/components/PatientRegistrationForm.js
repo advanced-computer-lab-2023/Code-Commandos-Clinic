@@ -50,17 +50,17 @@ const PatientRegistrationForm = () => {
   }
 
     return (
-        <div class="main-page">
+        <div class="patient-page">
         <div className="container">
-        <div className="row justify-content-center">
+       
             <div className="col-lg-8">
 
         <form className="create m-5" onSubmit={handleSubmit}>
             <h2>Patient Registration Form:</h2>
 
             <div className="row">
-            <div className="col-md-4 mb-3">
-            <label htmlFor="username" className="form-label">
+            <div className="col-md-5 mb-3">
+            <label htmlFor="username" className="form-label"style={{ marginTop: '30px' }}>
                 Username:
             </label>
             <input
@@ -73,8 +73,8 @@ const PatientRegistrationForm = () => {
             />
         </div>
 
-        <div className="col-md-4 mb-3">
-            <label htmlFor="name" className="form-label">
+        <div className="col-md-5 mb-3">
+            <label htmlFor="name" className="form-label"style={{ marginTop: '30px' }}>
                 Name:
             </label>
             <input
@@ -89,7 +89,7 @@ const PatientRegistrationForm = () => {
         </div>
     </div>
     <div className="row">
-    <div className="col-md-4 mb-3">
+    <div className="col-md-5 mb-3">
                 <label htmlFor="email" className="form-label">
                     E-mail:
                 </label>
@@ -104,7 +104,7 @@ const PatientRegistrationForm = () => {
                 />
             </div>
 
-            <div className="col-md-4 mb-3">
+            <div className="col-md-5 mb-3">
                 <label htmlFor="password" className="form-label">
                     Password:
                 </label>
@@ -120,7 +120,7 @@ const PatientRegistrationForm = () => {
             </div>
             </div>
             <div className="row">
-            <div className="col-md-4 mb-3">
+            <div className="col-md-5 mb-3">
                 <label htmlFor="dateOfBirth" className="form-label">
                     Date of Birth:
                 </label>
@@ -135,7 +135,7 @@ const PatientRegistrationForm = () => {
                 />
             </div>
            
-            <div className="col-md-4 mb-3">
+            <div className="col-md-5 mb-3">
                 <label htmlFor="mobileNumber" className="form-label">
                     Mobile Number:
                 </label>
@@ -150,7 +150,7 @@ const PatientRegistrationForm = () => {
             </div>
             </div>
             <div className="row">
-            <div className="col-md-4 mb-3">
+            <div className="col-md-5 mb-3">
                 <label className="form-label">Gender:</label><br />
                 <div className="form-check form-check-inline">
                     <input
@@ -179,7 +179,7 @@ const PatientRegistrationForm = () => {
 
             
           
-            <div className="col-md-4 mb-3">
+            <div className="col-md-5 mb-3">
                 <label htmlFor="ecFullName" className="form-label">
                     Emergency Contact Full Name:
                 </label>
@@ -193,7 +193,7 @@ const PatientRegistrationForm = () => {
                 />
             </div>
 
-            <div className="col-md-4 mb-3">
+            <div className="col-md-5 mb-3">
                 <label htmlFor="ecMobileNumber" className="form-label">
                     Emergency Contact Mobile Number:
                 </label>
@@ -208,13 +208,13 @@ const PatientRegistrationForm = () => {
             </div>
 
             <div>
-          <button type="submit" button className="buttonNav">Register</button>
+          <button type="submit" button className="patient-btn">Register</button>
              </div>
         </form>
      </div>
             </div>
         </div>
-        </div>
+     
     );
 }
 
