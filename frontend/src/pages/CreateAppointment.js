@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import doc from '../images/doc22.jpg';
 
 function CreateAppointment() {
     const [selectedStartTime,setSelectedStartTime] = useState(null)
@@ -33,7 +34,11 @@ function CreateAppointment() {
 
     return (
         <div className="container mt-5">
-            <h2 className="mb-4">Create an Appointment</h2>
+            <h2 className="mb-4"><hr className="lineAround"></hr>Add Appointment Solts <hr className="lineAround"></hr></h2>
+            <div className="box-with-image"> 
+            <div className="image"> <img src={doc} alt="Your Image" /></div>
+            <div className="box">
+            
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="startTime" className="form-label">Start Time:</label>
@@ -60,9 +65,9 @@ function CreateAppointment() {
                     />
                 </div>
 
-                <button type="submit" className="btn btn-primary">Create</button>
-            </form>
-        </div>
+                <button id = "button"type="submit" className="btn btn-primary">Create</button>
+            </form> 
+        </div>  </div> </div>
     );
 }
 

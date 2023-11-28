@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import family from '../images/family.jpg';
 
 const FamilyMemberForm = () => {
   const [name, setName] = useState('')
@@ -38,7 +39,9 @@ const FamilyMemberForm = () => {
 
     return (
         <form className="add m-5" onSubmit={handleSubmit}>
-            <h2>Add Family Member:</h2>
+            <h2 className="mb-4"><hr className="lineAround"></hr>Add Family Member <hr className="lineAround"></hr></h2>
+            <div className="box-with-image"> 
+            <div className="box">
             <div className="mb-3">
                 <label htmlFor="name" className="form-label">
                     Name:
@@ -148,8 +151,11 @@ const FamilyMemberForm = () => {
                     </label>
                 </div>
             </div>
+            </div>
+            <div className="image"> <img src={family} alt="Your Image" /></div>
+            </div>
 
-            <button type="submit" className="btn btn-primary">
+            <button id="button"type="submit" className="btn btn-primary">
                 Add
             </button>
         </form>

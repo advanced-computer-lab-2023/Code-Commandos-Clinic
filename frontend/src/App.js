@@ -85,6 +85,10 @@ const App = () => {
             <Route path="/ViewMyWalletAsPatient" element={<ViewMyWalletAsPatient/>}/>
             <Route path="/ViewMyWalletAsDoctor" element={<ViewMyWalletAsDoctor/>}/>
             <Route path="/UploadDocument" element={<UploadDocument/>}/>
+            
+            
+
+
             <Route path="/RemoveDocument" element={<RemoveDocument/>}/>
             <Route path="/FilterPatientsWithUpcomingAppointments" element={<FilterPatientsWithUpcomingAppointments/>}/>
             <Route path="/RegisterPatientWithDoctor" element={<RegisterPatientWithDoctor/>}/>
@@ -95,6 +99,11 @@ const App = () => {
             <Route path="/FilterPrescriptions"  element={<FilterPrescriptions/>}/>
             <Route path="/AddPrescription"  element={<AddPrescription/>}/>
             <Route path="/CreateAppointment"  element={<CreateAppointment/>}/>
+            
+            
+
+
+            
             <Route path="/CreateFollowUp"  element={<CreateFollowUp/>}/>
             <Route path="/CreateDoctor"  element={<CreateDoctor/>}/>
             <Route path="/ViewAvailableAppointmentsOfDoctor"  element={<ViewAvailableAppointmentsOfDoctor/>}/>
