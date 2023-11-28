@@ -51,6 +51,14 @@ const PrescriptionDetails = ({ prescription, showEditButton = true }) => {
         }
     };
 
+    function handleDecrementDosage(name) {
+        
+    }
+
+    function handleIncrementDosage(name) {
+        
+    }
+
     return (
       <div className="card">
         <div className="card-body">
@@ -82,6 +90,41 @@ const PrescriptionDetails = ({ prescription, showEditButton = true }) => {
                                     />
                                 </svg>
                                 {medicine.name} - Dosage: {medicine.dosage}
+                                <div className="input-group justify-content-end align-items-center">
+                                    <button
+                                        className="button-minus border rounded-circle icon-shape icon-sm mx-1"
+                                        onClick={() => handleDecrementDosage(medicine.name)}
+                                    >
+                                        -
+                                    </button>
+                                    <input
+                                        type="number"
+                                        step="1"
+                                        max="10"
+                                        value={medicine.dosage}
+                                        name="dosage"
+                                        className="quantity-field border-0 text-center w-25"
+                                        readOnly
+                                    />
+                                    <button
+                                        className="button-plus border rounded-circle icon-shape icon-sm"
+                                        onClick={() => handleIncrementDosage(medicine.name)}
+                                    >
+                                        +
+                                    </button>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        fill="currentColor"
+                                        className="bi bi-trash ml-2 text-danger"
+                                        viewBox="0 0 16 16"
+                                        style={{ cursor: 'pointer' }}
+                                        onClick={() => handleDeleteMedicine(medicine.name)}
+                                    >
+                                        {/* ...SVG paths */}
+                                    </svg>
+                                </div>
                             </div>
                         ))}
                     </div>
