@@ -1,7 +1,7 @@
 import React from 'react';
 import {useNavigate} from "react-router-dom";
 
-const PrescriptionDetails = ({ prescription, showEditButton = true }) => {
+const PrescriptionDetails = ({ prescription, showEditButton = true , showActions = true }) => {
     const navigate = useNavigate()
     const handleDelete = async () => {
         try {
@@ -51,86 +51,113 @@ const PrescriptionDetails = ({ prescription, showEditButton = true }) => {
         }
     };
 
-    function handleDecrementDosage(name) {
-        
-    }
+    const handleDecrementDosage = async (name) => {
+        try {
+            const prescriptionId = prescription._id;
+            const currentDosage = prescription.medicines.find((medicine) => medicine.name === name)?.dosage;
+            if (currentDosage > 0) {
+                const response = await fetch('/api/prescription/updateMedicineDosage', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        prescriptionId,
+                        name,
+                        newDosage: currentDosage - 1,
+                    }),
+                });
 
-    function handleIncrementDosage(name) {
-        
-    }
+                if (response.ok) {
+                    window.location.reload()
+                } else {
+                    alert('Failed to update dosage');
+                }
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    };
+
+    const handleIncrementDosage= async (name) => {
+        try {
+            const prescriptionId = prescription._id;
+            const currentDosage = prescription.medicines.find((medicine) => medicine.name === name)?.dosage;
+            const response = await fetch('/api/prescription/updateMedicineDosage', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    prescriptionId,
+                    name,
+                    newDosage: currentDosage + 1,
+                }),
+            });
+
+            if (response.ok) {
+                window.location.reload()
+            } else {
+                alert('Failed to update dosage');
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    };
 
     return (
       <div className="card">
         <div className="card-body">
-          <h5 className="card-title">Prescription for {prescription.patientName}</h5>
-          <p className="card-text">Doctor: {prescription.doctorName}</p>
-          <p className="card-text">Status: {prescription.status}</p>
+          <h5 className="card-title fontBig">Prescription for {prescription.patientName}</h5>
+          <p className="card-text fontMed">Doctor: {prescription.doctorName}</p>
+          <p className="card-text fontMed">Status: {prescription.status}</p>
             <br/>
-            {prescription.medicines.length > 0 && (
-                <div>
-                    <h5>Medicines:</h5>
-                    <div style={{ marginLeft: '20px' }}>
-                        {prescription.medicines.map((medicine, index) => (
-                            <div key={index}>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="16"
-                                    height="16"
-                                    fill="currentColor"
-                                    className="bi bi-trash ml-2 text-danger"
-                                    viewBox="0 0 16 16"
-                                    style={{ cursor: 'pointer' }}
-                                    onClick={() => handleDeleteMedicine(medicine.name)}
-                                >
-                                    <path
-                                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"
-                                    />
-                                    <path
-                                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"
-                                    />
-                                </svg>
-                                {medicine.name} - Dosage: {medicine.dosage}
-                                <div className="input-group justify-content-end align-items-center">
-                                    <button
-                                        className="button-minus border rounded-circle icon-shape icon-sm mx-1"
-                                        onClick={() => handleDecrementDosage(medicine.name)}
-                                    >
-                                        -
-                                    </button>
-                                    <input
-                                        type="number"
-                                        step="1"
-                                        max="10"
-                                        value={medicine.dosage}
-                                        name="dosage"
-                                        className="quantity-field border-0 text-center w-25"
-                                        readOnly
-                                    />
-                                    <button
-                                        className="button-plus border rounded-circle icon-shape icon-sm"
-                                        onClick={() => handleIncrementDosage(medicine.name)}
-                                    >
-                                        +
-                                    </button>
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="16"
-                                        height="16"
-                                        fill="currentColor"
-                                        className="bi bi-trash ml-2 text-danger"
-                                        viewBox="0 0 16 16"
-                                        style={{ cursor: 'pointer' }}
-                                        onClick={() => handleDeleteMedicine(medicine.name)}
-                                    >
-                                        {/* ...SVG paths */}
-                                    </svg>
-                                </div>
-                            </div>
-                        ))}
+            <h5>Medicines</h5>
+            {prescription.medicines.map((medicine, index) => (
+                <div key={index} className="fontMed">
+                    <div>
+                    {showActions && (
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        fill="currentColor"
+                        className="bi bi-trash ml-2 text-danger"
+                        viewBox="0 0 16 16"
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => handleDeleteMedicine(medicine.name)}
+                    >
+                        <path
+                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"
+                        />
+                        <path
+                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"
+                        />
+                    </svg>
+                            )}
+                    {medicine.name}
                     </div>
+                    {showActions && (
+                    <div className="justify-content-end align-items-center">
+                        Dosage: {medicine.dosage}
+                        <button
+                            className="btn btn-outline-secondary m-lg-2"
+                            onClick={() => handleIncrementDosage(medicine.name)}
+                        >
+                            +
+                        </button>
+                        <button
+                            className="btn btn-outline-secondary ml-2"
+                            onClick={() => handleDecrementDosage(medicine.name)}
+                        >
+                            -
+                        </button>
+                    </div>
+                        )}
+                    <br/>
                 </div>
-            )}
-            <br/>
+            ))}
+
             <button className="btn btn-danger" onClick={handleDelete}>
                 Delete Prescription
             </button>

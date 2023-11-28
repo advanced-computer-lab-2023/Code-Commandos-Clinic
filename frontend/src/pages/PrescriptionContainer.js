@@ -47,7 +47,7 @@ const PrescriptionContainer = () => {
               </li>
           ))}
         </ul>
-        {selectedPrescription && <PrescriptionDetails prescription={selectedPrescription} />}
+        {selectedPrescription && <PrescriptionDetails prescription={selectedPrescription} showEditButton={false} showActions={false}/>}
       </div>
   );
 };

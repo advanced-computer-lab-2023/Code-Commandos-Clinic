@@ -110,7 +110,7 @@ const EditPrescription = () => {
                     <PrescriptionDetails prescription={prescription} showEditButton={false} />
                 )}
             </div>
-
+            <br/>
         </div>
     );
 };

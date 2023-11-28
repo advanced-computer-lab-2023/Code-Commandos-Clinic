@@ -70,7 +70,7 @@ const AddPrescription = () => {
 
 
     return (
-        <div className="container">
+        <div className="container col-lg-6">
             <h2>Add Prescription</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
@@ -91,6 +91,7 @@ const AddPrescription = () => {
                         ))}
                     </select>
                 </div>
+                <br/>
                 <button type="submit" className="btn btn-primary">
                     Add Prescription
                 </button>
@@ -99,10 +100,10 @@ const AddPrescription = () => {
             <div className="results mt-4">
                 {prescriptions &&
                     prescriptions.map((prescription) => (
-                        <PrescriptionDetails  prescription={prescription}/>
+                        <PrescriptionDetails  prescription={prescription} showActions={false}/>
                     ))}
                 {addedPrescription && (
-                    <PrescriptionDetails prescription={addedPrescription} />
+                    <PrescriptionDetails prescription={addedPrescription} showActions={false} />
                 )}
             </div>
 
