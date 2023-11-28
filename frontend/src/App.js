@@ -52,6 +52,7 @@ import AppointmentSuccess from './pages/AppointmentSuccess'
 import AppointmentFailure from './pages/AppointmentFailure';
 import CreateContract from "./pages/CreateContract";
 import Register from "./pages/Register";
+import EditPrescription from "./pages/EditPrescription";
 
 const App = () => {
     const logged = window.localStorage.getItem("logged");
@@ -119,6 +120,8 @@ const App = () => {
             <Route path="/AppointmentSuccess" element={<AppointmentSuccess/>}/>
             <Route path="/AppointmentFailure" element={<AppointmentFailure/>}/>
             <Route path="/CreateContract" element={<CreateContract/>}/>
+            <Route path="/EditPrescription/:id" element={<EditPrescription/>}/>
+
             <Route path="/Register" element={<Register/>}/>
             <Route path="/Login" element={logged ? <Navigate to="/Home" replace /> : <Login/> }/>
             <Route path="/Home" element={<Home/>}/>

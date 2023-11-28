@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import AppointmentsDetails from "../components/AppointmentsDetails";
+import PrescriptionDetails from "../components/PrescriptionDetails";
 
 const AddPrescription = () => {
     const [patientId, setPatientId] = useState('');
     const [patients, setPatients] = useState([]);
-    const [medicines, setMedicines] = useState([])
+    const [addedPrescription, setAddedPrescription] = useState(null);
+    const [prescriptions,setPrescriptions] = useState([])
 
     const fetchPatients = async () => {
         try {
@@ -11,30 +14,36 @@ const AddPrescription = () => {
             const data = await response.json();
             setPatients(data);
         } catch (error) {
-            console.error('Error fetching patients:', error);
+            alert(error.message)
         }
     };
 
-    const fetchMedicines = async () => {
-        try {
-            const response = await fetch('http://localhost:8090/api/medicine/viewAvailableMedicines');
-            const data = await response.json();
-            setMedicines(data);
-        } catch (error) {
-            console.error('Error fetching medicines:', error);
-        }
-    };
+
 
     useEffect(() => {
         fetchPatients();
-        fetchMedicines();
     }, []);
 
-    const handlePatientChange = (event) => {
-        setPatientId(event.target.value);
+    const handlePatientChange = async (event) => {
+        const id = event.target.value
+        setPatientId(id);
+        fetchPrescriptionsOfPatient(id)
     };
 
-
+    const fetchPrescriptionsOfPatient = async (id) => {
+        try {
+            const response = await fetch('api/prescription/getPrescriptionsOfPatient/'+id);
+            if(response.ok){
+                const data = await response.json();
+                setPrescriptions(data)
+            }
+            else {
+                alert(await response.text())
+            }
+        } catch (error) {
+            alert(error.message)
+        }
+    }
 
     const handleSubmit = async () => {
         try{
@@ -48,17 +57,17 @@ const AddPrescription = () => {
             if(! response.ok) {
                 const errorMessage = await response.text();
                 alert(errorMessage)
-                throw new Error(errorMessage)
+            }
+            else if(response.ok){
+                const addedPrescriptionDetails = await response.json();
+                setAddedPrescription(addedPrescriptionDetails);
             }
         }
         catch (error){
-            alert(error.message)
+
         }
     };
 
-    function handleMedicineChange() {
-
-    }
 
     return (
         <div className="container">
@@ -75,26 +84,9 @@ const AddPrescription = () => {
                         required
                     >
                         <option value="">Select a patient</option>
-                        {patients.map((patient) => (
+                        {patients && patients.map((patient) => (
                             <option key={patient._id} value={patient._id}>
                                 {patient.name}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="medicine">Select Medicine</label>
-                    <select
-                        id="medicine"
-                        name="medicine"
-                        onChange={handleMedicineChange}
-                        className="form-control"
-                        required
-                    >
-                        <option value="">Select a medicine</option>
-                        {medicines && medicines.map((medicine) => (
-                            <option key={medicine._id} value={medicine._id}>
-                                {medicine.name}
                             </option>
                         ))}
                     </select>
@@ -103,6 +95,17 @@ const AddPrescription = () => {
                     Add Prescription
                 </button>
             </form>
+            <br/>
+            <div className="results mt-4">
+                {prescriptions &&
+                    prescriptions.map((prescription) => (
+                        <PrescriptionDetails  prescription={prescription}/>
+                    ))}
+                {addedPrescription && (
+                    <PrescriptionDetails prescription={addedPrescription} />
+                )}
+            </div>
+
         </div>
     );
 };

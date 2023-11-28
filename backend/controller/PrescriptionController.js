@@ -18,6 +18,19 @@ const getPrescriptionsbyPatient = asyncHandler(async (req, res) => {
   }
 });
 
+const getPrescriptionsOfPatient = asyncHandler(async (req, res) => {
+  const patientId  = req.params.id;
+  if(!mongoose.Types.ObjectId.isValid(patientId) ){
+    throw new Error('Invalid id format')
+  }
+  try {
+    const prescriptions = await PrescriptionModel.find({ patient: patientId ,doctor: req.user.id})
+    res.status(200).json(prescriptions);
+  } catch (error) {
+    res.status(400);
+    throw new Error(error.message);
+  }
+});
 
 const getPrescriptionbyId = asyncHandler(async (req, res) => {
   const { id } = req.params
@@ -51,6 +64,22 @@ const addPrescription = asyncHandler(async (req, res) => {
     res.status(201).json(newPrescription);
   } catch (error) {
     res.status(400)
+    throw new Error(error.message)
+  }
+});
+
+const deletePrescriptionById = asyncHandler(async (req, res) => {
+  const prescriptionId = req.params.id;
+  try {
+    const prescription = await PrescriptionModel.findById(prescriptionId);
+    if (!prescription) {
+      res.status(404)
+      throw new Error("Prescription not found")
+    }
+    await PrescriptionModel.findByIdAndDelete(prescriptionId)
+    res.status(200).json({ message: 'Prescription deleted successfully' });
+  } catch (error) {
+    res.status(500)
     throw new Error(error.message)
   }
 });
@@ -107,6 +136,7 @@ const addMedicineToPrescription = asyncHandler(async (req,res) => {
     }
 
     prescription.medicines.push({ name, dosage });
+    prescription.status = 'FILLED'
     await prescription.save();
 
     res.status(200).json(prescription);
@@ -128,6 +158,10 @@ const deleteMedicineFromPrescription = asyncHandler(async (req, res) => {
     if (!prescription) {
       return res.status(404)
       throw new Error("Prescription not found")
+    }
+    if(prescription.medicines.length === 0){
+      prescription.status = "UNFILLED"
+      await prescription.save()
     }
     res.status(200).json(prescription);
   } catch (error) {
@@ -160,7 +194,9 @@ const updateMedicineDosage = async (req, res) => {
 
 module.exports = {
   getPrescriptionsbyPatient,
+  getPrescriptionsOfPatient,
   addPrescription ,
+  deletePrescriptionById,
   getPrescriptionbyId,
   filterbyDate,
   filterbyStatus,

@@ -1,16 +1,27 @@
 const express = require('express')
-const { getPrescriptionsbyPatient, addPrescription, getPrescriptionbyId, filterbyDate, filterbyStatus, filterbyDoctor,
-    addMedicineToPrescription, deleteMedicineFromPrescription, updateMedicineDosage
+const {
+    getPrescriptionsbyPatient,
+    addPrescription,
+    getPrescriptionbyId,
+    filterbyDate,
+    filterbyStatus,
+    filterbyDoctor,
+    addMedicineToPrescription,
+    deleteMedicineFromPrescription,
+    updateMedicineDosage,
+    getPrescriptionsOfPatient, deletePrescriptionById
 } = require("../controller/PrescriptionController")
 const {protect} = require("../middleware/AuthenticationHandler");
 const {checkPatientDoctorRole, checkPatientRole, checkDoctorRole} = require("../middleware/AccessHandler");
 const router = express.Router();
 
 router.get('/getPrescriptionsbyPatient',protect,checkPatientRole, getPrescriptionsbyPatient)
+router.get('/getPrescriptionsOfPatient/:id',protect,checkDoctorRole, getPrescriptionsOfPatient)
 
 router.get('/getPrescriptionbyId/:id', getPrescriptionbyId)
 
 router.post('/addPrescription',protect,checkDoctorRole, addPrescription)
+router.delete('/deletePrescriptionById/:id',protect,checkPatientDoctorRole, deletePrescriptionById)
 
 router.get('/filterByDoctor/:doctorId',protect,checkPatientRole, filterbyDoctor)
 
