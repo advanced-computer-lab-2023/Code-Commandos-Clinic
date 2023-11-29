@@ -52,6 +52,16 @@ const ViewAvailableAppointmentsOfDoctor = () => {
     return (
         <div className="container">
             <h2 className="mb-4 text-center red-text">Doctor Available Appointments</h2>
+ {/* Display the image from the public folder */}
+                              <img
+                                     src={process.env.PUBLIC_URL + '/appointment.png'}
+                                     style={{
+                                       maxWidth: '140px',   // Adjust the maximum width as needed
+                                       height: 'up',
+                                       float: 'right',      // Float the image to the right
+                                       marginRight: '20px'  // Adjust the right margin as needed
+                                     }}
+                                   />
             <form>
                 <div className="form-group">
                     <label htmlFor="doctor"></label>
@@ -80,6 +90,7 @@ const ViewAvailableAppointmentsOfDoctor = () => {
                 <br />
                 <br />
             </form>
+
 
             <div>
                 {appointments && appointments.map((app) => (

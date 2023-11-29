@@ -119,7 +119,7 @@ function LinkFamilyMember(){
                     </label>
                 </div>
              </div>
-             <button type="submit" className="btn btn-primary">Link</button>
+             <button type="submit" className="btn btn-danger">Link</button>
             </form>
         </div>
     )

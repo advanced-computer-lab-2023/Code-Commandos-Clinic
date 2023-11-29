@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Swal from 'sweetalert2';
 import ContractDetails from "../components/ContractDetails";
 
 const DoctorContract = () => {
@@ -6,19 +7,26 @@ const DoctorContract = () => {
 
     useEffect(() => {
         const fetchContract = async () => {
-            const response = await fetch('/api/employmentContract/getDoctorContract', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-            if (response.ok) {
-                const json = await response.json();
-                console.log("contract is ",contract)
-                setContract(json);
-            }
-            else {
-                alert(await response.text());
+            try {
+                const response = await fetch('/api/employmentContract/getDoctorContract', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (response.ok) {
+                    const json = await response.json();
+                    setContract(json);
+                } else {
+                    throw new Error(await response.text());
+                }
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: error.message,
+                });
             }
         };
 
@@ -35,12 +43,20 @@ const DoctorContract = () => {
             });
 
             if (response.ok) {
-                alert('Contract accepted successfully!');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Contract accepted successfully!',
+                });
             } else {
-                alert('Failed to accept contract. Please try again.');
+                throw new Error('Failed to accept contract. Please try again.');
             }
         } catch (error) {
-            console.error('Error accepting contract:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.message,
+            });
         }
     };
 
@@ -54,18 +70,26 @@ const DoctorContract = () => {
             });
 
             if (response.ok) {
-                alert('Contract rejected successfully!');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Contract rejected successfully!',
+                });
             } else {
-                alert('Failed to reject contract. Please try again.');
+                throw new Error('Failed to reject contract. Please try again.');
             }
         } catch (error) {
-            console.error('Error rejecting contract:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.message,
+            });
         }
     };
 
     return (
-        <div className="contractDetails m-5">
-            {contract && <ContractDetails contract={contract}/>}
+        <div className="contractDetails m-5 text-center red-text">
+            {contract && <ContractDetails contract={contract} />}
             <div className="mt-3">
                 <button className="btn btn-success mr-2" onClick={handleAccept}>Accept</button>
                 <button className="btn btn-danger" onClick={handleReject}>Reject</button>

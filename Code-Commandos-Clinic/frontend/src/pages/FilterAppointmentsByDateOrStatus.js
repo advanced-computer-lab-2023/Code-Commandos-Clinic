@@ -50,7 +50,7 @@ const FilterAppointmentsByDateOrStatus = () => {
     return (
         <div className="container mt-4">
             <h1 className="mb-4 text-center red-text">Filter Appointment</h1>
-            <div className="mb-3 red-text">
+            <div style={{ border: '2px solid red', padding: '10px', marginBottom: '10px' }}>
                 <label htmlFor="Date" className="form-label">
                     Appointment Date
                 </label>
@@ -61,43 +61,44 @@ const FilterAppointmentsByDateOrStatus = () => {
                     className="form-control"
                     onChange={(e) => setDate(e.target.value)}
                 />
-            </div>
-            <input
-                required={true}
-                type="radio"
-                id="RESERVED"
-                name="status"
-                onChange={(e) => setStatus(e.target.id)}
-            />
-            <label>Reserved</label><br />
-            <input
-                required={true}
-                type="radio"
-                id="FREE"
-                name="status"
-                onChange={(e) => setStatus(e.target.id)}
-            />
-            <label>Free</label><br />
-            <input
-                type="radio"
-                id="COMPLETED"
-                name="status"
-                onChange={(e) => setStatus(e.target.id)}
-            />
-            <label>Completed</label><br />
-            <input
-                type="radio"
-                id="CANCELLED"
-                name="status"
-                onChange={(e) => setStatus(e.target.id)}
-            />
-            <label>Cancelled</label><br />
 
-            <div className="mb-3 d-flex justify-content-center">
-                <button className="btn btn-danger" onClick={fetchFilteredAppointments}>
-                    Filter
-                </button>
-            </div>
+                <input
+                    required={true}
+                    type="radio"
+                    id="RESERVED"
+                    name="status"
+                    onChange={(e) => setStatus(e.target.id)}
+                />
+                <label>Reserved</label><br />
+                <input
+                    required={true}
+                    type="radio"
+                    id="FREE"
+                    name="status"
+                    onChange={(e) => setStatus(e.target.id)}
+                />
+                <label>Free</label><br />
+                <input
+                    type="radio"
+                    id="COMPLETED"
+                    name="status"
+                    onChange={(e) => setStatus(e.target.id)}
+                />
+                <label>Completed</label><br />
+                <input
+                    type="radio"
+                    id="CANCELLED"
+                    name="status"
+                    onChange={(e) => setStatus(e.target.id)}
+                />
+                <label>Cancelled</label><br />
+                    </div>
+                <div className="mb-3 d-flex justify-content-center">
+                    <button className="btn btn-danger" onClick={fetchFilteredAppointments}>
+                        Filter
+                    </button>
+                </div>
+
 
             <div className="results mt-4">
                 {searchResults &&
