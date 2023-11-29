@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import AdminDetails from "../components/AdminDetails";
-
+import "../css/showandremoveadmins.css";
 
 const ShowAndRemoveAdmins = () => {
     const [admins, setAdmins] = useState([])
@@ -47,28 +47,42 @@ const ShowAndRemoveAdmins = () => {
 
     return (
         <div className="container mt-4">
-            <h1 className="mb-4">System Admins</h1>
-            <ul className="list-group">
-                {admins.map((admin) => (
-                    <li key={admin._id} className="list-group-item">
-                        <button
-                            className="btn btn-link btn-lg"
-                            onClick={() => setSetSelectedAdmin(admin)}
-                            style={{ textDecoration: "none" }}
-                        >
-                            {admin.username}
-                        </button>
-                    </li>
-
-                ))}
-            </ul>
-            {selectedAdmin &&(
-                <>
-                    <AdminDetails admin={selectedAdmin} />
-                    <button className="btn btn-danger" onClick={() => handleRemoveAdmin(selectedAdmin._id)}>Remove</button>
-                </>
-            )}
-        </div>
+        <h1 className="mb-4">System Admins</h1>
+        <ul className="list-group">
+            {admins.map((admin) => (
+                <li key={admin._id} className="list-group-item red-border">
+                    <div className="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5>{admin.username}</h5>
+                            <p>{admin.email}</p>
+                           
+                        </div>
+                        <div>
+                            <button
+                                className="btn btn-danger"
+                                onClick={() => handleRemoveAdmin(admin._id)}
+                                style={{ backgroundColor: '#d21312' }}
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    fill="currentColor"
+                                    className="bi bi-trash"
+                                    viewBox="0 0 16 16"
+                                >
+                                    <path
+                                        d="M1.5 2.5a.5.5 0 0 1 1 0V13a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5a.5.5 0 0 1 1 0V13a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V2.5zM0 1a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v1H0V1z"
+                                    />
+                                </svg>{" "}
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </li>
+            ))}
+        </ul>
+    </div>
     );
 }
 

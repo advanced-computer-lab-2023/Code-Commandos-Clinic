@@ -1,0 +1,12 @@
+.red-border {
+    border: 1px solid #D24848;
+}
+.mb-4{
+    color: #d21312;
+}
+.btn btn-danger{
+    background-color: #d21312;
+}
+.container mt-4{
+    margin-bottom: 2%;
+}
