@@ -1,26 +1,35 @@
 import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
 
-function CreateFollowUp(){
-    const [selectedStartTime,setSelectedStartTime] = useState(null);
-    const [selectedEndTime,setSelectedEndTime] = useState(null);
+function CreateFollowUp() {
+    const [selectedStartTime, setSelectedStartTime] = useState(null);
+    const [selectedEndTime, setSelectedEndTime] = useState(null);
     const [patients, setPatients] = useState([]);
-    const [selectedPatient,setSelectedPatient] = useState('')
+    const [selectedPatient, setSelectedPatient] = useState('');
+
     useEffect(() => {
         fetchPatients();
     }, []);
 
     const fetchPatients = async () => {
         try {
-            const response = await fetch('/api/patient/getPatientsOfADoctor'); // Replace with your API endpoint
-            if(response.ok){
+            const response = await fetch('/api/patient/getPatientsOfADoctor');
+            if (response.ok) {
                 const data = await response.json();
                 setPatients(data);
-            }
-            else {
-                alert(await response.text())
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: await response.text(),
+                });
             }
         } catch (error) {
-            alert(error)
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.message,
+            });
         }
     };
 
@@ -29,34 +38,50 @@ function CreateFollowUp(){
         try {
             const appointment = {
                 patient: selectedPatient,
-                startTime: selectedStartTime+':00.000+00:00',
-                endTime: selectedEndTime+':00.000+00:00'
-            }
-            console.log(appointment)
-            console.log(selectedPatient)
-            const response = await fetch('/api/appointment/scheduleFollowUp/'+selectedPatient, {
+                startTime: selectedStartTime + ':00.000+00:00',
+                endTime: selectedEndTime + ':00.000+00:00',
+            };
+
+            const response = await fetch('/api/appointment/scheduleFollowUp/' + selectedPatient, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(appointment),
             });
+
             if (response.ok) {
                 const data = await response.json();
-                alert("Follow-UP created",data)
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Follow-Up created successfully',
+                    text: data.message, // If there's a specific success message from the server
+                });
             } else {
-                alert(await response.text())
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: await response.text(),
+                });
             }
         } catch (error) {
-            alert('Error creating Follow-UP: ', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error creating Follow-Up',
+                text: error.message,
+            });
         }
     };
 
     return (
         <div className="container mt-5">
-             <h2 className="mb-4">Create a Follow-UP</h2>
+             <h2 className="mb-4 text-center red-text">Patient Follow-Up Check</h2>
+
              <form onSubmit={handleSubmit}>
+                             <div style={{ border: '2px solid red', padding: '10px', marginBottom: '10px' }}>
+
                    <div className="mb-3">
+
                         <label htmlFor="patient" className="form-label">Patient:</label>
                         <select
                             id="patient"
@@ -97,10 +122,25 @@ function CreateFollowUp(){
                             className="form-control"
                             required
                         />
-                   </div>
-                   <button type="submit" className="btn btn-primary">Create</button>
-             </form>
-        </div>
+                </div>
+ <img
+                                                              src={process.env.PUBLIC_URL + `/followup.png`}
+                                                              style={{
+                                                                 maxWidth: '1000px',
+                                                                        float: 'right',
+                                                                        marginRight: '50px',
+                                                                        marginBottom: '30px', // Add margin to move the image down
+
+                                                              }}
+                                                            />
+
+
+                </div>
+                 <button type="submit" className="btn btn-danger">Create</button>
+                                     </form>
+                </div>
+
+
     )
 }
 export default CreateFollowUp;

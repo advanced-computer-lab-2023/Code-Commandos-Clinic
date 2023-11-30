@@ -1,45 +1,73 @@
 import React, { useState, useEffect } from 'react';
 
-function LinkFamilyMember(){
-    const [email,setEmail] = useState('')
-    const [phoneNumber,setPhoneNumber] = useState('')
-    const [nationalId,setNationalId] = useState(0)
-    const [relation,setRelation] = useState('')
+import Swal from 'sweetalert2';
+
+function LinkFamilyMember() {
+    const [email, setEmail] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [nationalId, setNationalId] = useState(0);
+    const [relation, setRelation] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const familymember ={
+            const familymember = {
                 email: email,
                 phoneNumber: phoneNumber,
-                nationalId:nationalId,
+                nationalId: nationalId,
                 relation: relation
-            }
-            console.log("Family Member Payload:", familymember); // Log the payload
+            };
+
             const response = await fetch('/api/familyMember/linkFamilyMember', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(familymember),
-            })
+            });
+
             if (response.ok) {
                 const data = await response.json();
-                console.log(data)
-                alert("Linked successfully")
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Linked successfully',
+                    text: data.message, // If there's a specific success message from the server
+                });
             } else {
-                alert(await response.text())
+                const errorMessage = await response.text();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: errorMessage,
+                });
             }
         } catch (error) {
-            alert(error.message);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.message,
+            });
         }
     };
 
-
     return(
         <div className="container mt-5">
-            <h2 className="mb-4">Link a Patient</h2>
+            <h2 className="mb-4 text-center red-text">Link a Patient</h2>
+
+            <img
+                                                 src={process.env.PUBLIC_URL + `/family2.png`}
+                                                 style={{
+                                                   maxWidth: '400px',   // Adjust the maximum width as needed
+                                                   height: '',
+                                                   float: 'right',      // Float the image to the right
+                                                   marginRight: '50px'  // Adjust the right margin as needed
+
+                                                 }}
+                                               />
+
             <form onSubmit={handleSubmit}>
+                        <div style={{ border: '2px solid red', borderRadius: '8px', padding: '20px', backgroundColor: 'white', width: '800px', marginRight: '100px' }}>
+
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">email:</label>
                     <input
@@ -48,7 +76,7 @@ function LinkFamilyMember(){
                         id="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        
+
                     />
                 </div>
 
@@ -119,7 +147,11 @@ function LinkFamilyMember(){
                     </label>
                 </div>
              </div>
-             <button type="submit" className="btn btn-danger">Link</button>
+
+
+        </div>
+                <button type="submit" className="btn btn-danger">Link Member</button>
+
             </form>
         </div>
     )
