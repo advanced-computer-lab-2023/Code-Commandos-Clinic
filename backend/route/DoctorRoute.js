@@ -19,7 +19,7 @@ const {
     removeDoctor,
     createDoctorPatients,
     getPatientDoctors,
-    getAmount
+    getAmount,
 } = require('../controller/DoctorController')
 
 router.get('/searchByNameAndOrSpeciality/:name/:speciality',protect,checkPatientRole,searchByNameAndOrSpeciality)

@@ -370,5 +370,5 @@ module.exports = {
     createDoctorPatients,
     getDoctor,
     getPatientDoctors,
-    getAmount
+    getAmount,
 }

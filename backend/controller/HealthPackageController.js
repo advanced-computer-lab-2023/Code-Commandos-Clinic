@@ -4,6 +4,7 @@ const PatientModel = require("../model/Patient");
 const HealthPackageModel = require('../model/HealthPackage');
 const HealthPackagePatientModel = require('../model/HealthPackagePatient')
 const { default: mongoose } = require('mongoose');
+const FamilyMemberModel = require('../model/FamilyMember');
 
 
 //Req ID #11 in VC(add/update/delete health packages)
@@ -128,6 +129,8 @@ const deletePackage = asyncHandler(async(req,res) => {
       if(!HealthPackage){
         return res.status(400).json({error: 'Package not found'})
       }
+      const HealthPackagePatient = await HealthPackagePatientModel.findOneAndDelete({healthPackageID: id});
+      const familyMember = await FamilyMemberModel.findOneAndUpdate({'healthPackage.healthPackageID': id }, {healthPackage: null})
       res.status(200).json(HealthPackage)
     }
     catch (error) {

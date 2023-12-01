@@ -105,8 +105,6 @@ const getUpcomingPatientsOfDoctor = asyncHandler (async (req,res)=>{
 })
 
 const getAppointment = asyncHandler (async (req,res)=>{
-    
-   
         let query={};
         const currentDate = new Date();
         if(req.params.doctor !=="none" && req.params.doctor !=="none"){
@@ -117,7 +115,6 @@ const getAppointment = asyncHandler (async (req,res)=>{
                 {patient: patientid},
                 { startTime : { $lt : currentDate } }
                 ]
-                
          };
          try {
             const previousAppointments = await AppointmentModel.find(query)
@@ -127,9 +124,21 @@ const getAppointment = asyncHandler (async (req,res)=>{
             res.status(400)
             throw new Error(err.message)
           }
-}
+        }
+})
 
-
+const cancelAppointment = asyncHandler (async (req,res)=>{
+    const { appointmentID } = req.params
+    try {
+        const appointment = await AppointmentModel.findOneAndUpdate({_id:appointmentID},{status:'CANCELLED'})
+        if(!appointment)
+            throw new Error("Appointment not found")
+        res.status(200).json(appointment)
+    }
+    catch (err){
+        res.status(400)
+        throw new Error(err.message)
+    }
 })
 
 
@@ -303,7 +312,7 @@ const success = asyncHandler(async (req,res) =>{
 const upcomingPastAppointmentsOfDoctor = asyncHandler(async (req,res) => {
     try {
         const upcomingAppointments = await AppointmentModel.find({doctor:req.user.id,status:'RESERVED'})
-        const pastAppointments = await AppointmentModel.find({doctor:req.user.id,status:'COMPLETED'})
+        const pastAppointments = await AppointmentModel.find({doctor:req.user.id,status:{ $in: ['COMPLETED', 'CANCELLED'] }})
         res.status(200).json({upcoming: upcomingAppointments, past: pastAppointments})
     }
     catch (error){
@@ -315,7 +324,7 @@ const upcomingPastAppointmentsOfDoctor = asyncHandler(async (req,res) => {
 const upcomingPastAppointmentsOfPatient = asyncHandler(async (req,res) => {
     try {
         const upcomingAppointments = await AppointmentModel.find({patient:req.user.id,status:'RESERVED'})
-        const pastAppointments = await AppointmentModel.find({patient:req.user.id,status:'COMPLETED'})
+        const pastAppointments = await AppointmentModel.find({patient:req.user.id,status:{ $in: ['COMPLETED', 'CANCELLED'] }})
         res.status(200).json({upcoming: upcomingAppointments, past: pastAppointments})
     }
     catch (error){
@@ -437,5 +446,6 @@ module.exports = {
     upcomingPastAppointmentsOfPatient,
     filterAppointmentsByDateOrStatus,
     scheduleFollowUp,
-    success
+    success,
+    cancelAppointment
 };

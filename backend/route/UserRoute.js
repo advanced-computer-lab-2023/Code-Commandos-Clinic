@@ -7,7 +7,8 @@ const {
     generateOTP,
     verifyOTP,
     resetPassword,
-    changePassword
+    changePassword,
+    getUser
 } = require('../controller/UserController')
 const {protect,localVariables} = require("../middleware/AuthenticationHandler");
 
@@ -17,4 +18,5 @@ router.post('/logout',protect,logout)
 router.post('/generateOTP',localVariables,generateOTP)
 router.post('/resetPassword',verifyOTP,resetPassword)
 router.post('/changePassword',protect,changePassword)
+router.get('/getUser', protect, getUser)
 module.exports = router
