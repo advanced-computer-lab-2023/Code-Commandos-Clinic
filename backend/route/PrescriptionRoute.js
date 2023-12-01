@@ -15,7 +15,7 @@ const {protect} = require("../middleware/AuthenticationHandler");
 const {checkPatientDoctorRole, checkPatientRole, checkDoctorRole} = require("../middleware/AccessHandler");
 const router = express.Router();
 
-router.get('/getPrescriptionsbyPatient',protect,checkPatientRole, getPrescriptionsbyPatient)
+router.get('/getPrescriptionsbyPatient/:username', getPrescriptionsbyPatient)
 router.get('/getPrescriptionsOfPatient/:id',protect,checkDoctorRole, getPrescriptionsOfPatient)
 
 router.get('/getPrescriptionbyId/:id', getPrescriptionbyId)

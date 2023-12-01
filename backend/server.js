@@ -6,11 +6,14 @@ const connectToDb = require("./configuration/Db");
 const {errorHandler} = require('./middleware/ErrorHandler')
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+
 const port = process.env.PORT
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 server.use(cookieParser());
 server.use(bodyParser.json());
+server.use(cors({ origin: 'http://localhost:3000' }));
 
 server.listen(port,() => console.log(`Server is listening on port ${port}`))
 connectToDb()
