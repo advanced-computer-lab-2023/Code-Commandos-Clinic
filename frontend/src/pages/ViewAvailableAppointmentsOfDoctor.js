@@ -12,7 +12,7 @@ const ViewAvailableAppointmentsOfDoctor = () => {
     }, []);
 
     const fetchDoctors = async () =>{
-        const response = await fetch('/api/doctor/getPatientDoctors')
+        const response = await fetch('/api/doctor/getDoctors')
         if(response.ok){
             const result = await response.json()
             setDoctors(result)

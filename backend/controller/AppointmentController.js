@@ -11,6 +11,7 @@ const Doctor = require("../model/Doctor");
 const Admin = require("../model/Admin");
 const otpGenerator = require("otp-generator");
 const nodemailer = require("nodemailer");
+const DoctorPatient = require("../model/DoctorPatient");
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
 const createAppointment =asyncHandler( async (req,res) => {
@@ -214,13 +215,15 @@ const reserveAppointment = asyncHandler(async (req,res) => {
                 const newPatient = await PatientModel.findOneAndUpdate({_id:req.user.id},{wallet:newWallet})
             }
             //update status of appoinmtent
-            appointment.patient = req.user.id
+            const p = await PatientModel.findById(req.user.id)
+            appointment.patientName = p.name
             if(familyMemberId){
                 appointment.familyMember = familyMemberId
                 const member = await FamilyMember.findById(familyMemberId)
                 appointment.familyMemberName = member.name
             }
             appointment.status = 'RESERVED'
+            createDoctorPatients(appointment.doctor,appointment.patient)
             await appointment.save()
             try {
                 const patientEmailObject = await Patient.findOne({username:req.user.username}).select("email")
@@ -302,6 +305,9 @@ const success = asyncHandler(async (req,res) =>{
             appointment.familyMemberName = member.name
         }
         appointment.status = 'RESERVED'
+          const p = await PatientModel.findById(req.user.id)
+          appointment.patientName = p.name
+        createDoctorPatients(appointment.doctor,appointment.patient)
         await appointment.save()
           try {
               const patientEmailObject = await Patient.findOne({username:req.user.username}).select("email")
@@ -446,6 +452,7 @@ const scheduleFollowUp = asyncHandler(async (req,res) => {
         appointment.patientName = patient.name
         appointment.patient = patientId
         appointment.status = 'RESERVED'
+        createDoctorPatients(req.user.id,appointment.patient)
         appointment.type = 'FOLLOWUP'
         appointment.patient = patientId
         await appointment.save()
@@ -495,6 +502,33 @@ const sendEmail =  asyncHandler(async (email,content) => {
 
 })
 
+const createDoctorPatients= asyncHandler(async(doctorId,patientId) =>{
+    try{
+        if(!doctorId || !patientId){
+            throw new Error('patient and doctor ids are required to register a patient with a doctor')
+        }
+        const link = await DoctorPatient.findOne({doctor:doctorId,patient:patientId})
+        if(link){
+            return
+        }
+        const patient = await PatientModel.findById(patientId)
+        const doctor = await DoctorModel.findById(doctorId)
+        if(!patient || !doctor){
+            throw new Error('Invalid doctor/patient')
+        }
+        const patientDoctor = {
+            patient:patient._id,
+            doctor:doctor._id,
+            patientName:patient.name,
+            doctorName:doctor.name
+        }
+        const newPatientDoctor = await DoctorPatient.create(patientDoctor)
+    }
+    catch(error){
+        throw new Error(error.message)
+    }
+})
+
 module.exports = {
     getUpcomingPatientsOfDoctor,
     createAppointment,
@@ -507,5 +541,6 @@ module.exports = {
     upcomingPastAppointmentsOfPatient,
     filterAppointmentsByDateOrStatus,
     scheduleFollowUp,
-    success
+    success,
+    createDoctorPatients
 };
