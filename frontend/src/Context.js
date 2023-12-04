@@ -25,19 +25,16 @@ const ContextProvider = ({ children }) => {
       setMe(id); 
       try{
         const response = await axios.put('/api/videoCall/setSocketID',{socketID:id})
-        console.log(response.data)
+        console.log(await response.data)
       } catch (error) {
         // do nothing (not logged in yet)
       }
     });
 
-    socket.on('callUser', ({ from, name: callerName, signal }) => {
-      setCall({ isReceivingCall: true, from, name: callerName, signal });
-      console.log("hello")
+    socket.on('callUser', ({ from, name, signal }) => {
+      setCall({ isReceivingCall: true, from, name, signal });
+      console.log(JSON.stringify({ isReceivingCall: true, from, name}))
     });
-
-    if(window.location.pathname!=='/VideoCall')
-      return;
 
     navigator.mediaDevices.getUserMedia({ video: true, audio: true })
     .then((currentStream) => {
@@ -48,30 +45,52 @@ const ContextProvider = ({ children }) => {
       
   }, []);
 
-  const answerCall = () => {
+  const answerCall = async () => {
     setCallAccepted(true);
 
     const peer = new Peer({ initiator: false, trickle: false, stream });
 
     peer.on('signal', (data) => {
-      socket.emit('answerCall', { signal: data, to: call.from });
+      try{
+        socket.emit('answerCall', { signal: data, to: call.from });
+        socket.on('callEnded', ()=> {
+          window.location.reload();
+        })
+      } catch (error) {
+        window.location.reload()
+      }
     });
 
     peer.on('stream', (currentStream) => {
       userVideo.current.srcObject = currentStream;
     });
-
-    peer.signal(call.signal);
-
+    try{
+      peer.signal(call.signal);
+    }
+    catch(error){
+      alert("Other side lost connection");
+      const response = await axios.delete('/api/videoCall/deleteVideoCall')
+      if(response.status===200)
+        window.location.reload()
+    }
     connectionRef.current = peer;
+
+    try {
+      const response = await axios.delete('/api/videoCall/deleteVideoCall')
+    }
+    catch(error){}
   };
 
   const callUser = (id) => {
     const peer = new Peer({ initiator: true, trickle: false, stream });
 
     peer.on('signal', (data) => {
-      socket.emit('callUser', { userToCall: id, signalData: data, from: me, name });
-      console.log(JSON.stringify({ userToCall: id, from: me, name }))
+      try {
+        socket.emit('callUser', { userToCall: id, signalData: data, from: me, name: name });
+      } catch (error) {
+        window.location.reload()
+      }
+      console.log(JSON.stringify({ userToCall: id, from: me, name: name }))
     });
 
     peer.on('stream', (currentStream) => {
@@ -89,7 +108,7 @@ const ContextProvider = ({ children }) => {
 
   const leaveCall = () => {
     setCallEnded(true);
-
+    socket.emit("callEnded")
     connectionRef.current.destroy();
 
     window.location.reload();

@@ -31,13 +31,13 @@ const VideoCall = () => {
             });
             if(!cameraFound){
                 alert("No camera found")
-                //window.location.href = "http://localhost:3000/"
+                window.location.href = "http://localhost:3000/"
                 return
             }   
         })
         .catch((err) => {
             console.error(`${err.name}: ${err.message}`);
-        });   
+        });
     }, [])
 
     return (

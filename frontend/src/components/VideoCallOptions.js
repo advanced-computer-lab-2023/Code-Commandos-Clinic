@@ -10,8 +10,9 @@ const VideoCallOptions = ({ children, user }) => {
     const [patients, setPatients] = useState(null)
     const [doctorId, setDoctorId] = useState('')
     const [patientId, setPatientId] = useState('')
-    const [doctorSocketId, setDoctorSocketId] = useState('')
-    const [patientSocketId, setPatientSocketId] = useState('')
+    //const [doctorSocketId, setDoctorSocketId] = useState('')
+    //const [patientSocketId, setPatientSocketId] = useState('')
+    const [isCalling, setIsCalling] = useState(false)
 
     useEffect(() => {
         const fetchDoctors = async () => {
@@ -54,32 +55,41 @@ const VideoCallOptions = ({ children, user }) => {
             body = { patient: user._id, doctor: doctorId, patientSocketID: me }
             const response = await axios.post('/api/videoCall/addVideoCall', body)
             var json = await response.data
+            setIsCalling(true)
             while(!json.doctorSocketID){
                 const response2 = await fetch('/api/videoCall/getVideoCall')
                 if(response2.ok)
                     json = await response2.json()
             }
-            if (json.doctorSocketID)
+            if (json.doctorSocketID){
                 callUser(json.doctorSocketID)
+            }
         }
         else {
             body = { patient: patientId, doctor: user._id, doctorSocketID: me }
             const response = await axios.post('/api/videoCall/addVideoCall', body)
             var json = await response.data
+            setIsCalling(true)
             while(!json.patientSocketID){
                 const response2 = await fetch('/api/videoCall/getVideoCall')
                 if(response2.ok)
                     json = await response2.json()
             }
-            if (json.patientSocketID)
+            if (json.patientSocketID){
                 callUser(json.patientSocketID)
+            }
         }
         
         //callUser(doctorSocketId);
     }
 
     const handleLeaveCall = async () => {
-        const response = await axios.delete('/api/videoCall/deleteVideoCall')
+        setIsCalling(false)
+
+        try {
+            const response = await axios.delete('/api/videoCall/deleteVideoCall')
+        }
+        catch(error){}
         
         leaveCall();
     }
@@ -133,7 +143,7 @@ const VideoCallOptions = ({ children, user }) => {
                                         name="doctor"
                                         value={doctorId}
                                         onChange={(e) => {
-                                            setDoctorId(e.target.value)
+                                            setDoctorId(e.target.value); setName(user.name);
                                         }}
                                         className="form-control input-danger"
                                         required
@@ -164,7 +174,7 @@ const VideoCallOptions = ({ children, user }) => {
                                         ))}
                                     </select>
                                 }
-                            {callAccepted && !callEnded ? (
+                            {callAccepted && !callEnded ? ( 
                                 <Button variant="contained" color="secondary" startIcon={<PhoneDisabled fontSize="large" />} fullWidth onClick={() => {handleLeaveCall()}} style={margin}>
                                     Hang Up
                                 </Button>
@@ -173,6 +183,8 @@ const VideoCallOptions = ({ children, user }) => {
                                     Call
                                 </Button>
                             )}
+                            {isCalling && !(callAccepted && !callEnded) && <p>Calling {user.role==='PATIENT'?<span>your doctor.</span>:<span>your patient.</span>} Please wait while they answer.</p>}
+                            {callEnded && window.location.reload()}
                         </Grid>
                     </Grid>
                 </form>

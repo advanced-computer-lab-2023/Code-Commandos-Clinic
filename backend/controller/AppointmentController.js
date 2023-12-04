@@ -133,6 +133,21 @@ const cancelAppointment = asyncHandler (async (req,res)=>{
         const appointment = await AppointmentModel.findOneAndUpdate({_id:appointmentID},{status:'CANCELLED'})
         if(!appointment)
             throw new Error("Appointment not found")
+        const patient = await PatientModel.findById(appointment.patient)
+        const doctor = await DoctorModel.findById(appointment.doctor);
+        const healthPackagePatient = await HealthPackagePatientModel.findOne({ patientID: appointment.patient });
+        let amount=0;
+        if(!healthPackagePatient){
+            amount  = doctor.hourlyRate + doctor.hourlyRate*0.1
+        }
+        else{
+            const healthPackageID = healthPackagePatient.healthPackageID
+            const healthPackage = await HealthPackageModel.findOne({ _id: healthPackageID });
+            amount = doctor.hourlyRate + doctor.hourlyRate*0.1
+            amount = amount * ( 1 - healthPackage.doctorSessionDiscount);
+        }
+        patient.wallet = patient.wallet + amount
+        await patient.save()
         res.status(200).json(appointment)
     }
     catch (err){
@@ -216,6 +231,7 @@ const reserveAppointment = asyncHandler(async (req,res) => {
             }
             //update status of appoinmtent
             appointment.patient = req.user.id
+            appointment.patientName = patient.name
             if(familyMemberId){
                 appointment.familyMember = familyMemberId
                 const member = await FamilyMember.findById(familyMemberId)
@@ -281,10 +297,13 @@ const success = asyncHandler(async (req,res) =>{
     );
     if(session.payment_status==="paid"){
       const appointmentid = session.metadata.appointmentid
-      const familyMemberId=session.metadata.familyMemberId
+      const familyMemberId = session.metadata.familyMemberId
+      const patientID = session.metadata.patientID
       const appointment = await AppointmentModel.findById(appointmentid)
-
+      const patient = await PatientModel.findById(patientID)
       try{
+        appointment.patient = patientID
+        appointment.patientName = patient.name
         if(familyMemberId!="null"){
             appointment.familyMember = familyMemberId
             const member = await FamilyMember.findById(familyMemberId)

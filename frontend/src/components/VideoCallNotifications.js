@@ -5,7 +5,7 @@ import { SocketContext } from '../Context';
 import axios from 'axios';
 
 const VideoCallNotifications = ({user}) => {
-  const { me, answerCall, call, callAccepted } = useContext(SocketContext);
+  const { me, setName, answerCall, call, callAccepted } = useContext(SocketContext);
 
   const [ videoCall, setVideoCall ] = useState(null)
 
@@ -23,10 +23,16 @@ const VideoCallNotifications = ({user}) => {
 
   const handleAnswer = async () => { 
     try{
+      const delay = ms => new Promise(res => setTimeout(res, ms));
+      if(user.role==='PATIENT')
+        await setName(videoCall.patientName)
+      else
+        await setName(videoCall.doctorName)
+      await delay(2000) 
       answerCall()
     }
     catch(error){
-      alert('Other side has lost connection.');
+      alert("Other side lost connection");
       const response = await axios.delete('/api/videoCall/deleteVideoCall')
       if(response.status===200)
         window.location.reload()
@@ -43,7 +49,7 @@ const VideoCallNotifications = ({user}) => {
           </Button>
         </div>
       )} */}
-      { videoCall && 
+      { videoCall && !callAccepted &&
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
           <h1>{user.role=='DOCTOR'?videoCall.patientName:videoCall.doctorName} is calling:</h1>
           <Button variant="contained" color="primary" onClick={handleAnswer}>

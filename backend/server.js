@@ -76,10 +76,14 @@ io.on("connection", (socket) => {
 
 	socket.on("callUser", ({ userToCall, signalData, from, name }) => {
 		io.to(userToCall).emit("callUser", { signal: signalData, from, name });
-        console.log("hello")
+        console.log("hello from backend callUser")
 	});
 
 	socket.on("answerCall", (data) => {
 		io.to(data.to).emit("callAccepted", data.signal)
+	});
+
+	socket.on("callEnded", () => {
+		io.to(data.to).emit("callEnded")
 	});
 });

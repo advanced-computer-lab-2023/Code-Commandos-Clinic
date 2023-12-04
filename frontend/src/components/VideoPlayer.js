@@ -1,21 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { Grid, Typography, Paper } from '@mui/material';
 
 import { SocketContext } from '../Context';
 
 const VideoPlayer = () => {
-    const [user, setUser] = useState({})
-
-    useEffect(()=>{
-        const fetchUser = async () => {
-            const response = await fetch('/api/user/getUser')
-            if(response.ok)
-                setUser(await response.json())
-            else
-                alert(await response.text())
-        }
-        fetchUser()
-    },[])
 
     const { name, callAccepted, myVideo, userVideo, callEnded, stream, call } = useContext(SocketContext);
     
@@ -38,7 +26,7 @@ const VideoPlayer = () => {
                 {stream && (
                     <Paper className="card mt-5 border-danger box" style={paper}>
                         <Grid item xs={12} md={6}>
-                            <Typography variant="h5" gutterBottom>{ user.name }</Typography>
+                            <Typography variant="h5" gutterBottom>{  }</Typography>
                             <video playsInline muted ref={myVideo} autoPlay className="video" style={video}/>
                         </Grid>
                     </Paper>
@@ -46,7 +34,7 @@ const VideoPlayer = () => {
                 {callAccepted && !callEnded && (
                     <Paper className="card mt-5 border-danger box" style={paper}>
                         <Grid item xs={12} md={6}>
-                            <Typography variant="h5" gutterBottom>{ call.name || 'Name' }</Typography>
+                            <Typography variant="h5" gutterBottom>{  }</Typography>
                             <video playsInline ref={userVideo} autoPlay className="video" style={video}/>
                         </Grid>
                     </Paper>
