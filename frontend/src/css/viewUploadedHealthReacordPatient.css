@@ -1,0 +1,9 @@
+.headd{
+    color: #d21312;
+    margin-left: 3%;
+}
+.recordcon{
+    display: flex;
+    flex-direction: row;
+    
+}

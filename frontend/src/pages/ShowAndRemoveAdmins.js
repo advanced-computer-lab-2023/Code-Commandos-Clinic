@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import AdminDetails from "../components/AdminDetails";
+//import AdminDetails from "../components/AdminDetails";
 import "../css/showandremoveadmins.css";
 
 const ShowAndRemoveAdmins = () => {
@@ -48,6 +48,7 @@ const ShowAndRemoveAdmins = () => {
     return (
         <div className="container mt-4">
         <h1 className="mb-4">System Admins</h1>
+       
         <ul className="list-group">
             {admins.map((admin) => (
                 <li key={admin._id} className="list-group-item red-border">
@@ -63,6 +64,7 @@ const ShowAndRemoveAdmins = () => {
                                 onClick={() => handleRemoveAdmin(admin._id)}
                                 style={{ backgroundColor: '#d21312' }}
                             >
+                                Remove{" "}
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="16"
@@ -74,8 +76,8 @@ const ShowAndRemoveAdmins = () => {
                                     <path
                                         d="M1.5 2.5a.5.5 0 0 1 1 0V13a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5a.5.5 0 0 1 1 0V13a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V2.5zM0 1a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v1H0V1z"
                                     />
-                                </svg>{" "}
-                                Delete
+                                </svg>
+                                
                             </button>
                         </div>
                     </div>

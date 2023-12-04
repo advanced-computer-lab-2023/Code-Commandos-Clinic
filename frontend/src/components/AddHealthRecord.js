@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import {useParams} from "react-router-dom";
+import "../css/AddHealthRecord.css";
 const AddHealthRecord = () =>{
     const [file, setFile] = useState()
     const [caption, setCaption] = useState("");
@@ -39,29 +40,47 @@ const AddHealthRecord = () =>{
     }
 
     return (
-        <form onSubmit={submit}>
-            <input onChange={e => setFile(e.target.files[0])} type="file"  accept=".pdf" ></input>
-            <input value={caption} onChange={e => setCaption(e.target.value)} type="text" placeholder='Caption'></input>
-            <input
+        <div >
+              <h1 class ="sdsadssa">Add Health Record</h1>
+        <div class ="asasas">
+          
+        <form  class ="adsdd "onSubmit={submit}>
+            <input class ="awl" onChange={e => setFile(e.target.files[0])} type="file"  accept=".pdf" ></input>
+            <div class ="gamb">
+            <label>caption</label>
+            <input   class ="awl" value={caption} onChange={e => setCaption(e.target.value)} type="text" ></input>
+            </div>
+            <div class ="gamb">
+            <label>Allergic History</label>
+            <input class ="awl"
                 value={allergicHistory}
                 onChange={(e) => setAllergicHistory(e.target.value)}
                 type="text"
-                placeholder="Allergic History"
+               
             />
-            <input
+              </div>
+              <div class ="gamb">
+              <label>Blood Type</label>
+            <input class ="awl"
                 value={bloodType}
                 onChange={(e) => setBloodType(e.target.value)}
                 type="text"
-                placeholder="Blood Type"
+               
             />
-            <input
+               </div>
+               <div class ="gamb">
+               <label>Main Complaint</label>
+            <input class ="awl"
                 value={mainComplaint}
                 onChange={(e) => setMainComplaint(e.target.value)}
                 type="text"
-                placeholder="Main Complaint"
+                
             />
-            <button type="submit">Submit</button>
+            </div>
+            <button  class ="tany" type="submit">Submit</button>
         </form>
+        </div>
+        </div>
     )
 }
 

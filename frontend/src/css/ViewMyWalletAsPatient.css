@@ -1,0 +1,32 @@
+.tittle{
+    color: #d21312;
+    margin-left: 3%;
+}
+.bodyyy2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.walletcon{
+    display: flex;
+    flex-direction: column;
+    border: #d21312 1.4px solid;
+    align-items: center;
+    border-radius: 1%;
+    width: 50%;
+    justify-content: center;
+    margin-top: 5%;
+}
+.wallett{
+    margin-bottom: 2%;
+    width: 30%;
+    height: 30%;
+    margin-top: 2%;
+}
+.ammouunt{
+    margin-bottom: 2%;
+    color :#6f8195 ;
+}
+.dollar{
+    color: #89bd6a;
+}

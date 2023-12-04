@@ -1,6 +1,7 @@
 import {useState,useEffect} from "react";
 import DoctorDetails from "../components/DoctorDetails";
 import "../css/viewandremovedoctors.css"
+import bin from '../images/bin.jpg';
 const ViewAndRemoveDoctors = ()=> {
     const [doctors, setDoctors] = useState([]);
     const [selectedDoctor,setSelectedDoctor] = useState(null)
@@ -54,6 +55,8 @@ const ViewAndRemoveDoctors = ()=> {
     return (
         <div className="container mt-4">
         <h1 className="mb-4">System Doctors</h1>
+      
+
         <ul className="list-group">
             {doctors.map((doctor) => (
                 <li key={doctor._id} className="list-group-item red-border">

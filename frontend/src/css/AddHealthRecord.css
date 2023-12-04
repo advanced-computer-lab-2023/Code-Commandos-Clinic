@@ -1,0 +1,30 @@
+.adsdd{
+    display: flex;
+    flex-direction: column;
+    border : 1px solid #d21312 ;
+    width:30%;
+margin-left: 3%;
+
+}
+.awl{
+ margin-top: 2%;
+    margin-bottom: 5%;
+}
+.asasas{
+    display: flex;
+    align-items: center ;
+    justify-content: center ;
+    margin-top: 8%;
+
+}
+.gamb{
+    display: flex;
+    flex-direction: column;
+}
+.tany{
+    margin-bottom: 2.5%;
+}
+.sdsadssa{
+    color: #d21312;
+    margin-left: 3%;
+}

@@ -1,0 +1,53 @@
+.bodyyssyyy{
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+
+  margin-left: 10%;
+
+   
+}
+.doc{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.btn-primary{
+    align-items: flex-start;
+    background-color: #d21312;
+    border: none;
+    margin-left: 6%;
+    margin-top: 1%;
+    height: 20%;
+    margin-bottom: 1%;
+    width: 20%;
+}
+.titlee{
+    color: #d21312;
+    margin-left: 2%;
+}
+
+.btn-secondary{
+    margin-left: 5%;
+    margin-top: 1%;
+    
+}
+.row{
+    align-items: flex-start;
+    
+    
+    display: flex;
+    flex-direction: row;
+}
+.document{
+   width: 75%;
+   
+}
+.bodyyggy{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   
+    
+    
+}

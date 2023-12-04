@@ -86,4 +86,3 @@ const ViewPatientsOfDoctor = () =>{
 }
 
 export default ViewPatientsOfDoctor;
-

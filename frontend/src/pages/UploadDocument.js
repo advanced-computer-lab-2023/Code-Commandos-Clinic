@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-//import ProgressBar from '../components/progressBar';
-
+import React, { useState, useRef } from 'react';
+import "../css/UploadDocument.css"
+import documentImage from "../images/doc.jpg"
 
 const UploadDocument = () => {
   const [singleFile, setSingleFile] = useState(null);
   const [fileName, setFileName] = useState('');
-  
+  const fileInputRef = useRef(null);
 
   const handleFileSelect = (event) => {
     const file = event.target.files[0];
@@ -21,7 +21,7 @@ const UploadDocument = () => {
     }
     const formData = new FormData();
     formData.append('file', singleFile);
-    console.log(singleFile)
+    console.log(singleFile);
     try {
       const response = await fetch('/api/file/addSingleFile', {
         method: 'POST',
@@ -29,28 +29,41 @@ const UploadDocument = () => {
       });
       if (!response.ok) {
         const errorMessage = await response.text();
-        alert(errorMessage)
-        throw new Error(errorMessage)
+        alert(errorMessage);
+        throw new Error(errorMessage);
       } else {
         alert('File is uploaded successfully');
       }
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     }
     setFileName('');
-
   };
 
-
-
   return (
-    <div className="container">
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <button className="btn btn-secondary" style={{width: 300}} onClick={() => document.getElementById('fileInput').click()}>Upload a single document</button>
-        <input id="fileInput" type="file" style={{ display: 'none' }} onChange={handleFileSelect} />
+    <div class ="cccc">
+    <h1 className="titlee">Upload documents</h1>
+    <div className="bodyyggy">
+      
+      <div className="row">
+      <img src={documentImage} className="document" alt="document" />
+      <div className="bodyyssyyy">
+      
+        <button className="btn btn-secondary" style={{ width: 300 }} onClick={() => fileInputRef.current.click()}>
+          Upload a single document
+        </button>
+        <input id="fileInput" type="file" style={{ display: 'none' }} ref={fileInputRef} onChange={handleFileSelect} />
         {fileName && <p>Selected file: {fileName}</p>}
+       
+          <button type="submit" className="btn btn-primary" onClick={handleSubmit} style={{ marginTop: '10px' }}>
+            Submit
+          </button>
+          </div>
+        
+          
+          </div>  
+       
       </div>
-      <button type="submit" className="btn btn-primary" onClick={handleSubmit} style={{ marginTop: '10px' }}>submit</button>
     </div>
   );
 };
