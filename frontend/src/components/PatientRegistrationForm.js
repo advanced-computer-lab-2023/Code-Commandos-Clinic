@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import {useNavigate} from "react-router-dom";
 import '../css/registration.css';
+import Swal from 'sweetalert2';
 
 const PatientRegistrationForm = () => {
   const [name, setName] = useState('')
@@ -28,7 +29,12 @@ const PatientRegistrationForm = () => {
     })
 
     if (!response.ok) {
-        alert( await response.text())
+        //const errorMessage = await response.text();
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text:  await response.text(),
+      });
     }
     if (response.ok) {
         const json = await response.json()
@@ -40,7 +46,15 @@ const PatientRegistrationForm = () => {
       setMobileNumber('')
       setEcFullName('')
       setEcMobileNumber('')
-      alert('Registration successful.')
+      Swal.fire({
+        icon: 'success',
+        title: 'Registration successful!',
+        text: 'New patient registered.',
+      }).then(() => {
+        console.log('new patient registered:', json);
+        navigate('/Login');
+        window.location.reload();
+      });
       console.log('new patient registered:', json)
       navigate('/Login')
       window.location.reload()
@@ -56,7 +70,9 @@ const PatientRegistrationForm = () => {
             <div className="col-lg-8">
 
         <form className="create m-5" onSubmit={handleSubmit}>
-            <h2>Patient Registration Form:</h2>
+        <h2 className="mb-4"><hr className="lineAround"></hr>Patient Registration Form <hr className="lineAround"></hr></h2>
+        <div className="box-with-image"> 
+            <div className="box">
 
             <div className="row">
             <div className="col-md-5 mb-3">
@@ -206,7 +222,8 @@ const PatientRegistrationForm = () => {
                     onChange={(e) => setEcMobileNumber(e.target.value)}
                 />
             </div>
-
+            </div>
+            </div>
             <div>
           <button type="submit" button className="patient-btn">Register</button>
              </div>

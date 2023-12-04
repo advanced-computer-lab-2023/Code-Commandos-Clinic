@@ -30,7 +30,9 @@ const DoctorRegistrationRequests = () => {
 
     return (
         <div className="doctorRegistrationRequests m-5">
-            <h2>Doctors applying to join the platform:</h2>
+            <h2 className="mb-4"><hr className="lineAround"></hr>Doctors applying to join the platform<hr className="lineAround"></hr></h2>
+       
+            <div className="box">
             <div>
                 {doctorRequests && doctorRequests.map((doctorRequest) => (
                     //<p key={doctorRequest._id}>{doctorRequest.name}</p>
@@ -38,6 +40,8 @@ const DoctorRegistrationRequests = () => {
                 ))}
             </div>
         </div>
+        </div>
+       
     )
 }
 

@@ -1,10 +1,32 @@
 body{
     background-color: white;
 }
-h2 {
-    color: #D21312; /* Red color */
-    font-weight: bold; /* Bold font */
+h2.mb-4{
+    text-align: center;
+font-size: 30px;
+font-weight: 300;
+color: #222;
+letter-spacing: 1px;
+text-transform: uppercase;
+display: grid;
+grid-template-columns: 1fr max-content 1fr;
+grid-template-rows: 27px 0;
+grid-gap: 20px;
+align-items: center;
+
 }
+hr.lineAround {
+    border-top: 1px solid darkred;
+  }
+  .box-with-image {
+    display: flex;
+    align-items: center;
+  }
+  .image {
+    flex: 1;
+    padding: 20px;
+
+  }
 
 .button-reg{
     background-color: #D21312;
@@ -14,10 +36,9 @@ h2 {
     font-size: 1.1rem;
     transition-duration: 0.7s;
     border: 1px solid transparent;
-    width: 120px; 
+    margin-right:0.5rem ;
+    margin-top: 10px;
     height: 60px; 
-    font-size: 17px; 
-    margin-left: 370px; 
     
 }
 .custom-btn {
@@ -42,7 +63,7 @@ h2 {
     transition-duration: 0.7s;
     border: 1px solid transparent;
     margin-right:0.5rem ;
-    margin-top: 75px;
+    margin-top: 10px;
     height: 60px; 
 }
 .cash-btn{
@@ -81,9 +102,9 @@ h2 {
     transition-duration: 0.7s;
     border: 1px solid transparent;
     margin-right:0.5rem ;
-    margin-top: 25rem;
+    margin-top: 55rem;
     height: 60px; 
-    width: 320px;
+    width: 150px;
   
     
 }
@@ -167,9 +188,10 @@ h2 {
     
 }
 .doctor-page {
-    background-image: url('/Users/woaodhisham/Desktop/finall/Code-Commandos-Clinic/frontend/src/images/doc.png');
-    background-size: 40%; 
+    background-image: url('/Users/woaodhisham/Desktop/finall/Code-Commandos-Clinic/frontend/src/images/dooct.jpeg');
+    background-size: 50%; 
     background-repeat: no-repeat; 
     background-position:  right ; 
+    
     
 }

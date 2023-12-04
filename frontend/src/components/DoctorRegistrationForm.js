@@ -1,5 +1,6 @@
 
 import { useState } from 'react'
+import Swal from 'sweetalert2';
 
 const DoctorRegistrationForm = () => {
     const [name, setName] = useState('')
@@ -21,8 +22,12 @@ const DoctorRegistrationForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         if(!IDID || !LicenseID || !DegreeID){
-            alert("You need to submit the three files before you confirm registration")
-            return
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'You need to submit the three files before you confirm registration',
+            });
+            return;
         }
         const formData = new FormData();
         formData.append('name', name);
@@ -52,8 +57,12 @@ const DoctorRegistrationForm = () => {
         });
 
         if (!response.ok) {
-            const errorMessage = await response.text();
-            alert(errorMessage);
+            //const errorMessage = await response.text();
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: await response.text(),
+            });
         }
         if (response.ok) {
             const json = await response.json()
@@ -67,12 +76,19 @@ const DoctorRegistrationForm = () => {
             setMedicalIDFile(null);
             setMedicalLicensesFile(null);
             setMedicalDegreeFile(null);
-            setSpeciality('')
-            alert('Request to register successful.')
-            console.log('new doctor registration request added:', json)
-        }
+            setSpeciality('');
 
-    }
+            Swal.fire({
+                icon: 'success',
+                title: 'Request Successful!',
+                text: 'Request to register successful.',
+            }).then((result) => {
+                if (result.isConfirmed || result.isDismissed) {
+                    console.log('new doctor registration request added:', json);
+                }
+            });
+        }
+    };
     const handleMedicalIDSubmit = async () => {
         setIDID( await handleFileSubmit( medicalIDFile));
 
@@ -89,11 +105,20 @@ const DoctorRegistrationForm = () => {
 
     const handleFileSubmit = async ( file) => {
         if (!file) {
-            alert('Please select a file to upload');
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'Please select a file to upload',
+            });
             return;
         }
         if(!username){
-            alert("You have to enter username before submitting the files")
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: "You have to enter username before submitting the files",
+            });
+            return;
         }
         const formData = new FormData();
         formData.append('file', file);
@@ -104,16 +129,28 @@ const DoctorRegistrationForm = () => {
                 body: formData,
             });
             if (!response.ok) {
-                const errorMessage = await response.text();
-                alert(errorMessage);
-                throw new Error(errorMessage);
+               // const errorMessage = await response.text();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text:await response.text(),
+                });
+                throw new Error(await response.text());
             } else {
-                alert('File is uploaded successfully');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Request Successful!',
+                    text: 'File is uploaded successfully',
+                })
                 const fileId = await response.json();
                 return fileId;
             }
         } catch (error) {
-            alert(error.message);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: error.message,
+            });
         }
     };
 
@@ -123,8 +160,9 @@ const DoctorRegistrationForm = () => {
         <div className="col-lg-8">
 
         <form className="create m-5" >
-            <h2>Apply as a doctor to join the platform:</h2>
-
+        <h2 className="mb-4"><hr className="lineAround"></hr>Apply as a Doctor <hr className="lineAround"></hr></h2>
+        <div className="box-with-image"> 
+            <div className="box">
                <div className="row">
             <div className="col-md-5 mb-3">
             <label htmlFor="username" className="form-label"style={{ marginTop: '30px' }}>
@@ -158,7 +196,7 @@ const DoctorRegistrationForm = () => {
 
 
     <div className="row">
-    <div className="col-md-5 mb-3">
+    <div className="col-md-8 mb-3">
                 <label htmlFor="email" className="form-label">
                     E-mail:
                 </label>
@@ -173,7 +211,7 @@ const DoctorRegistrationForm = () => {
                 />
             </div>
 
-            <div className="col-md-5 mb-3">
+            <div className="col-md-8 mb-3">
                 <label htmlFor="password" className="form-label">
                     Password:
                 </label>
@@ -191,7 +229,7 @@ const DoctorRegistrationForm = () => {
 
 
             <div className="row">
-            <div className="col-md-5 mb-3">
+            <div className="col-md-8 mb-3">
                 <label htmlFor="dateOfBirth" className="form-label">
                     Date of Birth:
                 </label>
@@ -206,7 +244,7 @@ const DoctorRegistrationForm = () => {
                 />
             </div>
 
-            <div className="col-md-5 mb-3">
+            <div className="col-md-8 mb-3">
                 <label htmlFor="hourlyRate" className="form-label">
                     Hourly Rate:
                 </label>
@@ -222,7 +260,7 @@ const DoctorRegistrationForm = () => {
             </div> 
 
             <div className="row">
-            <div className="col-md-5 mb-3">
+            <div className="col-md-8 mb-3">
                 <label htmlFor="affiliation" className="form-label">
                     Affiliation:
                 </label>
@@ -236,7 +274,7 @@ const DoctorRegistrationForm = () => {
                 />
             </div>
 
-            <div className="col-md-5 mb-3">
+            <div className="col-md-8 mb-3">
                 <label htmlFor="educationalBackground" className="form-label">
                     Educational Background:
                 </label>
@@ -252,7 +290,7 @@ const DoctorRegistrationForm = () => {
             </div>
 
 
-            <div className="col-md-6 mb-3">
+            <div className="col-md-9 mb-3">
                 <label htmlFor="specialty" className="form-label">
                     Speciality:
                 </label>
@@ -306,7 +344,7 @@ const DoctorRegistrationForm = () => {
                 </select>
             </div>
 
-            <div className="col-md-6 mb-3">
+            <div className="col-md-9 mb-3">
                 <label htmlFor="medicalIDFile" className="form-label">
                     Upload Medical ID:
                 </label>
@@ -322,7 +360,7 @@ const DoctorRegistrationForm = () => {
                 </button>
             </div>
 
-            <div className="col-md-6 mb-3">
+            <div className="col-md-9 mb-3">
                 <label htmlFor="medicalLicensesFile" className="form-label">
                     Upload Medical Licenses:
                 </label>
@@ -340,7 +378,7 @@ const DoctorRegistrationForm = () => {
 
             
 
-            <div className="col-md-6 mb-3">
+            <div className="col-md-9 mb-3">
                 <label htmlFor="medicalDegreeFile" className="form-label">
                     Upload Medical Degree:
                 </label>
@@ -355,7 +393,8 @@ const DoctorRegistrationForm = () => {
                     Submit Medical Degree
                 </button>
             </div>
-
+            </div>
+            </div>
           
             <button type="submit" className="button-reg" onClick={handleSubmit} >
                 Register
@@ -364,6 +403,7 @@ const DoctorRegistrationForm = () => {
         </div>
         </div>
         </div>
+        
     );
 }
 

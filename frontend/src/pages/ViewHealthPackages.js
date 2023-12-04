@@ -58,13 +58,15 @@ const HealthPackages = () => {
         }
         const fetchHealthPackages = async () => {
             const response = await fetch('api/healthPackage/getPackages')
-            const json = await response.json()
+            
 
             if(response.ok){
+                const json = await response.json()
                 setHealthPackages(json)
+               
             }
             else {
-                alert(json)
+                alert(await response.text())
             }
         }
         const fetchDiscountedHealthPackages = async () => {

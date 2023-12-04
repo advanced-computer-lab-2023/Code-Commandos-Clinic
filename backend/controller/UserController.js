@@ -68,6 +68,12 @@ const generateToken = (username,role,id) => {
 
 const generateOTP =  asyncHandler(async (req,res) => {
     const {email} = req.body
+    const patient = await Patient.findOne({email})
+    const doctor = await Doctor.findOne({email})
+    const admin = await Admin.findOne({email})
+    if(!patient && !doctor && !admin){
+        res.status(400).json("No user found for this email")
+    }
     req.app.locals.OTP = await otpGenerator.generate(6, { lowerCaseAlphabets: false, upperCaseAlphabets: false, specialChars: false})
     req.app.locals.email = email
 
@@ -121,14 +127,14 @@ const verifyOTP =  asyncHandler(async (req,res,next) => {
 })
 
 const resetPassword = asyncHandler(async (req,res) => {
-    const {username,newPassword} = req.body
+    const {email,newPassword} = req.body
     if (newPassword.search(/[a-z]/) < 0 || newPassword.search(/[A-Z]/) < 0 || newPassword.search(/[0-9]/) < 0) {
         res.status(400)
         throw new Error("Password must contain at least one number, one capital letter and one small letter")
     }
-    const patient = await Patient.findOneAndUpdate({username},{password:newPassword})
-    const doctor = await Doctor.findOneAndUpdate({username},{password:newPassword})
-    const admin = await Admin.findOneAndUpdate({username},{password:newPassword})
+    const patient = await Patient.findOneAndUpdate({email},{password:newPassword})
+    const doctor = await Doctor.findOneAndUpdate({email},{password:newPassword})
+    const admin = await Admin.findOneAndUpdate({email},{password:newPassword})
 
     if (!patient && !doctor && !admin){
         res.status(404)
@@ -137,7 +143,15 @@ const resetPassword = asyncHandler(async (req,res) => {
     else {
         const salt = await bcrypt.genSalt(10)
         const hashedPassword = await bcrypt.hash(newPassword,salt)
-        await User.findOneAndUpdate({username},{password:hashedPassword})
+        if(patient){
+            await User.findOneAndUpdate({username:patient.username},{password:hashedPassword})
+        }
+        else if(doctor){
+            await User.findOneAndUpdate({username:doctor.username},{password:hashedPassword})
+        }
+        else if(admin){
+            await User.findOneAndUpdate({username:admin.username},{password:hashedPassword})
+        }
     }
     res.status(200).json("Your password has been reset")
 })

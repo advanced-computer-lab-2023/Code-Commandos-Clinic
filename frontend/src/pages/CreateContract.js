@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
+import Swal from 'sweetalert2';
 
 const CreateContract = () => {
     const [doctors,setDoctors] = useState([])
@@ -22,55 +23,86 @@ const CreateContract = () => {
                 const result = response.data
                 setDoctors(result)
             } else {
-                alert(response.data)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: await response.text(),
+                  });
             }
         }
-        catch (error){
-            alert(error.message)
+        catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: error.message,
+            });
+            console.error(error);
+            // Handle any other necessary error logic here
         }
-    }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-            try {
-                const contractData = {
-                    doctor:selectedDoctorId,
-                    monthlySalary,
-                    startDate,
-                    endDate,
-                    responsibilities,
-                    termsAndConditions,
-                    markup,
-                };
-                console.log(contractData)
-                const response = await fetch('/api/employmentContract/createContracts', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(contractData),
+        try {
+            const contractData = {
+                doctor: selectedDoctorId,
+                monthlySalary,
+                startDate,
+                endDate,
+                responsibilities,
+                termsAndConditions,
+                markup,
+            };
+            console.log(contractData);
+            const response = await fetch('/api/employmentContract/createContracts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(contractData),
+            });
+    
+            if (response.ok) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Employment contract created.',
+                    showConfirmButton: true,
+               
+                    
                 });
-
-                if (response.ok) {
-                    alert('Employment contract created:')
-                    // Handle success or navigate to a different page
-                } else {
-                    alert(await response.text());
-                }
-            } catch (error) {
-                console.error('Error creating employment contract:', error);
-                // Handle error
+            } else {
+                const errorText = await response.text();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: errorText,
+                });
             }
+        } catch (error) {
+            console.error('Error creating employment contract:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'An error occurred while creating the employment contract.',
+            });
+        }
     };
+    
 
     return (
         <div class="contract-page">
         <div className="container">
-      
-            <div className="col-lg-8">
+        <div className="col-lg-8">
         <div className="container">
-                <h2>Create Employment Contract</h2>
+
+       
                 <form onSubmit={handleSubmit}>
+                <h2 className="mb-4"><hr className="lineAround"></hr>create contract<hr className="lineAround"></hr></h2>
+      
+               
+        
+            <div className="box">
                 <div className="col-md-8 mb-3">
                         <label htmlFor="doctor" className="form-label">
                             Select Doctor:
@@ -172,16 +204,19 @@ const CreateContract = () => {
                             required
                         />
                     </div>
+                    </div>
+                   
+                    
 
                     <div>
-               <button type="submit" button className="custom-btn ">Create</button>
+               <button type="submit" button className="patient-btn ">Create</button>
                 </div>
                 </form>
         </div>
         </div>
-            </div>
+         </div>
         </div>
-       
+     
     );
 };
 

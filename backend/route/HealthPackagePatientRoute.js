@@ -20,11 +20,11 @@ const {
 router.post('/subscribeToPackage', subscribeToPackage)
 
 //get a patient's package
-router.get('/getSubscribedPackage/', protect, checkPatientRole, getSubscribedPackage)
-
+//router.get('/getSubscribedPackage/', protect, checkPatientRole, getSubscribedPackage)
+router.get('/getSubscribedPackage/',  getSubscribedPackage)
 //get a patient's package status and renewal date
-router.get('/getSubscribedPackageStatus', protect, checkPatientRole, getSubscribedPackageStatus)
-
+//router.get('/getSubscribedPackageStatus', protect, checkPatientRole, getSubscribedPackageStatus)
+router.get('/getSubscribedPackageStatus',  getSubscribedPackageStatus)
 //get all patient packages
 router.get('/getPatientPackages', getPatientPackages)
 

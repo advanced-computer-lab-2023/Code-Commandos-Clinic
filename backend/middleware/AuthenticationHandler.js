@@ -33,4 +33,3 @@ const localVariables = asyncHandler(async (req, res, next) =>{
 })
 
 module.exports = {protect,localVariables}
-
