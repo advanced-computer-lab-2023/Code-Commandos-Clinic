@@ -5,10 +5,10 @@ const asyncHandler = require('express-async-handler')
 const updateAppointmentsStatus = asyncHandler( async () => {
     try {
         const currentTime = new Date();
-        const appointmentsToUpdate = await Appointment.find({
-            startTime: { $lt: currentTime },
-            status: { $ne: 'COMPLETED' }
-        });
+      const appointmentsToUpdate = await Appointment.find({
+          startTime: { $lt: currentTime },
+          status: { $ne: 'COMPLETED' }
+      }).maxTimeMS(30000);
         for (const appointment of appointmentsToUpdate) {
             appointment.status = 'COMPLETED';
             await appointment.save();
