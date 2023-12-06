@@ -9,7 +9,8 @@ const {
     addMedicineToPrescription,
     deleteMedicineFromPrescription,
     updateMedicineDosage,
-    getPrescriptionsOfPatient, deletePrescriptionById
+    getPrescriptionsOfPatient, deletePrescriptionById,
+    generatePDF
 } = require("../controller/PrescriptionController")
 const {protect} = require("../middleware/AuthenticationHandler");
 const {checkPatientDoctorRole, checkPatientRole, checkDoctorRole} = require("../middleware/AccessHandler");
@@ -32,5 +33,8 @@ router.get('/filterbyStatus/:status', protect,checkPatientRole,filterbyStatus)
 router.post('/addMedicineToPrescription',addMedicineToPrescription)
 router.delete('/deleteMedicineFromPrescription',deleteMedicineFromPrescription)
 router.put('/updateMedicineDosage',updateMedicineDosage)
+
+router.get('/generatePdf/:id', generatePDF);
+
 module.exports = router
 

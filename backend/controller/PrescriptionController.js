@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const asyncHandler = require('express-async-handler');
 const PatientModel = require('../model/Patient')
 const DoctorModel = require('../model/Doctor')
+const fs = require('fs');
+const PDFDocument = require('pdfkit');
 
 const getPrescriptionsbyPatient = asyncHandler(async (req, res) => {
   const {username}  = req.params;
@@ -196,6 +198,41 @@ const updateMedicineDosage = async (req, res) => {
   }
 };
 
+const generatePDF = async (req, res) => {
+ try{
+  const prescriptionId = req.params.id; // Assuming you have an endpoint like /prescription/:id
+  const prescription = await PrescriptionModel.findById(prescriptionId);
+
+  if (!prescription) {
+    return res.status(404).json({ message: 'Prescription not found' });
+  }
+  res.setHeader('Content-Type', 'application/pdf');
+  res.setHeader('Content-Disposition', `attachment; filename=${encodeURIComponent('prescription.pdf')}`);
+  const doc = new PDFDocument();
+
+  // Add prescription details to the PDF
+  doc.text(`Patient: ${prescription.patientName}`);
+  doc.text(`Doctor: ${prescription.doctorName}`);
+  doc.text('------------------------------------'); 
+  doc.text('Medicines:');
+  prescription.medicines.forEach((medicine) => {
+    doc.text(`- Name: ${medicine.name}, Dosage: ${medicine.dosage}`);
+  });
+  doc.text('-----------------------------------'); 
+  doc.text(`Status: ${prescription.status}`);
+  doc.text('-----------------------------------'); 
+  doc.text(`Date: ${prescription.createdAt}`);
+
+  doc.pipe(res);
+  doc.end();
+ }
+ catch (error) {
+  console.error(error);
+  res.status(500).json({ error: 'Internal server error' });
+}
+};
+
+
 module.exports = {
   getPrescriptionsbyPatient,
   getPrescriptionsOfPatient,
@@ -207,5 +244,6 @@ module.exports = {
   filterbyDoctor,
   addMedicineToPrescription,
   deleteMedicineFromPrescription,
-  updateMedicineDosage
+  updateMedicineDosage,
+  generatePDF
 };
