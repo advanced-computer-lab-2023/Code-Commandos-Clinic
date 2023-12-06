@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 //import AdminDetails from "../components/AdminDetails";
 import "../css/showandremoveadmins.css";
+import swal from 'sweetalert';
 
 const ShowAndRemoveAdmins = () => {
     const [admins, setAdmins] = useState([])
@@ -23,7 +24,7 @@ const ShowAndRemoveAdmins = () => {
             console.log(json)
         }
         else if(!response.ok){
-            alert(await response.text())
+            swal(await response.text())
         }
     }
 
@@ -35,7 +36,7 @@ const ShowAndRemoveAdmins = () => {
             }
         })
         if (!response.ok) {
-            alert(await response.text())
+            swal(await response.text())
         }
         if (response.ok) {
             setSetSelectedAdmin(null)

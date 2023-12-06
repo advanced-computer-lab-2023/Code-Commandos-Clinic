@@ -2,6 +2,7 @@ import {useState,useEffect} from "react";
 import DoctorDetails from "../components/DoctorDetails";
 import "../css/viewandremovedoctors.css"
 import bin from '../images/bin.jpg';
+import swal from 'sweetalert';
 const ViewAndRemoveDoctors = ()=> {
     const [doctors, setDoctors] = useState([]);
     const [selectedDoctor,setSelectedDoctor] = useState(null)
@@ -43,11 +44,11 @@ const ViewAndRemoveDoctors = ()=> {
                 setSelectedDoctor(null)
             } else {
                 const errorMessage = await response.text();
-                alert(errorMessage);
+                swal(errorMessage);
                 throw new Error(errorMessage);
             }
         } catch (error) {
-            alert(error.message)
+            swal(error.message)
         }
     };
 

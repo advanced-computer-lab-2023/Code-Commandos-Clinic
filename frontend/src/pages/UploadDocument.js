@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import "../css/UploadDocument.css"
 import documentImage from "../images/doc.jpg"
+import swal from 'sweetalert';
 
 const UploadDocument = () => {
   const [singleFile, setSingleFile] = useState(null);
@@ -16,7 +17,7 @@ const UploadDocument = () => {
 
   const handleSubmit = async () => {
     if (!singleFile) {
-      alert('Please select a file to upload');
+      swal('Please select a file to upload');
       return;
     }
     const formData = new FormData();
@@ -29,13 +30,13 @@ const UploadDocument = () => {
       });
       if (!response.ok) {
         const errorMessage = await response.text();
-        alert(errorMessage);
+        swal(errorMessage);
         throw new Error(errorMessage);
       } else {
-        alert('File is uploaded successfully');
+        swal('File is uploaded successfully');
       }
     } catch (error) {
-      alert(error.message);
+      swal(error.message);
     }
     setFileName('');
   };

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import PatientInfo from "../components/PatientInfo";
+import swal from 'sweetalert';
 
 const ViewPatientsOfDoctor = () =>{
     const [patients , setPatients] = useState([])
@@ -14,7 +15,7 @@ const ViewPatientsOfDoctor = () =>{
                 setPatients(json)
             }
             else {
-                alert(await response.text())
+                swal(await response.text())
             }
         }
         fetchPatients()
@@ -41,12 +42,12 @@ const ViewPatientsOfDoctor = () =>{
                 setPatients(results)
             } else {
                 const errorMessage = await response.text();
-                alert(errorMessage)
+                swal(errorMessage)
                 throw new Error(errorMessage)
             }
         }
         catch (error) {
-           alert(error)
+           swal(error)
         }
         
     }

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import "../css/ViewMyWalletAsDoctor.css";
 import wallett from '../images/wallet.jpg';
+import swal from 'sweetalert';
+
 const ViewMyWalletAsPatient = () => {
     const [wallet, setWallet] = useState(0);
 
@@ -20,10 +22,10 @@ const ViewMyWalletAsPatient = () => {
                     setWallet(result);
                 }
                 else {
-                    alert(await response.text())
+                    swal(await response.text())
                 }
             } catch (error) {
-                alert(error.message)
+                swal(error.message)
             }
         };
 

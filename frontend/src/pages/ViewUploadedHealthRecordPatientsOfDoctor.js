@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import record from '../images/healthrecord.jpg';
 import "../css/ViewUploadedHealthRecordPatientsOfDoctor.css"
+import swal from 'sweetalert';
 const HealthRecordUploadPatientsDoctor = () => {
   const [healthRecord, setHealthRecord] = useState(null);
 
@@ -14,7 +15,7 @@ const HealthRecordUploadPatientsDoctor = () => {
           const json = await response.json();
           setHealthRecord(json);
         } else {
-          alert(await response.text());
+          swal(await response.text());
         }
       } catch (error) {
         console.error('Error fetching health record:', error);
