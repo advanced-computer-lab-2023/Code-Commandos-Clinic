@@ -88,11 +88,13 @@ const DoctorContract = () => {
     };
 
     return (
-        <div className="contractDetails m-5 text-center red-text">
-            {contract && <ContractDetails contract={contract} />}
-            <div className="mt-3">
-                <button className="btn btn-success mr-2" onClick={handleAccept}>Accept</button>
-                <button className="btn btn-danger" onClick={handleReject}>Reject</button>
+        <div className="contractDetails text-center red-text" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50xp' }}>
+            <div style={{ border: '2px solid red', borderRadius: '50px', padding: '80px', backgroundColor: 'white', width: '650px',height:'50xp' }}>
+                {contract && <ContractDetails contract={contract} />}
+                <div className="mt-3" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <button className="btn btn-success" onClick={handleAccept}>Accept</button>
+                    <button className="btn btn-danger" onClick={handleReject}>Reject</button>
+                </div>
             </div>
         </div>
     );

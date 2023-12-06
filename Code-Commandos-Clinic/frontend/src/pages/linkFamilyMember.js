@@ -52,24 +52,23 @@ function LinkFamilyMember() {
 
     return(
         <div className="container mt-5">
-            <h2 className="mb-4 text-center red-text">Link a Patient</h2>
+<h2 className="mb-4"><hr className="lineAround"></hr>Link a Patient<hr className="lineAround"></hr></h2>
 
             <img
-                                                 src={process.env.PUBLIC_URL + `/family2.png`}
-                                                 style={{
-                                                   maxWidth: '400px',   // Adjust the maximum width as needed
-                                                   height: '',
-                                                   float: 'right',      // Float the image to the right
-                                                   marginRight: '50px'  // Adjust the right margin as needed
-
-                                                 }}
-                                               />
+             src={process.env.PUBLIC_URL + `/family2.png`}
+              style={{
+              maxWidth: '400px',   // Adjust the maximum width as needed
+              height: '',
+              float: 'right',      // Float the image to the right
+              marginRight: '10px'  // Adjust the right margin as needed
+              }}
+              />
 
             <form onSubmit={handleSubmit}>
-                        <div style={{ border: '2px solid red', borderRadius: '8px', padding: '20px', backgroundColor: 'white', width: '800px', marginRight: '100px' }}>
+                        <div style={{ border: '2px solid red', borderRadius: '8px', padding: '30px', backgroundColor: 'white', width: '700px', marginRight: '100px',marginBottom:'20px' }}>
 
                 <div className="mb-3">
-                    <label htmlFor="email" className="form-label">email:</label>
+                    <label htmlFor="email" className="form-label">Email:</label>
                     <input
                         type="email"
                         className="form-control"

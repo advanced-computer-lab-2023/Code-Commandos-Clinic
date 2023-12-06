@@ -75,10 +75,21 @@ function CreateFollowUp() {
 
     return (
         <div className="container mt-5">
-             <h2 className="mb-4 text-center red-text">Patient Follow-Up Check</h2>
+<h2 className="mb-4"><hr className="lineAround"></hr>Patient Follow-UP Check<hr className="lineAround"></hr></h2>              <img
+                     src={process.env.PUBLIC_URL + `/ffollow.gif`}
+                      style={{
+                      maxWidth: '500px',   // Adjust the maximum width as needed
+                      height: '',
+                      float: 'right',      // Float the image to the right
+                     marginRight: '-40px',  // Adjust the right margin as needed
+                     marginTop: '-80px'
+
+                     }}
+               />
+
 
              <form onSubmit={handleSubmit}>
-                             <div style={{ border: '2px solid red', padding: '10px', marginBottom: '10px' }}>
+                        <div style={{ border: '2px solid red', borderRadius: '8px', padding: '40px', backgroundColor: 'white', width: '800px', marginRight: '100px', marginBottom:'20px' }}>
 
                    <div className="mb-3">
 
@@ -123,16 +134,6 @@ function CreateFollowUp() {
                             required
                         />
                 </div>
- <img
-                                                              src={process.env.PUBLIC_URL + `/followup.png`}
-                                                              style={{
-                                                                 maxWidth: '1000px',
-                                                                        float: 'right',
-                                                                        marginRight: '50px',
-                                                                        marginBottom: '30px', // Add margin to move the image down
-
-                                                              }}
-                                                            />
 
 
                 </div>

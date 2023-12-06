@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import {useParams} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
+
 
 const ReserveAppointment = () => {
     const { id} = useParams()
@@ -30,32 +32,42 @@ const ReserveAppointment = () => {
     }
 
     const handleReserve = async () => {
-        const body = {id: id, familyMemberId: selectedMemberId}
-        console.log("member id is ",selectedMemberId)
-        console.log(body.id)
+        const body = { id: id, familyMemberId: selectedMemberId };
+        console.log("member id is ", selectedMemberId);
+        console.log(body.id);
         try {
-            const response = await axios.put(`/api/appointment/reserveAppointment/${paymentMethod}`, body)
-            if(paymentMethod==="credit_card"){
-                if(response.status===200){
-                    const session = response.data
+            const response = await axios.put(`/api/appointment/reserveAppointment/${paymentMethod}`, body);
+            if (paymentMethod === "credit_card") {
+                if (response.status === 200) {
+                    const session = response.data;
                     window.location.href = session.url;
                 } else {
-                    alert(response.data.msg)
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: response.data.msg,
+                    });
                 }
             } else {
-                if(response.status===200){
-                    navigate('/AppointmentSuccess')
+                if (response.status === 200) {
+                    navigate('/AppointmentSuccess');
                 } else {
-                    alert(response.data.msg)
-                    console.log(response.data)
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: response.data.msg,
+                    });
+                    console.log(response.data);
                 }
             }
-            
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Wallet balance insufficient',
+            });
         }
-        catch (error){
-            alert("Wallet balance insufficient")
         }
-    }
 
     const handleMemberSelect = (e) => {
         if (e.target.value === 'Myself') {
@@ -66,10 +78,13 @@ const ReserveAppointment = () => {
     };
 
     return (
-        <div className="container">
-            <h2>Reserve Appointment</h2>
-            <div className="form-group">
-                <label htmlFor="familyMemberSelect">Reserve for your self or select a family member</label>
+        <div className="container red-text text-center">
+            <h2 className="mb-4">
+                <hr className="lineAround"></hr>Reserve Appointment<hr className="lineAround"></hr>
+            </h2>
+
+            <div className="form-group blue-text">
+                <label htmlFor="familyMemberSelect">Choose to Reserve Appointment for Myself or Different ID</label>
                 <select
                     id="familyMemberSelect"
                     name="familyMemberSelect"
@@ -77,43 +92,74 @@ const ReserveAppointment = () => {
                     onChange={handleMemberSelect}
                     className="form-control"
                 >
-                    <option value="Myself">Myself</option>
+                    <option value="Myself">Current ID</option>
                     {members && members.map((familyMember) => (
-                        <option key={familyMember._id} value={familyMember._id}>
+                    <option key={familyMember._id} value={familyMember._id}>
                             {familyMember.name}
                         </option>
                     ))}
                 </select>
             </div>
-            <br/>
-            <div className="healthPackages m-5">
-            <h2>Select Payment Method:</h2>
-            <ul className="list-group">
-                <li className="list-group-item">
-                <button
-                    className="btn btn-link"
-                    onClick={() => setPaymentMethod("wallet")} 
-                    style={{ fontSize: "20px", textDecoration:"none" }}>
-                    Pay with Wallet (Current balance: {}) {paymentMethod==="wallet" && <span>(selected)</span>}
-                </button>
-                </li>
-                <li className="list-group-item">
-                <button
-                    className="btn btn-link"
-                    onClick={() => setPaymentMethod("credit_card")} 
-                    style={{ fontSize: "20px", textDecoration:"none" }}>
-                    Pay with Credit Card (Stripe) {paymentMethod==="credit_card" && <span>(selected)</span>}
-                </button>
-                </li>
-            </ul>
-            <br/>
-            {paymentMethod &&
-                <button className="btn btn-success" onClick={() => handleReserve()}>
-                    Continue
-                </button>
-            }
-        </div>
+            <br />
+            <div className="healthPackages m-5 text-center">
+<h2 className="mb-4"><hr className="lineAround"></hr>Select Payment Method<hr className="lineAround"></hr></h2>
+                <div className="payment-methods-box">
+                    <div className="row">
+                        <div className="col-md-6">
+                  <div style={{ border: '4px solid lightblue', borderRadius: '8px', padding: '30px', backgroundColor: 'white', width: '400px', marginRight: '100px',marginTop:'50px', height:'400px' }}>
 
+                            <button
+                                className={`btn btn-link ${paymentMethod === "wallet" && "selected"}`}
+                                onClick={() => setPaymentMethod("wallet")}
+                            >
+                                Pay with Wallet (Current balance: {}) {paymentMethod === "wallet" && <span>(selected)</span>}
+                            </button>
+                            <img
+                                         src={process.env.PUBLIC_URL + `/wallet1.gif`}
+                                          style={{
+                                          maxWidth: '300px',   // Adjust the maximum width as needed
+                                          height: '',
+                                          float: 'right',      // Float the image to the right
+                                          marginRight: '10px', // Adjust the right margin as needed
+                                          marginTop:'50px'
+
+                                          }}
+                                          />
+                        </div>
+                                                        </div>
+
+                        <div className="col-md-6">
+                  <div style={{ border: '4px solid lightblue', borderRadius: '8px', padding: '30px', backgroundColor: 'white', width: '400px', marginLeft: '300px',marginTop:'50px',height:'400px' }}>
+
+                            <button
+                                className={`btn btn-link ${paymentMethod === "credit_card" && "selected"}`}
+                                onClick={() => setPaymentMethod("credit_card")}
+                            >
+                                Pay with Credit Card (Stripe) {paymentMethod === "credit_card" && <span>(selected)</span>}
+                            </button>
+                            <img
+                             src={process.env.PUBLIC_URL + `/credit.gif`}
+                             style={{
+                             maxWidth: '300px',   // Adjust the maximum width as needed
+                             height: '',
+                             float: 'right',      // Float the image to the right
+                             marginRight: '10px',  // Adjust the right margin as needed
+                             marginTop:'50px'
+                             }}
+                           />
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <br />
+
+                {paymentMethod && (
+                    <button className="btn btn-success text-center" onClick={() => handleReserve()}>
+                        Continue
+                    </button>
+                )}
+            </div>
         </div>
     );
 };

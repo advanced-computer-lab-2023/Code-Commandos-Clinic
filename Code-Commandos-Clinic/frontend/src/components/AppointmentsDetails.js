@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const AppointmentsDetails = ({ filteredAppointment, reserve }) => {
     return (
-        <div className="card box">
+        <div className="card box mb-3" style={{ maxWidth: '600px', margin: '0 50px' }}>
             <div className="card-body">
                 <p className="card-text"><strong>Doctor Name: </strong>{filteredAppointment.doctorName}</p>
                 <p className="card-text"><strong>Patient Name: </strong>{filteredAppointment.patientName}</p>
@@ -12,7 +12,6 @@ const AppointmentsDetails = ({ filteredAppointment, reserve }) => {
                 <p className="card-text"><strong>End Time: </strong>{filteredAppointment.endTime}</p>
                 <p className="card-text"><strong>Status: </strong>{filteredAppointment.status}</p>
                 <p className="card-text"><strong>Type: </strong>{filteredAppointment.type}</p>
-
             </div>
             {reserve && (
                 <Link to={`/ReserveAppointment/${filteredAppointment._id}`}>

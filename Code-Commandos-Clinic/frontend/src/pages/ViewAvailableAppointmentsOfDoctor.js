@@ -51,17 +51,9 @@ const ViewAvailableAppointmentsOfDoctor = () => {
 
     return (
         <div className="container">
-            <h2 className="mb-4 text-center red-text">Doctor Available Appointments</h2>
+<h2 className="mb-4"><hr className="lineAround"></hr>Doctor Available Appointments<hr className="lineAround"></hr></h2>
  {/* Display the image from the public folder */}
-                              <img
-                                     src={process.env.PUBLIC_URL + '/appointment.png'}
-                                     style={{
-                                       maxWidth: '140px',   // Adjust the maximum width as needed
-                                       height: 'up',
-                                       float: 'right',      // Float the image to the right
-                                       marginRight: '20px'  // Adjust the right margin as needed
-                                     }}
-                                   />
+
             <form>
                 <div className="form-group">
                     <label htmlFor="doctor"></label>
@@ -89,14 +81,26 @@ const ViewAvailableAppointmentsOfDoctor = () => {
                 </button>
                 <br />
                 <br />
+                 <div>
+                                {appointments && appointments.map((app) => (
+                                    <AppointmentsDetails key={app._id} filteredAppointment={app} reserve={true} />
+                                ))}
+                            </div>
             </form>
 
 
-            <div>
-                {appointments && appointments.map((app) => (
-                    <AppointmentsDetails key={app._id} filteredAppointment={app} reserve={true} />
-                ))}
-            </div>
+
+             <img
+             src={process.env.PUBLIC_URL + `/ddoctor.gif`}
+             style={{
+             maxWidth: '700px',   // Adjust the maximum width as needed
+             height: '',
+             position: 'fixed',   // Fixed position
+             top: '300px',         // Adjust the top position as needed
+             right: '200px',       // Adjust the right position as needed
+             zIndex: '1',
+             }}
+             />
         </div>
     );
 };
