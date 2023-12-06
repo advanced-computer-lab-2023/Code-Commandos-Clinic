@@ -38,7 +38,7 @@ const PatientAppointments = () => {
             <br/>
             <div>
                 {upcomingAppointments && upcomingAppointments.map((appointment) => (
-                    <AppointmentsDetails key={appointment._id} filteredAppointment={appointment} reserve={false} />
+                    <AppointmentsDetails key={appointment._id} filteredAppointment={appointment} reserve={false} follow_up={false} />
                 ))}
             </div>
             <br/>
@@ -46,7 +46,7 @@ const PatientAppointments = () => {
             <br/>
             <div>
                 {pastAppointments && pastAppointments.map((appointment) => (
-                    <AppointmentsDetails key={appointment._id} filteredAppointment={appointment} reserve={false} />
+                    <AppointmentsDetails key={appointment._id} filteredAppointment={appointment} reserve={false} follow_up={true}  />
                 ))}
             </div>
         </div>

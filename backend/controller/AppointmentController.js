@@ -529,6 +529,29 @@ const createDoctorPatients= asyncHandler(async(doctorId,patientId) =>{
     }
 })
 
+
+const updateStatusToPending = async (req, res) => {
+    try {
+      const id = req.params.id; // assuming you pass the appointment ID as a parameter
+      const updatedAppointment = await AppointmentModel.findByIdAndUpdate(
+        id,
+        { status: 'PENDING' },
+        { new: true }
+      );
+  
+      if (!updatedAppointment) {
+        return res.status(404).json({ message: 'Appointment not found' });
+      }
+  
+      // Optionally, you can send the updated appointment in the response
+      return res.status(200).json({ updatedAppointment });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Internal Server Error' });
+    }
+  };
+
+
 module.exports = {
     getUpcomingPatientsOfDoctor,
     createAppointment,
@@ -542,5 +565,6 @@ module.exports = {
     filterAppointmentsByDateOrStatus,
     scheduleFollowUp,
     success,
-    createDoctorPatients
+    createDoctorPatients,
+    updateStatusToPending
 };

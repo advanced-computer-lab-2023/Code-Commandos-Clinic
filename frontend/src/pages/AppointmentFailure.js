@@ -2,7 +2,7 @@ const AppointmentFailure = () => {
 
     return (
         <div>
-            <h2>Payment was canceled. Change your mind?</h2>
+            <h2>Payment was canceled. Changed your mind?</h2>
         </div>
     );
 };

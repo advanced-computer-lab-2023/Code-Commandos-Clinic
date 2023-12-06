@@ -1,7 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const AppointmentsDetails = ({ filteredAppointment, reserve }) => {
+const AppointmentsDetails = ({ filteredAppointment, reserve , follow_up , issue }) => {
+    const handleMakeRequest = async () => {
+        try {
+          const appointmentId = filteredAppointment._id; 
+          const response = await fetch(`/api/appointment/updateStatusToPending/${appointmentId}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+    
+          if (response.ok) {
+            //const data = await response.json();
+            alert('Your request has been sent successfully');
+            window.location.reload();
+          } else {
+            alert('Failed to update status');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          alert('An error occurred');
+        }
+      };
     return (
         <div className="card box">
             <div className="card-body">
@@ -14,6 +36,24 @@ const AppointmentsDetails = ({ filteredAppointment, reserve }) => {
                 <p className="card-text"><strong>Type: </strong>{filteredAppointment.type}</p>
 
             </div>
+
+
+            {issue && (
+                <button  className="btn btn-primary" onClick={handleMakeRequest}>Make the request</button>
+            )}
+
+            {follow_up && (
+
+                <Link to={`/ViewAvailableAppointmentsOfSpecificDoctor/${filteredAppointment.doctor}`}>
+                    <button
+                        className="btn btn-primary"
+                    >
+                        Request Follow-Up
+                    </button>
+                </Link>  
+            )}
+
+
             {reserve && (
                 <Link to={`/ReserveAppointment/${filteredAppointment._id}`}>
                     <button

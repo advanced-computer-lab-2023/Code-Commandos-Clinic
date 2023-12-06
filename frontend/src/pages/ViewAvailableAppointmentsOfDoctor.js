@@ -76,7 +76,7 @@ const ViewAvailableAppointmentsOfDoctor = () => {
 
             <div>
                 {appointments && appointments.map((app) => (
-                    <AppointmentsDetails filteredAppointment={app} reserve={true} />
+                    <AppointmentsDetails filteredAppointment={app} reserve={true} follow_up={false}/>
                 ))}
             </div>
         </div>
