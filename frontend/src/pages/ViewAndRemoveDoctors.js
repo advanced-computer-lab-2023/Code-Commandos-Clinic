@@ -54,26 +54,36 @@ const ViewAndRemoveDoctors = ()=> {
 
 
     return (
-        <div className="container mt-4">
-        <h1 className="mb-4">System Doctors</h1>
-      
-
-        <ul className="list-group">
-            {doctors.map((doctor) => (
-                <li key={doctor._id} className="list-group-item red-border">
-                    <div className="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h5>{doctor.name}</h5>
-                            <p>Email: {doctor.email}</p>
-                            <p>Affiliation: {doctor.affiliation}</p>
-                            <p>Educational Background: {doctor.educationalBackground}</p>
-                           
-                        </div>
-                        <div>
+<div className="container mt-4">
+            <div className="row">
+                <h2 className="mb-4"><hr className="lineAround"></hr>Doctor admins<hr className="lineAround"></hr></h2>
+             <div className="col-md-5">
+               <ul className="list-group">
+               {doctors.map((doctor)=> (
+                     <li key={doctor._id} className="list-group-item red-border">
+                         <button
+                             className="btn btn-link btn-lg"
+                             onClick={() => setSelectedDoctor(doctor)}
+                             style={{ textDecoration: "none", color:'#000000' }}
+                         >
+                             <span>{doctor.username}</span>
+                        </button>
+                    </li>
+                ))}
+              </ul>
+            </div>
+            <div className="col-md-5 mt-5">
+               {selectedDoctor && (
+                        <>
+                            <div style={{ marginLeft: '10px' }}> {/* Add margin to the bottom */}
+                            <DoctorDetails doctor={selectedDoctor} />
+        
+                           </div>
                             <button
                                 className="btn btn-danger"
-                                onClick={() => handleRemoveDoctor(doctor._id)}
-                                style={{ backgroundColor: '#d21312' }}
+                                style={{ marginLeft: '30px', marginTop:'5px', width:'150px' }}
+                                onClick={() => handleRemoveDoctor(selectedDoctor._id)}
+                                
                             >
                                 Remove{" "}
                                 <svg
@@ -88,17 +98,12 @@ const ViewAndRemoveDoctors = ()=> {
                                         d="M1.5 2.5a.5.5 0 0 1 1 0V13a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5a.5.5 0 0 1 1 0V13a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V2.5zM0 1a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v1H0V1z"
                                     />
                                 </svg>
+                                
                             </button>
-                        </div>
-                    </div>
-                </li>
-            ))}
-        </ul>
-        {selectedDoctor && (
-            <>
-                <DoctorDetails doctor={selectedDoctor} />
-            </>
-        )}
+                        </>
+            )}
+        </div>
+      </div>
     </div>
     );
 };

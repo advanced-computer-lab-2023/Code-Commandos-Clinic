@@ -43,10 +43,10 @@ const UploadDocument = () => {
 
   return (
     <div class ="cccc">
-    <h1 className="titlee">Upload documents</h1>
+    <h2 className="mb-4"><hr className="lineAround"></hr>Upload document<hr className="lineAround"></hr></h2>
     <div className="bodyyggy">
       
-      <div className="row">
+      <div className="rooow">
       <img src={documentImage} className="document" alt="document" />
       <div className="bodyyssyyy">
       

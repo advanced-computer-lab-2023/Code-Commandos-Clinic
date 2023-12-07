@@ -4,6 +4,10 @@
     border : 1px solid #d21312 ;
     width:30%;
 margin-left: 3%;
+border-radius: 4px;
+margin-top: 3%;
+padding: 0.7%;
+
 
 }
 .awl{
@@ -12,8 +16,8 @@ margin-left: 3%;
 }
 .asasas{
     display: flex;
-    align-items: center ;
-    justify-content: center ;
+    align-items: flex-start ;
+    justify-content: flex-start ;
     margin-top: 8%;
 
 }
@@ -22,9 +26,26 @@ margin-left: 3%;
     flex-direction: column;
 }
 .tany{
-    margin-bottom: 2.5%;
+    margin-top: 5%;
+    margin-bottom: 3%;
+    width: 20%;
+    color: #fff;
+    background-color: #d21312;
+    border: none;
+    border-radius: 4px;
+    
 }
 .sdsadssa{
     color: #d21312;
     margin-left: 3%;
+}
+.tanty{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.recdord{
+    margin-left: 4%;
+    width: 45%;
 }

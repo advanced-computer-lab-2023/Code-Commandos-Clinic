@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
-import swal from 'sweetalert';
 import {useParams} from "react-router-dom";
 import "../css/AddHealthRecord.css";
+import record from "../images/healthh.jpg";
 const AddHealthRecord = () =>{
     const [file, setFile] = useState()
     const [caption, setCaption] = useState("");
@@ -33,55 +33,88 @@ const AddHealthRecord = () =>{
             },
         });
         if(!response.ok){
-            swal(await response.text())
+            alert(await response.text())
         }
         else {
-            swal("Health record added")
+            alert("Health record added")
         }
     }
 
     return (
+     
         <div >
-        <h1 class ="sdsadssa">Add Health Record</h1>
-  <div class ="asasas">
-    
-  <form  class ="adsdd "onSubmit={submit}>
-      <input class ="awl" onChange={e => setFile(e.target.files[0])} type="file"  accept=".pdf" ></input>
-      <div class ="gamb">
-      <label>caption</label>
-      <input   class ="awl" value={caption} onChange={e => setCaption(e.target.value)} type="text" ></input>
-      </div>
-      <div class ="gamb">
-      <label>Allergic History</label>
-      <input class ="awl"
-          value={allergicHistory}
-          onChange={(e) => setAllergicHistory(e.target.value)}
-          type="text"
-         
-      />
-        </div>
-        <div class ="gamb">
-        <label>Blood Type</label>
-      <input class ="awl"
-          value={bloodType}
-          onChange={(e) => setBloodType(e.target.value)}
-          type="text"
-         
-      />
-         </div>
-         <div class ="gamb">
-         <label>Main Complaint</label>
-      <input class ="awl"
-          value={mainComplaint}
-          onChange={(e) => setMainComplaint(e.target.value)}
-          type="text"
+              <h1 class ="sdsadssa">Add Health Record</h1>
+        <div class ="asasas">
           
-      />
-      </div>
-      <button  class ="tany" type="submit">Submit</button>
-  </form>
-  </div>
-  </div>
+        <form  class ="adsdd "onSubmit={submit}>
+            <input class ="awl" onChange={e => setFile(e.target.files[0])} type="file"  accept=".pdf" ></input>
+        
+            <div class ="gamb">
+            <label>Allergic History</label>
+            <select class ="awl"
+                value={allergicHistory}
+                onChange={(e) => setAllergicHistory(e.target.value)}
+            >
+              <option value="NONE">NONE</option>
+              <option value="POLLEN">POLLEN</option>
+              <option value="DUST">DUST</option>
+              <option value="PET">PET</option>
+              <option value="FOOD">FOOD</option>
+              <option value="MEDICATION">MEDICATION</option>
+              <option value="OTHER">OTHER</option>
+
+            </select>
+           
+              </div>
+              <div class ="gamb">
+              <label>Main Complaint</label>
+            <select 
+            class ="awl"
+            value={mainComplaint}
+            onChange={(e) => setMainComplaint(e.target.value)}
+            >
+ <option value="NONE">NONE</option>
+              <option value="FEVER">FEVER</option>
+              <option value="COUGH">COUGH</option>
+              <option value="HEADACHE">HEADACHE</option>
+              <option value="ABDOMINAL_PAIN">ABDOMINAL_PAIN</option>
+              <option value="FATIGUE">FATIGUE</option>
+              <option value="OTHER">OTHER</option>
+                
+            </select>
+
+
+               </div>
+               <div class ="gamb">
+               <label>Blood Type</label>
+               <select 
+            class ="awl"
+            value={bloodType}
+            onChange={(e) => setBloodType(e.target.value)}
+            >
+ <option value="A_POSITIVE">A_POSITIVE</option>
+              <option value="A_NEGATIVE">A_NEGATIVE</option>
+              <option value="B_POSITIVE">B_POSITIVE</option>
+              <option value="B_NEGATIVE">B_NEGATIVE</option>
+              <option value="AB_POSITIVE">AB_POSITIVE</option>
+              <option value="AB_NEGATIVE">AB_NEGATIVE</option>
+              <option value="O_POSITIVE">O_POSITIVE</option>
+              <option value="O_NEGATIVE">O_NEGATIVE</option>
+            </select>
+
+               
+
+            </div>
+            <div class ="tanty">
+            <button  class ="tany" type="submit">Submit</button>
+            </div>
+        </form>
+        <img src={record} className="recdord" alt="record" />
+        </div>
+      
+        </div>
+      
+       
     )
 }
 

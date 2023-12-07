@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-//import AdminDetails from "../components/AdminDetails";
+import AdminDetails from "../components/AdminDetails";
 import "../css/showandremoveadmins.css";
 import swal from 'sweetalert';
 
 const ShowAndRemoveAdmins = () => {
     const [admins, setAdmins] = useState([])
-    const [selectedAdmin,setSetSelectedAdmin] = useState(null)
+    const [selectedAdmin,setSelectedAdmin] = useState(null)
 
     useEffect(() => {
         fetchAdmins()
@@ -39,7 +39,7 @@ const ShowAndRemoveAdmins = () => {
             swal(await response.text())
         }
         if (response.ok) {
-            setSetSelectedAdmin(null)
+            setSelectedAdmin(null)
             fetchAdmins()
         }
     }
@@ -48,22 +48,35 @@ const ShowAndRemoveAdmins = () => {
 
     return (
         <div className="container mt-4">
-        <h1 className="mb-4">System Admins</h1>
-       
-        <ul className="list-group">
-            {admins.map((admin) => (
-                <li key={admin._id} className="list-group-item red-border">
-                    <div className="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h5>{admin.username}</h5>
-                            <p>{admin.email}</p>
-                           
-                        </div>
-                        <div>
+            <div className="row">
+                <h2 className="mb-4"><hr className="lineAround"></hr>system admins<hr className="lineAround"></hr></h2>
+             <div className="col-md-5">
+               <ul className="list-group">
+                  {admins.map((admin) => (
+                     <li key={admin._id} className="list-group-item red-border">
+                         <button
+                             className="btn btn-link btn-lg"
+                             onClick={() => setSelectedAdmin(admin)}
+                             style={{ textDecoration: "none", color:'#000000' }}
+                         >
+                             <span>{admin.username}</span>
+                        </button>
+                    </li>
+                ))}
+              </ul>
+            </div>
+            <div className="col-md-5 mt-5">
+               {selectedAdmin && (
+                        <>
+                            <div style={{ marginLeft: '10px' }}> {/* Add margin to the bottom */}
+                            <AdminDetails admin={selectedAdmin} />
+        
+                           </div>
                             <button
                                 className="btn btn-danger"
-                                onClick={() => handleRemoveAdmin(admin._id)}
-                                style={{ backgroundColor: '#d21312' }}
+                                style={{ marginLeft: '30px', marginTop:'5px', width:'150px' }}
+                                onClick={() => handleRemoveAdmin(selectedAdmin._id)}
+                                
                             >
                                 Remove{" "}
                                 <svg
@@ -80,13 +93,12 @@ const ShowAndRemoveAdmins = () => {
                                 </svg>
                                 
                             </button>
-                        </div>
-                    </div>
-                </li>
-            ))}
-        </ul>
+                        </>
+            )}
+        </div>
+      </div>
     </div>
     );
-}
+};
 
 export default ShowAndRemoveAdmins;

@@ -27,7 +27,7 @@ const HealthRecordUploadPatientsDoctor = () => {
 
   return (
     <div className="recordbody">
-      <h1 className="headd">Your Health Record</h1>
+      <h2 className="mb-4"><hr className="lineAround"></hr>health records of your patients <hr className="lineAround"></hr></h2>
 
       <div className="recordcon">
         {healthRecord ? (
