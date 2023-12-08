@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import PrescriptionDetails from "../components/PrescriptionDetails";
-
 const FilterPrescriptions = () => {
     const [prescriptions, setPrescriptions] = useState([]);
     const [filteredPrescriptions, setFilteredPrescriptions] = useState([]);
@@ -55,7 +54,7 @@ const FilterPrescriptions = () => {
 
     return (
         <div className="container mt-4">
-            <h2>Prescription Filter Page</h2>
+            {/* <h2 className="mb-4"><hr className="lineAround"></hr>Prescription Filter Page<hr className="lineAround"></hr></h2> */}
             <div className="row">
                 <div className="col-md-3 mb-3">
                     <div className="form-group">
@@ -95,15 +94,19 @@ const FilterPrescriptions = () => {
                             <option value="UNFILLED">UNFILLED</option>
                         </select>
                     </div>
+
+
+
+{/* <ToggleSwitch label="Status" checked={status === 'FILLED'} onChange={() => setStatus(status === 'FILLED' ? '' : 'FILLED')} /> */}
                 </div>
                 <div className="col-md-3 mb-3">
-                    <button className="btn btn-primary" onClick={filterPrescriptions}>
+                    <button id="button"className="btn btn-primary" onClick={filterPrescriptions}>
                         Apply Filters
                     </button>
                 </div>
             </div>
 
-            <div className="row">
+            <div class="row row-cols-1 row-cols-md-3 g-4">
                 {filteredPrescriptions && filteredPrescriptions.map((prescription) => (
                     <PrescriptionDetails key={prescription._id} prescription={prescription} />
                 ))}
@@ -114,3 +117,5 @@ const FilterPrescriptions = () => {
 };
 
 export default FilterPrescriptions;
+
+

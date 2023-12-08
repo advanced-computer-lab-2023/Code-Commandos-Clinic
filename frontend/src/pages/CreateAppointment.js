@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import doc from '../images/doc22.jpg';
+import Swal from 'sweetalert2';
 
 function CreateAppointment() {
     const [selectedStartTime,setSelectedStartTime] = useState(null)
@@ -23,20 +24,47 @@ function CreateAppointment() {
             });
             if (response.ok) {
                 const data = await response.json();
-                alert("Appointment created",data)
+                showSuccessNotification("Appointment created",data)
             } else {
-                alert(await response.text())
+                showErrorDialog('Something is wrong')
             }
         } catch (error) {
-            alert('Error creating appointment: ', error);
+            showErrorDialog('Error creating appointment: ', error);
         }
     };
+
+    const showErrorDialog = async (message) => {
+        const result = await Swal.fire({
+            title: message,
+            icon: 'error',
+            showCancelButton: true,
+            showConfirmButton:false,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Try again',
+        });
+        return result.isConfirmed;
+      };
+      const showSuccessNotification = (message) => {
+        Swal.fire({
+          icon: 'success',
+          title: message,
+        });
+      };
+    const imge = {
+        width: '20%', 
+        height: 'auto',
+        position:'fixed' ,
+        right:40,
+        top:150
+      };
 
     return (
         <div className="container mt-5">
             <h2 className="mb-4"><hr className="lineAround"></hr>Add Appointment Solts <hr className="lineAround"></hr></h2>
+            <div className="image"> <img src={doc} style={imge} alt="Your Image" /></div>
             <div className="box-with-image"> 
-            <div className="image"> <img src={doc} alt="Your Image" /></div>
+           
             <div className="box">
             
             <form onSubmit={handleSubmit}>

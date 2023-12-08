@@ -1,5 +1,7 @@
 const FamilyMembersDetails =({registeredFamilyMember}) =>{
     return (
+        
+  <div class="col">
         <div className="card">
             <div className="card-body">
                 <h2 className="card-title">{registeredFamilyMember.name}</h2>
@@ -17,7 +19,8 @@ const FamilyMembersDetails =({registeredFamilyMember}) =>{
                 </p>
 
             </div>
-        </div>
+        </div></div>
+        
     );
 }
 

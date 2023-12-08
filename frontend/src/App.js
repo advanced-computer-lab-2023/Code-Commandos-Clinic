@@ -56,7 +56,6 @@ import Register from "./pages/Register";
 const App = () => {
     const logged = window.localStorage.getItem("logged");
 
-
   return (
     <div className="App">
       <BrowserRouter>

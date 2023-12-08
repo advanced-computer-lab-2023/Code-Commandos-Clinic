@@ -46,8 +46,9 @@ const AddPrescription = () => {
 
     return (
         <div>
-            <h2>Add Prescription</h2>
+            <h2 className="mb-4"><hr className="lineAround"></hr>Add Prescription <hr className="lineAround"></hr></h2>
             <form onSubmit={handleSubmit}>
+            <div className="box">
                 <div className="form-group">
                     <label htmlFor="patient">Select Patient</label>
                     <select
@@ -85,8 +86,8 @@ const AddPrescription = () => {
                         ))}
                     </select>
                 </div>
-
-                <button type="submit" className="btn btn-primary">
+</div>
+                <button id='button'type="submit" className="btn btn-primary">
                     Add Prescription
                 </button>
             </form>
