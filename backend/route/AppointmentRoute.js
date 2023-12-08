@@ -15,6 +15,8 @@ const {
     scheduleFollowUp,
     success,
     updateStatusToPending,
+    acceptFollowUp,
+    updateStatusToFree
 } = require('../controller/AppointmentController')
 const {protect} = require("../middleware/AuthenticationHandler");
 const {checkDoctorRole, checkPatientRole, checkPatientDoctorRole} = require("../middleware/AccessHandler");
@@ -33,6 +35,10 @@ router.get('/upcomingPastAppointmentsOfPatient',protect,checkPatientRole,upcomin
 router.get('/filterAppointmentsByDateOrStatus/:date/:status',protect,checkPatientDoctorRole,filterAppointmentsByDateOrStatus)
 router.post('/scheduleFollowUp/:patientId',protect,checkDoctorRole,scheduleFollowUp)
 
-router.put('/updateStatusToPending/:id',protect,checkPatientRole,updateStatusToPending)
+router.put('/updateStatusToPending/:id',protect,checkPatientRole,updateStatusToPending) // make the request
+
+router.put('/updateStatusToFree/:id',protect,checkDoctorRole,updateStatusToFree) // revoke a request
+
+router.put('/acceptFollowUp/:followUpId',protect,checkDoctorRole,acceptFollowUp)
 
 module.exports = router

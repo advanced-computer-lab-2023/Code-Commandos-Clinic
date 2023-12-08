@@ -14,7 +14,7 @@ const {
   searchByName,
   payForSubscription,
   subscribeToPackage,
-  getAmount
+  getAmount,getPatientNameById
 } = require('../controller/PatientController')
 const {protect} = require("../middleware/AuthenticationHandler");
 const {checkPatientRole,checkAdminRole, checkDoctorRole} = require("../middleware/AccessHandler");
@@ -31,4 +31,4 @@ router.get('/searchByName/:name',protect,checkDoctorRole,searchByName)
 router.get('/payForSubscription/:familyMemberID/:packageID/:paymentMethod', protect, checkPatientRole, payForSubscription)
 router.post('/subscribeToPackage/:sessionID',protect,checkPatientRole,subscribeToPackage)
 
-module.exports = router
+module.exports = router 

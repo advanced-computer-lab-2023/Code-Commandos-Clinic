@@ -54,6 +54,7 @@ import CreateContract from "./pages/CreateContract";
 import Register from "./pages/Register";
 import EditPrescription from "./pages/EditPrescription";
 import ViewAvailableAppointmentsOfSpecificDoctor from "./pages/ViewAvailableAppointmentsOfSpecificDoctor";
+import ViewFollowUpRequests from './pages/ViewFollowUpRequests';
 
 const App = () => {
     const logged = window.localStorage.getItem("logged");
@@ -79,6 +80,7 @@ const App = () => {
             <Route path="/ViewAndRemovePatients" element={<ViewAndRemovePatients/>}/>
             <Route path="/AddAdmin" element={<AddAdmin />}/>
             <Route path="/ViewPatientHealthRecord" element={<ViewpatientHealthRecord />}/>
+            <Route path="/ViewFollowUpRequests" element={<ViewFollowUpRequests/>}/>
 
             <Route path="/AddHealthRecord/:id" element={<AddHealthRecord />}/>
             <Route path="/viewUploadedHealthRecordPatient" element={<HealthRecordUpload />}/>

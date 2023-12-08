@@ -11,6 +11,7 @@ const Doctor = require("../model/Doctor");
 const Admin = require("../model/Admin");
 const otpGenerator = require("otp-generator");
 const nodemailer = require("nodemailer");
+const mongoose = require('mongoose')
 const DoctorPatient = require("../model/DoctorPatient");
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
@@ -176,6 +177,7 @@ const viewAvailableAppointmentsOfDoctor = asyncHandler(async (req,res) => {
     const {doctorId} = req.params
     try {
         const availableAppointments = await AppointmentModel.find({doctor:doctorId,status:'FREE'})
+       // availableAppointments.patient = req.user.id
         res.status(200).json(availableAppointments)
     }
     catch (error){
@@ -530,26 +532,84 @@ const createDoctorPatients= asyncHandler(async(doctorId,patientId) =>{
 })
 
 
+
+// make a request
 const updateStatusToPending = async (req, res) => {
     try {
-      const id = req.params.id; // assuming you pass the appointment ID as a parameter
-      const updatedAppointment = await AppointmentModel.findByIdAndUpdate(
-        id,
-        { status: 'PENDING' },
-        { new: true }
-      );
-  
-      if (!updatedAppointment) {
-        return res.status(404).json({ message: 'Appointment not found' });
-      }
-  
-      // Optionally, you can send the updated appointment in the response
-      return res.status(200).json({ updatedAppointment });
+        const id = req.params.id; 
+
+        const patientId = req.user.id;
+        const patientInfo = await PatientModel.findById(patientId);
+        const patientName = patientInfo.name;
+        console.log(patientInfo);
+
+        const updatedAppointment = await AppointmentModel.findByIdAndUpdate(
+            id,
+            { 
+                status: 'PENDING',
+                patientName: patientName ,
+                patient: req.user.id,
+            },
+        );
+        
+        if (!updatedAppointment) {
+            return res.status(404).json({ message: 'Appointment not found' });
+        }
+
+        // Optionally, you can send the updated appointment in the response
+        return res.status(200).json({ updatedAppointment });
     } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: 'Internal Server Error' });
+        console.error(error);
+        return res.status(500).json({ message: 'Internal Server Error' });
     }
-  };
+};
+
+// revoke a followup
+const updateStatusToFree = async (req, res) => {
+    try {
+        const id = req.params.id; 
+        const updatedAppointment = await AppointmentModel.findByIdAndUpdate(
+            id,
+            { 
+                status: 'FREE',
+                patientName: null ,
+                patient: null,
+            },
+        );
+        console.log("helloooooooo");
+        if (!updatedAppointment) {
+            return res.status(404).json({ message: 'Appointment not found' });
+        }
+
+        // Optionally, you can send the updated appointment in the response
+        return res.status(200).json({ updatedAppointment });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Internal Server Error' });
+    }
+
+}
+
+const acceptFollowUp = async (req, res) => {
+    try {
+        const followUpId = req.params.followUpId;
+        const updatedAppointment = await AppointmentModel.findByIdAndUpdate(
+            followUpId,
+            { status: 'RESERVED', type: 'FOLLOWUP' },
+        );
+
+        if (!updatedAppointment) {
+            return res.status(404).json({ message: 'Appointment not found' });
+        }
+
+        return res.status(200).json({ updatedAppointment });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
+
 
 
 module.exports = {
@@ -566,5 +626,7 @@ module.exports = {
     scheduleFollowUp,
     success,
     createDoctorPatients,
-    updateStatusToPending
+    updateStatusToPending,
+    acceptFollowUp,
+    updateStatusToFree
 };
