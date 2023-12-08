@@ -63,6 +63,9 @@ const Navbar = () => {
                                             <Link to="/DoctorRegistrationRequests" className="dropdown-item">Doctor Registration Requests</Link>
                                         </li>
                                         <li>
+                                            <Link to="/ViewFollowUpRequests" className="dropdown-item">FollowUp Requests</Link>
+                                        </li>
+                                        <li>
                                             <Link to="/DoctorRegistration" className="dropdown-item">Doctor Registration</Link>
                                         </li>
                                         <li>
