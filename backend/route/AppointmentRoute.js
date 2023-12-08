@@ -35,7 +35,7 @@ router.get('/upcomingPastAppointmentsOfPatient',protect,checkPatientRole,upcomin
 router.get('/filterAppointmentsByDateOrStatus/:date/:status',protect,checkPatientDoctorRole,filterAppointmentsByDateOrStatus)
 router.post('/scheduleFollowUp/:patientId',protect,checkDoctorRole,scheduleFollowUp)
 
-router.put('/updateStatusToPending/:id',protect,checkPatientRole,updateStatusToPending) // make the request
+router.put('/updateStatusToPending/:id/:whichMember',protect,checkPatientRole,updateStatusToPending) // make the request
 
 router.put('/updateStatusToFree/:id',protect,checkDoctorRole,updateStatusToFree) // revoke a request
 

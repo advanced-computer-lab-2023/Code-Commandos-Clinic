@@ -190,7 +190,7 @@ const reserveAppointment = asyncHandler(async (req,res) => {
     const {id , familyMemberId} = req.body
     try {
         const appointment = await AppointmentModel.findById(id)
-        const doctorid=appointment.doctor
+        const doctorid= appointment.doctor
         const doctor = await DoctorModel.findById(doctorid);
         const healthPackagePatient = await HealthPackagePatientModel.findOne({ patientID: req.user.id });
         let amount=0;
@@ -225,7 +225,7 @@ const reserveAppointment = asyncHandler(async (req,res) => {
                 appointment.familyMemberName = member.name
             }
             appointment.status = 'RESERVED'
-            createDoctorPatients(appointment.doctor,appointment.patient)
+            createDoctorPatients(appointment.doctor,patient._id)
             await appointment.save()
             try {
                 const patientEmailObject = await Patient.findOne({username:req.user.username}).select("email")
@@ -535,20 +535,30 @@ const createDoctorPatients= asyncHandler(async(doctorId,patientId) =>{
 
 // make a request
 const updateStatusToPending = async (req, res) => {
+    console.log('req params =========== ', req.params);
     try {
         const id = req.params.id; 
-
-        const patientId = req.user.id;
-        const patientInfo = await PatientModel.findById(patientId);
-        const patientName = patientInfo.name;
-        console.log(patientInfo);
+        const patientId = req.params.whichMember === 'me' ? req.user.id: req.params.whichMember ;        
+        let pn ;
+        let patient_id;
+        if(patientId == req.user.id ){
+            pn = await PatientModel.findById(patientId);
+            patient_id = req.user.id;
+        }
+        else{
+            pn = await FamilyMember.findById(patientId);
+            patient_id = pn.account
+        }    
+        
+        const patientName = pn.name;
+        console.log(pn);
 
         const updatedAppointment = await AppointmentModel.findByIdAndUpdate(
             id,
             { 
                 status: 'PENDING',
                 patientName: patientName ,
-                patient: req.user.id,
+                patient: patient_id,
             },
         );
         
