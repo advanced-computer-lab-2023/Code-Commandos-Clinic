@@ -39,6 +39,8 @@ const employmentContractRoutes = require('./route/employmentContractRoutes')
 const fileRoutes = require('./route/FileRoute')
 const updateAppointmentStatus = require('./middleware/SyncAppointmentMiddleware')
 const videoCallRoutes = require('./route/VideoCallRoute')
+const messageRoutes = require('./route/MessageRoute')
+const chatRoutes = require('./route/ChatRoute')
 
 updateAppointmentStatus()
 
@@ -55,6 +57,8 @@ server.use('/api/prescription',prescriptionRoute)
 server.use('/api/user',userRoutes)
 server.use('/api/employmentContract',employmentContractRoutes)
 server.use('/api/videoCall', videoCallRoutes)
+server.use('/api/message',messageRoutes)
+server.use('/api/chat',chatRoutes)
 
 server.use('/api/file',fileRoutes.routes)
 server.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -69,6 +73,35 @@ const io = require("socket.io")(httpServer, {
 })
 io.on("connection", (socket) => {
 	socket.emit("me", socket.id);
+
+	socket.on("setup", (userData) => {
+		socket.join(userData._id);
+		socket.emit("connected");
+	  });
+	
+	socket.on("join chat", (room) => {
+		socket.join(room);
+		console.log("User Joined Room: " + room);
+	});
+	socket.on("typing", (room) => socket.in(room).emit("typing"));
+	socket.on("stop typing", (room) => socket.in(room).emit("stop typing"));
+
+	socket.on("new message", (newMessageRecieved) => {
+	var chat = newMessageRecieved.chat;
+
+	if (!chat.users) return console.log("chat.users not defined");
+
+	chat.users.forEach((user) => {
+		if (user._id == newMessageRecieved.sender._id) return;
+
+		socket.in(user._id).emit("message recieved", newMessageRecieved);
+	});
+	});
+
+	socket.off("setup", () => {
+	console.log("USER DISCONNECTED");
+	socket.leave(userData._id);
+	});
 
 	socket.on("disconnect", () => {
 		socket.broadcast.emit("callEnded")

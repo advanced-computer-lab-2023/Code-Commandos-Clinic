@@ -213,7 +213,7 @@ const getUser = asyncHandler(async (req,res) => {
         }
         if(json){
             const user = await User.findOne({username: username})
-            json = {...json._doc, role:user.role}
+            json = {...json._doc, role:user.role, userId:user._id}
             return res.status(200).json(json)
         }
         else

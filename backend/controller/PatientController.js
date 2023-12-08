@@ -54,6 +54,27 @@ const getPatients = asyncHandler(async (req, res) => {
   
 })
 
+const searchPatientsToChat = asyncHandler(async (req, res) => {
+  const { name } = req.params;
+  let query = {};
+  if (name !== "none") {
+    query = { name: { $regex: new RegExp(name, "i") } };
+  }
+  try {
+    const patients = await PatientModel.find(query);
+    let patientList = []
+    for (const patientJSON of patients) {
+      const patient = patientJSON._doc
+      const user = await UserModel.findOne({username:patient.username});
+      if(user)
+        patientList.push({...patient, userId:user._id})
+    }
+    res.status(200).json(patientList);
+  } catch (error) {
+    res.status(400);
+    throw new Error(error.message);
+  }
+});
 
 // get a single patient
 const getPatient = asyncHandler(async (req, res) => {
@@ -345,6 +366,7 @@ const subscribeToPackage = asyncHandler(async (req, res) => {
 
 module.exports = {
     getPatients,
+    searchPatientsToChat,
     getPatient,
     createPatient,
     deletePatient,
