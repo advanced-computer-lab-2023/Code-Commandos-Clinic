@@ -77,3 +77,53 @@ hr.lineAround {
   align-items: center;
 
   }
+
+ .link-box {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 20px;
+ }
+
+ .box {
+     flex: 1 1 200px; /* Set the desired width */
+     box-sizing: border-box;
+     border: 2px solid #007bff;
+     padding: 20px;
+     border-radius: 8px;
+     background-color: #f8f8f8;
+     transition: background-color 0.3s;
+     text-align: center;
+     text-decoration: none;
+     color: #333;
+ }
+
+ .box:hover {
+     background-color: #e0e0e0;
+ }
+
+.glow-border {
+    border: 2px solid #ff0000; /* Red border color */
+    box-shadow: 0 0 10px 5px #ff0000; /* Red glowing effect */
+}
+
+/* AdminHome.css */
+.decorative-shape {
+    position: relative;
+    height: 40px;
+    background-color: #ff0000; /* Red color */
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    margin-bottom: -20px;
+    z-index: 1;
+}
+
+.card-link {
+    color: #007bff; /* Blue color for links */
+    transition: color 0.2s ease-in-out; /* Smooth transition effect */
+}
+
+.card-link:hover {
+    color: #8b0000; /* Dark red color on hover */
+    text-decoration: none;
+}
+
+

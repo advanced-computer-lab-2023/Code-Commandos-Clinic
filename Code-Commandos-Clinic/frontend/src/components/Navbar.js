@@ -51,8 +51,12 @@ const Navbar = () => {
                                     <a className="nav-link" href="#">Home</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#">Services</a>
-                                </li>
+                             <div className="collapse navbar-collapse items-nav col-8" id="navbarCollapse">
+
+                             <Link to="/adminHome" className="nav-link">Admin</Link>
+                           </div>
+
+                           </li>
                                 <li className="nav-item dropdown">
                                     <a className="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Services
@@ -218,10 +222,13 @@ const Navbar = () => {
                                         <Link to="/ChangePassword" className="dropdown-item">Change Password</Link>
                                     </li>
                                 </ul>
+
+
                             </div>
 
                         </div>
                     </div>
+
                 </div>
             </nav>
         </header>
