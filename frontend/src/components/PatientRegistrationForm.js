@@ -62,7 +62,10 @@ const PatientRegistrationForm = () => {
 
 
   }
-
+  const handleBack=  () => {
+      
+    navigate('/Login');
+};
     return (
         <div class="patient-page">
         <div className="container">
@@ -80,7 +83,7 @@ const PatientRegistrationForm = () => {
                 Username:
             </label>
             <input
-                required={true}
+            
                 type="text"
                 className="form-control"
                 id="username"
@@ -94,7 +97,7 @@ const PatientRegistrationForm = () => {
                 Name:
             </label>
             <input
-                required={true}
+            
                 type="text"
                 className="form-control"
                 id="name"
@@ -110,7 +113,7 @@ const PatientRegistrationForm = () => {
                     E-mail:
                 </label>
                 <input
-                    required={true}
+                 
                     type="email"
                     className="form-control"
                     id="email"
@@ -125,7 +128,7 @@ const PatientRegistrationForm = () => {
                     Password:
                 </label>
                 <input
-                    required={true}
+                
                     type="password"
                     className="form-control"
                     id="password"
@@ -141,7 +144,7 @@ const PatientRegistrationForm = () => {
                     Date of Birth:
                 </label>
                 <input
-                    required={true}
+                  
                     type="date"
                     className="form-control"
                     id="dateOfBirth"
@@ -156,7 +159,7 @@ const PatientRegistrationForm = () => {
                     Mobile Number:
                 </label>
                 <input
-                    required={true}
+                 
                     type="number"
                     className="form-control"
                     id="mobileNumber"
@@ -170,7 +173,7 @@ const PatientRegistrationForm = () => {
                 <label className="form-label">Gender:</label><br />
                 <div className="form-check form-check-inline">
                     <input
-                        required={true}
+                   
                         type="radio"
                         className="form-check-input"
                         id="MALE"
@@ -181,7 +184,7 @@ const PatientRegistrationForm = () => {
                 </div>
                 <div className="form-check form-check-inline">
                     <input
-                        required={true}
+                    
                         type="radio"
                         className="form-check-input"
                         id="FEMALE"
@@ -200,7 +203,7 @@ const PatientRegistrationForm = () => {
                     Emergency Contact Full Name:
                 </label>
                 <input
-                    required={true}
+                  
                     type="text"
                     className="form-control"
                     id="ecFullName"
@@ -214,7 +217,7 @@ const PatientRegistrationForm = () => {
                     Emergency Contact Mobile Number:
                 </label>
                 <input
-                    required={true}
+                   
                     type="number"
                     className="form-control"
                     id="ecMobileNumber"
@@ -225,7 +228,10 @@ const PatientRegistrationForm = () => {
             </div>
             </div>
             <div>
-          <button type="submit" button className="patient-btn">Register</button>
+          <button type="submit" button className="button-reg">Register</button>
+          <button className="back-btn" onClick={handleBack}>
+                       Back
+                    </button>
              </div>
         </form>
      </div>

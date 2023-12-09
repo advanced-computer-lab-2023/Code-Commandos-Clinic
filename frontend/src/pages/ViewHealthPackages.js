@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { redirect, useNavigate } from "react-router-dom";
-
+import Swal from 'sweetalert2';
 import PackageDetails from '../components/PackageDetails'
 
 const HealthPackages = () => {
@@ -11,6 +11,8 @@ const HealthPackages = () => {
     const [selectedPackage, setSelectedPackage] = useState({})
     const [familyMembers, setFamilyMembers] = useState(null)
     const [selectedFamilyMember, setSelectedFamilyMember] = useState(null)
+    const [paymentMethod, setPaymentMethod] = useState(null)
+
     const navigate = useNavigate()
 
     const fetchAll = () => {
@@ -45,6 +47,17 @@ const HealthPackages = () => {
 
     useEffect(() => {
         fetchAll()
+        const payment = async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const familyMember = urlParams.get('familyMember');
+            const healthPackage = urlParams.get('package')
+            setSelectedPackage(healthPackage)
+            if(familyMember)
+                setSelectedFamilyMember(familyMember)
+            else {
+                setSelectedFamilyMember("user")
+            }
+        }
         const fetchSubscribedPackageStatus = async () => {
             const response = await fetch('api/healthPackagePatient/getSubscribedPackageStatus')
             const json = await response.json()
@@ -80,10 +93,12 @@ const HealthPackages = () => {
                 setDiscountedHealthPackages(null)
             }
         }
+        
         fetchSubscribedPackageStatus()
         fetchHealthPackages()
         fetchDiscountedHealthPackages()
     }, [])
+   
 
     const handleSubmit = async () => {
         let url = "/HealthPackages/Subscribe"
@@ -93,7 +108,43 @@ const HealthPackages = () => {
             url+= "&familyMember=" + selectedFamilyMember._id
         navigate(url)
     }
-
+    const handleSubmitpay = async () => {
+        try {
+            const response = await fetch(`http://localhost:3000/api/patient/payForSubscription/${selectedFamilyMember}/${selectedPackage}/${paymentMethod}`);
+            const session = await response.json();
+            
+            if (paymentMethod === "credit_card") {
+                window.location.href = session.url;
+            } else {
+                if (response.ok) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'payment succefully done',
+                        showConfirmButton: true,
+                   
+                        
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: session.error
+                      
+                    });
+                }
+            }
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'An unexpected error occurred!'
+            });
+            console.error(error);
+        }
+    };
+   
+      
     const handleDelete = async () => {
         const familyMemberID = selectedFamilyMember? selectedFamilyMember._id: "user"
         const response = await fetch(`http://localhost:3000/api/healthPackagePatient/cancelSubscription/${familyMemberID}`, {
@@ -121,20 +172,47 @@ const HealthPackages = () => {
         }
         setSelectedFamilyMember(familyMember)
     }
-
+    const handleBack=  () => {
+      
+        navigate('/Login');
+    };
     return (
         <div className="healthPackages m-5">
-            <h3>Select Family Member:</h3>
-            <ul className="list-group">
-                <li className="list-group-item">
+          
+            <br/><li className="list-group-item">
+
+            {subscribedPackage._id? 
+            
+                <h2 className="mb-4">Change or Cancel Current Health Package:</h2>: <h2 className="mb-4"><hr className="lineAround"></hr>Subscribe to a Health Package:<hr className="lineAround"></hr></h2> 
+            }
+            <div className="dropdown">
+                
+            <button
+           className="btn paymentsuccess-btn dropdown-toggle"
+           type="button"
+           data-bs-toggle="dropdown"
+         aria-expanded="false"
+         >
+          {selectedFamilyMember ? selectedFamilyMember.name : "Select Family member"}
+          </button>
+
+               <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <button
-                    className="btn btn-link"
-                    onClick={() => fetchAll()} 
-                    style={{ fontSize: "20px", textDecoration:"none" }}>
-                    You {!selectedFamilyMember && <b>(selected)</b>}
-                </button>
-                </li>
-                <li className="list-group-item">
+               className="btn btn-link"
+                onClick={() => fetchAll()} 
+                style={{ fontSize: "20px", textDecoration:"none" }}
+           >
+                {selectedFamilyMember ? (
+           <>
+                You selecting <b>{selectedFamilyMember.name}</b>
+          </>
+                ) : (
+                  <>
+                   You <b>(Yourself)</b>
+                    </>
+                   )}
+                  </button>
+            
                     Subscription Status:&nbsp;
                     {(subscribedPackageStatus._id&&subscribedPackageStatus.status==="SUBSCRIBED")? 
                         <span><span className="badge bg-primary"><b>{subscribedPackageStatus.status}</b></span> <span className="badge bg-primary"><b>renews {(new Date(subscribedPackageStatus.renewalDate)).toLocaleDateString("en-GB")}</b></span></span>
@@ -143,34 +221,31 @@ const HealthPackages = () => {
                     :
                         <span className="badge bg-secondary"><b>UNSUBSCRIBED</b></span>
                     }
-                </li>
-                {familyMembers &&
-                    familyMembers.map((familyMember) => (
-                        <div><li key={familyMember._id} className="list-group-item">
-                        <button
-                            key={familyMember._id}
-                            className="btn btn-link"
-                            onClick={() => selectFamilyMember(familyMember)} 
-                            style={{ fontSize: "20px", textDecoration:"none" }}>
-                            {familyMember.name} {familyMember===selectedFamilyMember && <b>(selected)</b>}
-                        </button>
-                        </li>
-                        <li className="list-group-item">
-                            Subscription Status: &nbsp;
-                            {(familyMember.healthPackage&&familyMember.healthPackage.status=="SUBSCRIBED")? 
-                                <span><span className="badge bg-primary"><b>{familyMember.healthPackage.status}</b></span> <span className="badge bg-primary"><b>renews {(new Date(familyMember.healthPackage.renewalDate)).toLocaleDateString("en-GB")}</b></span></span>
-                            :(familyMember.healthPackage&&familyMember.healthPackage.status=="CANCELLED")? 
-                                <span><span className="badge bg-danger"><b>{familyMember.healthPackage.status}</b></span> <span className="badge bg-danger"><b>ends {(new Date(familyMember.healthPackage.renewalDate)).toLocaleDateString("en-GB")}</b></span></span>
-                            : 
-                                <span className="badge bg-secondary"><b>UNSUBSCRIBED</b></span>
-                            }
-                        </li></div>
-                    ))}
-            
-            <br/><li className="list-group-item">
-            {subscribedPackage._id? 
-                <h4>Change or Cancel Current Health Package:</h4>: <h4>Subscribe to a Health Package:</h4> 
-            }
+              
+                    {familyMembers &&
+                        familyMembers.map((familyMember) => (
+                            <li key={familyMember._id}>
+                                <button
+                                    className="dropdown-item"
+                                    onClick={() => selectFamilyMember(familyMember)}
+                                    style={{ fontSize: "20px", textDecoration: "none" }}
+                                >
+                                    {familyMember.name} {familyMember === selectedFamilyMember }
+                                </button>
+                                <div className="dropdown-item">
+                                    Subscription Status:&nbsp;
+                                    {(familyMember.healthPackage && familyMember.healthPackage.status === "SUBSCRIBED") ?
+                                        <span><span className="badge bg-primary"><b>{familyMember.healthPackage.status}</b></span> <span className="badge bg-primary"><b>renews {(new Date(familyMember.healthPackage.renewalDate)).toLocaleDateString("en-GB")}</b></span></span>
+                                        : (familyMember.healthPackage && familyMember.healthPackage.status === "CANCELLED") ?
+                                            <span><span className="badge bg-danger"><b>{familyMember.healthPackage.status}</b></span> <span className="badge bg-danger"><b>ends {(new Date(familyMember.healthPackage.renewalDate)).toLocaleDateString("en-GB")}</b></span></span>
+                                            :
+                                            <span className="badge bg-secondary"><b>UNSUBSCRIBED</b></span>
+                                    }
+                                </div>
+                            </li>
+                        ))}
+                </ul>
+                </div>
             <div>
                 {(discountedHealthPackages&&selectedFamilyMember)? 
                 discountedHealthPackages.map((healthPackage) => (
@@ -197,24 +272,48 @@ const HealthPackages = () => {
                     </div>
                 ))    
                 :<br/>}
-                {(selectedPackage._id && subscribedPackage._id!=selectedPackage._id)?
-                    <button className="btn btn-success" onClick={() => handleSubmit()}>
-                        Continue
-                    </button>
-                :
-                    <button className="btn btn-success" disabled>
-                        Continue
-                    </button>
+                {(selectedPackage._id && subscribedPackage._id !== selectedPackage._id) ? (
+             <div>
+              <button
+                className={`cash-btn ${paymentMethod === 'wallet' ? 'btn-primary' : 'btn-secondary'}`}
+                onClick={() => setPaymentMethod('wallet')}
+              >
+                Pay with Wallet (Current balance: {}) {paymentMethod === 'wallet' && <span>(selected)</span>}
+              </button>
+             <button
+                className={`credit-btn ${paymentMethod === 'credit_card' ? 'btn-primary' : 'btn-secondary'}`}
+                onClick={() => setPaymentMethod('credit_card')}
+              >
+                Pay with Credit Card (Stripe) {paymentMethod === 'credit_card' && <span>(selected)</span>}
+              </button>
+      {paymentMethod && (
+            <button className="con-btn" onClick={() => handleSubmitpay()}>
+              Continue
+            </button>
+          )}
+    </div>
+  ) : 
+  
+    <button className="select-btn" disabled>
+  Select
+    </button>
+    
                 }&nbsp;
                 {(subscribedPackage._id&&( (selectedFamilyMember&&selectedFamilyMember.healthPackage.status!="CANCELLED")||(!selectedFamilyMember&&subscribedPackageStatus.status!="CANCELLED") )) &&
                     <button className="btn btn-danger" onClick={() => handleDelete()}>
                         Cancel Subscription
                     </button>
-                }    
-            </div></li>
-            </ul>
-        </div>
-    )
-}
+                }  
+                 </div>  
+              </li>
+              <button className="back-btn" onClick={handleBack}>
+                       Back
+                    </button>
+               
+                
+                </div>
+       
+    );
+};
 
 export default HealthPackages;

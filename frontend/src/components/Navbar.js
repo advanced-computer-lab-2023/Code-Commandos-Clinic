@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
     const navigate = useNavigate();
-
+ 
     const handleLogout = async () =>{
         console.log("in handle logout")
         try {
@@ -217,7 +217,7 @@ const Navbar = () => {
                                     </li>
                                 </ul>
                             </div>
-
+                    
                         </div>
                     </div>
                 </div>

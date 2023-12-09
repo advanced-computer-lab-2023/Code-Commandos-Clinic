@@ -56,7 +56,7 @@ const SubscribeToPackage = () => {
         
             
           <div className="row">
-          <div class="pay-page">
+          
           <div className="col-md-6 mb-3">
           
               <button
@@ -65,12 +65,7 @@ const SubscribeToPackage = () => {
               >
                 Pay with Wallet (Current balance: {}) {paymentMethod === 'wallet' && <span>(selected)</span>}
               </button>
-            </div>
-            
-            
-            <div class="pay1-page">
-            
-              <button
+             <button
                 className={`credit-btn ${paymentMethod === 'credit_card' ? 'btn-primary' : 'btn-secondary'}`}
                 onClick={() => setPaymentMethod('credit_card')}
               >
@@ -79,15 +74,13 @@ const SubscribeToPackage = () => {
               
             </div>
           </div>
-       
-       
           {paymentMethod && (
             <button className="con-btn" onClick={() => handleSubmit()}>
               Continue
             </button>
           )}
         </div>
-        </div>
+       
         
       );
     };

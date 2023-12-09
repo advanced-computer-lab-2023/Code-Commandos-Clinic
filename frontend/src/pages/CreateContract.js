@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const CreateContract = () => {
     const [doctors,setDoctors] = useState([])
@@ -11,7 +12,7 @@ const CreateContract = () => {
     const [responsibilities, setResponsibilities] = useState('');
     const [termsAndConditions, setTermsAndConditions] = useState('');
     const [markup, setMarkup] = useState('');
-
+    const navigate = useNavigate();
     useEffect(() => {
         fetchDoctors()
     }, []);
@@ -40,7 +41,10 @@ const CreateContract = () => {
             // Handle any other necessary error logic here
         }
     };
-
+    const handleBack=  () => {
+      
+        navigate('/Login');
+    };
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -112,7 +116,7 @@ const CreateContract = () => {
                             value={selectedDoctorId}
                             onChange={(e) => setSelectedDoctorId(e.target.value)}
                             className="form-select"
-                            required
+                          
                         >
                             <option value="" disabled>
                                 Select a doctor
@@ -134,7 +138,7 @@ const CreateContract = () => {
                             value={monthlySalary}
                             onChange={(e) => setMonthlySalary(e.target.value)}
                             className="form-control"
-                            required
+                            
                         />
                     </div>
                     <div className="col-md-8 mb-3">
@@ -147,7 +151,7 @@ const CreateContract = () => {
                             value={startDate}
                             onChange={(e) => setStartDate(e.target.value)}
                             className="form-control"
-                            required
+                            
                         />
                     </div>
 
@@ -161,7 +165,7 @@ const CreateContract = () => {
                             value={endDate}
                             onChange={(e) => setEndDate(e.target.value)}
                             className="form-control"
-                            required
+                            
                         />
                     </div>
 
@@ -174,7 +178,7 @@ const CreateContract = () => {
                             value={responsibilities}
                             onChange={(e) => setResponsibilities(e.target.value)}
                             className="form-control"
-                            required
+                           
                         ></textarea>
                     </div>
 
@@ -187,7 +191,7 @@ const CreateContract = () => {
                             value={termsAndConditions}
                             onChange={(e) => setTermsAndConditions(e.target.value)}
                             className="form-control"
-                            required
+                            
                         ></textarea>
                     </div>
 
@@ -201,7 +205,7 @@ const CreateContract = () => {
                             value={markup}
                             onChange={(e) => setMarkup(e.target.value)}
                             className="form-control"
-                            required
+                            
                         />
                     </div>
                     </div>
@@ -209,8 +213,11 @@ const CreateContract = () => {
                     
 
                     <div>
-               <button type="submit" button className="patient-btn ">Create</button>
+               <button type="submit" button className="button-reg ">Create</button>
                 </div>
+                <button className="back-btn" onClick={handleBack}>
+                       Back
+                    </button>
                 </form>
         </div>
         </div>

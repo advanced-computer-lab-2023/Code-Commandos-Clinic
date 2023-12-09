@@ -1,5 +1,21 @@
 import { useEffect } from "react";
+import Swal from 'sweetalert2';
 const PaymentSuccess = () => {
+    const handlePaymentSuccess = () => {
+        Swal.fire({
+            icon: 'success',
+            title: 'Payment successful!',
+            text: 'You are now subscribed.',
+            confirmButtonText: 'Back to health packages',
+            showCancelButton: true,
+            cancelButtonText: 'Close',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirect the user to the health packages page
+                window.location.href = '/HealthPackages';
+            }
+        });
+    };
     useEffect(()=>{
         const subscribe = async () => {
             const urlParams = new URLSearchParams(window.location.search);
@@ -12,14 +28,18 @@ const PaymentSuccess = () => {
             })
             console.log(await response.json())
         }
+      
 
         subscribe()
     },[])
     return (
-        <div>
-            <h2>Payment successful. You are now subscribed.</h2>
-            <a href="/HealthPackages">Go back to health packages page.</a>
+        <div class="health-page">
+        <div class>
+            <a href="handlePaymentSuccess"></a>
+            <button  className="paymentsuccess-btn" onClick={handlePaymentSuccess}>Done</button>
+
         </div>
+        </div>  
     );
 };
 

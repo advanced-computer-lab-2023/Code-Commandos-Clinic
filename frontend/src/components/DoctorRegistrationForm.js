@@ -1,7 +1,7 @@
 
 import { useState } from 'react'
 import Swal from 'sweetalert2';
-
+import { useNavigate } from 'react-router-dom';
 const DoctorRegistrationForm = () => {
     const [name, setName] = useState('')
     const [username, setUsername] = useState('')
@@ -18,7 +18,7 @@ const DoctorRegistrationForm = () => {
     const [IDID, setIDID] = useState(null);
     const [LicenseID, setLicenseID] = useState(null);
     const [DegreeID, setDegreeID] = useState(null);
-
+    const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault()
         if(!IDID || !LicenseID || !DegreeID){
@@ -102,7 +102,11 @@ const DoctorRegistrationForm = () => {
     const handleMedicalDegreeSubmit = async () => {
         setDegreeID( await handleFileSubmit( medicalDegreeFile));
     };
-
+    
+    const handleBack=  () => {
+      
+        navigate('/Login');
+    };
     const handleFileSubmit = async ( file) => {
         if (!file) {
             Swal.fire({
@@ -153,6 +157,7 @@ const DoctorRegistrationForm = () => {
             });
         }
     };
+   
 
      return (
         <div class="doctor-page">
@@ -161,10 +166,10 @@ const DoctorRegistrationForm = () => {
 
         <form className="create m-5" >
         <h2 className="mb-4"><hr className="lineAround"></hr>Apply as a Doctor <hr className="lineAround"></hr></h2>
-        <div className="box-with-image"> 
+       
             <div className="box">
                <div className="row">
-            <div className="col-md-5 mb-3">
+            <div className="col-md-6 mb-3">
             <label htmlFor="username" className="form-label"style={{ marginTop: '30px' }}>
                 Username:
             </label>
@@ -178,7 +183,7 @@ const DoctorRegistrationForm = () => {
             />
         </div>
 
-        <div className="col-md-5 mb-3">
+        <div className="col-md-6 mb-3">
             <label htmlFor="name" className="form-label"style={{ marginTop: '30px' }}>
                 Name:
             </label>
@@ -196,7 +201,7 @@ const DoctorRegistrationForm = () => {
 
 
     <div className="row">
-    <div className="col-md-8 mb-3">
+    <div className="col-md-6 mb-3">
                 <label htmlFor="email" className="form-label">
                     E-mail:
                 </label>
@@ -211,7 +216,7 @@ const DoctorRegistrationForm = () => {
                 />
             </div>
 
-            <div className="col-md-8 mb-3">
+            <div className="col-md-6 mb-3">
                 <label htmlFor="password" className="form-label">
                     Password:
                 </label>
@@ -229,7 +234,7 @@ const DoctorRegistrationForm = () => {
 
 
             <div className="row">
-            <div className="col-md-8 mb-3">
+            <div className="col-md-6 mb-3">
                 <label htmlFor="dateOfBirth" className="form-label">
                     Date of Birth:
                 </label>
@@ -244,7 +249,7 @@ const DoctorRegistrationForm = () => {
                 />
             </div>
 
-            <div className="col-md-8 mb-3">
+            <div className="col-md-6 mb-3">
                 <label htmlFor="hourlyRate" className="form-label">
                     Hourly Rate:
                 </label>
@@ -260,7 +265,7 @@ const DoctorRegistrationForm = () => {
             </div> 
 
             <div className="row">
-            <div className="col-md-8 mb-3">
+            <div className="col-md-6 mb-3">
                 <label htmlFor="affiliation" className="form-label">
                     Affiliation:
                 </label>
@@ -274,7 +279,7 @@ const DoctorRegistrationForm = () => {
                 />
             </div>
 
-            <div className="col-md-8 mb-3">
+            <div className="col-md-6 mb-3">
                 <label htmlFor="educationalBackground" className="form-label">
                     Educational Background:
                 </label>
@@ -355,8 +360,8 @@ const DoctorRegistrationForm = () => {
                     id="medicalIDFile"
                     onChange={  (e) => setMedicalIDFile(e.target.files[0])}
                 />
-                <button type="button" className="custom-btn" onClick={handleMedicalIDSubmit}>
-                    Submit Medical ID
+                <button type="button" className="patient-btn" onClick={handleMedicalIDSubmit}>
+                    Submit
                 </button>
             </div>
 
@@ -371,8 +376,8 @@ const DoctorRegistrationForm = () => {
                     id="medicalLicensesFile"
                     onChange={(e) => setMedicalLicensesFile(e.target.files[0])}
                 />
-                <button type="button" className="custom-btn" onClick={handleMedicalLicensesSubmit}>
-                    Submit Medical Licenses
+                <button type="button" className="patient-btn" onClick={handleMedicalLicensesSubmit}>
+                    Submit 
                 </button>
             </div>
 
@@ -389,16 +394,19 @@ const DoctorRegistrationForm = () => {
                     id="medicalDegreeFile"
                     onChange={(e) => setMedicalDegreeFile(e.target.files[0])}
                 />
-                <button type="button" className="custom-btn" onClick={handleMedicalDegreeSubmit}>
-                    Submit Medical Degree
+                <button type="button" className="patient-btn" onClick={handleMedicalDegreeSubmit}>
+                    Submit 
                 </button>
             </div>
             </div>
-            </div>
+            
           
             <button type="submit" className="button-reg" onClick={handleSubmit} >
                 Register
             </button>
+            <button className="back-btn" onClick={handleBack}>
+                       Back
+                    </button>
         </form>
         </div>
         </div>
