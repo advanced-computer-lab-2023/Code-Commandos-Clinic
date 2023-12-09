@@ -1,6 +1,7 @@
 import React, { useState} from "react";
 import "../css/style.css"
 import {Link, useNavigate} from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Login = () => {
     const [username, setUsername] = useState("");
@@ -21,7 +22,11 @@ const Login = () => {
             window.location.reload()
         }
         if (!response.ok) {
-            alert(await response.text())
+            Swal.fire({
+                icon: 'error',
+                title: 'Login Failed',
+                text: "Invalid credentials",
+            });
         }
     };
 

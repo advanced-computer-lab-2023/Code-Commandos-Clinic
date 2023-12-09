@@ -61,65 +61,60 @@ body{
     color: #fff; /* Set text color to white or another contrasting color */
     /* Add any other styling you need */
   }
+
+  footer {
+    background-color: #777;
+    padding: 10px;
+    text-align: center;
+    color: white;
+  }
+
+  hr.lineAround {
+    border-top: 1px solid darkred;
+  }
+
+  h2.mb-4{
+    text-align: center;
+font-size: 30px;
+font-weight: 300;
+color: #222;
+letter-spacing: 1px;
+text-transform: uppercase;
+display: grid;
+grid-template-columns: 1fr max-content 1fr;
+grid-template-rows: 27px 0;
+grid-gap: 20px;
+align-items: center;
+
+}
+
+.wider-button {
+    width: 100px;
+    margin-left: 20px; /* Adjust the width as needed */
+  }
+
+  .doctor-update {
+    display: flex;
+  }
   
-/* body{
-    background-color: white;
-}
+  .content {
+    flex: 1;
+  }
+  
+  .photo {
+    width: 30%; /* Adjust the width as needed */
+    padding: 20px;
+  }
+  
+  img {
+    width: 80%;
+    height: auto;
+  }
 
-.buttons{
-    background-color: #D21312;
-    border-radius: 0.3rem;
-    padding: 0.6em 1.3em;
-    color: white;
-    font-size: 1.1rem;
-    transition-duration: 0.7s;
-    border: 1px solid transparent;
-    width: 120px; 
-    height: 60px; 
-    font-size: 17px; 
-    margin-left: 370px; 
-
+  .add-package {
+    display: flex;
+    align-items: flex-start;
 }
-.custom-btn {
-
-    background-color: #D21312;
-    border-radius: 0.3rem;
-    padding: 0.6em 1.3em;
-    color: white;
-    font-size: 1.1rem;
-    transition-duration: 0.7s;
-    border: 1px solid transparent;
-    margin-right:0.5rem ;
-    margin-top: 10px;
+.create {
+    margin-bottom: 50px; /* Adjust the margin-top as needed */
 }
-.form-label {
-    margin-bottom: 10px; 
-}
-
-.FEMALE {  
-    background-color: red;
-    border-color: red;
-}
-.FEMALE:hover {
-    background-color: red;
-    border-color: red;
-}
-
-.FEMALE:checked {
-    background-color: red;
-    border-color: red;
-}
-.form-check-input:hover {
-    background-color: red;
-    border-color: red;
-}
-.form-check-input:checked {
-    background-color: red;
-    border-color: red;
-}
-.main-page {
-    background-image: url('C:\Users\Lenovo\git\Code-Commandos-Clinic\frontend\src\images\IMG.jpg');
-    background-size: 100%; 
-    background-repeat: no-repeat; 
-
-} */

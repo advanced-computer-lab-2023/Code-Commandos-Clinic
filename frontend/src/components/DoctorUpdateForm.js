@@ -87,10 +87,10 @@ const DoctorUpdateForm = () => {
   };
 
   return (
-    <form className="create m-5" onSubmit={handleSubmit}>
-      <h2 className="red-header"> Update your information</h2>
-
-      <div className="col-md-2 mb-3">
+    <div>
+  <h2 className="mb-4"><hr className="lineAround"></hr>Update your information<hr className="lineAround"></hr></h2>
+    <form className="create m-5 border-danger box col-md-9" onSubmit={handleSubmit}>
+      <div className="col-md-3 mb-3">
         <label htmlFor="email" className="form-label">
           E-mail:
         </label>
@@ -103,7 +103,7 @@ const DoctorUpdateForm = () => {
         />
       </div>
 
-      <div className="col-md-2 mb-3">
+      <div className="col-md-3 mb-3">
         <label htmlFor="hourlyRate" className="form-label">
           Hourly Rate:
         </label>
@@ -116,7 +116,7 @@ const DoctorUpdateForm = () => {
         />
       </div>
 
-      <div className="col-md-2 mb-3">
+      <div className="col-md-3 mb-3">
         <label htmlFor="affiliation" className="form-label">
           Affiliation:
         </label>
@@ -129,10 +129,11 @@ const DoctorUpdateForm = () => {
         />
       </div>
 
-      <button type="submit" className="custom-btn">
+      <button type="submit" className="custom-btn wider-button" >
         Edit
       </button>
     </form>
+    </div>
   );
 };
 

@@ -48,8 +48,6 @@ const ViewAndRemovePatients = ()=> {
             if (response.ok) {
                 fetchResults();
                 setSelectedPatient(null);
-                fetchResults();
-                setSelectedPatient(null);
                 Swal.fire({
                     icon: 'success',
                     title: 'Success',
@@ -71,27 +69,34 @@ const ViewAndRemovePatients = ()=> {
 
     return (
         <div className="container mt-4">
-            <h2 className= "red-header"> System patients</h2>
-            <ul className="list-group">
-                {patients.map((patient) => (
-                    <li key={patient._id} className="list-group-item">
-                        <button
-                            className="btn btn-link btn-lg"
-                            onClick={() => setSelectedPatient(patient)}
-                            style={{ textDecoration: "none" }}
-                        >
-                            {patient.name}
-                        </button>
-                    </li>
-
-                ))}
-            </ul>
-            {selectedPatient &&(
-                <>
-                    <PatientDetails patient={selectedPatient} />
-                    <button className="custom-btn" style={{ marginTop: '5px'}} onClick={() => handleRemovePatient(selectedPatient._id)}>Remove</button>
-                </>
-            )}
+            <div className="row">
+                    <h2 className="mb-4"> <hr className="linearound"></hr> System patients <hr className="linearound"></hr> </h2>
+                <div className="col-md-5">
+                    <ul className="list-group">
+                        {patients.map((patient) => (
+                            <li key={patient._id} className="list-group-item">
+                                <button
+                                    className="btn btn-link btn-lg"
+                                    onClick={() => setSelectedPatient(patient)}
+                                    style={{ textDecoration: "none", color:'#1B3236' }}
+                                >
+                                    {patient.name}
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div className="col-md-5 mt-5"> 
+                    {selectedPatient && (
+                        <>
+                            <div style={{ marginLeft: '10px' }}> {/* Add margin to the bottom */}
+                                <PatientDetails patient={selectedPatient} />
+                            </div>
+                            <button className="custom-btn wider-button" style={{ marginLeft: '30px', marginTop:'5px', width:'150px' }} onClick={() => handleRemovePatient(selectedPatient._id)}>Remove</button>
+                        </>
+                    )}
+                </div>
+            </div>
         </div>
     );
 };

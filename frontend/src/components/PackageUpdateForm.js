@@ -20,7 +20,7 @@ const PackageUpdateForm = ({ healthPackage }) => {
       Swal.fire({
         icon: 'error',
         title: 'Error!',
-        text: 'aloooooo',
+        text: 'errorMessage',
       });
     }
     if (response.ok) {
@@ -80,9 +80,8 @@ const PackageUpdateForm = ({ healthPackage }) => {
   }
 
   return (
-      <div>
-        <form className="create p-4" onSubmit={handleSubmit}>
-          <h2 className= "red-header"> Health package ID: {healthPackage._id}</h2>
+    <div>
+        <form className="create p-4 border-danger box col-md-11" onSubmit={handleSubmit}>
           <div className="col-md-2 mb-3">
             <label htmlFor="packageName" className="form-label">
               Name:
@@ -148,7 +147,7 @@ const PackageUpdateForm = ({ healthPackage }) => {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary" style={{ marginRight: '5px', backgroundColor: '#344D6D', border: 'none'}}>
+          <button type="submit" className="btn btn-primary" style={{ marginLeft:'15px', marginRight: '10px', backgroundColor: '#344D6D', border: 'none'}}>
             Edit
           </button>
           <button onClick={deleteHealthPackage} className="btn btn-danger red-header">
@@ -156,7 +155,6 @@ const PackageUpdateForm = ({ healthPackage }) => {
           </button>
           {error && <div className="error mt-3">{error}</div>}
         </form>
-
       </div>
 
   )
