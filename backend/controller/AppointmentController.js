@@ -529,6 +529,98 @@ const createDoctorPatients= asyncHandler(async(doctorId,patientId) =>{
     }
 })
 
+//this api used to get all upcoming appointments of a patient or familiymember, will be used to view  all upcoming appointments
+const getUpcomingAppointmentsPatient = asyncHandler(async (req,res) => {
+    try{
+        //i am assuming that that the reserved is the upcomingappointment
+        const upcomingAppointments = await AppointmentModel.find({patient:req.params.patientid,status:'RESERVED'})
+        if(!upcomingAppointments){
+            throw new Error('patient have no appointments');
+        }
+        res.status(200).json({upcoming: upcomingAppointments})
+    }
+    catch(error){
+        res.status(400)
+        throw new Error(error.message)
+    }
+})
+
+
+//reschedule an appointment for myself or for a family member 
+
+const rescheduleAppointment = asyncHandler(async (req,res) => {
+    try{
+       //when you click on the appointment that you want to reschedule, you will send the appointment id and doctor id and the start date and end date of the the appointment you want to reschedule 
+       let overlappingAppointment;
+       const appointmentId=req.params.appointmentId
+       const doctorId=req.params.doctorId;
+       const appointmentBody = req.body
+       const currentDateTime = new Date();
+       const convertedStartTime = new Date(appointmentBody.startTime)
+       
+       const convertedEndTime = new Date(appointmentBody.endTime)
+       console.log(convertedEndTime)
+       if(currentDateTime >= convertedStartTime ){
+           res.status(400)
+           throw new Error("The appointment has to start in the future")
+       }
+       if(appointmentBody.startTime >= appointmentBody.endTime){
+        res.status(400)
+        throw new Error("End time has to be greater than start time")
+}
+       overlappingAppointment = await AppointmentModel.findOne({
+        $and: [
+            {
+                doctor: doctorId,
+            },
+            {
+                $or: [
+                    {
+                        startTime: {$lte: appointmentBody.startTime},
+                        endTime: {$gte: appointmentBody.startTime},
+                    },
+                    {
+                        startTime: {$gte: appointmentBody.startTime},
+                        endTime: {$lte: appointmentBody.endTime},
+                    },
+                    {
+                        startTime: {$lte: appointmentBody.endTime},
+                        endTime: {$gte: appointmentBody.startTime},
+                    },
+                ]
+            }
+
+        ]
+    })
+    if (overlappingAppointment){
+        console.log(overlappingAppointment)
+        res.status(400)
+        throw new Error('The appointment overlapps with another appointment')
+    }
+
+
+       const appoinmtentToBeScheduled = await AppointmentModel.findOneAndUpdate({_id:appointmentId},{startTime:convertedStartTime,endTime:convertedEndTime})
+       res.status(200).json(appoinmtentToBeScheduled);
+
+    }
+    catch(error){
+        res.status(400)
+        throw new Error(error.message)
+    }  
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
 module.exports = {
     getUpcomingPatientsOfDoctor,
     createAppointment,
@@ -542,5 +634,7 @@ module.exports = {
     filterAppointmentsByDateOrStatus,
     scheduleFollowUp,
     success,
-    createDoctorPatients
+    createDoctorPatients,
+    rescheduleAppointment,
+    getUpcomingAppointmentsPatient
 };
