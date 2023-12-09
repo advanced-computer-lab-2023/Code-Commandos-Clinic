@@ -175,7 +175,9 @@ hr.lineAround {
     height: 60px; 
     width: 320px;
 }
-
+.margin-edit {
+    margin-top: 90px; 
+}
 .form-label {
     margin-bottom: 10px; 
 }
@@ -291,13 +293,13 @@ hr.lineAround {
     
 }
 .welcome-page {
-    background-image: url('/Users/woaodhisham/Desktop/finall/Code-Commandos-Clinic/frontend/src/images/welc.gif');
+    background-image: url('/Users/woaodhisham/Desktop/finall/Code-Commandos-Clinic/frontend/src/images/hrt.jpeg');
     background-size: 40%; 
     background-repeat: no-repeat; 
     background-position: top  ; 
     width: 500rem; 
     height: 10000rem; 
-    margin-left: 10rem; 
-    margin-top: 5rem; 
+    margin-left: 20rem; 
+    margin-top: 30rem; 
     
 }
