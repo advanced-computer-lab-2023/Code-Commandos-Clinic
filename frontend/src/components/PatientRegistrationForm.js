@@ -68,12 +68,13 @@ const PatientRegistrationForm = () => {
 };
     return (
         <div class="patient-page">
+            <h2 className="mb-4"><hr className="lineAround"></hr>Patient Registration Form <hr className="lineAround"></hr></h2>
         <div className="container">
        
             <div className="col-lg-8">
 
         <form className="create m-5" onSubmit={handleSubmit}>
-        <h2 className="mb-4"><hr className="lineAround"></hr>Patient Registration Form <hr className="lineAround"></hr></h2>
+        
         <div className="box-with-image"> 
             <div className="box">
 
@@ -197,7 +198,7 @@ const PatientRegistrationForm = () => {
             </div>
 
             
-          
+            <div className="row">
             <div className="col-md-5 mb-3">
                 <label htmlFor="ecFullName" className="form-label">
                     Emergency Contact Full Name:
@@ -224,6 +225,7 @@ const PatientRegistrationForm = () => {
                     value={ecMobileNumber}
                     onChange={(e) => setEcMobileNumber(e.target.value)}
                 />
+            </div>
             </div>
             </div>
             </div>

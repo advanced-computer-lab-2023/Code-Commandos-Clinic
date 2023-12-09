@@ -294,8 +294,8 @@ const DoctorRegistrationForm = () => {
             </div>
             </div>
 
-
-            <div className="col-md-9 mb-3">
+            <div className="row">
+            <div className="col-md-5 mb-3">
                 <label htmlFor="specialty" className="form-label">
                     Speciality:
                 </label>
@@ -348,8 +348,8 @@ const DoctorRegistrationForm = () => {
                     <option value="DENTIST">Dentist</option>
                 </select>
             </div>
-
-            <div className="col-md-9 mb-3">
+         
+            <div className="col-md-5 mb-3">
                 <label htmlFor="medicalIDFile" className="form-label">
                     Upload Medical ID:
                 </label>
@@ -364,8 +364,9 @@ const DoctorRegistrationForm = () => {
                     Submit
                 </button>
             </div>
-
-            <div className="col-md-9 mb-3">
+            </div>
+            <div className="row">
+            <div className="col-md-5 mb-3">
                 <label htmlFor="medicalLicensesFile" className="form-label">
                     Upload Medical Licenses:
                 </label>
@@ -383,7 +384,7 @@ const DoctorRegistrationForm = () => {
 
             
 
-            <div className="col-md-9 mb-3">
+            <div className="col-md-5 mb-3">
                 <label htmlFor="medicalDegreeFile" className="form-label">
                     Upload Medical Degree:
                 </label>
@@ -397,13 +398,15 @@ const DoctorRegistrationForm = () => {
                 <button type="button" className="patient-btn" onClick={handleMedicalDegreeSubmit}>
                     Submit 
                 </button>
-            </div>
-            </div>
-            
-          
-            <button type="submit" className="button-reg" onClick={handleSubmit} >
+
+                <button type="submit" className="button1-reg" onClick={handleSubmit} >
                 Register
             </button>
+            </div>
+            </div>
+            </div>
+          
+           
             <button className="back-btn" onClick={handleBack}>
                        Back
                     </button>

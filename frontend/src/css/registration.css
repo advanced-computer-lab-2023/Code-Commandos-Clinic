@@ -36,7 +36,13 @@ hr.lineAround {
     color: white;
     border: 1px solid red;
 }
-
+.contract {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10rem;
+    height: 100%; /* Optionally set height for vertical centering */
+}
 .button-reg{
     background-color: #D21312;
     border-radius: 0.3rem;
@@ -45,7 +51,20 @@ hr.lineAround {
     font-size: 1.1rem;
     transition-duration: 0.7s;
     border: 1px solid transparent;
-    margin-left:70rem ;
+    margin-left:50rem ;
+    margin-top: 10px;
+    height: 60px; 
+    
+}
+.button1-reg{
+    background-color: #D21312;
+    border-radius: 0.3rem;
+    padding: 0.6em 1.3em;
+    color: white;
+    font-size: 1.1rem;
+    transition-duration: 0.7s;
+    border: 1px solid transparent;
+    margin-left:20rem ;
     margin-top: 10px;
     height: 60px; 
     
@@ -77,13 +96,13 @@ hr.lineAround {
   
 }
 .patient-btn{
-    background-color: #D21312;
+    background-color: white;
     border-radius: 0.3rem;
     padding: 0.6em 1.3em;
-    color: white;
+    color:  #D21312;
     font-size: 1.1rem;
     transition-duration: 0.7s;
-    border: 1px solid transparent;
+    border: 1px solid red;
     margin-right:0.5rem ;
     margin-top: 10px;
     height: 60px; 
@@ -222,7 +241,14 @@ hr.lineAround {
   }
 .mycard{
     background-size: 50%;
+    
     background-repeat: no-repeat; 
+}
+.contract {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Optionally set height for vertical centering */
 }
 .patient-page {
     background-image: url('/Users/woaodhisham/Desktop/finall/Code-Commandos-Clinic/frontend/src/images/patient.jpeg');
@@ -234,36 +260,15 @@ hr.lineAround {
     
 }
 .contract-page {
-    background-image: url('/Users/woaodhisham/Desktop/finall/Code-Commandos-Clinic/frontend/src/images/contract.png');
-    background-size: 15%; 
+    background-image: url('/Users/woaodhisham/Desktop/finall/Code-Commandos-Clinic/frontend/src/images/contr.jpeg');
+    background-size: 25%; 
     background-repeat: no-repeat; 
     background-position: right; 
   
     background-position-y: 90px; 
     
 }
-.pay-page {
-    background-image: url('/Users/woaodhisham/Desktop/finall/Code-Commandos-Clinic/frontend/src/images/wallet.png');
-    background-size: 35%; 
-    background-repeat: no-repeat; 
-    background-position: left; 
-    background-position-y: 70px; 
-    background-position-x: 70px; 
-    width: 40rem; 
-    height: 400rem; 
-    margin: 0.5rem; 
-}
-.pay1-page {
-    background-image: url('/Users/woaodhisham/Desktop/finall/Code-Commandos-Clinic/frontend/src/images/rightt.jpeg');
-    background-size: 5%; 
-    background-repeat: no-repeat; 
-    background-position: left; 
-    background-position-y: 70px; 
-    background-position-x: 70px; 
-    width: 40rem; 
-    height: 400rem; 
-    margin: 0.5rem; 
-}
+
 
 
 .req-page {
@@ -283,15 +288,7 @@ hr.lineAround {
     
     
 }
-.health-page {
-    background-image: url('/Users/woaodhisham/Desktop/finall/Code-Commandos-Clinic/frontend/src/images/health.jpeg');
-    background-size: 100; 
-    background-repeat: no-repeat; 
-    width: 400rem; 
-    height: 400rem; 
-   
-    
-}
+
 .welcome-page {
     background-image: url('/Users/woaodhisham/Desktop/finall/Code-Commandos-Clinic/frontend/src/images/hrt.jpeg');
     background-size: 40%; 

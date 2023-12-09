@@ -42,7 +42,6 @@ import DoctorContract from "./pages/DoctorContract";
 import LinkFamilyMember from "./pages/linkFamilyMember";
 import CreateFollowUp from "./pages/CreateFollowUp";
 import HealthPackages from './pages/ViewHealthPackages';
-import SubscribeToPackage from './pages/SubscribeToPackage';
 import PaymentSuccess from './pages/PaymentSuccess';
 import PaymentCancel from './pages/PaymentCancel';
 import UploadDocument from "./pages/UploadDocument";
@@ -115,7 +114,6 @@ const App = () => {
             <Route path="/LinkFamilyMember" element={<LinkFamilyMember/>}/>
             <Route path="/CreateFollowUp" element={<CreateFollowUp/>}/>
             <Route path="/HealthPackages" element={<HealthPackages/>}/>
-            <Route path="/HealthPackages/Subscribe" element={<SubscribeToPackage/>}/>
             <Route path="/HealthPackages/Subscribe/Success" element={<PaymentSuccess/>}/>
             <Route path="/HealthPackages/Subscribe/Cancel" element={<PaymentCancel/>}/>
             <Route path="/AppointmentSuccess" element={<AppointmentSuccess/>}/>
