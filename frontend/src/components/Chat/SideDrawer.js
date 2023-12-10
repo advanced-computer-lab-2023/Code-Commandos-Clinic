@@ -123,26 +123,26 @@ function SideDrawer() {
   return (
     <>
       <Box
-        d="flex"
+        display="flex"
         justifyContent="space-between"
         alignItems="center"
-        bg="white"
-        w="100%"
+        bg="white" 
+        m="5px 5px 5px 5px"
         p="5px 10px 5px 10px"
-        borderWidth="5px"
+        borderRadius="lg"
+        borderWidth="1px"
       >
         <Tooltip label="Search for users to chat" hasArrow placement="bottom-end">
-          <Button variant="ghost" onClick={onOpen} verticalAlign="center">
-            <Text d={{ base: "none", md: "flex" }} >
-              <SearchIcon/>
+          <Button variant="ghost" onClick={onOpen} display="flex" verticalAlign="middle" alignContent="center" background={"#e7e7e7"}>
+            <SearchIcon/>
+            <Text display={{ base: "none", md: "flex" }} paddingTop="15px">
               Search for {user.role==='PATIENT'?<>Doctors</>:<>Patients</>}
             </Text>
           </Button>
         </Tooltip>
         <Text fontSize="2xl">
           Talk to a {user.role==='PATIENT'?<>Doctor</>:<>Patient</>}
-        </Text>
-        <div>
+          <span>
           <Menu>
             <MenuButton p={1}>
               <NotificationBadge
@@ -168,7 +168,8 @@ function SideDrawer() {
               ))}
             </MenuList>
           </Menu>
-        </div>
+          </span>
+        </Text>
       </Box>
 
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
