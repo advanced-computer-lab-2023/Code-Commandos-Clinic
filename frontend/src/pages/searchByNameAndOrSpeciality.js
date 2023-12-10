@@ -58,7 +58,7 @@ const SearchByNameAndOrSpeciality = () => {
 
   return (
     <div className="container m-5">
-      <h2 className="red-header"> Search by Name and Speciality</h2>
+      <h2 className="mb-4"> <hr className="linearound"></hr> Search by Name and Speciality <hr className="linearound"></hr></h2>
       <div className="col-md-2 mb-3">
         <label htmlFor="name" className="form-label">
           Name:
@@ -122,24 +122,26 @@ const SearchByNameAndOrSpeciality = () => {
                     <option value="UROLOGISTS">Urologists</option>
                     <option value="DENTIST">Dentist</option>        </select>
       </div>
-      <button className="custom-btn" onClick={fetchResults}>
+      <button className="custom-btn wider-button" onClick={fetchResults}>
         Search
       </button>
 
-      <div className="results mt-4">
+      <div className="results mt-4 col-md-3">
         {searchResults &&
           searchResults.map((doctor) => (
             <button
               key={doctor._id}
-              className="btn btn-link"
-              onClick={() => setSelectedDoctor(doctor)}
+              className="btn "
+              onClick={() => setSelectedDoctor(doctor)} style={{ fontSize: "20px", color:'#1B3236', marginInlineEnd:'5px' }}
             >
               {doctor.name}
               <br />
             </button>
           ))}
       </div>
-      {selectedDoctor && <DoctorDetails key={selectedDoctor._id} doctor={selectedDoctor} />}
+      <div className="col-md-5">
+        {selectedDoctor && <DoctorDetails key={selectedDoctor._id} doctor={selectedDoctor} />}
+      </div>
     </div>
   );
 };

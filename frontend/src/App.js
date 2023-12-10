@@ -52,10 +52,13 @@ import AppointmentSuccess from './pages/AppointmentSuccess'
 import AppointmentFailure from './pages/AppointmentFailure';
 import CreateContract from "./pages/CreateContract";
 import Register from "./pages/Register";
+import '../src/css/style.css'; // Add any additional styling for the footer
+import DoctorPage from "./pages/DoctorPage";
 
 const App = () => {
     const logged = window.localStorage.getItem("logged");
 
+    
 
   return (
     <div className="App">
@@ -118,9 +121,14 @@ const App = () => {
             <Route path="/Register" element={<Register/>}/>
             <Route path="/Login" element={logged ? <Navigate to="/Home" replace /> : <Login/> }/>
             <Route path="/Home" element={<Home/>}/>
+            {/* <Route path="/DoctorSearchPage" element={<DoctorSearchPage/>}/> */}
+
+            <Route path="/DoctorPage" element={<DoctorPage />} />
+
         </Routes>
        </div>
       </BrowserRouter>
+      
     </div>
   );
 };

@@ -1,6 +1,8 @@
 import {useState} from "react";
 import Swal from 'sweetalert2';
 import DoctorDetails from "../components/DoctorDetails";
+import Card from 'react-bootstrap/Card';
+
 
 const FilterBySpecialityAndDate = () => {
     const [speciality, setSpeciality] = useState(null);
@@ -14,7 +16,7 @@ const FilterBySpecialityAndDate = () => {
           Swal.fire({
             icon: 'warning',
             title: 'Missing Information',
-            text: 'Please fill in either of the fields.',
+            text: 'Please fill in either of the fields',
           });
           return;
         }
@@ -66,7 +68,7 @@ const FilterBySpecialityAndDate = () => {
 
     return (
         <div className="container m-5">
-            <h2 className="red-header"> Filter By Speciality And Date</h2>
+            <h2 className="mb-4"> <hr className="linearound"></hr> Filter By Speciality And Date <hr className="linearound"></hr></h2>
             <div className="col-md-2 mb-3">
                 <label htmlFor="specialty" className="form-label">
                     Speciality:
@@ -131,7 +133,7 @@ const FilterBySpecialityAndDate = () => {
                     onChange={(e) => setDate(e.target.value)}
                 />
             </div>
-            <button className="custom-btn" onClick={fetchResults}>
+            <button className="custom-btn wider-button" onClick={fetchResults}>
                 Filter
             </button>
 
@@ -140,16 +142,22 @@ const FilterBySpecialityAndDate = () => {
                     searchResults.map((doctor) => (
                         <button
                             key={doctor._id}
-                            className="btn btn-link"
-                            onClick={() => setSelectedDoctor(doctor)} style={{ fontSize: "20px" }}>
+                            className="btn"
+                            onClick={() => setSelectedDoctor(doctor)} style={{ fontSize: "20px", color:'#1B3236', marginInlineEnd:'5px' }}>
                             {doctor.name}
                             <br/>
                         </button>
                     ))}
             </div>
-            {selectedDoctor && <DoctorDetails key={selectedDoctor._id} doctor={selectedDoctor} />}
+            <div className="col-md-5 mt-3">
+              <div style={{ marginLeft: '10px' }}>
 
-        </div>
+                    {selectedDoctor && <DoctorDetails key={selectedDoctor._id} doctor={selectedDoctor} />}
+                
+                    </div>
+                    </div>
+                </div>
+
     );
 };
 
