@@ -1,17 +1,18 @@
 import { useNavigate } from 'react-router-dom';
 import React from "react";
 import hrtImage from '../images/hrt.jpeg'; // Import the image
-
+import PatientNavbar from "../components/patientNavbar";
 const PatientHome = () => {
 
     const navigate = useNavigate();
 
-    const handleBack = () => {
-        navigate('/Login');
+    const handleAppointment = () => {
+        navigate('/CreateAppointment');
     };
     return(
 
-       
+        <body className="my-patient-background">
+        {<PatientNavbar />}
         <div className="container">
         <div className="row">
       
@@ -25,7 +26,7 @@ const PatientHome = () => {
                     <p> consult with experts from </p>
                     <p> anywhere,anytime, </p>
                     <p>  with just a click</p>
-                    <button className="patient-btn" onClick={handleBack}>
+                    <button className="home-btn" onClick={handleAppointment}>
                         Reserve an Appointment
                     </button>
 
@@ -40,7 +41,7 @@ const PatientHome = () => {
             </div>
             </div>
             </div>
-      
+            </body>
     )
 }
 export default PatientHome;

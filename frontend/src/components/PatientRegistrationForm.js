@@ -2,6 +2,8 @@ import { useState } from 'react'
 import {useNavigate} from "react-router-dom";
 import '../css/registration.css';
 import Swal from 'sweetalert2';
+import PatientNavbar from "../components/patientNavbar";
+
 
 const PatientRegistrationForm = () => {
   const [name, setName] = useState('')
@@ -67,6 +69,9 @@ const PatientRegistrationForm = () => {
     navigate('/Login');
 };
     return (
+        <body className="my-patient-background">
+        {<PatientNavbar />}
+        <br/>
         <div class="patient-page">
             <h2 className="mb-4"><hr className="lineAround"></hr>Patient Registration Form <hr className="lineAround"></hr></h2>
         <div className="container">
@@ -231,15 +236,13 @@ const PatientRegistrationForm = () => {
             </div>
             <div>
           <button type="submit" button className="button-reg">Register</button>
-          <button className="back-btn" onClick={handleBack}>
-                       Back
-                    </button>
+          
              </div>
         </form>
      </div>
             </div>
         </div>
-     
+        </body>
     );
 }
 

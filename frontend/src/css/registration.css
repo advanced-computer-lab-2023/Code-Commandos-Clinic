@@ -51,7 +51,7 @@ hr.lineAround {
     font-size: 1.1rem;
     transition-duration: 0.7s;
     border: 1px solid transparent;
-    margin-left:50rem ;
+    margin-left:20rem ;
     margin-top: 10px;
     height: 60px; 
     
@@ -64,11 +64,12 @@ hr.lineAround {
     font-size: 1.1rem;
     transition-duration: 0.7s;
     border: 1px solid transparent;
-    margin-left:20rem ;
+    margin-left:50rem ;
     margin-top: 10px;
     height: 60px; 
     
 }
+
 .accept-btn {
     background-color: #D21312;
     border-radius: 0.3rem;
@@ -100,6 +101,18 @@ hr.lineAround {
     border-radius: 0.3rem;
     padding: 0.6em 1.3em;
     color:  #D21312;
+    font-size: 1.1rem;
+    transition-duration: 0.7s;
+    border: 1px solid red;
+    margin-right:0.5rem ;
+    margin-top: 10px;
+    height: 60px; 
+}
+.home-btn{
+    background-color: #D21312;
+    border-radius: 0.3rem;
+    padding: 0.6em 1.3em;
+    color:  white;
     font-size: 1.1rem;
     transition-duration: 0.7s;
     border: 1px solid red;
@@ -150,10 +163,11 @@ hr.lineAround {
 }
 .back-btn{
     
-    background-color: white;
+    background-color:rgba(var(--bs-light-rgb),var(--bs-bg-opacity));
     border-radius: 0.3rem;
     padding: 0.6em 1.3em;
     color: #D21312;
+
     font-size: 1.1rem;
     transition-duration: 0.7s;
     border: 1px solid transparent;

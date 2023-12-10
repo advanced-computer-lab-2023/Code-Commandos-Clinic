@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { redirect, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 import PackageDetails from '../components/PackageDetails'
+import PatientNavbar from "../components/patientNavbar";
 
 const HealthPackages = () => {
     const [healthPackages, setHealthPackages] = useState(null)
@@ -174,9 +175,11 @@ const HealthPackages = () => {
     }
     const handleBack=  () => {
       
-        navigate('/Login');
+        navigate('/patientHome');
     };
     return (
+        <body className="my-patient-background">
+        {<PatientNavbar />}
         <div className="healthPackages m-5">
           
             <br/><li className="list-group-item">
@@ -307,12 +310,12 @@ const HealthPackages = () => {
                  </div>  
               </li>
               <button className="back-btn" onClick={handleBack}>
-                       Back
+                       
                     </button>
                
                 
                 </div>
-       
+                </body>
     );
 };
 
