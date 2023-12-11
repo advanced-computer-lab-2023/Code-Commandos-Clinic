@@ -174,7 +174,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             {messages &&
               (
                 <>
-                  {getSender(user, selectedChat.users)}
+                  {selectedChat.pharmacistUsername || getSender(user, selectedChat.users)}
                   {/* <ProfileModal
                     user={getSenderFull(user, selectedChat.users)}
                   /> */}

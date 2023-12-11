@@ -20,6 +20,12 @@ const chatModel = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Patient",
     },
+    pharmacistUsername: {
+      type: String
+    },
+    pharmacyChatId: {
+      type: mongoose.Schema.Types.ObjectId,
+    },
     latestMessage: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Message",

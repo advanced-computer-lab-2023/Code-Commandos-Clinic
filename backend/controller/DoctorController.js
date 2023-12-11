@@ -116,7 +116,7 @@ const searchDoctorsToChat = asyncHandler(async (req, res) => {
         const doctor = doctorJSON._doc
         const user = await UserModel.findOne({username:doctor.username});
         if(user)
-            doctorList.push({...doctor,userId:user._id})
+            doctorList.push({...doctor,userId:user._id, role:user.role})
     }
     res.status(200).json(doctorList);
   } catch (error) {

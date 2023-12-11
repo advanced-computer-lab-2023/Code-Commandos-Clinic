@@ -105,11 +105,11 @@ const MyChats = ({ fetchAgain }) => {
                 key={chat._id}
               >
                 <Text>
-                  {chat.users && getSender(loggedUser, chat.users)}
+                  {chat.users && (chat.pharmacistUsername || getSender(loggedUser, chat.users))}
                 </Text>
                 {chat.latestMessage && (
                   <Text fontSize="xs">
-                    <b>{chat.latestMessage.sender.username} : </b>
+                    <b>{chat.latestMessage.sender.username || chat.pharmacistUsername} : </b>
                     {chat.latestMessage.content.length > 50
                       ? chat.latestMessage.content.substring(0, 51) + "..."
                       : chat.latestMessage.content}
