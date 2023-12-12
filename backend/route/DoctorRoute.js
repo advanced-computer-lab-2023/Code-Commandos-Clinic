@@ -19,7 +19,8 @@ const {
     removeDoctor,
     createDoctorPatients,
     getPatientDoctors,
-    getAmount
+    getAmount,
+    searchDoctorsToChat,
 } = require('../controller/DoctorController')
 
 router.get('/searchByNameAndOrSpeciality/:name/:speciality',protect,checkPatientRole,searchByNameAndOrSpeciality)
@@ -33,5 +34,6 @@ router.get('/getSessionPrice',protect,checkPatientRole,getDoctorsSessionPrice)
 router.post('/createDoctorPatients',createDoctorPatients)
 router.get('/getPatientDoctors',protect,checkPatientRole,getPatientDoctors)
 router.get('/getAmount',protect,checkDoctorRole,getAmount)
+router.get('/searchDoctorsToChat/:name/:specialty',searchDoctorsToChat)
 
 module.exports = router

@@ -85,7 +85,7 @@ const createAppointment =asyncHandler( async (req,res) => {
 //requirement 35
 // get the upcoming appointments of a doctor
 const getUpcomingPatientsOfDoctor = asyncHandler (async (req,res)=>{
-    
+
     const currentDate = new Date();
     let query = {
         $and: [
@@ -96,10 +96,10 @@ const getUpcomingPatientsOfDoctor = asyncHandler (async (req,res)=>{
     }
     console.log(currentDate)
     try{
-    const upcomingAppointments = await AppointmentModel.find(query)
-    if(upcomingAppointments.length===0){
-        throw new Error("No Upcoming Appointments")
-       }
+        const upcomingAppointments = await AppointmentModel.find(query)
+        if(upcomingAppointments.length===0){
+            throw new Error("No Upcoming Appointments")
+        }
         const patientIds = upcomingAppointments.map(appointment => appointment.patient);
         const upcomingPatients = await PatientModel.find({ _id: { $in: patientIds } });
         res.status(200).json(upcomingPatients);
@@ -111,31 +111,27 @@ const getUpcomingPatientsOfDoctor = asyncHandler (async (req,res)=>{
 })
 
 const getAppointment = asyncHandler (async (req,res)=>{
-    
-   
-        let query={};
-        const currentDate = new Date();
-        if(req.params.doctor !=="none" && req.params.doctor !=="none"){
-            const {doctorid,patientid} =req.params
-           query={
+    let query={};
+    const currentDate = new Date();
+    if(req.params.doctor !=="none" && req.params.doctor !=="none"){
+        const {doctorid,patientid} =req.params
+        query={
             $and:[
                 {doctor: doctorid},
                 {patient: patientid},
                 { startTime : { $lt : currentDate } }
-                ]
-                
-         };
-         try {
+            ]
+
+        };
+        try {
             const previousAppointments = await AppointmentModel.find(query)
             res.status(200).json(previousAppointments)
-          }
-          catch (err){
+        }
+        catch (err){
             res.status(400)
             throw new Error(err.message)
-          }
-}
-
-
+        }
+    }
 })
 
 
@@ -215,8 +211,8 @@ const reserveAppointment = asyncHandler(async (req,res) => {
                 const newPatient = await PatientModel.findOneAndUpdate({_id:req.user.id},{wallet:newWallet})
             }
             //update status of appoinmtent
-            const p = await PatientModel.findById(req.user.id)
-            appointment.patientName = p.name
+            appointment.patient = req.user.id
+            appointment.patientName = patient.name
             if(familyMemberId){
                 appointment.familyMember = familyMemberId
                 const member = await FamilyMember.findById(familyMemberId)
@@ -288,47 +284,52 @@ const success = asyncHandler(async (req,res) =>{
 
     const { sessionID } = req.params
     const session = await stripe.checkout.sessions.retrieve(
-      sessionID,
-      {
-        expand: ['line_items'],
-      }
+        sessionID,
+        {
+            expand: ['line_items'],
+        }
     );
     if(session.payment_status==="paid"){
-      const appointmentid = session.metadata.appointmentid
-      const familyMemberId=session.metadata.familyMemberId
-      const appointment = await AppointmentModel.findById(appointmentid)
+        const appointmentid = session.metadata.appointmentid
+        const familyMemberId=session.metadata.familyMemberId
+        const patientID = session.metadata.patientID
 
-      try{
-        if(familyMemberId!="null"){
-            appointment.familyMember = familyMemberId
-            const member = await FamilyMember.findById(familyMemberId)
-            appointment.familyMemberName = member.name
+        const appointment = await AppointmentModel.findById(appointmentid)
+        const patient = await PatientModel.findById(patientID)
+
+        try{
+            appointment.patient = patientID
+            appointment.patientName = patient.name
+            if(familyMemberId!="null"){
+                appointment.familyMember = familyMemberId
+                const member = await FamilyMember.findById(familyMemberId)
+                appointment.familyMemberName = member.name
+            }
+            appointment.status = 'RESERVED'
+            const p = await PatientModel.findById(req.user.id)
+            appointment.patientName = p.name
+            createDoctorPatients(appointment.doctor,appointment.patient)
+            await appointment.save()
+            try {
+                const patientEmailObject = await Patient.findOne({username:req.user.username}).select("email")
+                const patientEmail = patientEmailObject.email
+                const doctorEmailObject = await DoctorModel.findOne({_id:appointment.doctor}).select("email")
+                const doctorEmail = doctorEmailObject.email
+                sendEmail(patientEmail,"Your Appointment has been confirmed from "+appointment.startTime+ " to "+ appointment.endTime)
+                sendEmail(doctorEmail,"Your Appointment has been confirmed from "+appointment.startTime+ " to "+ appointment.endTime)
+            }
+            catch (error){
+                res.status(400)
+                throw new Error("Error sending the appointment confirmation email")
+            }
+            res.status(200).json(appointment)
+
         }
-        appointment.status = 'RESERVED'
-          const p = await PatientModel.findById(req.user.id)
-          appointment.patientName = p.name
-        createDoctorPatients(appointment.doctor,appointment.patient)
-        await appointment.save()
-          try {
-              const patientEmailObject = await Patient.findOne({username:req.user.username}).select("email")
-              const patientEmail = patientEmailObject.email
-              const doctorEmailObject = await DoctorModel.findOne({_id:appointment.doctor}).select("email")
-              const doctorEmail = doctorEmailObject.email
-              sendEmail(patientEmail,"Your Appointment has been confirmed from "+appointment.startTime+ " to "+ appointment.endTime)
-              sendEmail(doctorEmail,"Your Appointment has been confirmed from "+appointment.startTime+ " to "+ appointment.endTime)
-          }
-          catch (error){
-              res.status(400)
-              throw new Error("Error sending the appointment confirmation email")
-          }
-        res.status(200).json(appointment)
-        
-      }
-      catch (error) {
-        res.status(400).json(error.message)
-      }
+        catch (error) {
+            res.status(400).json(error.message)
+        }
     } else {
-      res.status(400).json({error:"payment unsuccessful"})
+        res.status(400).json({error:"payment unsuccessful"})
     }
 
 
@@ -341,7 +342,7 @@ const success = asyncHandler(async (req,res) =>{
 const upcomingPastAppointmentsOfDoctor = asyncHandler(async (req,res) => {
     try {
         const upcomingAppointments = await AppointmentModel.find({doctor:req.user.id,status:'RESERVED'})
-        const pastAppointments = await AppointmentModel.find({doctor:req.user.id,status:'COMPLETED'})
+        const pastAppointments = await AppointmentModel.find({doctor:req.user.id,status:{ $in: ['COMPLETED', 'CANCELLED'] }})
         res.status(200).json({upcoming: upcomingAppointments, past: pastAppointments})
     }
     catch (error){
@@ -353,7 +354,7 @@ const upcomingPastAppointmentsOfDoctor = asyncHandler(async (req,res) => {
 const upcomingPastAppointmentsOfPatient = asyncHandler(async (req,res) => {
     try {
         const upcomingAppointments = await AppointmentModel.find({patient:req.user.id,status:'RESERVED'})
-        const pastAppointments = await AppointmentModel.find({patient:req.user.id,status:'COMPLETED'})
+        const pastAppointments = await AppointmentModel.find({patient:req.user.id,status:{ $in: ['COMPLETED', 'CANCELLED'] }})
         res.status(200).json({upcoming: upcomingAppointments, past: pastAppointments})
     }
     catch (error){
@@ -546,71 +547,112 @@ const getUpcomingAppointmentsPatient = asyncHandler(async (req,res) => {
 })
 
 
-//reschedule an appointment for myself or for a family member 
+//reschedule an appointment for myself or for a family member
 
 const rescheduleAppointment = asyncHandler(async (req,res) => {
     try{
-       //when you click on the appointment that you want to reschedule, you will send the appointment id and doctor id and the start date and end date of the the appointment you want to reschedule 
-       let overlappingAppointment;
-       const appointmentId=req.params.appointmentId
-       const doctorId=req.params.doctorId;
-       const appointmentBody = req.body
-       const currentDateTime = new Date();
-       const convertedStartTime = new Date(appointmentBody.startTime)
-       
-       const convertedEndTime = new Date(appointmentBody.endTime)
-       console.log(convertedEndTime)
-       if(currentDateTime >= convertedStartTime ){
-           res.status(400)
-           throw new Error("The appointment has to start in the future")
-       }
-       if(appointmentBody.startTime >= appointmentBody.endTime){
-        res.status(400)
-        throw new Error("End time has to be greater than start time")
-}
-       overlappingAppointment = await AppointmentModel.findOne({
-        $and: [
-            {
-                doctor: doctorId,
-            },
-            {
-                $or: [
-                    {
-                        startTime: {$lte: appointmentBody.startTime},
-                        endTime: {$gte: appointmentBody.startTime},
-                    },
-                    {
-                        startTime: {$gte: appointmentBody.startTime},
-                        endTime: {$lte: appointmentBody.endTime},
-                    },
-                    {
-                        startTime: {$lte: appointmentBody.endTime},
-                        endTime: {$gte: appointmentBody.startTime},
-                    },
-                ]
-            }
+        //when you click on the appointment that you want to reschedule, you will send the appointment id and doctor id and the start date and end date of the the appointment you want to reschedule
+        let overlappingAppointment;
+        const appointmentId=req.params.appointmentId
+        const doctorId=req.params.doctorId;
+        const appointmentBody = req.body
+        const currentDateTime = new Date();
+        const convertedStartTime = new Date(appointmentBody.startTime)
 
-        ]
-    })
-    if (overlappingAppointment){
-        console.log(overlappingAppointment)
-        res.status(400)
-        throw new Error('The appointment overlapps with another appointment')
-    }
+        const convertedEndTime = new Date(appointmentBody.endTime)
+        console.log(convertedEndTime)
+        if(currentDateTime >= convertedStartTime ){
+            res.status(400)
+            throw new Error("The appointment has to start in the future")
+        }
+        if(appointmentBody.startTime >= appointmentBody.endTime){
+            res.status(400)
+            throw new Error("End time has to be greater than start time")
+        }
+        overlappingAppointment = await AppointmentModel.findOne({
+            $and: [
+                {
+                    doctor: doctorId,
+                },
+                {
+                    $or: [
+                        {
+                            startTime: {$lte: appointmentBody.startTime},
+                            endTime: {$gte: appointmentBody.startTime},
+                        },
+                        {
+                            startTime: {$gte: appointmentBody.startTime},
+                            endTime: {$lte: appointmentBody.endTime},
+                        },
+                        {
+                            startTime: {$lte: appointmentBody.endTime},
+                            endTime: {$gte: appointmentBody.startTime},
+                        },
+                    ]
+                }
+
+            ]
+        })
+        if (overlappingAppointment){
+            console.log(overlappingAppointment)
+            res.status(400)
+            throw new Error('The appointment overlapps with another appointment')
+        }
 
 
-       const appoinmtentToBeScheduled = await AppointmentModel.findOneAndUpdate({_id:appointmentId},{startTime:convertedStartTime,endTime:convertedEndTime})
-       res.status(200).json(appoinmtentToBeScheduled);
+        const appoinmtentToBeScheduled = await AppointmentModel.findOneAndUpdate({_id:appointmentId},{startTime:convertedStartTime,endTime:convertedEndTime})
+        res.status(200).json(appoinmtentToBeScheduled);
 
     }
     catch(error){
         res.status(400)
         throw new Error(error.message)
-    }  
+    }
 })
 
 
-
+const cancelAppointment = asyncHandler(async (req, res) => {
+    const { appointmentID } = req.params;
+    try {
+        // Finds the appointment from mongoDB and sets its status to cancelled.
+        const appointment = await AppointmentModel.findOneAndUpdate(
+            { _id: appointmentID },
+            { status: "CANCELLED" }
+        );
+        if (!appointment) throw new Error("Appointment not found");
+        // Appointments cancelled less than 24 hours before the appointment do not receive a refund.
+        const appointmentTime = new Date(appointment.startTime);
+        const cancellationDeadline = appointmentTime - 24 * 60 * 60 * 1000;
+        const now = new Date();
+        if (now > cancellationDeadline) {
+            res.status(200).json(appointment);
+            return;
+        }
+        // Appointment cancelled early, so refund is given.
+        const patient = await PatientModel.findById(appointment.patient);
+        const doctor = await DoctorModel.findById(appointment.doctor);
+        const healthPackagePatient = await HealthPackagePatientModel.findOne({
+            patientID: appointment.patient,
+        });
+        let amount = 0;
+        if (!healthPackagePatient) {
+            amount = doctor.hourlyRate + doctor.hourlyRate * 0.1;
+        } else {
+            const healthPackageID = healthPackagePatient.healthPackageID;
+            const healthPackage = await HealthPackageModel.findOne({
+                _id: healthPackageID,
+            });
+            amount = doctor.hourlyRate + doctor.hourlyRate * 0.1;
+            amount = amount * (1 - healthPackage.doctorSessionDiscount);
+        }
+        patient.wallet = patient.wallet + amount;
+        await patient.save();
+        res.status(200).json(appointment);
+    } catch (err) {
+        res.status(400);
+        throw new Error(err.message);
+    }
+});
 
 
 
@@ -636,5 +678,6 @@ module.exports = {
     success,
     createDoctorPatients,
     rescheduleAppointment,
-    getUpcomingAppointmentsPatient
+    getUpcomingAppointmentsPatient,
+    cancelAppointment
 };

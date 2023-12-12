@@ -1,7 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const AppointmentsDetails = ({ filteredAppointment, reserve }) => {
+
+const AppointmentsDetails = ({ filteredAppointment, reserve, cancel }) => {
+    const handleCancel = async () => {
+        try {
+            const response = await fetch(`/api/appointment/cancelAppointment/${filteredAppointment._id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                alert('Appointment cancelled successfully!');
+                window.location.reload();
+            } else {
+                alert(await response.text());
+            }
+        } catch (error) {
+            console.error('Error cancelling appointment', error);
+        }
+    }
+
     return (
         <div className="card box">
             <div className="card-body">
@@ -28,6 +49,20 @@ const AppointmentsDetails = ({ filteredAppointment, reserve }) => {
                         Reserve
                     </button>
                 </Link>
+            )}
+            {cancel && (
+                <button
+                    className="btn btn-danger"
+                    style={{
+                        position: 'absolute',
+                        top: 10,
+                        bottom: 10,
+                        right: 10,
+                    }}
+                    onClick={()=>handleCancel()}
+                >
+                    Cancel
+                </button>
             )}
         </div>
     );

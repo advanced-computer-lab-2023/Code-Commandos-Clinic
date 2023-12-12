@@ -53,6 +53,11 @@ import AppointmentFailure from './pages/AppointmentFailure';
 import CreateContract from "./pages/CreateContract";
 import Register from "./pages/Register";
 import EditPrescription from "./pages/EditPrescription";
+import VideoCall from './pages/VideoCall';
+import { ContextProvider } from './Context';
+import { ChakraProvider } from "@chakra-ui/react";
+import ChatProvider from "./ChatProvider";
+import Chat from './pages/Chat';
 
 const App = () => {
     const logged = window.localStorage.getItem("logged");
@@ -119,9 +124,10 @@ const App = () => {
             <Route path="/HealthPackages/Subscribe/Cancel" element={<PaymentCancel/>}/>
             <Route path="/AppointmentSuccess" element={<AppointmentSuccess/>}/>
             <Route path="/AppointmentFailure" element={<AppointmentFailure/>}/>
+            <Route path="/VideoCall" element={<ContextProvider><VideoCall/></ContextProvider>}/>
             <Route path="/CreateContract" element={<CreateContract/>}/>
             <Route path="/EditPrescription/:id" element={<EditPrescription/>}/>
-
+            <Route path="/Chat" element={<ChakraProvider><ChatProvider><Chat/></ChatProvider></ChakraProvider>}/>
             <Route path="/Register" element={<Register/>}/>
             <Route path="/Login" element={logged ? <Navigate to="/Home" replace /> : <Login/> }/>
             <Route path="/Home" element={<Home/>}/>

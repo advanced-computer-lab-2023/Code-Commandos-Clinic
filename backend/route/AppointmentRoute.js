@@ -15,7 +15,8 @@ const {
     scheduleFollowUp,
     success,
     rescheduleAppointment,
-    getUpcomingAppointmentsPatient
+    getUpcomingAppointmentsPatient,
+    cancelAppointment
 } = require('../controller/AppointmentController')
 const {protect} = require("../middleware/AuthenticationHandler");
 const {checkDoctorRole, checkPatientRole, checkPatientDoctorRole} = require("../middleware/AccessHandler");
@@ -35,6 +36,6 @@ router.get('/filterAppointmentsByDateOrStatus/:date/:status',protect,checkPatien
 router.get('/getUpcomingAppointmentsPatient/:patientid',getUpcomingAppointmentsPatient)
 router.post('/scheduleFollowUp/:patientId',protect,checkDoctorRole,scheduleFollowUp)
 router.put('/rescheduleAppointment/:appointmentId/:doctorId',rescheduleAppointment);
-
+router.put('/cancelAppointment/:appointmentID', protect, cancelAppointment)
 
 module.exports = router

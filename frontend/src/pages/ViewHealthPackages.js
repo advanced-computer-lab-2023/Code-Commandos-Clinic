@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import PackageDetails from '../components/PackageDetails'
 
@@ -144,7 +144,7 @@ const HealthPackages = () => {
                 </li>
                 {familyMembers &&
                     familyMembers.map((familyMember) => (
-                        <div><li key={familyMember._id} className="list-group-item">
+                        <div key={familyMember._id}><li key={familyMember._id} className="list-group-item">
                         <button
                             key={familyMember._id}
                             className="btn btn-link"
@@ -155,9 +155,9 @@ const HealthPackages = () => {
                         </li>
                         <li className="list-group-item">
                             Subscription Status: &nbsp;
-                            {(familyMember.healthPackage&&familyMember.healthPackage.status=="SUBSCRIBED")? 
+                            {(familyMember.healthPackage&&familyMember.healthPackage.status==="SUBSCRIBED")? 
                                 <span><span className="badge bg-primary"><b>{familyMember.healthPackage.status}</b></span> <span className="badge bg-primary"><b>renews {(new Date(familyMember.healthPackage.renewalDate)).toLocaleDateString("en-GB")}</b></span></span>
-                            :(familyMember.healthPackage&&familyMember.healthPackage.status=="CANCELLED")? 
+                            :(familyMember.healthPackage&&familyMember.healthPackage.status==="CANCELLED")? 
                                 <span><span className="badge bg-danger"><b>{familyMember.healthPackage.status}</b></span> <span className="badge bg-danger"><b>ends {(new Date(familyMember.healthPackage.renewalDate)).toLocaleDateString("en-GB")}</b></span></span>
                             : 
                                 <span className="badge bg-secondary"><b>UNSUBSCRIBED</b></span>
@@ -175,6 +175,7 @@ const HealthPackages = () => {
                     <div
                     onClick={() => setSelectedPackage(healthPackage)}
                     style={{cursor: "pointer"}}
+                    key={healthPackage._id}
                     >
                     {selectedPackage._id===healthPackage._id?
                     <PackageDetails key={healthPackage._id} healthPackage={healthPackage} currentPlan={healthPackage._id===subscribedPackage._id} selected={true}/>:
@@ -187,6 +188,7 @@ const HealthPackages = () => {
                     <div
                     onClick={() => setSelectedPackage(healthPackage)}
                     style={{cursor: "pointer"}}
+                    key={healthPackage._id}
                     >
                     {selectedPackage._id===healthPackage._id?
                     <PackageDetails key={healthPackage._id} healthPackage={healthPackage} currentPlan={healthPackage._id===subscribedPackage._id} selected={true}/>:
@@ -195,7 +197,7 @@ const HealthPackages = () => {
                     </div>
                 ))    
                 :<br/>}
-                {(selectedPackage._id && subscribedPackage._id!=selectedPackage._id)?
+                {(selectedPackage._id && subscribedPackage._id!==selectedPackage._id)?
                     <button className="btn btn-success" onClick={() => handleSubmit()}>
                         Continue
                     </button>
@@ -204,7 +206,7 @@ const HealthPackages = () => {
                         Continue
                     </button>
                 }&nbsp;
-                {(subscribedPackage._id&&( (selectedFamilyMember&&selectedFamilyMember.healthPackage.status!="CANCELLED")||(!selectedFamilyMember&&subscribedPackageStatus.status!="CANCELLED") )) &&
+                {(subscribedPackage._id&&( (selectedFamilyMember&&selectedFamilyMember.healthPackage.status!=="CANCELLED")||(!selectedFamilyMember&&subscribedPackageStatus.status!=="CANCELLED") )) &&
                     <button className="btn btn-danger" onClick={() => handleDelete()}>
                         Cancel Subscription
                     </button>
