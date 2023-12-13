@@ -647,6 +647,10 @@ const cancelAppointment = asyncHandler(async (req, res) => {
         }
         patient.wallet = patient.wallet + amount;
         await patient.save();
+        const patientMail = await PatientModel.findById(appointment.patient).select('email')
+        const doctorMail = await DoctorModel.findById(appointment.doctor).select('email')
+        sendEmail(patientMail.email,"Your Appointment starting at "+appointment.startTime+" has been cancelled and you will receive a refund")
+        sendEmail(doctorMail.email,"Your Appointment starting at "+appointment.startTime+" has been cancelled")
         res.status(200).json(appointment);
     } catch (err) {
         res.status(400);

@@ -35,7 +35,7 @@ router.get('/upcomingPastAppointmentsOfPatient',protect,checkPatientRole,upcomin
 router.get('/filterAppointmentsByDateOrStatus/:date/:status',protect,checkPatientDoctorRole,filterAppointmentsByDateOrStatus)
 router.get('/getUpcomingAppointmentsPatient/:patientid',getUpcomingAppointmentsPatient)
 router.post('/scheduleFollowUp/:patientId',protect,checkDoctorRole,scheduleFollowUp)
-router.put('/rescheduleAppointment/:appointmentId/:doctorId',rescheduleAppointment);
+router.put('/rescheduleAppointment/:appointmentId/:doctorId',protect,checkPatientDoctorRole,rescheduleAppointment);
 router.put('/cancelAppointment/:appointmentID', protect, cancelAppointment)
 
 module.exports = router
