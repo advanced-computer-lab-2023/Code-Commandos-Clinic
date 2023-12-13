@@ -11,6 +11,7 @@ const Doctor = require("../model/Doctor");
 const Admin = require("../model/Admin");
 const otpGenerator = require("otp-generator");
 const nodemailer = require("nodemailer");
+const mongoose = require('mongoose')
 const DoctorPatient = require("../model/DoctorPatient");
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
@@ -172,6 +173,7 @@ const viewAvailableAppointmentsOfDoctor = asyncHandler(async (req,res) => {
     const {doctorId} = req.params
     try {
         const availableAppointments = await AppointmentModel.find({doctor:doctorId,status:'FREE'})
+       // availableAppointments.patient = req.user.id
         res.status(200).json(availableAppointments)
     }
     catch (error){
@@ -184,7 +186,7 @@ const reserveAppointment = asyncHandler(async (req,res) => {
     const {id , familyMemberId} = req.body
     try {
         const appointment = await AppointmentModel.findById(id)
-        const doctorid=appointment.doctor
+        const doctorid= appointment.doctor
         const doctor = await DoctorModel.findById(doctorid);
         const healthPackagePatient = await HealthPackagePatientModel.findOne({ patientID: req.user.id });
         let amount=0;
@@ -219,7 +221,7 @@ const reserveAppointment = asyncHandler(async (req,res) => {
                 appointment.familyMemberName = member.name
             }
             appointment.status = 'RESERVED'
-            createDoctorPatients(appointment.doctor,appointment.patient)
+            createDoctorPatients(appointment.doctor,patient._id)
             await appointment.save()
             try {
                 const patientEmailObject = await Patient.findOne({username:req.user.username}).select("email")
@@ -658,13 +660,90 @@ const cancelAppointment = asyncHandler(async (req, res) => {
     }
 });
 
+// make a request
+const updateStatusToPending = async (req, res) => {
+    console.log('req params =========== ', req.params);
+    try {
+        const id = req.params.id; 
+        const patientId = req.params.whichMember === 'me' ? req.user.id: req.params.whichMember ;        
+        let pn ;
+        let patient_id;
+        if(patientId == req.user.id ){
+            pn = await PatientModel.findById(patientId);
+            patient_id = req.user.id;
+        }
+        else{
+            pn = await FamilyMember.findById(patientId);
+            patient_id = pn.account
+        }    
+        
+        const patientName = pn.name;
+        console.log(pn);
 
+        const updatedAppointment = await AppointmentModel.findByIdAndUpdate(
+            id,
+            { 
+                status: 'PENDING',
+                patientName: patientName ,
+                patient: patient_id,
+            },
+        );
+        
+        if (!updatedAppointment) {
+            return res.status(404).json({ message: 'Appointment not found' });
+        }
 
+        // Optionally, you can send the updated appointment in the response
+        return res.status(200).json({ updatedAppointment });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
 
+// revoke a followup
+const updateStatusToFree = async (req, res) => {
+    try {
+        const id = req.params.id; 
+        const updatedAppointment = await AppointmentModel.findByIdAndUpdate(
+            id,
+            { 
+                status: 'FREE',
+                patientName: null ,
+                patient: null,
+            },
+        );
+        if (!updatedAppointment) {
+            return res.status(404).json({ message: 'Appointment not found' });
+        }
 
+        // Optionally, you can send the updated appointment in the response
+        return res.status(200).json({ updatedAppointment });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Internal Server Error' });
+    }
 
+}
 
+const acceptFollowUp = async (req, res) => {
+    try {
+        const followUpId = req.params.followUpId;
+        const updatedAppointment = await AppointmentModel.findByIdAndUpdate(
+            followUpId,
+            { status: 'RESERVED', type: 'FOLLOWUP' },
+        );
 
+        if (!updatedAppointment) {
+            return res.status(404).json({ message: 'Appointment not found' });
+        }
+
+        return res.status(200).json({ updatedAppointment });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
 
 
 module.exports = {
@@ -683,5 +762,8 @@ module.exports = {
     createDoctorPatients,
     rescheduleAppointment,
     getUpcomingAppointmentsPatient,
-    cancelAppointment
+    cancelAppointment,
+    updateStatusToPending,
+    acceptFollowUp,
+    updateStatusToFree
 };

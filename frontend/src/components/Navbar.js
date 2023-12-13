@@ -63,6 +63,9 @@ const Navbar = () => {
                                             <Link to="/DoctorRegistrationRequests" className="dropdown-item">Doctor Registration Requests</Link>
                                         </li>
                                         <li>
+                                            <Link to="/ViewFollowUpRequests" className="dropdown-item">FollowUp Requests</Link>
+                                        </li>
+                                        <li>
                                             <Link to="/DoctorRegistration" className="dropdown-item">Doctor Registration</Link>
                                         </li>
                                         <li>
@@ -113,9 +116,9 @@ const Navbar = () => {
                                         <li>
                                             <Link to="/LinkFamilyMember" className="dropdown-item">Link Family Member</Link>
                                         </li>
-                                        <li>
-                                            <Link to="/CreateFollowUp" className="dropdown-item">Create Follow-Up</Link>
-                                        </li>
+                                        
+                                            {/* <Link to="/CreateFollowUp" className="dropdown-item">Create Follow-Up</Link>
+                                        </li> */}
                                     </ul>
                                 </li>
                                 <li className="nav-item dropdown">

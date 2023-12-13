@@ -58,6 +58,8 @@ import { ContextProvider } from './Context';
 import { ChakraProvider } from "@chakra-ui/react";
 import ChatProvider from "./ChatProvider";
 import Chat from './pages/Chat';
+import ViewAvailableAppointmentsOfSpecificDoctor from "./pages/ViewAvailableAppointmentsOfSpecificDoctor";
+import ViewFollowUpRequests from './pages/ViewFollowUpRequests';
 
 const App = () => {
     const logged = window.localStorage.getItem("logged");
@@ -83,6 +85,7 @@ const App = () => {
             <Route path="/ViewAndRemovePatients" element={<ViewAndRemovePatients/>}/>
             <Route path="/AddAdmin" element={<AddAdmin />}/>
             <Route path="/ViewPatientHealthRecord" element={<ViewpatientHealthRecord />}/>
+            <Route path="/ViewFollowUpRequests" element={<ViewFollowUpRequests/>}/>
 
             <Route path="/AddHealthRecord/:id" element={<AddHealthRecord />}/>
             <Route path="/viewUploadedHealthRecordPatient" element={<HealthRecordUpload />}/>
@@ -117,6 +120,7 @@ const App = () => {
             <Route path="/DoctorContract" element={<DoctorContract/>}/>
             <Route path="/LinkFamilyMember" element={<LinkFamilyMember/>}/>
             <Route path="/CreateFollowUp" element={<CreateFollowUp/>}/>
+            <Route path="/ViewAvailableAppointmentsOfSpecificDoctor/:doctorId" element={<ViewAvailableAppointmentsOfSpecificDoctor/>} />
             <Route path="/HealthPackages" element={<HealthPackages/>}/>
             <Route path="/HealthPackages/Subscribe" element={<SubscribeToPackage/>}/>
             <Route path="/HealthPackages/Subscribe/Success" element={<PaymentSuccess/>}/>

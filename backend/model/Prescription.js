@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+
+
 const PrescriptionSchema = new mongoose.Schema({
   patient: {
     type: mongoose.Schema.Types.ObjectId,
@@ -35,6 +37,7 @@ const PrescriptionSchema = new mongoose.Schema({
   ],
 
 },{ timestamps: true });
+
 
 const Prescription = mongoose.model('Prescription', PrescriptionSchema);
 module.exports = Prescription;

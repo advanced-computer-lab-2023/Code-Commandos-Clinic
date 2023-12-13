@@ -101,7 +101,7 @@ const FilterAppointmentsByDateOrStatus = () =>{
             <div className="results mt-4">
                 {searchResults &&
                     searchResults.map((filteredAppointment) => (
-                        <AppointmentsDetails  filteredAppointment={filteredAppointment} reserve={false} cancel={false}/>
+                        <AppointmentsDetails  filteredAppointment={filteredAppointment} reserve={false} follow_up={false} cancel={false} />
                     ))}
             </div>
 

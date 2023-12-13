@@ -30,6 +30,9 @@ const getPatientsOfADoctor = asyncHandler ( async (req,res) =>{
     }
 })
 
+
+
+
 //requirement-25 Nour
 const getInfoHealthPatient = asyncHandler ( async (req , res) =>{
     try{
@@ -376,5 +379,6 @@ module.exports = {
     searchByName,
     payForSubscription,
     subscribeToPackage,
-    getAmount
+    getAmount,
+    
 }

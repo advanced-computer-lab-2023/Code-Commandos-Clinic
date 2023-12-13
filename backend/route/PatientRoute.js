@@ -15,7 +15,7 @@ const {
   payForSubscription,
   subscribeToPackage,
   getAmount,
-  searchPatientsToChat
+  searchPatientsToChat,
 } = require('../controller/PatientController')
 const {protect} = require("../middleware/AuthenticationHandler");
 const {checkPatientRole,checkAdminRole, checkDoctorRole} = require("../middleware/AccessHandler");
@@ -33,4 +33,4 @@ router.get('/payForSubscription/:familyMemberID/:packageID/:paymentMethod', prot
 router.post('/subscribeToPackage/:sessionID',protect,checkPatientRole,subscribeToPackage)
 router.get('/searchPatientsToChat/:name', searchPatientsToChat)
 
-module.exports = router
+module.exports = router 
