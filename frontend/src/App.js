@@ -117,7 +117,6 @@ const App = () => {
             <Route path="/DoctorContract" element={<DoctorContract/>}/>
             <Route path="/LinkFamilyMember" element={<LinkFamilyMember/>}/>
             <Route path="/CreateFollowUp" element={<CreateFollowUp/>}/>
-
             <Route path="/HealthPackages" element={<HealthPackages/>}/>
             <Route path="/HealthPackages/Subscribe" element={<SubscribeToPackage/>}/>
             <Route path="/HealthPackages/Subscribe/Success" element={<PaymentSuccess/>}/>
