@@ -38,13 +38,10 @@ router.get('/upcomingPastAppointmentsOfPatient',protect,checkPatientRole,upcomin
 router.get('/filterAppointmentsByDateOrStatus/:date/:status',protect,checkPatientDoctorRole,filterAppointmentsByDateOrStatus)
 router.get('/getUpcomingAppointmentsPatient/:patientid',getUpcomingAppointmentsPatient)
 router.post('/scheduleFollowUp/:patientId',protect,checkDoctorRole,scheduleFollowUp)
-router.put('/rescheduleAppointment/:appointmentId/:doctorId',protect,checkPatientDoctorRole,rescheduleAppointment);
+router.put('/rescheduleAppointment/:appointmentId',protect,checkPatientDoctorRole,rescheduleAppointment);
 router.put('/cancelAppointment/:appointmentID', protect, cancelAppointment)
-
 router.put('/updateStatusToPending/:id/:whichMember',protect,checkPatientRole,updateStatusToPending) // make the request
-
 router.put('/updateStatusToFree/:id',protect,checkDoctorRole,updateStatusToFree) // revoke a request
-
 router.put('/acceptFollowUp/:followUpId',protect,checkDoctorRole,acceptFollowUp)
 
 module.exports = router

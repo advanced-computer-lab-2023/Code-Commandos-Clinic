@@ -60,6 +60,7 @@ import ChatProvider from "./ChatProvider";
 import Chat from './pages/Chat';
 import ViewAvailableAppointmentsOfSpecificDoctor from "./pages/ViewAvailableAppointmentsOfSpecificDoctor";
 import ViewFollowUpRequests from './pages/ViewFollowUpRequests';
+import RescheduleAppointment from "./pages/RescheduleAppointment";
 
 const App = () => {
     const logged = window.localStorage.getItem("logged");
@@ -131,6 +132,8 @@ const App = () => {
             <Route path="/CreateContract" element={<CreateContract/>}/>
             <Route path="/EditPrescription/:id" element={<EditPrescription/>}/>
             <Route path="/Chat" element={<ChakraProvider><ChatProvider><Chat/></ChatProvider></ChakraProvider>}/>
+            <Route path="/Reschedule/:appointmentId" element={<RescheduleAppointment/>}/>
+
             <Route path="/Register" element={<Register/>}/>
             <Route path="/Login" element={logged ? <Navigate to="/Home" replace /> : <Login/> }/>
             <Route path="/Home" element={<Home/>}/>

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import {useNavigate} from "react-router-dom";
 
 const AppointmentsDetails = ({ filteredAppointment, reserve , follow_up , issue,cancel }) => {
+    const navigate = useNavigate();
     const handleMakeRequest = async () => {
         try {
           const appointmentId = filteredAppointment._id; 
@@ -44,6 +45,10 @@ const AppointmentsDetails = ({ filteredAppointment, reserve , follow_up , issue,
         } catch (error) {
             console.error('Error cancelling appointment', error);
         }
+    }
+
+    function handleReschedule() {
+        navigate(`/Reschedule/${filteredAppointment._id}`)
     }
 
     return (
@@ -92,6 +97,19 @@ const AppointmentsDetails = ({ filteredAppointment, reserve , follow_up , issue,
                 </Link>
             )}
             {cancel && (
+                <div>
+                <button
+                    className="btn btn-primary"
+                    style={{
+                        position: 'absolute',
+                        top: 10,
+                        bottom: 10,
+                        right: 100,
+                    }}
+                    onClick={()=>handleReschedule()}
+                >
+                    Reschedule
+                </button>
                 <button
                     className="btn btn-danger"
                     style={{
@@ -104,6 +122,7 @@ const AppointmentsDetails = ({ filteredAppointment, reserve , follow_up , issue,
                 >
                     Cancel
                 </button>
+                </div>
             )}
         </div>
     );

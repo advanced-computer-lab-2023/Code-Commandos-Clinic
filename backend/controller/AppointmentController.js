@@ -91,7 +91,7 @@ const getUpcomingPatientsOfDoctor = asyncHandler (async (req,res)=>{
     let query = {
         $and: [
             { startTime : { $gt : currentDate } },
-            {status: "RESERVED"},
+            { status: { $in: ["RESERVED", "RESCHEDULED"] } },
             { doctor : req.user.id }
         ]
     }
@@ -343,7 +343,7 @@ const success = asyncHandler(async (req,res) =>{
 
 const upcomingPastAppointmentsOfDoctor = asyncHandler(async (req,res) => {
     try {
-        const upcomingAppointments = await AppointmentModel.find({doctor:req.user.id,status:'RESERVED'})
+        const upcomingAppointments = await AppointmentModel.find({doctor:req.user.id,status: { $in: ["RESERVED", "RESCHEDULED"] }})
         const pastAppointments = await AppointmentModel.find({doctor:req.user.id,status:{ $in: ['COMPLETED', 'CANCELLED'] }})
         res.status(200).json({upcoming: upcomingAppointments, past: pastAppointments})
     }
@@ -355,7 +355,7 @@ const upcomingPastAppointmentsOfDoctor = asyncHandler(async (req,res) => {
 
 const upcomingPastAppointmentsOfPatient = asyncHandler(async (req,res) => {
     try {
-        const upcomingAppointments = await AppointmentModel.find({patient:req.user.id,status:'RESERVED'})
+        const upcomingAppointments = await AppointmentModel.find({patient:req.user.id,status: { $in: ["RESERVED", "RESCHEDULED"] }})
         const pastAppointments = await AppointmentModel.find({patient:req.user.id,status:{ $in: ['COMPLETED', 'CANCELLED'] }})
         res.status(200).json({upcoming: upcomingAppointments, past: pastAppointments})
     }
@@ -536,7 +536,7 @@ const createDoctorPatients= asyncHandler(async(doctorId,patientId) =>{
 const getUpcomingAppointmentsPatient = asyncHandler(async (req,res) => {
     try{
         //i am assuming that that the reserved is the upcomingappointment
-        const upcomingAppointments = await AppointmentModel.find({patient:req.params.patientid,status:'RESERVED'})
+        const upcomingAppointments = await AppointmentModel.find({patient:req.params.patientid,status: { $in: ["RESERVED", "RESCHEDULED"] }})
         if(!upcomingAppointments){
             throw new Error('patient have no appointments');
         }
@@ -556,7 +556,8 @@ const rescheduleAppointment = asyncHandler(async (req,res) => {
         //when you click on the appointment that you want to reschedule, you will send the appointment id and doctor id and the start date and end date of the the appointment you want to reschedule
         let overlappingAppointment;
         const appointmentId=req.params.appointmentId
-        const doctorId=req.params.doctorId;
+        const appointment = await AppointmentModel.findById(appointmentId).select('doctor')
+        const doctorId = appointment.doctor
         const appointmentBody = req.body
         const currentDateTime = new Date();
         const convertedStartTime = new Date(appointmentBody.startTime)
@@ -595,14 +596,14 @@ const rescheduleAppointment = asyncHandler(async (req,res) => {
 
             ]
         })
-        if (overlappingAppointment){
+        if (overlappingAppointment && overlappingAppointment._id != appointmentId){
             console.log(overlappingAppointment)
             res.status(400)
             throw new Error('The appointment overlapps with another appointment')
         }
 
 
-        const appoinmtentToBeScheduled = await AppointmentModel.findOneAndUpdate({_id:appointmentId},{startTime:convertedStartTime,endTime:convertedEndTime})
+        const appoinmtentToBeScheduled = await AppointmentModel.findOneAndUpdate({_id:appointmentId},{startTime:convertedStartTime,endTime:convertedEndTime,status:'RESCHEDULED'})
         res.status(200).json(appoinmtentToBeScheduled);
 
     }
