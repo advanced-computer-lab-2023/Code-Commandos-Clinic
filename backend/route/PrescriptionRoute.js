@@ -10,7 +10,7 @@ const {
     deleteMedicineFromPrescription,
     updateMedicineDosage,
     getPrescriptionsOfPatient, deletePrescriptionById,
-    generatePDF, updateDosageDescription
+    generatePDF, updateDosageDescription, medicineIsBought
 } = require("../controller/PrescriptionController")
 const {protect} = require("../middleware/AuthenticationHandler");
 const {checkPatientDoctorRole, checkPatientRole, checkDoctorRole} = require("../middleware/AccessHandler");
@@ -35,7 +35,8 @@ router.delete('/deleteMedicineFromPrescription',deleteMedicineFromPrescription)
 router.put('/updateMedicineDosage',updateMedicineDosage)
 router.put('/updateDosageDescription',updateDosageDescription)
 
-router.get('/generatePdf/:id', generatePDF);
+router.get('/generatePdf/:id', generatePDF)
+router.put('/medicineIsBought/:username', medicineIsBought)
 
 module.exports = router
 

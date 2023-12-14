@@ -35,6 +35,10 @@ const PrescriptionSchema = new mongoose.Schema({
       },
       dosageDescription: {
         type: String,
+      },
+      bought: {
+        type: Boolean,
+        default: false
       }
     },
   ],

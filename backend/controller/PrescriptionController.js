@@ -252,6 +252,44 @@ const generatePDF = async (req, res) => {
 }
 };
 
+const medicineIsBought = asyncHandler(async (req,res) => {
+  const{username} = req.params
+  const medicineNames = req.body
+
+  console.log("user ",username)
+
+  try{
+    const patient = await PatientModel.findOne({username}).select('_id')
+    const prescriptions = await PrescriptionModel.find({
+      patient: patient._id,
+      'medicines.name': { $in: medicineNames }
+    });
+    for (const prescription of prescriptions) {
+      for (const medicine of prescription.medicines) {
+        if (medicineNames.includes(medicine.name)) {
+          medicine.bought = true;
+        }
+      }
+
+      await prescription.save();
+
+      const allMedicinesBought = prescription.medicines.every(
+          (medicine) => medicine.bought
+      );
+
+      if (allMedicinesBought) {
+        prescription.status = 'FILLED';
+        await prescription.save();
+      }
+    }
+    res.status(200).json(medicineNames)
+  }
+  catch (error){
+    console.log(error)
+    res.status(400)
+    throw new Error(error.message)
+  }
+})
 
 module.exports = {
   getPrescriptionsbyPatient,
@@ -266,5 +304,6 @@ module.exports = {
   deleteMedicineFromPrescription,
   updateMedicineDosage,
   updateDosageDescription,
-  generatePDF
+  generatePDF,
+  medicineIsBought
 };
