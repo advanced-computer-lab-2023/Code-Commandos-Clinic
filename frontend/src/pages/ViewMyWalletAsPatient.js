@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import "../css/ViewMyWalletAsPatient.css";
+import wallett from '../images/wallet.jpg';
+import Swal from 'sweetalert2';
 
 const ViewMyWalletAsPatient = () => {
     const [wallet, setWallet] = useState(0);
@@ -19,10 +22,18 @@ const ViewMyWalletAsPatient = () => {
                     setWallet(result);
                 }
                 else {
-                    alert(await response.text())
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: await response.text(),
+                    });
                 }
             } catch (error) {
-                alert(error.message)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: error.message,
+                });
             }
         };
 
@@ -31,10 +42,16 @@ const ViewMyWalletAsPatient = () => {
         
     }, []);
     return (
-        <div className="container mt-4">
-            <h2>Your Wallet Amount:</h2>
-            <h4>${wallet}</h4>
+        <div className="bodyy">  
+        <h2 className="mb-4"><hr className="lineAround"></hr>Wallet Amount <hr className="lineAround"></hr></h2>
+        <div class ="bodyyy2">
+        <div class ="walletcon">
+        <img src={wallett} className="wallett" alt="wallet" />
+        <h4 class="ammouunt">Amount of money in your wallet : {wallet} <span class ="dollar">$ </span></h4>
         </div>
+        </div>
+    </div>
+
 
     );
 }

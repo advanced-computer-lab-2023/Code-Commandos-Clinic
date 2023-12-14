@@ -74,7 +74,7 @@ const ViewAndRemovePatients = ()=> {
                 <div className="col-md-5">
                     <ul className="list-group">
                         {patients.map((patient) => (
-                            <li key={patient._id} className="list-group-item">
+                            <li key={patient._id} className="list-group-item red-border">
                                 <button
                                     className="btn btn-link btn-lg"
                                     onClick={() => setSelectedPatient(patient)}

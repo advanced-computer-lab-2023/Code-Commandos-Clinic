@@ -1,63 +1,73 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import record from '../images/healthrecord.jpg';
+import "../css/viewUploadedHealthRecordPatient.css";
+import Swal from "sweetalert2"
 
 const HealthRecordUpload = () => {
-  const [healthRecord, setHealthRecord] = useState(null);
+  const [healthRecord, setHealthRecord] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchHealthRecord = async () => {
       const response = await fetch("/api/healthRecord/getHealthRecordOfPatient");
       if (response.ok) {
-        const json = await response.json()
-        setLoading(false)
-        console.log(json)
+        const json = await response.json();
+        setLoading(false);
         setHealthRecord(json);
+      } else {
+        setLoading(false);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: await response.text(),
+        });
       }
-      else{
-        setLoading(false);
-        alert(await response.text())
-      }/*
-      try {
-        const response = await fetch("/api/healthRecord/getHealthRecordOfPatient");
-        const json= await response.json()
-        setHealthRecord(json);
-      } catch (error) {
-        if ((error.response && error.response.status === 401 )   ||( error.response && error.response.status === 403)) {
-          // Handle unauthorized access, e.g., redirect to login
-          alert('Unauthorized access. ');
-        } else {
-          alert('Error fetching health record:', error.message);
-        }
-      } finally {
-        setLoading(false);
-      }*/
     };
 
     fetchHealthRecord();
   }, []); // Empty dependency array to run only once
 
   return (
-      <div className="container">
+<div className="recordbody">
+    <h1 className="headd">Your Health Record</h1>
+
+    <div className="recordcon">
+
         {loading ? (
             <p>Loading...</p>
-        ) : healthRecord ? (
-            <div>
-              <h1>Your Health Record</h1>
-
-              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
-                <iframe
-                    title="Health Record"
-                    src={healthRecord.urlName}
-                    style={{ width: '100%', height: '100%' }}
-                />
-              </div>
-            </div>
         ) : (
-            <p>Error loading health record.</p>
+            <table className="sss">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Affiliation</th>
+                        <th>Educational Background</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {Array.isArray(healthRecord) && healthRecord.length > 0 ? (
+                        healthRecord.map((recordd) => (
+                            <tr key={recordd._id}>
+                                <td>{recordd.name}</td>
+                                <td>{recordd.email}</td>
+                                <td>{recordd.affiliation}</td>
+                                <td>{recordd.educationalBackground}</td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan="4">No health records found</td>
+                        </tr>
+                    )}
+                </tbody>
+            </table>
         )}
-      </div>
-  );
+
+        <img src={record} className="record" alt="record" />
+    </div>
+</div>
+);
 };
 
 export default HealthRecordUpload;

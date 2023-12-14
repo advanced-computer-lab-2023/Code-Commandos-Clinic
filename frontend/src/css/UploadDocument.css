@@ -1,0 +1,77 @@
+.bodyyssyyy{
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    margin-left: 6%;
+
+   
+}
+.doc{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.btn-primary{
+    align-items: flex-start;
+    background-color: #d21312;
+    border: none;
+    margin-left: 13%;
+    margin-top: 1%;
+    height: 20%;
+    margin-bottom: 1%;
+    width: 20%;
+}
+.titlee{
+    color: #d21312;
+    margin-left: 2%;
+}
+
+.btn-secondary{
+    margin-left: 5%;
+    margin-top: 1%;
+    
+}
+.rooow{
+    align-items: flex-start;
+    margin-left: 18%;
+    display: flex;
+    flex-direction: row;
+}
+.document{
+   width: 60%;
+
+}
+.bodyyggy{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   
+    
+    
+}
+h2.mb-4{
+    text-align: center;
+font-size: 30px;
+font-weight: 300;
+color: #222;
+letter-spacing: 1px;
+text-transform: uppercase;
+display: grid;
+grid-template-columns: 1fr max-content 1fr;
+grid-template-rows: 27px 0;
+grid-gap: 20px;
+align-items: center;
+
+}
+hr.lineAround {
+    border-top: 1px solid darkred;
+  }
+  .box-with-image {
+    display: flex;
+    align-items: center;
+  }
+  .image {
+    flex: 1;
+    padding: 20px;
+
+  }

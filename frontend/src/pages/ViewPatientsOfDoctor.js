@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import PatientInfo from "../components/PatientInfo";
+import Swal from 'sweetalert2';
+import '../css/ViewPatientsOfDoctor.css'
 
 const ViewPatientsOfDoctor = () =>{
     const [patients , setPatients] = useState([])
@@ -10,11 +12,14 @@ const ViewPatientsOfDoctor = () =>{
             const response = await fetch('api/patient/getPatientsOfADoctor')
             if(response.ok){
                 const json = await response.json()
-                console.log("patients are ",json)
                 setPatients(json)
             }
             else {
-                alert(await response.text())
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: await response.text(),
+                });
             }
         }
         fetchPatients()
@@ -37,16 +42,22 @@ const ViewPatientsOfDoctor = () =>{
             });
             if (response.ok) {
                 const results = await response.json();
-                console.log(results)
                 setPatients(results)
             } else {
                 const errorMessage = await response.text();
-                alert(errorMessage)
-                throw new Error(errorMessage)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: errorMessage,
+                });
             }
         }
         catch (error) {
-           alert(error)
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: error.message,
+            });
         }
         
     }
@@ -54,7 +65,7 @@ const ViewPatientsOfDoctor = () =>{
     return (
         <div className="container mt-4">
             <h2 className="mb-4">List of Your Patients</h2>
-            <div className="input-group mb-3">
+            <div className="ss">
                 <input
                     type="text"
                     id="name"
@@ -63,27 +74,41 @@ const ViewPatientsOfDoctor = () =>{
                     className="form-control"
                     placeholder="Search by name"
                 />
-                <button onClick={handleSearch} className="btn btn-primary">
+                
+                <button onClick={handleSearch} className="searchh">
                     Search
                 </button>
             </div>
-
-            <div className="list-group">
-                {patients &&
-                    patients.map((patient) => (
-                        <button
-                            key={patient._id}
-                            className="list-group-item list-group-item-action"
-                            onClick={() => setSelectedPatient(patient)}
-                        >
-                            {patient.name}
+            <div className="roww">
+             <div className="col-md-5 see">
+               <ul className="list-group">
+                  {patients.map((patient) => (
+                     <li key={patient._id} className="list-group-item ">
+                         <button
+                             className="btn btn-link btn-lg"
+                             onClick={() => setSelectedPatient(patient)}
+                             style={{ textDecoration: "none", color:'#000000' }}
+                         >
+                             <span>{patient.name}</span>
                         </button>
-                    ))}
+                    </li>
+                ))}
+              </ul>
             </div>
-            {selectedPatient && <PatientInfo patient={selectedPatient} />}
+            <div className="col-md-5 mt-55">
+               {selectedPatient && (
+                        <>
+                            <div > {/* Add margin to the bottom */}
+                            <PatientInfo patient={selectedPatient} />
+        
+                           </div>
+
+                        </>
+            )}
         </div>
+      </div>
+    </div>
     );
-}
+};
 
 export default ViewPatientsOfDoctor;
-

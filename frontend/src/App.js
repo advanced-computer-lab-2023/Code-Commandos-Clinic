@@ -90,7 +90,6 @@ const App = () => {
             <Route path="/AddAdmin" element={<AddAdmin />}/>
             <Route path="/ViewPatientHealthRecord" element={<ViewpatientHealthRecord />}/>
             <Route path="/ViewFollowUpRequests" element={<ViewFollowUpRequests/>}/>
-
             <Route path="/AddHealthRecord/:id" element={<AddHealthRecord />}/>
             <Route path="/viewUploadedHealthRecordPatient" element={<HealthRecordUpload />}/>
             <Route path="/ViewUploadedHealthRecordPatientsOfDoctor" element={<HealthRecordUploadPatientsDoctor />}/>
@@ -100,7 +99,6 @@ const App = () => {
             <Route path="/ViewMyWalletAsPatient" element={<ViewMyWalletAsPatient/>}/>
             <Route path="/ViewMyWalletAsDoctor" element={<ViewMyWalletAsDoctor/>}/>
             <Route path="/UploadDocument" element={<UploadDocument/>}/>
-
             <Route path="/RemoveDocument" element={<RemoveDocument/>}/>
             <Route path="/FilterPatientsWithUpcomingAppointments" element={<FilterPatientsWithUpcomingAppointments/>}/>
             <Route path="/RegisterPatientWithDoctor" element={<RegisterPatientWithDoctor/>}/>

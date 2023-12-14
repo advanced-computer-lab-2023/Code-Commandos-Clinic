@@ -1,0 +1,44 @@
+.red-border {
+    border: 1px solid #D24848;
+}
+.mb-4{
+    color: #d21312;
+}
+.btn btn-danger{
+    background-color: #d21312;
+}
+.mt-4{
+    margin-bottom: 2%;
+
+}
+.bin{
+margin-left: 40%;
+
+}
+
+h2.mb-4{
+    text-align: center;
+font-size: 30px;
+font-weight: 300;
+color: #222;
+letter-spacing: 1px;
+text-transform: uppercase;
+display: grid;
+grid-template-columns: 1fr max-content 1fr;
+grid-template-rows: 27px 0;
+grid-gap: 20px;
+align-items: center;
+
+}
+hr.lineAround {
+    border-top: 1px solid darkred;
+  }
+  .box-with-image {
+    display: flex;
+    align-items: center;
+  }
+  .image {
+    flex: 1;
+    padding: 20px;
+
+  }

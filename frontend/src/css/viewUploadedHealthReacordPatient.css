@@ -1,0 +1,36 @@
+.headd{
+    color: #d21312;
+    margin-left: 3%;
+}
+.recordcon{
+    display: flex;
+    flex-direction: row;
+    
+}
+
+h2.mb-4{
+    text-align: center;
+font-size: 30px;
+font-weight: 300;
+color: #222;
+letter-spacing: 1px;
+text-transform: uppercase;
+display: grid;
+grid-template-columns: 1fr max-content 1fr;
+grid-template-rows: 27px 0;
+grid-gap: 20px;
+align-items: center;
+
+}
+hr.lineAround {
+    border-top: 1px solid darkred;
+  }
+  .box-with-image {
+    display: flex;
+    align-items: center;
+  }
+  .image {
+    flex: 1;
+    padding: 20px;
+
+  }
