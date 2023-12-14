@@ -723,6 +723,8 @@ const updateStatusToFree = async (req, res) => {
         }
 
         // Optionally, you can send the updated appointment in the response
+        const patientEmail = await Patient.findById(updatedAppointment.patient).select("email")
+        sendEmail(patientEmail.email,"Your follow up request has been revoked")
         return res.status(200).json({ updatedAppointment });
     } catch (error) {
         console.error(error);
@@ -742,7 +744,8 @@ const acceptFollowUp = async (req, res) => {
         if (!updatedAppointment) {
             return res.status(404).json({ message: 'Appointment not found' });
         }
-
+        const patientEmail = await Patient.findById(updatedAppointment.patient).select("email")
+        sendEmail(patientEmail.email,"Your follow up request has been accepted")
         return res.status(200).json({ updatedAppointment });
     } catch (error) {
         console.error(error);
