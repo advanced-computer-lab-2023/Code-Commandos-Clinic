@@ -48,6 +48,80 @@ body{
     display: flex;
 }
 
-.medicine-name{
+.medicine-name {
     color: red;
+}
+.red-header {
+    color: #D21312;
+}
+
+.custom-btn {
+    background-color: #D21312; /* Change this to your desired color */
+    color: #fff; /* Text color on the button, adjust as needed */
+    border: none; /* Remove button border if necessary */
+    padding: 10px 20px; /* Adjust padding as needed */
+    border-radius: 5px; /* Optional: Add border-radius for a rounded button */
+  }
+
+  .edit-btn {
+    background-color: #354E6A;
+    color: #fff; /* Set text color to white or another contrasting color */
+    /* Add any other styling you need */
+  }
+
+  footer {
+    background-color: #777;
+    padding: 10px;
+    text-align: center;
+    color: white;
+  }
+
+  hr.lineAround {
+    border-top: 1px solid darkred;
+  }
+
+  h2.mb-4{
+    text-align: center;
+font-size: 30px;
+font-weight: 300;
+color: #222;
+letter-spacing: 1px;
+text-transform: uppercase;
+display: grid;
+grid-template-columns: 1fr max-content 1fr;
+grid-template-rows: 27px 0;
+grid-gap: 20px;
+align-items: center;
+
+}
+
+.wider-button {
+    width: 100px;
+    margin-left: 20px; /* Adjust the width as needed */
+  }
+
+  .doctor-update {
+    display: flex;
+  }
+  
+  .content {
+    flex: 1;
+  }
+  
+  .photo {
+    width: 30%; /* Adjust the width as needed */
+    padding: 20px;
+  }
+  
+  img {
+    width: 80%;
+    height: auto;
+  }
+
+  .add-package {
+    display: flex;
+    align-items: flex-start;
+}
+.create {
+    margin-bottom: 50px; /* Adjust the margin-top as needed */
 }

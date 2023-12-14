@@ -1,111 +1,140 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import Swal from 'sweetalert2';
 
 const DoctorUpdateForm = () => {
-  //const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
-  const [hourlyRate, setHourlyRate] = useState('')
-  const [affiliation, setAffiliation] = useState('')
+  const [email, setEmail] = useState('');
+  const [hourlyRate, setHourlyRate] = useState('');
+  const [affiliation, setAffiliation] = useState('');
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    let doctor = {}
-    // if(username.length !== 0){
-    //   doctor.username = username;
-    // }
-    if(email.length !== 0){
+    // Validation checks
+    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Please enter a valid email address.',
+      });
+      return;
+    }
+
+    if (!hourlyRate || isNaN(hourlyRate) || hourlyRate < 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Please enter a valid hourly rate.',
+      });
+      return;
+    }
+
+    if (!affiliation) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Please enter an affiliation.',
+      });
+      return;
+    }
+
+    let doctor = {};
+
+    if (email.length !== 0) {
       doctor.email = email;
     }
-    if(hourlyRate.length !== 0){
+    if (hourlyRate.length !== 0) {
       doctor.hourlyRate = hourlyRate;
     }
-    if(affiliation.length !== 0){
+    if (affiliation.length !== 0) {
       doctor.affiliation = affiliation;
     }
-    
+
     const response = await fetch('/api/doctor/updateDoctor', {
       method: 'PUT',
       body: JSON.stringify(doctor),
       headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+        'Content-Type': 'application/json',
+      },
+    });
 
     if (!response.ok) {
-        alert(await response.text())
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: await response.text(),
+      });
     }
+
     if (response.ok) {
-        const json = await response.json()
-      setEmail('')
-      setHourlyRate('')
-      setAffiliation('')
-      alert('Update successful.')
-      console.log('a doctor\'s profile has been updated:', json)
+      const json = await response.json();
+      setEmail('');
+      setHourlyRate('');
+      setAffiliation('');
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Update Successful!',
+        showConfirmButton: true,
+        confirmButtonText: 'OK',
+
+      }).then((result) => {
+        if (result.isConfirmed || result.isDismissed) {
+          // Handle additional actions if needed
+          console.log("A doctor's profile has been updated:", json);
+        }
+      });
     }
+  };
 
-  }
+  return (
+    <div>
+  <h2 className="mb-4"><hr className="lineAround"></hr>Update your information<hr className="lineAround"></hr></h2>
+    <form className="create m-5 border-danger box col-md-9" onSubmit={handleSubmit}>
+      <div className="col-md-3 mb-3">
+        <label htmlFor="email" className="form-label">
+          E-mail:
+        </label>
+        <input
+          type="email"
+          className="form-control"
+          id="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </div>
 
-    return (
-        <form className="create m-5" onSubmit={handleSubmit}>
-            <h2>Update your information:</h2>
+      <div className="col-md-3 mb-3">
+        <label htmlFor="hourlyRate" className="form-label">
+          Hourly Rate:
+        </label>
+        <input
+          type="number"
+          className="form-control"
+          id="hourlyRate"
+          value={hourlyRate}
+          onChange={(e) => setHourlyRate(e.target.value)}
+        />
+      </div>
 
-            {/* <div className="mb-3">
-                <label htmlFor="username" className="form-label">
-                    Confirm your username:
-                </label>
-                <input
-                    type="text"
-                    className="form-control"
-                    id="username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-            </div> */}
+      <div className="col-md-3 mb-3">
+        <label htmlFor="affiliation" className="form-label">
+          Affiliation:
+        </label>
+        <input
+          type="text"
+          className="form-control"
+          id="affiliation"
+          value={affiliation}
+          onChange={(e) => setAffiliation(e.target.value)}
+        />
+      </div>
 
-            <div className="mb-3">
-                <label htmlFor="email" className="form-label">
-                    E-mail:
-                </label>
-                <input
-                    type="email"
-                    className="form-control"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-            </div>
+      <button type="submit" className="custom-btn wider-button" >
+        Edit
+      </button>
+    </form>
+    </div>
+  );
+};
 
-            <div className="mb-3">
-                <label htmlFor="hourlyRate" className="form-label">
-                    Hourly Rate:
-                </label>
-                <input
-                    type="number"
-                    className="form-control"
-                    id="hourlyRate"
-                    value={hourlyRate}
-                    onChange={(e) => setHourlyRate(e.target.value)}
-                />
-            </div>
-
-            <div className="mb-3">
-                <label htmlFor="affiliation" className="form-label">
-                    Affiliation:
-                </label>
-                <input
-                    type="text"
-                    className="form-control"
-                    id="affiliation"
-                    value={affiliation}
-                    onChange={(e) => setAffiliation(e.target.value)}
-                />
-            </div>
-
-            <button type="submit" className="btn btn-primary">
-                Edit
-            </button>
-        </form>
-    );
-}
-
-export default DoctorUpdateForm
+export default DoctorUpdateForm;

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import PackageUpdateForm from '../components/PackageUpdateForm'
+import Swal from "sweetalert2";
 
 const HealthPackageUpdate = () => {
 
@@ -15,7 +16,11 @@ const HealthPackageUpdate = () => {
                 setHealthPackages(json)
             }
             else if (!response.ok){
-                alert(await response.text())
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: await response.text(),
+                });
             }
         }
 
@@ -24,6 +29,9 @@ const HealthPackageUpdate = () => {
 
     return (
         <div className="health-package-update m-5">
+            <h2 className="mb-4">
+                <hr className='linearound'></hr> Packages <hr className='linearound'></hr>
+            </h2>
             <div>
                 {healthPackages && healthPackages.map((healthPackage) => (
                     <PackageUpdateForm key={healthPackage._id} healthPackage={healthPackage}/>

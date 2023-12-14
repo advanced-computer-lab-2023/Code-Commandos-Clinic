@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import Swal from 'sweetalert2';
+
 
 const PackageUpdateForm = ({ healthPackage }) => {
 
@@ -15,16 +17,33 @@ const PackageUpdateForm = ({ healthPackage }) => {
     })
     const json = await response.json()
     if (!response.ok) {
-      setError(json.message)
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'errorMessage',
+      });
     }
     if (response.ok) {
-      setError('successfully deleted')
-      console.log('a health package has been deleted:', json)
+      Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'Health package successfully deleted.',
+      });
+      console.log('A health package has been deleted:', json);
     }
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    if (!packageName || !yearlySubscription || !doctorSessionDiscount || !medicineDiscount || !familyDiscount) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Warning!',
+        text: 'Please fill in all fields.',
+      });
+      return;
+    }
 
     let newHealthPackage = {}
     newHealthPackage.packageName = packageName;
@@ -42,21 +61,28 @@ const PackageUpdateForm = ({ healthPackage }) => {
     })
     const json = await response.json()
 
-    if (!response.ok) {
-      setError(json.message)
-    }
+    // if (!response.ok) {
+    //   Swal.fire({
+    //     icon: 'error',
+    //     title: 'Error!',
+    //     text: '3mnnnnnnnnnaaaaaaaa',
+    //   });
+    // }
     if (response.ok) {
-      setError('successfully updated')
-      console.log('a health package has been updated:', json)
+      Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: 'Health package successfully updated.',
+      });
+      console.log('A health package has been updated:', json);
     }
 
   }
 
   return (
-      <div>
-        <form className="create p-4" onSubmit={handleSubmit}>
-          <h2>Update health package id: {healthPackage._id}</h2>
-          <div className="mb-3">
+    <div>
+        <form className="create p-4 border-danger box col-md-11" onSubmit={handleSubmit}>
+          <div className="col-md-2 mb-3">
             <label htmlFor="packageName" className="form-label">
               Name:
             </label>
@@ -69,7 +95,7 @@ const PackageUpdateForm = ({ healthPackage }) => {
             />
           </div>
 
-          <div className="mb-3">
+          <div className="col-md-2 mb-3">
             <label htmlFor="yearlySubscription" className="form-label">
               Yearly Subscription (in EGP):
             </label>
@@ -82,7 +108,7 @@ const PackageUpdateForm = ({ healthPackage }) => {
             />
           </div>
 
-          <div className="mb-3">
+          <div className="col-md-2 mb-3">
             <label htmlFor="doctorSessionDiscount" className="form-label">
               Discount for doctor sessions:
             </label>
@@ -95,12 +121,12 @@ const PackageUpdateForm = ({ healthPackage }) => {
             />
           </div>
 
-          <div className="mb-3">
+          <div className="col-md-2 mb-3">
             <label htmlFor="medicineDiscount" className="form-label">
               Discount for medicine:
             </label>
             <input
-                type="text"
+                type="number"
                 className="form-control"
                 id="medicineDiscount"
                 value={medicineDiscount}
@@ -108,12 +134,12 @@ const PackageUpdateForm = ({ healthPackage }) => {
             />
           </div>
 
-          <div className="mb-3">
+          <div className="col-md-2 mb-3">
             <label htmlFor="familyDiscount" className="form-label">
               Discount for family members:
             </label>
             <input
-                type="text"
+                type="number"
                 className="form-control"
                 id="familyDiscount"
                 value={familyDiscount}
@@ -121,15 +147,14 @@ const PackageUpdateForm = ({ healthPackage }) => {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn btn-primary" style={{ marginLeft:'15px', marginRight: '10px', backgroundColor: '#344D6D', border: 'none'}}>
             Edit
           </button>
-          <button onClick={deleteHealthPackage} className="btn btn-danger">
+          <button onClick={deleteHealthPackage} className="btn btn-danger red-header">
             Delete
           </button>
           {error && <div className="error mt-3">{error}</div>}
         </form>
-
       </div>
 
   )

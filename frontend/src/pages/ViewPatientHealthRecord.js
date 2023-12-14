@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import HealthRecordDetails from "../components/HealthRecordDetails"; 
 
 
@@ -13,7 +14,12 @@ const ViewpatientHealthRecord = () =>{
                 setHealthRecord(json)
             }
             else {
-                alert(await response.text())
+                const errorMessage = await response.text();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: "No health record found",
+                });
             }
         }
         fetchHealthRecord()
@@ -22,8 +28,8 @@ const ViewpatientHealthRecord = () =>{
     
 
     return (
-        <div className="container mt-4">
-            <h2 className="mb-4">Your HealthRecord</h2>
+        <div className="container justify-content-center col-md-7 ">
+            <h2 className="mb-4"> <hr className="linearound"></hr> Your HealthRecord <hr className="linearound"></hr> </h2>
             {healthRecord && <HealthRecordDetails healthRecord={healthRecord} />}
         </div>
     );

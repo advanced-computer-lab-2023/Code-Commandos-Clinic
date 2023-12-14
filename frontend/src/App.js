@@ -61,10 +61,13 @@ import Chat from './pages/Chat';
 import ViewAvailableAppointmentsOfSpecificDoctor from "./pages/ViewAvailableAppointmentsOfSpecificDoctor";
 import ViewFollowUpRequests from './pages/ViewFollowUpRequests';
 import RescheduleAppointment from "./pages/RescheduleAppointment";
+import '../src/css/style.css'; // Add any additional styling for the footer
+import DoctorPage from "./pages/DoctorPage";
 
 const App = () => {
     const logged = window.localStorage.getItem("logged");
 
+    
 
   return (
     <div className="App">
@@ -137,9 +140,14 @@ const App = () => {
             <Route path="/Register" element={<Register/>}/>
             <Route path="/Login" element={logged ? <Navigate to="/Home" replace /> : <Login/> }/>
             <Route path="/Home" element={<Home/>}/>
+            {/* <Route path="/DoctorSearchPage" element={<DoctorSearchPage/>}/> */}
+
+            <Route path="/DoctorPage" element={<DoctorPage />} />
+
         </Routes>
        </div>
       </BrowserRouter>
+      
     </div>
   );
 };

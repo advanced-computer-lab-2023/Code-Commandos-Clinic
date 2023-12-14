@@ -252,6 +252,7 @@ const getDoctorsSessionPrice = asyncHandler(async (req, res) => {
                 const { name, 
                     speciality,
                     hourlyRate,
+                    affiliation
                 } = doctor;
                 
                 let calculatedSessionPrice = hourlyRate + hourlyRate*0.1
@@ -261,6 +262,7 @@ const getDoctorsSessionPrice = asyncHandler(async (req, res) => {
                     name,
                     speciality,
                     hourlyRate,
+                    affiliation,
                     sessionPrice: calculatedSessionPrice,
                 });
             }
@@ -273,6 +275,7 @@ const getDoctorsSessionPrice = asyncHandler(async (req, res) => {
                 const { name, 
                     speciality,
                     hourlyRate,
+                    affiliation
                 } = doctor;
                 
                 let calculatedSessionPrice = hourlyRate + hourlyRate*0.1
@@ -284,6 +287,7 @@ const getDoctorsSessionPrice = asyncHandler(async (req, res) => {
                     name,
                     speciality,
                     hourlyRate,
+                    affiliation,
                     sessionPrice: calculatedSessionPrice,
                 });
             }
