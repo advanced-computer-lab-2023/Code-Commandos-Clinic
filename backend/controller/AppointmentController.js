@@ -604,6 +604,10 @@ const rescheduleAppointment = asyncHandler(async (req,res) => {
 
 
         const appoinmtentToBeScheduled = await AppointmentModel.findOneAndUpdate({_id:appointmentId},{startTime:convertedStartTime,endTime:convertedEndTime,status:'RESCHEDULED'})
+        const patientEmail = await PatientModel.findById(appoinmtentToBeScheduled.patient).select('email')
+        const doctorEmail = await DoctorModel.findById(appoinmtentToBeScheduled.doctor).select('email')
+        sendEmail(patientEmail.email,"Your appointment has been successfully rescheduled from "+appointmentBody.startTime+ " to "+ appointmentBody.endTime)
+        sendEmail(doctorEmail.email,"Your apppointment has been successfully rescheduled from "+appointmentBody.startTime+ " to "+ appointmentBody.endTime)
         res.status(200).json(appoinmtentToBeScheduled);
 
     }

@@ -43,3 +43,11 @@ body{
     text-align: center;
     align-items: center;
 }
+
+.dosage-description{
+    display: flex;
+}
+
+.medicine-name{
+    color: red;
+}

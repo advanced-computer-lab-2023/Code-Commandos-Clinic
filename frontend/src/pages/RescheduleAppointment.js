@@ -24,7 +24,6 @@ function RescheduleAppointment() {
             if (response.ok) {
                 const data = await response.json();
                 alert("Appointment Reschedule")
-                navigate('/PatientUpcomingPastAppointments')
             } else {
                 alert(await response.text())
             }

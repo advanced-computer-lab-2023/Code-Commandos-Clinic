@@ -124,7 +124,7 @@ const filterbyDoctor = asyncHandler(async (req, res) => {
 });
 
 const addMedicineToPrescription = asyncHandler(async (req,res) => {
-  const {name,dosage,prescriptionId} = req.body
+  const {name,dosage,dosageDescription,prescriptionId} = req.body
   try {
     const prescription = await PrescriptionModel.findById(prescriptionId);
     if (!prescription) {
@@ -141,8 +141,7 @@ const addMedicineToPrescription = asyncHandler(async (req,res) => {
       throw new Error("Medicine exists already")
     }
 
-    prescription.medicines.push({ name, dosage });
-    prescription.status = 'FILLED'
+    prescription.medicines.push({ name, dosage, dosageDescription });
     await prescription.save();
 
     res.status(200).json(prescription);
@@ -166,7 +165,6 @@ const deleteMedicineFromPrescription = asyncHandler(async (req, res) => {
       throw new Error("Prescription not found")
     }
     if(prescription.medicines.length === 0){
-      prescription.status = "UNFILLED"
       await prescription.save()
     }
     res.status(200).json(prescription);
@@ -191,6 +189,28 @@ const updateMedicineDosage = async (req, res) => {
       return res.status(404).json({ message: 'Medicine not found in prescription' });
     }
     medicineToUpdate.dosage = newDosage;
+    await prescription.save();
+    res.status(200).json(prescription);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+const updateDosageDescription = async (req, res) => {
+  const { prescriptionId, name, newDosage } = req.body;
+
+  try {
+    const prescription = await PrescriptionModel.findById(prescriptionId);
+    if (!prescription) {
+      return res.status(404).json({ message: 'Prescription not found' });
+    }
+    const medicineToUpdate = prescription.medicines.find(
+        (medicine) => medicine.name === name
+    );
+    if (!medicineToUpdate) {
+      return res.status(404).json({ message: 'Medicine not found in prescription' });
+    }
+    medicineToUpdate.dosageDescription = newDosage;
     await prescription.save();
     res.status(200).json(prescription);
   } catch (error) {
@@ -245,5 +265,6 @@ module.exports = {
   addMedicineToPrescription,
   deleteMedicineFromPrescription,
   updateMedicineDosage,
+  updateDosageDescription,
   generatePDF
 };

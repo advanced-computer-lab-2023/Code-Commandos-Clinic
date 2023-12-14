@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useNavigate } from "react-router-dom";
 
 
 const PrescriptionDetails = ({ prescription, showEditButton = true, showActions = true }) => {
+    const [dosageDescription, setDosageDescription] = useState('');
+
     const navigate = useNavigate()
     const handleDelete = async () => {
         try {
@@ -106,27 +108,31 @@ const PrescriptionDetails = ({ prescription, showEditButton = true, showActions 
         }
     };
 
-    // const handleDownload = async () => {
-    //     try {
-    //         const response = await fetch(`/api/prescription/generatePdf/${prescription._id}`, {
-    //             method: 'GET',
-    //         });
+    const handleDosageDescription = async (name) =>{
+        try {
+            const prescriptionId = prescription._id;
+            const response = await fetch('/api/prescription/updateDosageDescription', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    prescriptionId,
+                    name,
+                    newDosage: dosageDescription,
+                }),
+            });
 
-    //         if (response.ok) {
-    //             const blob = new Blob([response.data], { type: 'application/pdf' });
-    //             const url = window.URL.createObjectURL(blob);
-    //             const a = document.createElement('a');
-    //             a.href = url;
-    //             a.download = 'prescription.pdf';
-    //             a.click();
-    //             window.URL.revokeObjectURL(url);
-    //         } else {
-    //             alert('Failed to download prescription');
-    //         }
-    //     } catch (error) {
-    //         alert(error.message);
-    //     }
-    // };
+            if (response.ok) {
+                window.location.reload()
+            } else {
+                alert(await response.text());
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    };
+
 
     return (
         <div className="card">
@@ -159,10 +165,14 @@ const PrescriptionDetails = ({ prescription, showEditButton = true, showActions 
                                 </svg>
                             )}
                             {medicine.name}
+                            <br/>
+                            Dosage description : {medicine.dosageDescription}
+                            <br/>
+                            Dosage: {medicine.dosage}
                         </div>
                         {showActions && (
                             <div className="justify-content-end align-items-center">
-                                Dosage: {medicine.dosage}
+
                                 <button
                                     className="btn btn-outline-secondary m-lg-2"
                                     onClick={() => handleIncrementDosage(medicine.name)}
@@ -175,6 +185,19 @@ const PrescriptionDetails = ({ prescription, showEditButton = true, showActions 
                                 >
                                     -
                                 </button>
+                                <div className="dosage-description">
+                                    <input
+                                        type="text"
+                                        id="dosageDescription"
+                                        name="dosageDescription"
+                                        value={dosageDescription}
+                                        placeholder="Update dosage description"
+                                        defaultValue={medicine.dosageDescription}
+                                        onChange={(e) => setDosageDescription(e.target.value)}
+                                        className="form-control"
+                                    />
+                                    <button onClick={() => handleDosageDescription(medicine.name)} className="btn btn-primary">Save</button>
+                                </div>
                             </div>
                         )}
                         <br />

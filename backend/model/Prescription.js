@@ -33,6 +33,9 @@ const PrescriptionSchema = new mongoose.Schema({
         type: Number,
         required: true,
       },
+      dosageDescription: {
+        type: String,
+      }
     },
   ],
 
