@@ -1,20 +1,20 @@
 import { useNavigate } from 'react-router-dom';
 import React from "react";
-import hrtImage from '../images/hrt.jpeg'; // Import the image
 import PatientNavbar from "../components/patientNavbar";
+import "../css/login.css"
 const PatientHome = () => {
 
     const navigate = useNavigate();
 
     const handleAppointment = () => {
-        navigate('/CreateAppointment');
+        navigate('/ViewAvailableAppointmentsOfDoctor');
     };
     return(
 
         <body className="my-patient-background">
         {<PatientNavbar />}
         <div className="container">
-        <div className="row">
+        <div className="row" style={{marginTop:50}}>
       
             <div className="col-6">
             

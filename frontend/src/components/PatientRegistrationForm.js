@@ -63,10 +63,7 @@ const PatientRegistrationForm = () => {
 
 
   }
-  const handleBack=  () => {
-      
-    navigate('/Login');
-};
+
     return (
         <body className="my-patient-background">
         {<PatientNavbar />}

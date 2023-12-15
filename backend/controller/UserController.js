@@ -25,17 +25,21 @@ const login = asyncHandler(async (req,res) => {
         throw new Error('Invalid Password')
     }
     var id
+    var name;
     if(user.role == 'PATIENT'){
-        const patient = await Patient.findOne({username}).select('_id')
+        const patient = await Patient.findOne({username})
         id = patient._id
+        name = patient.name;
     }
     else if(user.role == 'DOCTOR'){
-        const doctor = await Doctor.findOne({username}).select('_id')
+        const doctor = await Doctor.findOne({username})
         id = doctor._id
+        name = doctor.name;
     }
     else if(user.role == 'ADMIN'){
-        const admin = await Admin.findOne({username}).select('_id')
+        const admin = await Admin.findOne({username})
         id = admin._id
+        name = admin.username;
     }
     const token = generateToken(user.username,user.role,id)
     res.cookie('token', token, {
@@ -45,6 +49,7 @@ const login = asyncHandler(async (req,res) => {
     res.status(200).json({
         id: id,
         username: user.username,
+        name: name,
         role: user.role,
         token: token
     })

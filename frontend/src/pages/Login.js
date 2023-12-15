@@ -22,6 +22,7 @@ const Login = () => {
             const result = await response.json()
             window.localStorage.setItem("logged",true)
             window.localStorage.setItem("role",result.role)
+            window.localStorage.setItem("name", result.name);
             window.localStorage.setItem("username",result.username)
             window.localStorage.setItem("id",result.id)
             navigate('/Home')
