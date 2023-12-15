@@ -60,7 +60,7 @@ function CreateAppointment() {
       };
 
     return (
-        <div className="container mt-5">
+        <div className="container align-content-lg-start mt-5 col-lg-6">
             <h2 className="mb-4"><hr className="lineAround"></hr>Add Appointment Solts <hr className="lineAround"></hr></h2>
             <div className="image"> <img src={doc} style={imge} alt="Your Image" /></div>
             <div className="box-with-image"> 

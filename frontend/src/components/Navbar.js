@@ -42,7 +42,8 @@ const Navbar = () => {
         }
         window.localStorage.removeItem("logged");
         window.localStorage.removeItem("role");
-
+        window.localStorage.removeItem("username")
+        window.localStorage.removeItem("id")
         navigate('/Login')
         window.location.reload()
     }

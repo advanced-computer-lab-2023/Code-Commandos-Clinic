@@ -4,6 +4,7 @@ import axios from "axios";
 
 const ViewFollowUpRequests = () => {
     const [appointments, setAppointments] = useState([]);
+    const doctorId = window.localStorage.getItem("id")
 
     useEffect(() => {
         fetchAppointments();
@@ -13,9 +14,13 @@ const ViewFollowUpRequests = () => {
         try {
             const response = await axios.get('/api/appointment/filterAppointmentsByDateOrStatus/none/PENDING');
             if (response.status === 200) {
-                const result = response.data;
-                console.log(result);
-                setAppointments(result);
+                const allAppointments = response.data;
+
+                // Filter appointments based on the doctorId
+                const doctorAppointments = allAppointments.filter(appointment => appointment.doctor === doctorId);
+
+                console.log(doctorAppointments);
+                setAppointments(doctorAppointments);
             } else {
                 alert(response.data);
             }

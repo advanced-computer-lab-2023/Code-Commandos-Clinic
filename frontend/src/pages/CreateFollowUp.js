@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Swal from "sweetalert2"
 
 function CreateFollowUp(){
     const [selectedStartTime,setSelectedStartTime] = useState(null);
@@ -54,9 +55,24 @@ function CreateFollowUp(){
 
     return (
         <div className="container mt-5">
-             <h2 className="mb-4">Create a Follow-UP</h2>
-             <form onSubmit={handleSubmit}>
-                   <div className="mb-3">
+            <h2 className="mb-4"><hr className="lineAround"></hr>Patient Follow-UP Check<hr className="lineAround"></hr></h2>              <img
+            src={process.env.PUBLIC_URL + `/ffollow.gif`}
+            style={{
+                maxWidth: '500px',   // Adjust the maximum width as needed
+                height: '',
+                float: 'right',      // Float the image to the right
+                marginRight: '-40px',  // Adjust the right margin as needed
+                marginTop: '-80px'
+
+            }}
+        />
+
+
+            <form onSubmit={handleSubmit}>
+                <div style={{ border: '2px solid red', borderRadius: '8px', padding: '40px', backgroundColor: 'white', width: '800px', marginRight: '100px', marginBottom:'20px' }}>
+
+                    <div className="mb-3">
+
                         <label htmlFor="patient" className="form-label">Patient:</label>
                         <select
                             id="patient"
@@ -97,10 +113,15 @@ function CreateFollowUp(){
                             className="form-control"
                             required
                         />
-                   </div>
-                   <button type="submit" className="btn btn-primary">Create</button>
-             </form>
+                    </div>
+
+
+                </div>
+                <button type="submit" className="btn btn-danger">Create</button>
+            </form>
         </div>
+
+
     )
 }
 export default CreateFollowUp;

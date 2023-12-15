@@ -21,6 +21,7 @@ const Login = () => {
             window.localStorage.setItem("logged",true)
             window.localStorage.setItem("role",result.role)
             window.localStorage.setItem("username",result.username)
+            window.localStorage.setItem("id",result.id)
             navigate('/Home')
             window.location.reload()
         }
