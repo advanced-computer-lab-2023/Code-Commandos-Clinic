@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {useNavigate} from "react-router-dom";
+import Swal from "sweetalert2"
 
 const AppointmentsDetails = ({ filteredAppointment, reserve , follow_up , issue,cancel }) => {
     const navigate = useNavigate();
@@ -16,14 +17,24 @@ const AppointmentsDetails = ({ filteredAppointment, reserve , follow_up , issue,
     
           if (response.ok) {
             //const data = await response.json();
-            alert('Your request has been sent successfully');
-            window.location.reload();
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Success!',
+                  text: "Your request has been sent successfully",
+              });
           } else {
-            alert('Failed to update status');
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Error!',
+                  text: "Failed to update status",
+              });
           }
         } catch (error) {
-          console.error('Error:', error);
-          alert('An error occurred');
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: "An error occurred",
+            });
         }
       };
 
@@ -37,13 +48,24 @@ const AppointmentsDetails = ({ filteredAppointment, reserve , follow_up , issue,
             });
 
             if (response.ok) {
-                alert('Appointment cancelled successfully!');
-                window.location.reload();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: "Appointment cancelled successfully",
+                });
             } else {
-                alert(await response.text());
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: await response.text(),
+                });
             }
         } catch (error) {
-            console.error('Error cancelling appointment', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: "Appointment cancelled successfully",
+            });
         }
     }
 
@@ -61,7 +83,15 @@ const AppointmentsDetails = ({ filteredAppointment, reserve , follow_up , issue,
                 <p className="card-text"><strong>End Time: </strong>{filteredAppointment.endTime}</p>
                 <p className="card-text"><strong>Status: </strong>{filteredAppointment.status}</p>
                 <p className="card-text"><strong>Type: </strong>{filteredAppointment.type}</p>
-
+                {reserve && (
+                    <Link to={`/ReserveAppointment/${filteredAppointment._id}`}>
+                        <button
+                            className="btn btn-success"
+                        >
+                            Reserve
+                        </button>
+                    </Link>
+                )}
             </div>
 
 
@@ -81,43 +111,18 @@ const AppointmentsDetails = ({ filteredAppointment, reserve , follow_up , issue,
             )}
 
 
-            {reserve && (
-                <Link to={`/ReserveAppointment/${filteredAppointment._id}`}>
-                    <button
-                        className="btn btn-success"
-                        style={{
-                            position: 'absolute',
-                            top: 10,
-                            bottom: 10,
-                            right: 10,
-                        }}
-                    >
-                        Reserve
-                    </button>
-                </Link>
-            )}
+
             {cancel && (
                 <div>
                 <button
                     className="btn btn-primary"
-                    style={{
-                        position: 'absolute',
-                        top: 10,
-                        bottom: 10,
-                        right: 100,
-                    }}
                     onClick={()=>handleReschedule()}
                 >
                     Reschedule
                 </button>
                 <button
-                    className="btn btn-danger"
-                    style={{
-                        position: 'absolute',
-                        top: 10,
-                        bottom: 10,
-                        right: 10,
-                    }}
+                    className="btn btn-danger m-lg-3"
+
                     onClick={()=>handleCancel()}
                 >
                     Cancel

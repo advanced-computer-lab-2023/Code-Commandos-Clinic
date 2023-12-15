@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AppointmentsDetails from "../components/AppointmentsDetails";
 import axios from "axios";
+import Swal from "sweetalert2"
 
 const ViewAvailableAppointmentsOfDoctor = () => {
     const [doctorId, setDoctorId] = useState(null);
@@ -18,7 +19,11 @@ const ViewAvailableAppointmentsOfDoctor = () => {
             setDoctors(result)
         }
         else {
-            alert(await response.text())
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: await response.text(),
+            });
         }
     }
 
@@ -34,11 +39,19 @@ const ViewAvailableAppointmentsOfDoctor = () => {
                 setAppointments(result)
             }
             else {
-                alert(response.data)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: response.data,
+                });
             }
         }
         catch (error){
-            alert(error.message)
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: error.message,
+            });
         }
     };
 

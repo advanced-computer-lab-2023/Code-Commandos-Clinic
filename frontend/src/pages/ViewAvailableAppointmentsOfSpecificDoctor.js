@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import AppointmentsDetails from "../components/AppointmentsDetails";
 import axios from "axios";
-import { useParams } from 'react-router-dom'; // Assuming you're using React Router for routing
+import { useParams } from 'react-router-dom';
+import Swal from "sweetalert2"; // Assuming you're using React Router for routing
 
 const ViewAvailableAppointmentsOfSpecificDoctor = () => {
     const { doctorId } = useParams();
@@ -17,14 +18,20 @@ const ViewAvailableAppointmentsOfSpecificDoctor = () => {
             const response = await axios.get(`/api/appointment/viewAvailableAppointmentsOfDoctor/${doctorId}`);
             if (response.status === 200) {
                 const result = response.data;
-                console.log(result);
-                console.log(doctorId);
                 setAppointments(result);
             } else {
-                alert(response.data);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: response.data,
+                });
             }
         } catch (error) {
-            alert(error.message);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: error.message,
+            });
         }
     };
 
