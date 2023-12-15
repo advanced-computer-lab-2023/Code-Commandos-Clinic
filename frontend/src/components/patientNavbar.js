@@ -1,16 +1,16 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from '../images/logo.png';
 import '../css/navbar.css';
-import { Link } from 'react-router-dom';
+import {Link, Route} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Swal from "sweetalert2";
+import FilterAppointmentsByDateOrStatus from "../pages/FilterAppointmentsByDateOrStatus";
 
 
 const Navbar = () => {
     const navigate = useNavigate();
- 
+
     const handleLogout = async () =>{
-        console.log("in handle logout")
         try {
             const response = await fetch('api/user/logout', {
                 method: 'POST',
@@ -42,9 +42,14 @@ const Navbar = () => {
             });
         }
         window.localStorage.removeItem("logged");
+        window.localStorage.removeItem("role");
+        window.localStorage.removeItem("name");
+        window.localStorage.removeItem("username")
+        window.localStorage.removeItem("id")
         navigate('/Login')
         window.location.reload()
     }
+
 
     return (
         <header>
@@ -75,24 +80,15 @@ const Navbar = () => {
                                        Prescriptions
                                     </a>
                                     <ul className="dropdown-menu" aria-labelledby="servicesDropdown">
-                                    <li>
-                                            <Link to="/AddPrescription" className="dropdown-item">Add Prescription</Link>
-                                        </li> 
-                                    <li>
+
+                                        <li>
                                             <Link to="/PrescriptionContainer" className="dropdown-item">Your Prescriptions</Link>
                                         </li>
                                         <li>
                                             <Link to="/FilterPrescriptions" className="dropdown-item">Filter Prescriptions</Link>
                                         </li>
-                                        
-                                        <li>
-                                            <Link to="/AddHealthPackage" className="dropdown-item">Add Health Package</Link>
-                                        </li>
                                         <li>
                                             <Link to="/HealthPackages" className="dropdown-item">View Health Packages</Link>
-                                        </li>  
-                                        <li>
-                                            <Link to="/HealthPackageUpdate" className="dropdown-item">Health Package Update</Link>
                                         </li>
                                         <li>
                                             <Link to="/ViewpatientHealthRecord" className="dropdown-item">View Health Record</Link>
@@ -112,9 +108,6 @@ const Navbar = () => {
                                     </a>
                                     <ul className="dropdown-menu" aria-labelledby="servicesDropdown">
                                     <li>
-                                      <Link to="/CreateAppointment" className="dropdown-item">Create Appointment</Link>
-                                    </li>
-                                    <li>
                                      <Link to="/ViewAvailableAppointmentsOfDoctor" className="dropdown-item">View Available Appointments</Link>
                                     </li>
                                       
@@ -124,12 +117,15 @@ const Navbar = () => {
                                     <li>
                                       <Link to="/FilterAppointmentsByDateAndStatus" className="dropdown-item">Filter Appointments By Date & Status</Link>
                                      </li>
-                                       
-                                       
-                                        
-                                       
+
                                         <li>
-                                            <Link to="/SearchByNameAndOrSpeciality" className="dropdown-item">Search By Name And Or Speciality</Link>
+                                            <Link to="/FilterAppointmentsByDateOrStatus" className="dropdown-item">Filter Appointments By Date or Status</Link>
+                                        </li>
+
+
+
+                                        <li>
+                                            <Link to="/SearchByNameAndOrSpeciality" className="dropdown-item">Search doctors by name and or speciality</Link>
                                         </li>
                                         <li>
                                             <Link to="/FilterBySpecialityAndDate" className="dropdown-item">Filter By Speciality And Date</Link>
@@ -159,19 +155,15 @@ const Navbar = () => {
                                         <li>
                                             <Link to="/ViewMyWalletAsPatient" className="dropdown-item">View My Wallet </Link>
                                         </li>
-                                       
-                                        <li>
-                                            <Link to="/AddFamilyMember" className="dropdown-item">Add Family Member</Link>
-                                        </li>
-                                        
                                         <li>
                                             <Link to="/LinkFamilyMember" className="dropdown-item">Link Family Member</Link>
                                         </li>
-                                      
                                         <li>
                                             <Link to="/RegisteredFamilyMembers" className="dropdown-item">Registered Family Members</Link>
                                         </li>
-                                        
+                                        <li>
+                                            <Link to="/Chat" className="dropdown-item">Chat with a doctor</Link>
+                                        </li>
                                         
                                     </ul>
                                 </li>
