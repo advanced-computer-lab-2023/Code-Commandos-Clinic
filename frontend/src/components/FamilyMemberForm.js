@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import family from '../images/family.jpg';
+import Swal from 'sweetalert2';
 
 const FamilyMemberForm = () => {
   const [name, setName] = useState('')
@@ -21,24 +23,60 @@ const FamilyMemberForm = () => {
     })
 
     if (!response.ok) {
-        alert(await response.text())
+        // alert(await response.text())
+        Error('Something is missing or family member already added');
     }
     if (response.ok) {
         const json = await response.json()
+        showSuccessNotification('New family member added successfully');
         setName('')
       setNationalId('')
       setAge('')
       //setGender('')
       //setRelation('')
-      alert('Successfully added')
       console.log('new family member added:', json)
     }
 
   }
+  const Error = async (message) => {
+    const result = await Swal.fire({
+      title: message,
+      icon: 'error',
+      showCancelButton: true,
+      showConfirmButton:false,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Try again',
+    });
+    return result.isConfirmed;
+  };
+  const showSuccessNotification = (message) => {
+    Swal.fire({
+      icon: 'success',
+      title: message,
+    });
+  };
+  const ImageStyle = {
+    // width: '60%', // Adjust the width as needed
+    // height: 'auto',
+    // position:'fixed' ,
+    // right:0,
+    // top:150,
+     maxWidth: '50%', 
+     height: 'auto' ,
+    //  marginLeft:'80%',
+    position: 'relative',
+    bottom: -150,
+    right: 100,
+
+  };
+  
 
     return (
         <form className="add m-5" onSubmit={handleSubmit}>
-            <h2>Add Family Member:</h2>
+            <h2 className="mb-4"><hr className="lineAround"></hr>Add Family Member <hr className="lineAround"></hr></h2>
+            <div className="box-with-image"> 
+            <div className="box">
             <div className="mb-3">
                 <label htmlFor="name" className="form-label">
                     Name:
@@ -79,6 +117,7 @@ const FamilyMemberForm = () => {
             </div>
 
             <div className="mb-3">
+                <div className="imageInside">
                 <label>Gender:</label>
                 <div className="form-check">
                     <input
@@ -108,7 +147,8 @@ const FamilyMemberForm = () => {
             </div>
 
             <div className="mb-3">
-                <label>Relation:</label>
+                <label>Relation:</label>                         
+                         </div>
                 <div className="form-check">
                     <input
                         type="radio"
@@ -147,9 +187,16 @@ const FamilyMemberForm = () => {
                         Children
                     </label>
                 </div>
-            </div>
+              </div>
+             </div>
+             <div className="imageInside" >
+                
+               
+             <img src={family} style={ImageStyle} alt="Your Image" />
+             </div>
+         </div>
 
-            <button type="submit" className="btn btn-primary">
+            <button id="button"type="submit" className="btn btn-primary">
                 Add
             </button>
         </form>

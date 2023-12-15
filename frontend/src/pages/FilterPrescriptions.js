@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PrescriptionDetails from "../components/PrescriptionDetails";
-
+import Swal from "sweetalert2"
 const FilterPrescriptions = () => {
     const [prescriptions, setPrescriptions] = useState([]);
     const [filteredPrescriptions, setFilteredPrescriptions] = useState([]);
@@ -21,13 +21,20 @@ const FilterPrescriptions = () => {
                 if (response.ok){
                     const result = await response.json()
                     setPrescriptions(result)
-                    console.log(result)
                 }
                 else{
-                    alert(await response.text())
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: await response.text(),
+                    });
                 }
             } catch (error) {
-                alert(error.message)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: error.message,
+                });
             }
         };
 
@@ -114,3 +121,5 @@ const FilterPrescriptions = () => {
 };
 
 export default FilterPrescriptions;
+
+

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AppointmentsDetails from "../components/AppointmentsDetails";
 import PrescriptionDetails from "../components/PrescriptionDetails";
-
+import Swal from "sweetalert2"
 const AddPrescription = () => {
     const [patientId, setPatientId] = useState('');
     const [patients, setPatients] = useState([]);
@@ -14,7 +14,11 @@ const AddPrescription = () => {
             const data = await response.json();
             setPatients(data);
         } catch (error) {
-            alert(error.message)
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: error.message,
+            });
         }
     };
 
@@ -38,10 +42,18 @@ const AddPrescription = () => {
                 setPrescriptions(data)
             }
             else {
-                alert(await response.text())
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: await response.text(),
+                });
             }
         } catch (error) {
-            alert(error.message)
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: error.message,
+            });
         }
     }
 
@@ -56,7 +68,11 @@ const AddPrescription = () => {
             });
             if(! response.ok) {
                 const errorMessage = await response.text();
-                alert(errorMessage)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: errorMessage,
+                });
             }
             else if(response.ok){
                 const addedPrescriptionDetails = await response.json();
@@ -64,15 +80,20 @@ const AddPrescription = () => {
             }
         }
         catch (error){
-
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: error.message,
+            });
         }
     };
 
 
     return (
         <div className="container col-lg-6">
-            <h2>Add Prescription</h2>
+            <h2 className="mb-4"><hr className="lineAround"></hr>Add Prescription <hr className="lineAround"></hr></h2>
             <form onSubmit={handleSubmit}>
+            <div className="box">
                 <div className="form-group">
                     <label htmlFor="patient">Select Patient</label>
                     <select
@@ -92,9 +113,10 @@ const AddPrescription = () => {
                     </select>
                 </div>
                 <br/>
-                <button type="submit" className="btn btn-primary">
+                <button id='button'type="submit" className="btn btn-primary">
                     Add Prescription
                 </button>
+            </div>
             </form>
             <br/>
             <div className="results mt-4">

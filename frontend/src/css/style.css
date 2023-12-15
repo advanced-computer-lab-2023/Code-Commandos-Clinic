@@ -80,7 +80,31 @@ body{
     border-top: 1px solid darkred;
   }
 
-  h2.mb-4{
+
+
+
+
+.card-body{
+    display: inline;
+}
+
+.card-title {
+    color: #333;
+  }
+
+  .card-text {
+    margin: 10px ;
+    color: #666;
+  }
+
+
+
+    #button:hover {
+      box-shadow: rgba(255, 118, 91, 0.35) 0 -25px 18px -14px inset rgba(255, 118, 91, 0.35) 0 1px 2px,  rgba(255, 118, 91, 0.35) 0 2px 4px, rgba(187, 68, 44, 0.35) 0 4px 8px rgba(187, 68, 44, 0.35) 0 8px 16px, rgba(187, 68, 44, 0.35) 0 16px 32px;
+      transform: scale(1.05) rotate(-1deg);
+    }
+
+h2.mb-4{
     text-align: center;
 font-size: 30px;
 font-weight: 300;
@@ -103,16 +127,16 @@ align-items: center;
   .doctor-update {
     display: flex;
   }
-  
+
   .content {
     flex: 1;
   }
-  
+
   .photo {
     width: 30%; /* Adjust the width as needed */
     padding: 20px;
   }
-  
+
   img {
     width: 80%;
     height: auto;
@@ -125,3 +149,190 @@ align-items: center;
 .create {
     margin-bottom: 50px; /* Adjust the margin-top as needed */
 }
+
+hr.lineAround {
+    border-top: 1px solid darkred;
+  }
+  .box-with-image {
+    display: flex;
+    align-items: center;
+  }
+  .image {
+    flex: 1;
+    padding: 20px;
+
+  }
+  #click{
+
+      --b: 3px;   /* border thickness */
+      --s: .45em; /* size of the corner */
+      --color: #700112;
+
+      padding: calc(.5em + var(--s)) calc(.9em + var(--s));
+      color: var(--color);
+      --_p: var(--s);
+      background:
+        conic-gradient(from 90deg at var(--b) var(--b),#e91a1a00 90deg,var(--color) 0)
+        var(--_p) var(--_p)/calc(100% - var(--b) - 2*var(--_p)) calc(100% - var(--b) - 2*var(--_p));
+      transition: .3s linear, color 0s, background-color 0s;
+      outline: var(--b) solid #0000;
+      outline-offset: .6em;
+      font-size: 16px;
+
+      border: 0;
+
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+    }
+
+    #click:hover,
+    #click:focus-visible{
+      --_p: 0px;
+      outline-color: var(--color);
+      outline-offset: .05em;
+    }
+
+    #click:active {
+      background: var(--color);
+      color: #f5e3e3;
+    }
+    #removeDoc{
+        border: 5px solid rgb(0, 0, 0);
+        border-radius: 50px;
+        width: 50%;
+
+    }
+
+    .patientContainer {
+      display: flex;
+      /* flex-direction: column; */
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .AppointmentCard {
+      cursor: pointer;
+      padding: 10px;
+      margin-right: 10px; /* Add margin for separation */
+
+    }
+
+    .PatientDetailsContainer {
+      /* flex: 1; */
+      padding: 10px;
+      border: 3px solid #e59292;
+      width: 30%;
+      margin-left: 30px;
+      background-color: #fff;
+      /* display: flex; */
+
+    }
+      .list-group-item.active {
+        background-color: #337ab7;
+        color: #fff;
+        border-color: #337ab7;
+      }
+
+      /* Optional: Custom styling for links within list group item */
+      .list-group-item a {
+        text-decoration: none;
+        color: #333;
+      }
+
+      /* Optional: Custom styling for badge within list group item */
+      .list-group-item .badge {
+        float: right;
+        background-color: #5bc0de;
+        color: #fff;
+      }
+
+
+
+#date {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+
+  }
+
+  #date:focus {
+    outline: none; /* Remove the default focus outline if desired */
+    border-color: #ff0000; /* Change the border color on focus */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); /* Add a subtle box shadow on focus */
+  }
+
+
+
+
+  .prescription-details-container {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .prescription-details-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+  }
+
+  .prescription-details-info {
+    font-size: 16px;
+    color: #666;
+  }
+
+  .prescription-details-list {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .prescription-details-list-item {
+    margin-bottom: 10px;
+  }
+  .imageInside{
+    /* position: absolute; */
+    /* left:50%;
+    flex: 1;
+    padding: 20px; */
+     display:flex;
+     /* flex: 0.7; */
+    /* flex-direction: column;
+    align-items: left;  */
+    /* margin-left:30%; */
+
+  }
+
+
+
+
+
+  /* App.css */
+.app {
+  display: flex;
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #333;
+  padding: 20px;
+  color: white;
+}
+
+.sidebar a {
+  display: block;
+  margin-bottom: 10px;
+  color: white;
+  text-decoration: none;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+}
+

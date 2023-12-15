@@ -108,7 +108,7 @@ const PrescriptionDetails = ({ prescription, showEditButton = true, showActions 
         }
     };
 
-    const handleDosageDescription = async (name) =>{
+    const handleDosageDescription = async (name) => {
         try {
             const prescriptionId = prescription._id;
             const response = await fetch('/api/prescription/updateDosageDescription', {
@@ -140,7 +140,7 @@ const PrescriptionDetails = ({ prescription, showEditButton = true, showActions 
                 <h5 className="card-title fontBig">Prescription for {prescription.patientName}</h5>
                 <p className="card-text fontMed">Doctor: {prescription.doctorName}</p>
                 <p className="card-text fontMed">Status: {prescription.status}</p>
-                <br />
+                <br/>
                 <h5>Medicines</h5>
                 {prescription.medicines.map((medicine, index) => (
                     <div key={index} className="fontMed">
@@ -153,7 +153,7 @@ const PrescriptionDetails = ({ prescription, showEditButton = true, showActions 
                                     fill="currentColor"
                                     className="bi bi-trash ml-2 text-danger"
                                     viewBox="0 0 16 16"
-                                    style={{ cursor: 'pointer' }}
+                                    style={{cursor: 'pointer'}}
                                     onClick={() => handleDeleteMedicine(medicine.name)}
                                 >
                                     <path
@@ -196,11 +196,13 @@ const PrescriptionDetails = ({ prescription, showEditButton = true, showActions 
                                         onChange={(e) => setDosageDescription(e.target.value)}
                                         className="form-control"
                                     />
-                                    <button onClick={() => handleDosageDescription(medicine.name)} className="btn btn-primary">Save</button>
+                                    <button onClick={() => handleDosageDescription(medicine.name)}
+                                            className="btn btn-primary">Save
+                                    </button>
                                 </div>
                             </div>
                         )}
-                        <br />
+                        <br/>
                     </div>
                 ))}
 
@@ -210,7 +212,8 @@ const PrescriptionDetails = ({ prescription, showEditButton = true, showActions 
 
 
                 <button className="btn btn-secondary">
-                    <div onClick={() => window.open(`http://localhost:4000/api/prescription/generatePdf/${prescription._id}`, '_blank')}>
+                    <div
+                        onClick={() => window.open(`http://localhost:4000/api/prescription/generatePdf/${prescription._id}`, '_blank')}>
                         Download as pdf
                     </div>
                 </button>
@@ -223,6 +226,5 @@ const PrescriptionDetails = ({ prescription, showEditButton = true, showActions 
             </div>
         </div>
     );
-};
-
+}
 export default PrescriptionDetails;

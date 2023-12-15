@@ -1,6 +1,6 @@
 import { useState } from "react";
 import AppointmentsDetails from '../components/AppointmentsDetails';
-
+import Swal from "sweetalert2"
 const FilteredAppointments = () =>{
     const [date, setDate] = useState(null);
     const [status,setStatus]=useState(null);
@@ -22,26 +22,33 @@ const FilteredAppointments = () =>{
                     const results = await response.json();
                     setSearchResults(results)
                     setSelectedAppointment(null)
-                    console.log(searchResults)
                 } else {
                     const errorMessage = await response.text();
-                    alert(errorMessage)
                     setSearchResults(null)
-                    throw new Error(errorMessage)
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: errorMessage,
+                    });
                 }
             }
             catch (error) {
                 setSelectedAppointment(null)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: error.message,
+                });
             }
-    
-            console.log(searchResults)
         }
         
 
     return(
         <div className="container mt-4">
-             <h1 className="mb-4">Filter By Date and Status:</h1>
-             <div className="mb-3">
+             <h2 className="mb-4"><hr className="lineAround"></hr>Filter By Date and Status<hr className="lineAround"></hr></h2>
+             <div className="box">
+                 <div className="mb-3">
+             
                 <label htmlFor="Date" className="form-label">
                     Date:
                 </label>
@@ -83,14 +90,15 @@ const FilteredAppointments = () =>{
               onChange={(e) => setStatus(e.target.id)}  
             /> 
             <label>Cancelled</label><br />
-            <button className="btn btn-primary" onClick={fetchFilteredAppointments}>
+            </div>
+            <button id="button" className="btn btn-primary" onClick={fetchFilteredAppointments}>
                 Filter
             </button>
 
             <div className="results mt-4">
                 {searchResults &&
                     searchResults.map((filteredAppointment) => (
-                        <button
+                        <button 
                             key={filteredAppointment._id}
                             className="btn btn-link"
                             onClick={() => setSelectedAppointment(filteredAppointment)} style={{ fontSize: "20px" }}>
