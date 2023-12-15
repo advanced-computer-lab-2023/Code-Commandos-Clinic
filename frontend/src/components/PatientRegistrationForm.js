@@ -1,5 +1,9 @@
 import { useState } from 'react'
 import {useNavigate} from "react-router-dom";
+import '../css/registration.css';
+import Swal from 'sweetalert2';
+import PatientNavbar from "../components/patientNavbar";
+
 
 const PatientRegistrationForm = () => {
   const [name, setName] = useState('')
@@ -27,7 +31,11 @@ const PatientRegistrationForm = () => {
     })
 
     if (!response.ok) {
-        alert( await response.text())
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text:  await response.text(),
+      });
     }
     if (response.ok) {
         const json = await response.json()
@@ -39,7 +47,15 @@ const PatientRegistrationForm = () => {
       setMobileNumber('')
       setEcFullName('')
       setEcMobileNumber('')
-      alert('Registration successful.')
+      Swal.fire({
+        icon: 'success',
+        title: 'Registration successful!',
+        text: 'New patient registered.',
+      }).then(() => {
+        console.log('new patient registered:', json);
+        navigate('/Login');
+        window.location.reload();
+      });
       console.log('new patient registered:', json)
       navigate('/Login')
       window.location.reload()
@@ -47,86 +63,122 @@ const PatientRegistrationForm = () => {
 
 
   }
-
+  const handleBack=  () => {
+      
+    navigate('/Login');
+};
     return (
+        <body className="my-patient-background">
+        {<PatientNavbar />}
+        <br/>
+        <div class="patient-page">
+            <h2 className="mb-4"><hr className="lineAround"></hr>Patient Registration Form <hr className="lineAround"></hr></h2>
+        <div className="container">
+       
+            <div className="col-lg-8">
+
         <form className="create m-5" onSubmit={handleSubmit}>
-            <h2>Registration:</h2>
+        
+        <div className="box-with-image"> 
+            <div className="box">
 
-            <div className="mb-3">
-                <label htmlFor="username" className="form-label">
-                    Username:
-                </label>
-                <input
-                    required={true}
-                    type="text"
-                    className="form-control"
-                    id="username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-            </div>
+            <div className="row">
+            <div className="col-md-5 mb-3">
+            <label htmlFor="username" className="form-label"style={{ marginTop: '30px' }}>
+                Username:
+            </label>
+            <input
+            
+                type="text"
+                className="form-control"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+            />
+        </div>
 
-            <div className="mb-3">
-                <label htmlFor="name" className="form-label">
-                    Name:
-                </label>
-                <input
-                    required={true}
-                    type="text"
-                    className="form-control"
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-            </div>
-
-            <div className="mb-3">
+        <div className="col-md-5 mb-3">
+            <label htmlFor="name" className="form-label"style={{ marginTop: '30px' }}>
+                Name:
+            </label>
+            <input
+            
+                type="text"
+                className="form-control"
+                id="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              
+            />
+        </div>
+    </div>
+    <div className="row">
+    <div className="col-md-5 mb-3">
                 <label htmlFor="email" className="form-label">
                     E-mail:
                 </label>
                 <input
-                    required={true}
+                 
                     type="email"
                     className="form-control"
                     id="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    placeholder='name@gmail.com'
                 />
             </div>
 
-            <div className="mb-3">
+            <div className="col-md-5 mb-3">
                 <label htmlFor="password" className="form-label">
                     Password:
                 </label>
                 <input
-                    required={true}
+                
                     type="password"
                     className="form-control"
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                   
                 />
             </div>
-
-            <div className="mb-3">
+            </div>
+            <div className="row">
+            <div className="col-md-5 mb-3">
                 <label htmlFor="dateOfBirth" className="form-label">
                     Date of Birth:
                 </label>
                 <input
-                    required={true}
+                  
                     type="date"
                     className="form-control"
                     id="dateOfBirth"
                     value={dateOfBirth}
                     onChange={(e) => setDateOfBirth(e.target.value)}
+                 
                 />
             </div>
-
-            <div className="mb-3">
+           
+            <div className="col-md-5 mb-3">
+                <label htmlFor="mobileNumber" className="form-label">
+                    Mobile Number:
+                </label>
+                <input
+                 
+                    type="number"
+                    className="form-control"
+                    id="mobileNumber"
+                    value={mobileNumber}
+                    onChange={(e) => setMobileNumber(e.target.value)}
+                />
+            </div>
+            </div>
+            <div className="row">
+            <div className="col-md-5 mb-3">
                 <label className="form-label">Gender:</label><br />
                 <div className="form-check form-check-inline">
                     <input
-                        required={true}
+                   
                         type="radio"
                         className="form-check-input"
                         id="MALE"
@@ -137,7 +189,7 @@ const PatientRegistrationForm = () => {
                 </div>
                 <div className="form-check form-check-inline">
                     <input
-                        required={true}
+                    
                         type="radio"
                         className="form-check-input"
                         id="FEMALE"
@@ -147,27 +199,16 @@ const PatientRegistrationForm = () => {
                     <label className="form-check-label" htmlFor="FEMALE">Female</label>
                 </div>
             </div>
-
-            <div className="mb-3">
-                <label htmlFor="mobileNumber" className="form-label">
-                    Mobile Number:
-                </label>
-                <input
-                    required={true}
-                    type="number"
-                    className="form-control"
-                    id="mobileNumber"
-                    value={mobileNumber}
-                    onChange={(e) => setMobileNumber(e.target.value)}
-                />
             </div>
 
-            <div className="mb-3">
+            
+            <div className="row">
+            <div className="col-md-5 mb-3">
                 <label htmlFor="ecFullName" className="form-label">
                     Emergency Contact Full Name:
                 </label>
                 <input
-                    required={true}
+                  
                     type="text"
                     className="form-control"
                     id="ecFullName"
@@ -176,12 +217,12 @@ const PatientRegistrationForm = () => {
                 />
             </div>
 
-            <div className="mb-3">
+            <div className="col-md-5 mb-3">
                 <label htmlFor="ecMobileNumber" className="form-label">
                     Emergency Contact Mobile Number:
                 </label>
                 <input
-                    required={true}
+                   
                     type="number"
                     className="form-control"
                     id="ecMobileNumber"
@@ -189,11 +230,18 @@ const PatientRegistrationForm = () => {
                     onChange={(e) => setEcMobileNumber(e.target.value)}
                 />
             </div>
-
-            <button type="submit" className="btn btn-primary">
-                Register
-            </button>
+            </div>
+            </div>
+            </div>
+            <div>
+          <button type="submit" button className="button-reg">Register</button>
+          
+             </div>
         </form>
+     </div>
+            </div>
+        </div>
+        </body>
     );
 }
 

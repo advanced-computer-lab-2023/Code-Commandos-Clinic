@@ -1,9 +1,12 @@
 import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
 import Login from "./pages/Login";
 import Home from "./pages/Home";
+
 import DoctorRegistrationRequests from "./pages/viewDoctorRequests";
 import DoctorRegistration from "./pages/registerAsDoctor";
 import PatientRegistration from "./pages/registerAsPatient";
+
+
 import DoctorUpdate from "./pages/updateDoctor";
 import SearchByNameAndOrSpeciality from "./pages/searchByNameAndOrSpeciality";
 import FilterBySpecialityAndDate from "./pages/filterBySpecialityAndDate";
@@ -39,7 +42,6 @@ import DoctorContract from "./pages/DoctorContract";
 import LinkFamilyMember from "./pages/linkFamilyMember";
 import CreateFollowUp from "./pages/CreateFollowUp";
 import HealthPackages from './pages/ViewHealthPackages';
-import SubscribeToPackage from './pages/SubscribeToPackage';
 import PaymentSuccess from './pages/PaymentSuccess';
 import PaymentCancel from './pages/PaymentCancel';
 import UploadDocument from "./pages/UploadDocument";
@@ -61,11 +63,14 @@ import Chat from './pages/Chat';
 import ViewAvailableAppointmentsOfSpecificDoctor from "./pages/ViewAvailableAppointmentsOfSpecificDoctor";
 import ViewFollowUpRequests from './pages/ViewFollowUpRequests';
 import RescheduleAppointment from "./pages/RescheduleAppointment";
-import '../src/css/style.css'; // Add any additional styling for the footer
+import '../src/css/style.css';
 import DoctorPage from "./pages/DoctorPage";
+import PatientHome from "./pages/patientHome";
 
 const App = () => {
+ 
     const logged = window.localStorage.getItem("logged");
+   
 
     
 
@@ -124,7 +129,6 @@ const App = () => {
             <Route path="/CreateFollowUp" element={<CreateFollowUp/>}/>
             <Route path="/ViewAvailableAppointmentsOfSpecificDoctor/:doctorId" element={<ViewAvailableAppointmentsOfSpecificDoctor/>} />
             <Route path="/HealthPackages" element={<HealthPackages/>}/>
-            <Route path="/HealthPackages/Subscribe" element={<SubscribeToPackage/>}/>
             <Route path="/HealthPackages/Subscribe/Success" element={<PaymentSuccess/>}/>
             <Route path="/HealthPackages/Subscribe/Cancel" element={<PaymentCancel/>}/>
             <Route path="/AppointmentSuccess" element={<AppointmentSuccess/>}/>
@@ -138,10 +142,8 @@ const App = () => {
             <Route path="/Register" element={<Register/>}/>
             <Route path="/Login" element={logged ? <Navigate to="/Home" replace /> : <Login/> }/>
             <Route path="/Home" element={<Home/>}/>
-            {/* <Route path="/DoctorSearchPage" element={<DoctorSearchPage/>}/> */}
-
             <Route path="/DoctorPage" element={<DoctorPage />} />
-
+            <Route path="/PatientHome" element={<PatientHome />}/>
         </Routes>
        </div>
       </BrowserRouter>

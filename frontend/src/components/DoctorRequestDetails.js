@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import Swal from 'sweetalert2';
 
 const DoctorRequestDetails = ({ doctorRequest }) => {
 
@@ -14,15 +14,28 @@ const DoctorRequestDetails = ({ doctorRequest }) => {
             });
 
             if (response.ok) {
-                alert('Doctor request accepted successfully!');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Request Successful!',
+                    text: 'Doctor request accepted successfully!',
+                })
+               
             } else {
-                alert(await response.text());
+                const errorMessage = await response.text();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: errorMessage,
+                });
             }
         } catch (error) {
-            console.error('Error accepting doctor request:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'An error occurred while accepting the doctor request.',
+            });
         }
     };
-
     const handleReject = async () => {
         try {
             const response = await fetch(`/api/doctorRegistration/rejectDoctorRequests/${doctorRequest._id}`, {
@@ -33,12 +46,26 @@ const DoctorRequestDetails = ({ doctorRequest }) => {
             });
 
             if (response.ok) {
-                alert('Doctor request rejected successfully!');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Request Successful!',
+                    text: 'Doctor request rejected successfully!',
+                })
+              
             } else {
-                alert(await response.text());
+                const errorMessage = await response.text();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: errorMessage,
+                });
             }
         } catch (error) {
-            console.error('Error rejecting doctor request:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'An error occurred while rejecting the doctor request.',
+            });
         }
     };
 
@@ -49,7 +76,6 @@ const DoctorRequestDetails = ({ doctorRequest }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                console.log(doctorRequest)
                 // Fetch file names based on file IDs
                 const idFileInfoResponse = await axios.get(`/api/file/getFileById/${doctorRequest.medicalID}`);
                 const licenseFileInfoResponse = await axios.get(`/api/file/getFileById/${doctorRequest.medicalLicenses}`);
@@ -70,7 +96,11 @@ const DoctorRequestDetails = ({ doctorRequest }) => {
                 });
         
             } catch (error) {
-                console.error('Error fetching file names:', error.message);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'An error occurred while fetching the file names.',
+                });
             }
         };
 
@@ -87,9 +117,12 @@ const DoctorRequestDetails = ({ doctorRequest }) => {
 
 
     return (
-        <div className="card">
+       
+        <div className="mycard">
+            <div className="row">
+             
             <div className="card-body">
-                <h5 className="card-title" style={{ color: '#1aac83' }}>{doctorRequest.name}</h5>
+                <h5 className="card-title" style={{ color: '#D21312' }}>{doctorRequest.name}</h5>
                 <p className="card-text">Username: {doctorRequest.username}</p>
                 <p className="card-text">Email: {doctorRequest.email}</p>
                 <p className="card-text">Date of Birth: {doctorRequest.dateOfBirth}</p>
@@ -102,10 +135,12 @@ const DoctorRequestDetails = ({ doctorRequest }) => {
                 <p className="card-text">Medical Degree: {createFileLink(degreeFileInfo)}</p>
                 <p className="card-text">Request Status: {doctorRequest.status}</p>
                 <p className="card-text">Created At: {doctorRequest.createdAt}</p>
-                <button className="btn btn-success" onClick={handleAccept}>Accept</button>
-                <button className="btn btn-danger" onClick={handleReject}>Reject</button>
+                <button className="accept-btn" onClick={handleAccept}>Accept</button>
+                <button className="reject-btn" onClick={handleReject}>Reject</button>
             </div>
         </div>
+        </div>
+     
     );
 };
 

@@ -1,0 +1,316 @@
+body{
+    background-color: white;
+}
+h2.mb-4{
+    text-align: center;
+font-size: 30px;
+font-weight: 300;
+color: #222;
+letter-spacing: 1px;
+text-transform: uppercase;
+display: grid;
+grid-template-columns: 1fr max-content 1fr;
+grid-template-rows: 27px 0;
+grid-gap: 20px;
+align-items: center;
+
+}
+hr.lineAround {
+    border-top: 1px solid darkred;
+  }
+  .box-with-image {
+    display: flex;
+    align-items: center;
+  }
+  .image {
+    flex: 1;
+    padding: 20px;
+
+  }
+
+  .welcomeHeader {
+    color: #D21312;
+  }
+  .accept{
+    background-color: #D21312;
+    color: white;
+    border: 1px solid red;
+}
+.contract {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10rem;
+    height: 100%; /* Optionally set height for vertical centering */
+}
+.button-reg{
+    background-color: #D21312;
+    border-radius: 0.3rem;
+    padding: 0.6em 1.3em;
+    color: white;
+    font-size: 1.1rem;
+    transition-duration: 0.7s;
+    border: 1px solid transparent;
+    margin-left:20rem ;
+    margin-top: 10px;
+    height: 60px; 
+    
+}
+.button1-reg{
+    background-color: #D21312;
+    border-radius: 0.3rem;
+    padding: 0.6em 1.3em;
+    color: white;
+    font-size: 1.1rem;
+    transition-duration: 0.7s;
+    border: 1px solid transparent;
+    margin-left:50rem ;
+    margin-top: 10px;
+    height: 60px; 
+    
+}
+
+.accept-btn {
+    background-color: #D21312;
+    border-radius: 0.3rem;
+    padding: 0.6em 1.3em;
+    color: white;
+    font-size: 1.1rem;
+    transition-duration: 0.7s;
+    border: 1px solid transparent;
+    margin-right:0.5rem ;
+    
+    height: 60px; 
+  
+}
+.reject-btn {
+    background-color:   #e8e0e0;
+    border-radius: 0.3rem;
+    padding: 0.6em 1.3em;
+    color: #D21312;
+    font-size: 1.1rem;
+    transition-duration: 0.7s;
+    border: 1px solid transparent;
+    margin-right:0.5rem ;
+    
+    height: 60px; 
+  
+}
+.patient-btn{
+    background-color: white;
+    border-radius: 0.3rem;
+    padding: 0.6em 1.3em;
+    color:  #D21312;
+    font-size: 1.1rem;
+    transition-duration: 0.7s;
+    border: 1px solid red;
+    margin-right:0.5rem ;
+    margin-top: 10px;
+    height: 60px; 
+}
+.home-btn{
+    background-color: #D21312;
+    border-radius: 0.3rem;
+    padding: 0.6em 1.3em;
+    color:  white;
+    font-size: 1.1rem;
+    transition-duration: 0.7s;
+    border: 1px solid red;
+    margin-right:0.5rem ;
+    margin-top: 10px;
+    height: 60px; 
+}
+.cash-btn{
+    background-color: #D21312;
+    border-radius: 0.3rem;
+    padding: 0.6em 1.3em;
+    color: white;
+    font-size: 1.1rem;
+    transition-duration: 0.7s;
+    border: 1px solid transparent;
+    margin-top: 2rem;
+    margin-left:30rem ;
+    height: 60px; 
+    width: 320px;
+}
+.credit-btn{
+    background-color: #D21312;
+    border-radius: 0.3rem;
+    padding: 0.6em 1.3em;
+    color: white;
+    font-size: 1.1rem;
+    transition-duration: 0.7s;
+    border: 1px solid transparent;
+    margin-left:30rem ;
+    margin-top: 2rem;
+    height: 60px; 
+    width: 320px;
+  
+}
+.select-btn{
+    background-color: #e8e0e0;
+    border-radius: 0.3rem;
+    padding: 0.6em 1.3em;
+    color: #D21312;
+    font-size: 1.1rem;
+    transition-duration: 0.7s;
+    border: 1px solid transparent;
+    margin-left:70rem ;
+    height: 60px; 
+    width: 150px;
+  
+    
+}
+.back-btn{
+    
+    background-color:rgba(var(--bs-light-rgb),var(--bs-bg-opacity));
+    border-radius: 0.3rem;
+    padding: 0.6em 1.3em;
+    color: #D21312;
+
+    font-size: 1.1rem;
+    transition-duration: 0.7s;
+    border: 1px solid transparent;
+    margin-top:2rem ;
+    height: 60px; 
+    width: 150px;
+  
+    
+}
+.con-btn{
+    background-color:#D21312;
+    border-radius: 0.3rem;
+    padding: 0.6em 1.3em;
+    color: white;
+    font-size: 1.1rem;
+    transition-duration: 0.7s;
+    border: 1px solid transparent;
+    margin-left:70rem ;
+    height: 60px; 
+    width: 150px;
+  
+    
+}
+.health{
+    width: 50%;
+}
+
+.paymentsuccess-btn{
+    background-color: #D21312;
+    border-radius: 0.3rem;
+    padding: 0.6em 1.3em;
+    color: white;
+    font-size: 1.1rem;
+    transition-duration: 0.7s;
+    border: 1px solid transparent;
+    margin-left:2rem ;
+    margin-bottom:2rem ;
+    height: 60px; 
+    width: 320px;
+}
+.margin-edit {
+    margin-top: 90px; 
+}
+.form-label {
+    margin-bottom: 10px; 
+}
+
+.FEMALE {
+    background-color: red;
+    border-color: red;
+}
+
+/* Hover styles */
+.FEMALE:hover {
+    background-color: red;
+    border-color: red;
+}
+
+/* Selected styles */
+.FEMALE:checked {
+    background-color: red;
+    border-color: red;
+}
+
+.form-check-input:hover {
+    background-color: red;
+    border-color: red;
+}
+
+.form-check-input:checked {
+    background-color: red;
+    border-color: red;
+}
+.requests-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    /* Adjust spacing between cards */
+  }
+  
+  .request-card {
+    flex: 0 0 calc(50% - 10px); /* To display two cards in a row */
+    margin-bottom: 20px; /* Adjust margin for each card */
+    /* Other card styles... */
+  }
+.mycard{
+    background-size: 50%;
+    
+    background-repeat: no-repeat; 
+}
+.contract {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Optionally set height for vertical centering */
+}
+.patient-page {
+    background-image: url('../images/patient.jpeg');
+    background-size: 40%; 
+    background-repeat: no-repeat;
+    background-position: right; 
+    background-position: 80% top;  
+   
+    
+}
+.contract-page {
+    background-image: url('../images/contr.jpeg');
+    background-size: 25%; 
+    background-repeat: no-repeat; 
+    background-position: right; 
+  
+    background-position-y: 90px; 
+    
+}
+
+
+
+.req-page {
+    background-image: url('../images/req.jpeg');
+    background-size: 10%; 
+    background-repeat: no-repeat; 
+    background-position: top right; 
+    
+    
+    
+}
+.doctor-page {
+    background-image: url('../images/dooct.jpeg');
+    background-size: 30%; 
+    background-repeat: no-repeat; 
+    background-position:  right ; 
+    
+    
+}
+
+.welcome-page {
+    background-image: url('../images/hrt.jpeg');
+    background-size: 40%; 
+    background-repeat: no-repeat; 
+    background-position: top  ; 
+    width: 500rem; 
+    height: 10000rem; 
+    margin-left: 20rem; 
+    margin-top: 30rem; 
+    
+}

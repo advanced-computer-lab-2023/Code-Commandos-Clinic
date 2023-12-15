@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const CreateContract = () => {
     const [doctors,setDoctors] = useState([])
@@ -10,7 +12,7 @@ const CreateContract = () => {
     const [responsibilities, setResponsibilities] = useState('');
     const [termsAndConditions, setTermsAndConditions] = useState('');
     const [markup, setMarkup] = useState('');
-
+    const navigate = useNavigate();
     useEffect(() => {
         fetchDoctors()
     }, []);
@@ -22,53 +24,83 @@ const CreateContract = () => {
                 const result = response.data
                 setDoctors(result)
             } else {
-                alert(response.data)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: "Error occured while fetching the doctors!",
+                  });
             }
         }
-        catch (error){
-            alert(error.message)
+        catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: error.message,
+            });
         }
-    }
-
+    };
+    const handleBack=  () => {
+      
+        navigate('/patientHome');
+    };
     const handleSubmit = async (e) => {
         console.log(selectedDoctorId)
         e.preventDefault();
-            try {
-                const contractData = {
-                    doctor:selectedDoctorId,
-                    monthlySalary,
-                    startDate,
-                    endDate,
-                    responsibilities,
-                    termsAndConditions,
-                    markup,
-                };
-                console.log(contractData)
-                const response = await fetch('/api/employmentContract/createContracts', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(contractData),
+        try {
+            const contractData = {
+                doctor: selectedDoctorId,
+                monthlySalary,
+                startDate,
+                endDate,
+                responsibilities,
+                termsAndConditions,
+                markup,
+            };
+            const response = await fetch('/api/employmentContract/createContracts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(contractData),
+            });
+    
+            if (response.ok) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Employment contract created.',
+                    showConfirmButton: true,
                 });
-
-                if (response.ok) {
-                    alert('Employment contract created:')
-                    // Handle success or navigate to a different page
-                } else {
-                    alert(await response.text());
-                }
-            } catch (error) {
-                console.error('Error creating employment contract:', error);
-                // Handle error
+            } else {
+                const errorText = await response.text();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: errorText,
+                });
             }
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'An error occurred while creating the employment contract.',
+            });
+        }
     };
+    
 
     return (
-        <div className="container">
-                <h2>Create Employment Contract</h2>
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
+        
+        <div className="contract">
+        <div className="col-lg-8">
+
+       
+         <form onSubmit={handleSubmit}>
+         <h2 className="mb-4"><hr className="lineAround"></hr>create contract<hr className="lineAround"></hr></h2>
+      
+            <div className="box">
+            <div class="contract-page">
+                <div className="col-md-6 mb-3">
                         <label htmlFor="doctor" className="form-label">
                             Select Doctor:
                         </label>
@@ -77,7 +109,7 @@ const CreateContract = () => {
                             value={selectedDoctorId}
                             onChange={(e) => setSelectedDoctorId(e.target.value)}
                             className="form-select"
-                            required
+                          
                         >
                             <option value="" disabled>
                                 Select a doctor
@@ -89,7 +121,7 @@ const CreateContract = () => {
                             ))}
                         </select>
                     </div>
-                    <div className="mb-3">
+                    <div className="col-md-6 mb-3">
                         <label htmlFor="monthlySalary" className="form-label">
                             Monthly Salary:
                         </label>
@@ -99,10 +131,10 @@ const CreateContract = () => {
                             value={monthlySalary}
                             onChange={(e) => setMonthlySalary(e.target.value)}
                             className="form-control"
-                            required
+                            
                         />
                     </div>
-                    <div className="mb-3">
+                    <div className="col-md-6 mb-3">
                         <label htmlFor="startDate" className="form-label">
                             Start Date:
                         </label>
@@ -112,11 +144,11 @@ const CreateContract = () => {
                             value={startDate}
                             onChange={(e) => setStartDate(e.target.value)}
                             className="form-control"
-                            required
+                            
                         />
                     </div>
 
-                    <div className="mb-3">
+                    <div className="col-md-6 mb-3">
                         <label htmlFor="endDate" className="form-label">
                             End Date:
                         </label>
@@ -126,11 +158,11 @@ const CreateContract = () => {
                             value={endDate}
                             onChange={(e) => setEndDate(e.target.value)}
                             className="form-control"
-                            required
+                            
                         />
                     </div>
 
-                    <div className="mb-3">
+                    <div className="col-md-6 mb-3">
                         <label htmlFor="responsibilities" className="form-label">
                             Responsibilities:
                         </label>
@@ -139,11 +171,11 @@ const CreateContract = () => {
                             value={responsibilities}
                             onChange={(e) => setResponsibilities(e.target.value)}
                             className="form-control"
-                            required
+                           
                         ></textarea>
                     </div>
 
-                    <div className="mb-3">
+                    <div className="col-md-6 mb-3">
                         <label htmlFor="termsAndConditions" className="form-label">
                             Terms and Conditions:
                         </label>
@@ -152,11 +184,11 @@ const CreateContract = () => {
                             value={termsAndConditions}
                             onChange={(e) => setTermsAndConditions(e.target.value)}
                             className="form-control"
-                            required
+                            
                         ></textarea>
                     </div>
 
-                    <div className="mb-3">
+                    <div className="col-md-6 mb-3">
                         <label htmlFor="markup" className="form-label">
                             Markup:
                         </label>
@@ -166,15 +198,28 @@ const CreateContract = () => {
                             value={markup}
                             onChange={(e) => setMarkup(e.target.value)}
                             className="form-control"
-                            required
+                            
                         />
                     </div>
+                    
+               <button type="submit" button className="button1-reg ">Create</button>
+                
+                    </div>
+                    </div>
+                    
 
-                    <button type="submit" className="btn btn-primary">
-                        Create Contract
+                   
+                <button className="back-btn" onClick={handleBack}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
+  <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
+</svg>
                     </button>
                 </form>
         </div>
+        </div>
+       
+       
+     
     );
 };
 
