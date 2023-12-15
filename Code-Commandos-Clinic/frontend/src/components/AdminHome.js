@@ -57,18 +57,7 @@ const AdminHome = () => {
                 </div>
                 </div>
 
-                <div className="col-md-4 mb-4">
-                    <div className="card">
-                   <div className="card shadow">
 
-                        <div className="card-body">
-                            <Link to="/HealthPackageUpdate" className="card-link">
-                                Health Package Update
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-                </div>
 
                 <div className="col-md-4 mb-4">
                 <div className="card">
@@ -81,8 +70,19 @@ const AdminHome = () => {
                 </div>
                 </div>
                </div>
+        <div className="col-md-4 mb-4">
+        <div className="card">
+         <div className="card shadow">
+        <div className="card-body">
+                <Link to="/HealthPackageUpdate" className="card-link">
+                                Health Package Update
+                 </Link>
+               </div>
+               </div>
+                </div>
+                </div>
 
-                <div className="col-md-4 mb-4">
+         <div className="col-md-4 mb-4">
                     <div className="card">
                     <div className="card shadow">
 
