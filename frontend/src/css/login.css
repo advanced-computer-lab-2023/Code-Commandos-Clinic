@@ -1,0 +1,150 @@
+.logo-edit{
+    margin-top: -325px;
+    width: 110%;
+    height: 110%;
+}
+.my-custom-background{
+    background-color: #dbedff;
+    margin-top: -100px;
+}
+.login-header-edit{
+    text-align: left;
+    margin-left: 18px;
+    font-weight: bold;
+    margin-bottom: 50px;
+}
+.welcome-text-edit{
+    margin-left: 18px;
+}
+.login-btn{
+    background-color: #F6635C;
+    color: white;
+    padding: 9px;
+    margin-bottom: 22px;
+}
+.login-btn:hover{
+    background-color: #053B50;
+    color: white;
+}
+.link-edit{
+    color: #053B50;
+}
+.link-edit:hover{
+    color: #D21312;
+}
+.link-edit-register{
+    color: #053B50;
+    font-size: 23px;
+}
+.link-edit-register:hover {
+    color: blue ;
+    transition-duration: 0.3s;
+}
+.my-patient-background{
+    background-color: #e6f4fc ;
+    margin-top: -100px;
+    height: 874px;
+}
+.margin-edit{
+    margin-top: 193px;
+    margin-left: 100px;
+}
+.patient-pic{
+    width: 90%;
+    height: 80%;
+    margin-left: -30px;
+    margin-top: 160px;
+    border-radius: 20px;
+}
+.margin-edit-medicine{
+    margin-left: 440px;
+    margin-top: -50px;
+}
+.red-color{
+    color: #D21312;
+    font-weight: bold;
+}
+.browse-btn {
+    width: 74%;
+    background-color: #D21312;
+    color: white;
+    padding: 0.8rem;
+    margin-top: 110px;
+    margin-left: 6px;
+    border: none;
+    border-radius: 13px;
+    font-size: 26px;
+}
+.browse-btn:hover {
+    width: 74%;
+    background-color: #176B87;
+    transition-duration: 0.4s;
+}
+.pharmacist-gif{
+    width: 80%;
+    height: 70%;
+    margin-left: -30px;
+    margin-top: 160px;
+    border-radius: 20px;
+}
+.doctor-gif{
+    width: 90%;
+    height: 76%;
+    margin-left: -20px;
+    margin-top: 190px;
+    border-radius: 20px;
+}
+.link-editt{
+    color: #0B666A;
+    font-size: 30px;
+}
+.link-editt:hover{
+    color: #D21312;
+    transition-duration: 0.3s;
+}
+.admin-gif{
+    width: 90%;
+    height: 80%;
+    margin-left: -30px;
+    margin-top: 200px;
+    border-radius: 20px;
+}
+.display-edit-register{
+    display: flex;
+    margin-top: 30px;
+}
+.margin-reg-adjust{
+    margin-top: -30px;
+    margin-bottom: 50px;
+    color: #190482;
+}
+.width-adjust-button{
+    width: 40%;
+}
+.margin-left-pharm{
+    margin-left: -150px;
+}
+.pharmacist-registration{
+    margin-left: 200px;
+}
+.width-adjust-auth{
+    width: 120%;
+}
+.btn-auth{
+    background-color: #7752FE;
+    border: none;
+    border-radius: 3pc;
+}
+.btn-auth:hover{
+    background-color: #190482;
+    border: none;
+    transition-duration: 0.3s;
+}
+.margin-top-extra{
+    margin-top: 167px;
+}
+.login-card{
+    margin-top: 30%;
+    border-radius: 20px;
+    margin-right: 40px;
+}

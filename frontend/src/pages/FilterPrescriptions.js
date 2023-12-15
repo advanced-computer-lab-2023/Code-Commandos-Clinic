@@ -112,7 +112,7 @@ const FilterPrescriptions = () => {
 
             <div className="row">
                 {filteredPrescriptions && filteredPrescriptions.map((prescription) => (
-                    <PrescriptionDetails key={prescription._id} prescription={prescription} />
+                    <PrescriptionDetails key={prescription._id} prescription={prescription} showActions={false} showEditButton={false} />
                 ))}
             </div>
         </div>
