@@ -9,6 +9,7 @@ const HealthPackageModel=require("../model/HealthPackage")
 const Patient = require("../model/Patient");
 const Doctor = require("../model/Doctor");
 const Admin = require("../model/Admin");
+const Notification = require('../model/Notification')
 const otpGenerator = require("otp-generator");
 const nodemailer = require("nodemailer");
 const mongoose = require('mongoose')
@@ -228,8 +229,19 @@ const reserveAppointment = asyncHandler(async (req,res) => {
                 const patientEmail = patientEmailObject.email
                 const doctorEmailObject = await DoctorModel.findOne({_id:appointment.doctor}).select("email")
                 const doctorEmail = doctorEmailObject.email
-                sendEmail(patientEmail,"Your Appointment has been confirmed from "+appointment.startTime+ " to "+ appointment.endTime)
-                sendEmail(doctorEmail,"Your Appointment has been confirmed from "+appointment.startTime+ " to "+ appointment.endTime)
+                const messageContent = "Your Appointment has been confirmed from "+appointment.startTime+ " to "+ appointment.endTime
+                sendEmail(patientEmail,messageContent)
+                sendEmail(doctorEmail,messageContent)
+                await Notification.create({
+                    userId: appointment.patient,
+                    title: "Appointment Reservation",
+                    content: messageContent,
+                })
+                await Notification.create({
+                    userId: appointment.doctor,
+                    title: "Appointment Reservation",
+                    content: messageContent,
+                })
             }
             catch (error){
                 res.status(400)
@@ -317,8 +329,19 @@ const success = asyncHandler(async (req,res) =>{
                 const patientEmail = patientEmailObject.email
                 const doctorEmailObject = await DoctorModel.findOne({_id:appointment.doctor}).select("email")
                 const doctorEmail = doctorEmailObject.email
-                sendEmail(patientEmail,"Your Appointment has been confirmed from "+appointment.startTime+ " to "+ appointment.endTime)
-                sendEmail(doctorEmail,"Your Appointment has been confirmed from "+appointment.startTime+ " to "+ appointment.endTime)
+                const messageContent = "Your Appointment has been confirmed from "+appointment.startTime+ " to "+ appointment.endTime
+                sendEmail(patientEmail,messageContent)
+                sendEmail(doctorEmail,messageContent)
+                await Notification.create({
+                    userId: appointment.patient,
+                    title: "Appointment Reservation",
+                    content: messageContent,
+                })
+                await Notification.create({
+                    userId: appointment.doctor,
+                    title: "Appointment Reservation",
+                    content: messageContent,
+                })
             }
             catch (error){
                 res.status(400)
@@ -606,8 +629,19 @@ const rescheduleAppointment = asyncHandler(async (req,res) => {
         const appoinmtentToBeScheduled = await AppointmentModel.findOneAndUpdate({_id:appointmentId},{startTime:convertedStartTime,endTime:convertedEndTime,status:'RESCHEDULED'})
         const patientEmail = await PatientModel.findById(appoinmtentToBeScheduled.patient).select('email')
         const doctorEmail = await DoctorModel.findById(appoinmtentToBeScheduled.doctor).select('email')
-        sendEmail(patientEmail.email,"Your appointment has been successfully rescheduled from "+appointmentBody.startTime+ " to "+ appointmentBody.endTime)
-        sendEmail(doctorEmail.email,"Your apppointment has been successfully rescheduled from "+appointmentBody.startTime+ " to "+ appointmentBody.endTime)
+        const messageContent = "Your appointment has been successfully rescheduled from "+appointmentBody.startTime+ " to "+ appointmentBody.endTime
+        sendEmail(patientEmail.email,messageContent)
+        sendEmail(doctorEmail.email,messageContent)
+        await Notification.create({
+            userId: appoinmtentToBeScheduled.patient,
+            title: "Appointment Rescheduled",
+            content: messageContent,
+        })
+        await Notification.create({
+            userId: appoinmtentToBeScheduled.doctor,
+            title: "Appointment Rescheduled",
+            content: messageContent,
+        })
         res.status(200).json(appoinmtentToBeScheduled);
 
     }
@@ -658,6 +692,16 @@ const cancelAppointment = asyncHandler(async (req, res) => {
         const doctorMail = await DoctorModel.findById(appointment.doctor).select('email')
         sendEmail(patientMail.email,"Your Appointment starting at "+appointment.startTime+" has been cancelled and you will receive a refund")
         sendEmail(doctorMail.email,"Your Appointment starting at "+appointment.startTime+" has been cancelled")
+        await Notification.create({
+            userId: appointment.patient,
+            title: "Appointment Cancellation",
+            content: "Your Appointment starting at "+appointment.startTime+" has been cancelled and you will receive a refund",
+        })
+        await Notification.create({
+            userId: appointment.doctor,
+            title: "Appointment Cancellation",
+            content: "Your Appointment starting at "+appointment.startTime+" has been cancelled",
+        })
         res.status(200).json(appointment);
     } catch (err) {
         res.status(400);
@@ -725,6 +769,11 @@ const updateStatusToFree = async (req, res) => {
         // Optionally, you can send the updated appointment in the response
         const patientEmail = await Patient.findById(updatedAppointment.patient).select("email")
         sendEmail(patientEmail.email,"Your follow up request has been revoked")
+        await Notification.create({
+            userId: updatedAppointment.patient,
+            title: "Follow-up request status",
+            content: "Your follow up request has been revoked",
+        })
         return res.status(200).json({ updatedAppointment });
     } catch (error) {
         console.error(error);
@@ -746,6 +795,11 @@ const acceptFollowUp = async (req, res) => {
         }
         const patientEmail = await Patient.findById(updatedAppointment.patient).select("email")
         sendEmail(patientEmail.email,"Your follow up request has been accepted")
+        await Notification.create({
+            userId: updatedAppointment.patient,
+            title: "Follow-up request status",
+            content: "Your follow up request has been accepted",
+        })
         return res.status(200).json({ updatedAppointment });
     } catch (error) {
         console.error(error);

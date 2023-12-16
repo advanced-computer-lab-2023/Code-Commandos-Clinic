@@ -43,7 +43,7 @@ const updateAppointmentStatus = require('./middleware/SyncAppointmentMiddleware'
 const videoCallRoutes = require('./route/VideoCallRoute')
 const messageRoutes = require('./route/MessageRoute')
 const chatRoutes = require('./route/ChatRoute')
-
+const notificationRoutes = require('./route/NotificationRoute')
 updateAppointmentStatus()
 
 server.use('/api/appointment',appointmentRoutes)
