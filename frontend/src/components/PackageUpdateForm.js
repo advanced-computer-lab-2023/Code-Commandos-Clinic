@@ -148,9 +148,9 @@ const PackageUpdateForm = ({ healthPackage }) => {
           </div>
 
           <button type="submit" className="btn btn-primary" style={{ marginLeft:'15px', marginRight: '10px', backgroundColor: '#344D6D', border: 'none'}}>
-            Edit
+            Save
           </button>
-          <button onClick={deleteHealthPackage} className="btn btn-danger red-header">
+          <button onClick={deleteHealthPackage} className="btn btn-danger">
             Delete
           </button>
           {error && <div className="error mt-3">{error}</div>}

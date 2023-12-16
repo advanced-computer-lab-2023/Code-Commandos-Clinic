@@ -64,11 +64,10 @@ import ViewAvailableAppointmentsOfSpecificDoctor from "./pages/ViewAvailableAppo
 import ViewFollowUpRequests from './pages/ViewFollowUpRequests';
 import RescheduleAppointment from "./pages/RescheduleAppointment";
 import '../src/css/style.css';
-import DoctorPage from "./pages/DoctorPage";
 import PatientHome from "./pages/patientHome";
-import AdminHome from "./components/AdminHome";
 import DoctorHome from "./pages/DoctorHome";
 import PrescriptionContainerDoctor from "./pages/PrescriptionContainerDoctor";
+import AdminHome from "./pages/AdminHome";
 
 const App = () => {
  
@@ -144,13 +143,14 @@ const App = () => {
             <Route path="/EditPrescription/:id" element={<EditPrescription/>}/>
             <Route path="/Chat" element={<ChakraProvider><ChatProvider><Chat/></ChatProvider></ChakraProvider>}/>
             <Route path="/Reschedule/:appointmentId" element={<RescheduleAppointment/>}/>
-            <Route path="/AdminHome" element={<AdminHome/>}/>
 
             <Route path="/Register" element={<Register/>}/>
             <Route path="/Login" element={logged ? <Navigate to="/Home" replace /> : <Login/> }/>
             <Route path="/Home" element={<Home/>}/>
             <Route path="/DoctorHome" element={<DoctorHome />} />
             <Route path="/PatientHome" element={<PatientHome />}/>
+            <Route path="/AdminHome" element={<AdminHome />}/>
+
         </Routes>
        </div>
       </BrowserRouter>
