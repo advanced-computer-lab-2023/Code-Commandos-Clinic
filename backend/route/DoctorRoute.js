@@ -21,6 +21,7 @@ const {
     getPatientDoctors,
     getAmount,
     searchDoctorsToChat,
+    searchDoctorsToChatClinic
 } = require('../controller/DoctorController')
 
 router.get('/searchByNameAndOrSpeciality/:name/:speciality',protect,checkPatientRole,searchByNameAndOrSpeciality)
@@ -34,6 +35,6 @@ router.get('/getSessionPrice',protect,checkPatientRole,getDoctorsSessionPrice)
 router.post('/createDoctorPatients',createDoctorPatients)
 router.get('/getPatientDoctors',protect,checkPatientRole,getPatientDoctors)
 router.get('/getAmount',protect,checkDoctorRole,getAmount)
-router.get('/searchDoctorsToChat/:name/:specialty',searchDoctorsToChat)
-
+router.get('/searchDoctorsToChatClinic/:name/:specialty', protect, checkPatientRole, searchDoctorsToChatClinic)
+router.get('/searchDoctorsToChat/:name/:specialty', searchDoctorsToChat) // cannot protect as it is accessed by pharmacy
 module.exports = router

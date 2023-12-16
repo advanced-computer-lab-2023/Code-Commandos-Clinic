@@ -109,6 +109,9 @@ const DoctorNavbar = () => {
                                         <li>
                                             <Link to="/Chat" className="dropdown-item">Chat with a patient</Link>
                                         </li>
+                                        <li>
+                                            <Link to="/ZoomCall" className="dropdown-item">Video call a patient</Link>
+                                        </li>
 
                                     </ul>
                                 </li>

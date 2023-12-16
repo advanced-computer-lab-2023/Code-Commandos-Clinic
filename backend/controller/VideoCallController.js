@@ -3,6 +3,9 @@ const mongoose = require('mongoose');
 const asyncHandler = require('express-async-handler');
 const PatientModel = require('../model/Patient')
 const DoctorModel = require('../model/Doctor')
+require('dotenv').config()
+const axios = require('axios');
+const { NextWeek } = require('@material-ui/icons');
 
 const getVideoCall = asyncHandler(async (req, res) => {
   const id  = req.user.id;
@@ -77,9 +80,87 @@ const setSocketID = asyncHandler(async (req,res) => {
   }
 })
 
+const authZoomAPI = asyncHandler(async (req,res) => {
+  const code = req.body.code;
+  const data = encodeURI(`grant_type=authorization_code&code=${code}&redirect_uri=${process.env.REDIRECT_URI}`);
+
+  try{
+    const response = await axios.post('https://zoom.us/oauth/token',data,{
+      headers:{
+        'Authorization':`Basic ${Buffer.from(`${process.env.ZOOM_API_KEY}:${process.env.ZOOM_API_SECRET}`).toString('base64')}`,
+      }
+    });
+    if(response.status===200)
+      res.send(response.data.access_token)
+    else
+      res.status(400).json(response.data)
+  }catch(error){
+    res.status(400).json(error.message)
+  }
+})
+
+const getMeetings = asyncHandler(async (req,res) => {
+  const accessToken = req.body.accessToken
+  try{
+    const response = await axios.get('https://api.zoom.us/v2/users/me/meetings',{
+      headers:{
+        'Authorization':`Bearer ${accessToken}`
+      }
+    });
+    const data = response.data;
+    if(response.status===200)
+      res.send(data)
+    else
+      res.status(400).json(data)
+  }catch(error){
+      console.error('Error',error);
+      res.status(400).json(error.message)
+  }
+})
+
+const createMeeting = asyncHandler(async (req,res) => {
+  const { doctorId, patientId, accessToken } = req.body
+  try{
+    const response = await axios.post('https://api.zoom.us/v2/users/me/meetings',{
+      topic: 'Virtual Clinic Meeting',
+      type: 2,
+      start_time: (new Date()).toUTCString(),
+      duration: 60,
+      timezone: 'UTC',
+      agenda: doctorId || patientId,
+      settings:{
+        host_video:true,
+        participant_video:true,
+        join_before_host:true,
+        mute_upon_entry:true,
+        watermark:false,
+        use_pmi:false,
+        approval_type:0,
+        audio:'both',
+        auto_recording:'none'
+      }
+    },{
+      headers:{
+        'Authorization':`Bearer ${accessToken}`
+      },
+    });
+    const body = response.data;
+    if(!patientId || patientId === "")
+      await VideoCallModel.create({join_url:body.join_url, doctor: doctorId});
+    else
+      await VideoCallModel.create({join_url:body.join_url, patient: patientId});
+    res.send(body)
+  }catch(error){
+      console.error('Error',error);
+  }
+})
+
 module.exports = {
   getVideoCall,
   addVideoCall,
   deleteVideoCall,
-  setSocketID
+  setSocketID,
+  authZoomAPI,
+  getMeetings,
+  createMeeting
 };

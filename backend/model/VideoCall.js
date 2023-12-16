@@ -4,12 +4,10 @@ const VideoCallSchema = new mongoose.Schema({
     patient: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Patient',
-        required: true,
     },
     doctor: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Doctor',
-        required: true,
     },
     patientName: {
         type: String,
@@ -23,6 +21,9 @@ const VideoCallSchema = new mongoose.Schema({
     doctorSocketID: {
         type: String,
     },
+    join_url: {
+        type: String,
+    }
 },{ timestamps: true });
 
 const VideoCall = mongoose.model('VideoCall', VideoCallSchema);
