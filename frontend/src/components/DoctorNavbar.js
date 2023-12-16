@@ -135,9 +135,6 @@ const DoctorNavbar = () => {
                                             <Link to="/FilterAppointmentsByDateOrStatus" className="dropdown-item">Filter Appointments By Date or Status</Link>
                                         </li>
                                         <li>
-                                            <Link to="/ViewAvailableAppointmentsOfDoctor" className="dropdown-item">View Available Appointments</Link>
-                                        </li>
-                                        <li>
                                             <Link to="/CreateFollowUp" className="dropdown-item">Create a FollowUp</Link>
                                         </li>
                                         <li>
