@@ -12,12 +12,21 @@ const FilteredAppointments = () =>{
             try {
                 let url='api/appointment/getAppointmentsByDateAndStatus'
                 url += `/${date}/${status}`
+                if(!date || !status){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: "Please select both date and status",
+                    });
+                    return
+                }
                 const response = await fetch(url,{
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                 });
+
                 if (response.ok) {
                     const results = await response.json();
                     setSearchResults(results)
