@@ -94,7 +94,7 @@ const searchByNameAndOrSpeciality = asyncHandler( async (req,res) => {
     }
 })
 
-const searchDoctorsToChat = asyncHandler(async (req, res) => {
+const searchDoctorsToChatClinic = asyncHandler(async (req, res) => {
   const { name, speciality } = req.params;
   let query = {};
   if (name !== "none" && speciality !== "none") {
@@ -114,15 +114,49 @@ const searchDoctorsToChat = asyncHandler(async (req, res) => {
     let doctorList = []
     for (const doctorJSON of doctors) {
         const doctor = doctorJSON._doc
-        const user = await UserModel.findOne({username:doctor.username});
-        if(user)
-            doctorList.push({...doctor,userId:user._id, role:user.role})
+        const doctorPatient = await DoctorPatient.findOne({doctor: doctor._id, patient: req.user.id})
+        if(doctorPatient){
+            const user = await UserModel.findOne({username:doctor.username});
+            if(user)
+                doctorList.push({...doctor,userId:user._id, role:user.role})
+        }
     }
     res.status(200).json(doctorList);
   } catch (error) {
     res.status(400);
     throw new Error(error.message);
   }
+});
+
+const searchDoctorsToChat = asyncHandler(async (req, res) => {
+    const { name, speciality } = req.params;
+    let query = {};
+    if (name !== "none" && speciality !== "none") {
+      query = {
+        $and: [
+          { name: { $regex: new RegExp(name, "i") } },
+          { speciality: { $regex: new RegExp(speciality, "i") } },
+        ],
+      };
+    } else if (name !== "none") {
+      query = { name: { $regex: new RegExp(name, "i") } };
+    } else if (speciality !== "none") {
+      query = { speciality: { $regex: new RegExp(speciality, "i") } };
+    } 
+    try {
+      const doctors = await DoctorModel.find(query);
+      let doctorList = []
+      for (const doctorJSON of doctors) {
+        const doctor = doctorJSON._doc
+        const user = await UserModel.findOne({username:doctor.username});
+        if(user)
+            doctorList.push({...doctor,userId:user._id, role:user.role})
+      }
+      res.status(200).json(doctorList);
+    } catch (error) {
+      res.status(400);
+      throw new Error(error.message);
+    }
 });
 
 const createDoctor = asyncHandler(async (req,res) =>{
@@ -395,6 +429,7 @@ const getPatientDoctors = asyncHandler(async (req,res) => {
 
 module.exports = {
     searchByNameAndOrSpeciality,
+    searchDoctorsToChatClinic,
     searchDoctorsToChat,
     createDoctor,
     updateDoctor,

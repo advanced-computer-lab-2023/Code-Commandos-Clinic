@@ -129,7 +129,9 @@ const Navbar = () => {
                                         <li>
                                             <Link to="/ViewDoctorsWithSessionPrice" className="dropdown-item">View Doctors With Session Price</Link>
                                         </li>
-                            
+                                        <li>
+                                            <Link to="/ZoomCall" className="dropdown-item">Video call a doctor</Link>
+                                        </li>
                                     </ul>
                                 </li>
                                 <li className="nav-item dropdown">

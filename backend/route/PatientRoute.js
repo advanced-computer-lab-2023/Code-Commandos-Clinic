@@ -31,6 +31,6 @@ router.get('/getInfoHealthPatient/:id',getInfoHealthPatient);
 router.get('/searchByName/:name',protect,checkDoctorRole,searchByName)
 router.get('/payForSubscription/:familyMemberID/:packageID/:paymentMethod', protect, checkPatientRole, payForSubscription)
 router.post('/subscribeToPackage/:sessionID',protect,checkPatientRole,subscribeToPackage)
-router.get('/searchPatientsToChat/:name', searchPatientsToChat)
+router.get('/searchPatientsToChat/:name', protect, checkDoctorRole, searchPatientsToChat)
 
 module.exports = router 
