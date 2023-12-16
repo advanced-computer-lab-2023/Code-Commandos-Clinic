@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 
 const PrescriptionDetails = ({ prescription, showEditButton = true, showActions = true }) => {
@@ -16,7 +17,11 @@ const PrescriptionDetails = ({ prescription, showEditButton = true, showActions 
             });
 
             if (response.ok) {
-                alert("Prescription deleted successfully")
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: "Prescription deleted successfully",
+                });
                 window.location.reload()
             } else {
                 alert(await response.text())
@@ -44,7 +49,11 @@ const PrescriptionDetails = ({ prescription, showEditButton = true, showActions 
             });
 
             if (response.ok) {
-                alert('Medicine deleted successfully');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Medicine deleted successfully',
+                });
                 window.location.reload()
             } else {
                 alert(await response.text());

@@ -54,7 +54,7 @@ const FilterAppointmentsByDateOrStatus = () =>{
 
     return (
         <div className="container mt-4">
-            <h2 className="mb-4"><hr className="lineAround"></hr>Filter Appointment<hr className="lineAround"></hr></h2>
+            <h2 className="mb-4"><hr className="lineAround"></hr>Filter appointments by date or status<hr className="lineAround"></hr></h2>
             <div className="row">
                 <div className="col-md-5">
                     <img

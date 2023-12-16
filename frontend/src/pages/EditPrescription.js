@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {useParams} from "react-router-dom";
 import PrescriptionDetails from "../components/PrescriptionDetails";
+import Swal from "sweetalert2";
 
 const EditPrescription = () => {
     const {id} = useParams()
@@ -56,7 +57,11 @@ const EditPrescription = () => {
             });
 
             if (response.ok) {
-                alert('Medicine added successfully');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Medicine added successfully',
+                });
                 window.location.reload()
             } else {
                 alert(await response.text());

@@ -1,0 +1,13 @@
+/* css/Footer.css */
+
+footer {
+  background-color: #7aaae8;
+  color: #fff;
+  text-align: center;
+  padding: 1em;
+  position:relative;
+  top: 100px;
+  bottom: 0;
+  width: 100%;
+  margin-top: 200px;
+}

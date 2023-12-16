@@ -5,7 +5,6 @@ const PatientModel = require('../model/Patient')
 const DoctorModel = require('../model/Doctor')
 require('dotenv').config()
 const axios = require('axios');
-const { NextWeek } = require('@material-ui/icons');
 
 const getVideoCall = asyncHandler(async (req, res) => {
   const id  = req.user.id;

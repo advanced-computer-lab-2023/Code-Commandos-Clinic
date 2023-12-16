@@ -73,6 +73,7 @@ import DoctorNavbar from "./components/DoctorNavbar";
 import PatientNavbar from "./components/patientNavbar";
 import AdminNavbar from "./components/AdminNavbar";
 import SubscribeToPackage from "./pages/SubscribeToPackage";
+import Footer from "./components/Footer";
 
 const App = () => {
  
@@ -168,6 +169,9 @@ const App = () => {
 
         </Routes>
        </div>
+          <div>
+              <Footer/>
+          </div>
       </BrowserRouter>
       
     </div>

@@ -50,67 +50,76 @@ const FilteredAppointments = () =>{
                 });
             }
         }
-        
 
-    return(
+
+    return (
         <div className="container mt-4">
-             <h2 className="mb-4"><hr className="lineAround"></hr>Filter By Date and Status<hr className="lineAround"></hr></h2>
-             <div className="box">
-                 <div className="mb-3">
-             
-                <label htmlFor="Date" className="form-label">
-                    Date:
-                </label>
-                <input
-                    required={true}
-                    type="date"
-                    id="date"
-                    className="form-control"
-                    onChange={(e) => setDate(e.target.value)}
-                />
-            </div>
-             <input
-                required={true}
-                type="radio"
-                id="RESERVED"
-                name="status" 
-                onChange={(e) => setStatus(e.target.id)} 
-            />
-            <label>Reserved</label><br />
+            <h2 className="mb-4"><hr className="lineAround"></hr>Filter appointments by date and status<hr className="lineAround"></hr></h2>
+            <div className="row">
+                <div className="col-md-5">
+                    <img
+                        src={process.env.PUBLIC_URL + `/filters.gif`}
+                        style={{
+                            maxWidth: '100%',   // Adjusted the maximum width
+                            height: 'auto',     // Allow height to adjust accordingly
+                            marginBottom: '-30px',
+                            marginRight:'100px'
+                        }}
+                    />
+                </div>
+                <div className="col-md-6">
+                    <div style={{ border: '2px solid red', padding: '30px', marginTop: '20px', width: '400xp', marginBottom:'30px' }}>
+                        <label htmlFor="Date" className="form-label">
+                            Appointment Date:
+                        </label>
+                        <input
+                            required={true}
+                            type="date"
+                            id="date"
+                            className="form-control"
+                            onChange={(e) => setDate(e.target.value)}
+                        />
 
-            <input 
-              type="radio"
-              id="COMPLETED"
-              name="status"  
-              onChange={(e) => setStatus(e.target.id)}  
-            /> 
-            <label>Completed</label><br />
-            <input 
-              type="radio"
-              id="CANCELLED"
-              name="status"  
-              onChange={(e) => setStatus(e.target.id)}  
-            /> 
-            <label>Cancelled</label><br />
+                        <input
+                            required={true}
+                            type="radio"
+                            id="RESERVED"
+                            name="status"
+                            onChange={(e) => setStatus(e.target.id)}
+                        />
+                        <label>Reserved</label><br />
+
+                        <input
+                            type="radio"
+                            id="COMPLETED"
+                            name="status"
+                            onChange={(e) => setStatus(e.target.id)}
+                        />
+                        <label>Completed</label><br />
+                        <input
+                            type="radio"
+                            id="CANCELLED"
+                            name="status"
+                            onChange={(e) => setStatus(e.target.id)}
+                        />
+                        <label>Cancelled</label><br />
+                    </div>
+                    <div className="mb-3">
+                        <button className="btn btn-danger" onClick={fetchFilteredAppointments}>
+                            Filter
+                        </button>
+                    </div>
+                </div>
             </div>
-            <button id="button" className="btn btn-primary" onClick={fetchFilteredAppointments}>
-                Filter
-            </button>
 
             <div className="results mt-4">
                 {searchResults &&
                     searchResults.map((filteredAppointment) => (
-                        <button 
-                            key={filteredAppointment._id}
-                            className="btn btn-link"
-                            onClick={() => setSelectedAppointment(filteredAppointment)} style={{ fontSize: "20px" }}>
-                            Appointment with Doctor {filteredAppointment.doctorName} 
-                        </button>
+                        <AppointmentsDetails key={filteredAppointment._id} filteredAppointment={filteredAppointment} reserve={false} />
                     ))}
             </div>
-            {selectedAppointment && <AppointmentsDetails key={selectedAppointment._id} filteredAppointment={selectedAppointment} reserve={false} follow_up={false} cancel={false}/>}
         </div>
-    )
+    );
 }
 
 export default FilteredAppointments
