@@ -61,6 +61,7 @@ server.use('/api/employmentContract',employmentContractRoutes)
 server.use('/api/videoCall', videoCallRoutes)
 server.use('/api/message',messageRoutes)
 server.use('/api/chat',chatRoutes)
+server.use('/api/notification',notificationRoutes)
 
 server.use('/api/file',fileRoutes.routes)
 server.use('/uploads', express.static(path.join(__dirname, 'uploads')));
