@@ -21,12 +21,12 @@ router.post('/subscribeToPackage', subscribeToPackage)
 
 //get a patient's package
 //router.get('/getSubscribedPackage/', protect, checkPatientRole, getSubscribedPackage)
-router.get('/getSubscribedPackage/',  getSubscribedPackage)
+router.get('/getSubscribedPackage/',protect,  getSubscribedPackage)
 //get a patient's package status and renewal date
 //router.get('/getSubscribedPackageStatus', protect, checkPatientRole, getSubscribedPackageStatus)
-router.get('/getSubscribedPackageStatus',  getSubscribedPackageStatus)
+router.get('/getSubscribedPackageStatus',protect,  getSubscribedPackageStatus)
 //get all patient packages
-router.get('/getPatientPackages', getPatientPackages)
+router.get('/getPatientPackages',protect, getPatientPackages)
 
 router.delete('/cancelSubscription/:familyMemberID',protect, checkPatientRole, cancelSubscription)
 

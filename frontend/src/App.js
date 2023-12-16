@@ -72,6 +72,7 @@ import AdminHome from "./pages/AdminHome";
 import DoctorNavbar from "./components/DoctorNavbar";
 import PatientNavbar from "./components/patientNavbar";
 import AdminNavbar from "./components/AdminNavbar";
+import SubscribeToPackage from "./pages/SubscribeToPackage";
 
 const App = () => {
  
@@ -146,6 +147,7 @@ const App = () => {
             <Route path="/CreateFollowUp" element={<CreateFollowUp/>}/>
             <Route path="/ViewAvailableAppointmentsOfSpecificDoctor/:doctorId" element={<ViewAvailableAppointmentsOfSpecificDoctor/>} />
             <Route path="/HealthPackages" element={<HealthPackages/>}/>
+            <Route path="/HealthPackages/Subscribe" element={<SubscribeToPackage/>}/>
             <Route path="/HealthPackages/Subscribe/Success" element={<PaymentSuccess/>}/>
             <Route path="/HealthPackages/Subscribe/Cancel" element={<PaymentCancel/>}/>
             <Route path="/AppointmentSuccess" element={<AppointmentSuccess/>}/>

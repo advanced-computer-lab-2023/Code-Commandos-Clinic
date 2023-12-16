@@ -93,11 +93,6 @@ const Navbar = () => {
                                         <li>
                                             <Link to="/ViewpatientHealthRecord" className="dropdown-item">View Health Record</Link>
                                         </li>
-                                        <li>
-                                            <Link to="/viewUploadedHealthRecordPatient" className="dropdown-item">View uploaded Health Record</Link>
-                                        </li>
-                                        
-
                                     </ul>
                                 </li>
 
@@ -144,10 +139,6 @@ const Navbar = () => {
                                         My Account
                                     </a>
                                     <ul className="dropdown-menu" aria-labelledby="servicesDropdown">
-                                    <li>
-                                            <Link to="/PatientRegistration" className="dropdown-item"> Registration</Link>
-                                        </li>
-                                    
                                         <li>
                                             <Link to="/UploadDocument" className="dropdown-item">upload a document</Link>
                                         </li>

@@ -197,7 +197,7 @@ const HealthPackages = () => {
                     ))}
 
                 <br/><li className="list-group-item">
-                {subscribedPackage._id?
+                {subscribedPackage && subscribedPackage._id?
                     <h4>Change or Cancel Current Health Package:</h4>: <h4>Subscribe to a Health Package:</h4>
                 }
                 <div>
