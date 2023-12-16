@@ -32,10 +32,10 @@ const NotificationDetails = ({ notification }) => {
     };
 
     return (
-        <div className="card box mt-lg-5">
-            <h3>{notification.title}</h3>
-            <p className="card-text"><strong>Content: </strong>{notification.content}</p>
-            <button className="btn btn-danger" onClick={handleDelete}>Delete</button>
+        <div className="container card box mt-lg-5 col-6">
+            <h3 >{notification.title}</h3>
+            <p><strong>Content: </strong>{notification.content}</p>
+            <button className="btn btn-danger" style={{width:"fit-content"}} onClick={handleDelete}>Delete</button>
             <hr />
         </div>
     );

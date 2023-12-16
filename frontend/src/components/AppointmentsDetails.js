@@ -7,8 +7,16 @@ const AppointmentsDetails = ({ filteredAppointment, reserve , follow_up , issue,
     const navigate = useNavigate();
     const handleMakeRequest = async () => {
         try {
-          const appointmentId = filteredAppointment._id; 
-          const response = await fetch(`/api/appointment/updateStatusToPending/${appointmentId}`, {
+          const appointmentId = filteredAppointment._id;
+          const memberId = filteredAppointment.familyMember
+            let url;
+            if(memberId){
+                url = `/api/appointment/updateStatusToPending/${appointmentId}/${memberId}`
+            }
+            else {
+                url = `/api/appointment/updateStatusToPending/${appointmentId}/none`
+            }
+          const response = await fetch(url, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
@@ -26,7 +34,7 @@ const AppointmentsDetails = ({ filteredAppointment, reserve , follow_up , issue,
               Swal.fire({
                   icon: 'error',
                   title: 'Error!',
-                  text: "Failed to update status",
+                  text: await response.text(),
               });
           }
         } catch (error) {

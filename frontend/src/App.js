@@ -74,6 +74,7 @@ import PatientNavbar from "./components/patientNavbar";
 import AdminNavbar from "./components/AdminNavbar";
 import SubscribeToPackage from "./pages/SubscribeToPackage";
 import Footer from "./components/Footer";
+import NotificationPage from "./pages/NotificationPage";
 
 const App = () => {
  
@@ -159,6 +160,7 @@ const App = () => {
             <Route path="/Chat" element={<ChakraProvider><ChatProvider><Chat/></ChatProvider></ChakraProvider>}/>
             <Route path="/ZoomCall" element={<ZoomCall/>}/>
             <Route path="/Reschedule/:appointmentId" element={<RescheduleAppointment/>}/>
+            <Route path="/Notifications" element={<NotificationPage/>}/>
 
             <Route path="/Register" element={<Register/>}/>
             <Route path="/Login" element={logged ? <Navigate to="/Home" replace /> : <Login/> }/>

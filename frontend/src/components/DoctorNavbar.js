@@ -183,6 +183,9 @@ const DoctorNavbar = () => {
                                     <li>
                                         <Link to="/ChangePassword" className="dropdown-item">Change Password</Link>
                                     </li>
+                                    <li>
+                                        <Link to="/Notifications" className="dropdown-item">Notifications</Link>
+                                    </li>
                                 </ul>
                             </div>
                     

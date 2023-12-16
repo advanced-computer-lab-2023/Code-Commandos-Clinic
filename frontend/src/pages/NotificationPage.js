@@ -36,8 +36,8 @@ const NotificationsPage = () => {
     }, []);
 
     return (
-        <div>
-            <h1>Notifications</h1>
+        <div className="container">
+            <h1 style={{textAlign:"center"}}>Notifications</h1>
             {notifications && notifications.map((notification) => (
                 <NotificationDetails
                     key={notification._id}

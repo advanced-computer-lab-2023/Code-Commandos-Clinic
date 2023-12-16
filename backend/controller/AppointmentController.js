@@ -714,7 +714,7 @@ const updateStatusToPending = async (req, res) => {
     console.log('req params =========== ', req.params);
     try {
         const id = req.params.id; 
-        const patientId = req.params.whichMember === 'me' ? req.user.id: req.params.whichMember ;        
+        const patientId = req.params.whichMember === 'none' ? req.user.id: req.params.whichMember ;
         let pn ;
         let patient_id;
         if(patientId == req.user.id ){
