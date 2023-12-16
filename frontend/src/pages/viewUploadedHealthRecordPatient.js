@@ -4,7 +4,7 @@ import "../css/viewUploadedHealthRecordPatient.css";
 import Swal from "sweetalert2"
 
 const HealthRecordUpload = () => {
-  const [healthRecord, setHealthRecord] = useState([]);
+  const [healthRecord, setHealthRecord] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -46,15 +46,13 @@ const HealthRecordUpload = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {Array.isArray(healthRecord) && healthRecord.length > 0 ? (
-                        healthRecord.map((recordd) => (
-                            <tr key={recordd._id}>
-                                <td>{recordd.name}</td>
-                                <td>{recordd.email}</td>
-                                <td>{recordd.affiliation}</td>
-                                <td>{recordd.educationalBackground}</td>
+                    {healthRecord && healthRecord ? (
+                            <tr key={healthRecord._id}>
+                                <td>{healthRecord.name}</td>
+                                <td>{healthRecord.email}</td>
+                                <td>{healthRecord.affiliation}</td>
+                                <td>{healthRecord.educationalBackground}</td>
                             </tr>
-                        ))
                     ) : (
                         <tr>
                             <td colSpan="4">No health records found</td>
