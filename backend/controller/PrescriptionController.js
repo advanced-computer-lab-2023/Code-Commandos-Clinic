@@ -24,6 +24,18 @@ const getPrescriptionsbyPatient = asyncHandler(async (req, res) => {
   }
 });
 
+const getPrescriptionsbyDoctor = asyncHandler(async (req, res) => {
+  try {
+    console.log(req.user.id)
+    const prescriptions = await PrescriptionModel.find({ doctor: req.user.id })
+    res.status(200).json(prescriptions);
+  } catch (error) {
+    res.status(400);
+    throw new Error(error.message);
+  }
+});
+
+
 const getPrescriptionsOfPatient = asyncHandler(async (req, res) => {
   const patientId  = req.params.id;
   if(!mongoose.Types.ObjectId.isValid(patientId) ){
@@ -293,6 +305,7 @@ const medicineIsBought = asyncHandler(async (req,res) => {
 
 module.exports = {
   getPrescriptionsbyPatient,
+  getPrescriptionsbyDoctor,
   getPrescriptionsOfPatient,
   addPrescription ,
   deletePrescriptionById,

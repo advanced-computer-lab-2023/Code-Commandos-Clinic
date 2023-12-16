@@ -67,6 +67,8 @@ import '../src/css/style.css';
 import DoctorPage from "./pages/DoctorPage";
 import PatientHome from "./pages/patientHome";
 import AdminHome from "./components/AdminHome";
+import DoctorHome from "./pages/DoctorHome";
+import PrescriptionContainerDoctor from "./pages/PrescriptionContainerDoctor";
 
 const App = () => {
  
@@ -113,11 +115,12 @@ const App = () => {
             <Route path="/FilterAppointmentsByDateAndStatus" element={<FilterAppointmentsByDateAndStatus/>}/>
             <Route path='/AddFamilyMember' element={<AddFamilyMember/>}/>
             <Route path="/PrescriptionContainer" element={<PrescriptionContainer/>} />
+            <Route path="/PrescriptionContainerDoctor" element={<PrescriptionContainerDoctor/>} />
+
             <Route path="/FilterPrescriptions"  element={<FilterPrescriptions/>}/>
             <Route path="/AddPrescription"  element={<AddPrescription/>}/>
             <Route path="/CreateAppointment"  element={<CreateAppointment/>}/>
 
-            <Route path="/CreateFollowUp"  element={<CreateFollowUp/>}/>
             <Route path="/CreateDoctor"  element={<CreateDoctor/>}/>
             <Route path="/ViewAvailableAppointmentsOfDoctor"  element={<ViewAvailableAppointmentsOfDoctor/>}/>
             <Route path="/DoctorUpcomingPastAppointments"  element={<DoctorUpcomingPastAppointments/>}/>
@@ -146,7 +149,7 @@ const App = () => {
             <Route path="/Register" element={<Register/>}/>
             <Route path="/Login" element={logged ? <Navigate to="/Home" replace /> : <Login/> }/>
             <Route path="/Home" element={<Home/>}/>
-            <Route path="/DoctorPage" element={<DoctorPage />} />
+            <Route path="/DoctorHome" element={<DoctorHome />} />
             <Route path="/PatientHome" element={<PatientHome />}/>
         </Routes>
        </div>

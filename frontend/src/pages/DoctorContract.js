@@ -66,8 +66,8 @@ const DoctorContract = () => {
     return (
         <div className="contractDetails m-5">
             {contract && <ContractDetails contract={contract}/>}
-            <div className="mt-3">
-                <button className="btn btn-success mr-2" onClick={handleAccept}>Accept</button>
+            <div className="mt-3 m-lg-5">
+                <button className="btn btn-success m-lg-3" onClick={handleAccept}>Accept</button>
                 <button className="btn btn-danger" onClick={handleReject}>Reject</button>
             </div>
         </div>

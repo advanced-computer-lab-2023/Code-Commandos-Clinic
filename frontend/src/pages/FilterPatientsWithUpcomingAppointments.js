@@ -41,7 +41,7 @@ const FilterPatientsWithUpcomingAppointments = () => {
 
     return (
         <div className="UpcomingAppointments">
-            <h2 className="mb-4"><hr className="lineAround"></hr>Your upcoming appointments<hr className="lineAround"></hr></h2>
+            <h2 className="mb-4"><hr className="lineAround"></hr>Patients whom you have upcoming appointments with<hr className="lineAround"></hr></h2>
             {/* <div>
                 {results && results.map((patient) => (
                     <PatientDetails  patient={patient}/>
@@ -57,7 +57,7 @@ const FilterPatientsWithUpcomingAppointments = () => {
                 <p></p>
               {/* Display only the name and appointment date initially */}
               <div className="AppointmentCard" onClick={() => handlePatientClick(patient)}>
-                <button id= "button">click to view {patient.name} details</button>
+                <button id="button" className="btn btn-success">click to view {patient.name} details</button>
               </div>
 
             </div>
@@ -69,7 +69,7 @@ const FilterPatientsWithUpcomingAppointments = () => {
         Your browser does not support the video tag.
       </video>
       </div>
-      <div className="container">{selectedPatient && (
+      <div >{selectedPatient && (
           <div className="PatientDetailsContainer" key={selectedPatient.id}>
             <PatientDetails patient={selectedPatient} />
           </div>

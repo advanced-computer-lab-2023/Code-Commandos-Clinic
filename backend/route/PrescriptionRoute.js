@@ -10,13 +10,15 @@ const {
     deleteMedicineFromPrescription,
     updateMedicineDosage,
     getPrescriptionsOfPatient, deletePrescriptionById,
-    generatePDF, updateDosageDescription, medicineIsBought
+    generatePDF, updateDosageDescription, medicineIsBought, getPrescriptionsbyDoctor
 } = require("../controller/PrescriptionController")
 const {protect} = require("../middleware/AuthenticationHandler");
 const {checkPatientDoctorRole, checkPatientRole, checkDoctorRole} = require("../middleware/AccessHandler");
 const router = express.Router();
 
 router.get('/getPrescriptionsbyPatient/:username', getPrescriptionsbyPatient)
+router.get('/getPrescriptionsbyDoctor',protect,checkPatientDoctorRole, getPrescriptionsbyDoctor)
+
 router.get('/getPrescriptionsOfPatient/:id',protect,checkDoctorRole, getPrescriptionsOfPatient)
 
 router.get('/getPrescriptionbyId/:id', getPrescriptionbyId)

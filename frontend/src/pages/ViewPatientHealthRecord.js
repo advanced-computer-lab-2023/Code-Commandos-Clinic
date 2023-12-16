@@ -29,7 +29,7 @@ const ViewpatientHealthRecord = () =>{
 
     return (
         <div className="container justify-content-center col-md-7 ">
-            <h2 className="mb-4"> <hr className="linearound"></hr> Your HealthRecord <hr className="linearound"></hr> </h2>
+            <h2 className="mb-4"> <hr className="linearound"></hr> Your Health Record <hr className="linearound"></hr> </h2>
             {healthRecord && <HealthRecordDetails healthRecord={healthRecord} />}
         </div>
     );
