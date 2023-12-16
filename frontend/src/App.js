@@ -68,18 +68,29 @@ import PatientHome from "./pages/patientHome";
 import DoctorHome from "./pages/DoctorHome";
 import PrescriptionContainerDoctor from "./pages/PrescriptionContainerDoctor";
 import AdminHome from "./pages/AdminHome";
+import DoctorNavbar from "./components/DoctorNavbar";
+import PatientNavbar from "./components/patientNavbar";
+import AdminNavbar from "./components/AdminNavbar";
 
 const App = () => {
  
     const logged = window.localStorage.getItem("logged");
+    const role = window.localStorage.getItem("role");
+
+    const isPatient = role === "PATIENT";
+    const isDoctor = role === "DOCTOR";
+    const isAdmin = role === "ADMIN"
 
   return (
     <div className="App">
       <BrowserRouter>
-          {logged ? <Home/> : null}
+          {logged && isPatient && <PatientNavbar />}
+          {logged && isDoctor && <DoctorNavbar />}
+          {logged && isAdmin && <AdminNavbar />}
+
        <div className="pages">
         <Routes>
-            <Route path="/" element={logged ? <Home /> : <Navigate to="/login"/>}/>
+            <Route path="/" element={logged ? <Navigate to="/Home"/> : <Navigate to="/login"/>}/>
             <Route path="/DoctorRegistrationRequests" element={<DoctorRegistrationRequests />}/>
             <Route path="/DoctorRegistration" element={<DoctorRegistration />}/>
             <Route path="/PatientRegistration" element={<PatientRegistration />}/>
@@ -146,7 +157,7 @@ const App = () => {
 
             <Route path="/Register" element={<Register/>}/>
             <Route path="/Login" element={logged ? <Navigate to="/Home" replace /> : <Login/> }/>
-            <Route path="/Home" element={<Home/>}/>
+            <Route path="/Home" element={isPatient ? <PatientHome/> : isDoctor ? <DoctorHome /> : <AdminHome />}/>
             <Route path="/DoctorHome" element={<DoctorHome />} />
             <Route path="/PatientHome" element={<PatientHome />}/>
             <Route path="/AdminHome" element={<AdminHome />}/>
