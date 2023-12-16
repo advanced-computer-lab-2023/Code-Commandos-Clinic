@@ -6,7 +6,7 @@ const DoctorSessionDetails = ({ doctor }) => {
     
   return (
     <div className="card">
-      <div className="card-body" style={{width: 500}}>
+      <div className="card-body" >
         <h5 className="card-title" style={{ color: '#000000' }}>
           {doctor.name}
         </h5>

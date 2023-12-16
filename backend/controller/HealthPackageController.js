@@ -129,8 +129,8 @@ const deletePackage = asyncHandler(async(req,res) => {
       if(!HealthPackage){
         return res.status(400).json({error: 'Package not found'})
       }
-      const HealthPackagePatient = await HealthPackagePatientModel.findOneAndDelete({healthPackageID: id});
-      const familyMember = await FamilyMemberModel.findOneAndUpdate({'healthPackage.healthPackageID': id }, {healthPackage: null})
+      await HealthPackagePatientModel.deleteMany({healthPackageID: id})
+      await FamilyMemberModel.updateMany({'healthPackage.healthPackageID': id},{healthPackage:null})
       res.status(200).json(HealthPackage)
     }
     catch (error) {

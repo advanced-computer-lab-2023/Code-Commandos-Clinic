@@ -142,10 +142,6 @@ const Navbar = () => {
                                         My Account
                                     </a>
                                     <ul className="dropdown-menu" aria-labelledby="servicesDropdown">
-                                    <li>
-                                            <Link to="/PatientRegistration" className="dropdown-item"> Registration</Link>
-                                        </li>
-                                    
                                         <li>
                                             <Link to="/UploadDocument" className="dropdown-item">upload a document</Link>
                                         </li>
