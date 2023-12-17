@@ -1,8 +1,5 @@
 const asyncHandler = require("express-async-handler");
 const Notification = require("../model/Notification");
-const Patient = require("../model/Patient");
-const Doctor = require("../model/Doctor");
-const Admin = require("../model/Admin");
 
 
 const getUserNotifications = asyncHandler(async (req,res) => {
