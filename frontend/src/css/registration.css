@@ -264,15 +264,7 @@ hr.lineAround {
     align-items: center;
     height: 100vh; /* Optionally set height for vertical centering */
 }
-.patient-page {
-    background-image: url('../images/patient.jpeg');
-    background-size: 40%; 
-    background-repeat: no-repeat;
-    background-position: right; 
-    background-position: 80% top;  
-   
-    
-}
+
 .contract-page {
     background-image: url('../images/contr.jpeg');
     background-size: 25%; 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {useNavigate, useParams} from "react-router-dom";
+import Swal from "sweetalert2";
 
 function RescheduleAppointment() {
     const [selectedStartTime,setSelectedStartTime] = useState(null)
@@ -23,12 +24,24 @@ function RescheduleAppointment() {
             });
             if (response.ok) {
                 const data = await response.json();
-                alert("Appointment Reschedule")
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: "Appointment rescheduled!",
+                });
             } else {
-                alert(await response.text())
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: await response.text(),
+                });
             }
         } catch (error) {
-            alert('Error rescheduling the appointment: ', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "Error rescheduling the appointment",
+            });
         }
     };
 

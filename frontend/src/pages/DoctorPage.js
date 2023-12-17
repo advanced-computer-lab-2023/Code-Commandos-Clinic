@@ -47,7 +47,11 @@ const DoctorPage = () => {
             }
         }
         catch (error){
-            alert(error.message)
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "Failed to reject contract",
+            });
         }
         // window.localStorage.removeItem("logged");
         // navigate('/Login')

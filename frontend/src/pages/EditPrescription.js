@@ -20,10 +20,18 @@ const EditPrescription = () => {
                     const data = await response.json();
                     setPrescription(data);
                 } else {
-                    alert(await response.text())
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: await response.text(),
+                    });
                 }
             } catch (error) {
-                alert(error.message)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: "Something went wrong",
+                });
             }
         };
         fetchPrescriptionById();
@@ -36,7 +44,11 @@ const EditPrescription = () => {
             const data = await response.json();
             setMedicines(data);
         } catch (error) {
-            console.error('Error fetching medicines:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "Error fetching medicines",
+            });
         }
     };
 
@@ -64,10 +76,18 @@ const EditPrescription = () => {
                 });
                 window.location.reload()
             } else {
-                alert(await response.text());
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: await response.text(),
+                });
             }
         } catch (error) {
-            alert(error.message);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "Something went wrong",
+            });
         }
     }
 

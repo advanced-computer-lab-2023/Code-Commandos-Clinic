@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import {useNavigate, useParams} from "react-router-dom";
+import Swal from "sweetalert2";
 
 const ResetPassword = () => {
     const [otp, setOtp] = useState(null);
@@ -19,16 +20,28 @@ const ResetPassword = () => {
                 body: JSON.stringify(body),
             });
             if(response.ok){
-                alert("Your password has been reset")
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: "Your password has been reset",
+                });
                 navigate('/Login')
             }
             else {
-                alert(await response.text())
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: await response.text(),
+                });
                 navigate('/EnterEmailReset')
             }
         }
         catch (error){
-            alert(error.message)
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "Something went wrong",
+            });
         }
     };
 

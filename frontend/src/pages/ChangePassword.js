@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {useNavigate} from "react-router-dom";
+import Swal from "sweetalert2";
 
 const ChangePassword = () => {
     const [currentPassword, setCurrentPassword] = useState('');
@@ -22,17 +23,27 @@ const ChangePassword = () => {
             const responseData = await response.json();
 
             if (response.status === 200) {
-                console.log(responseData);
                 window.localStorage.removeItem("logged");
-                alert(responseData);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: responseData,
+                });
                 navigate('/Login')
-                window.location.reload()
             } else {
-                alert(responseData.error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: responseData.error,
+                });
             }
         }
         catch (error){
-            alert(error.message)
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "Something went wrong",
+            });
         }
     };
 

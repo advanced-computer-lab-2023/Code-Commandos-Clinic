@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 const SubscribeToPackage = () => {
     const [selectedPackage, setSelectedPackage] = useState(null)
     const [selectedFamilyMember, setSelectedFamilyMember] = useState(null)
@@ -27,7 +28,11 @@ const SubscribeToPackage = () => {
             if(response.ok){
                 navigate('/HealthPackages/Subscribe/Success')
             } else {
-                alert(session.error)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: session.error,
+                });
             }
         }
     }

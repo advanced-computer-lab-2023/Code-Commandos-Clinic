@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import Swal from "sweetalert2";
 
 const EnterEmailReset = () => {
     const [email, setEmail] = useState('');
@@ -15,7 +16,11 @@ const EnterEmailReset = () => {
             }
         }
         catch (error){
-            alert("No user found for such an email")
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "No user found for such an email",
+            });
         }
 
     };

@@ -18,10 +18,18 @@ function CreateFollowUp(){
                 setPatients(data);
             }
             else {
-                alert(await response.text())
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: await response.text(),
+                });
             }
         } catch (error) {
-            alert(error)
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "Something went wrong",
+            });
         }
     };
 
@@ -44,12 +52,24 @@ function CreateFollowUp(){
             });
             if (response.ok) {
                 const data = await response.json();
-                alert("Follow-UP created",data)
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: "Follow-UP created",
+                });
             } else {
-                alert(await response.text())
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: await response.text(),
+                });
             }
         } catch (error) {
-            alert('Error creating Follow-UP: ', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "Error creating Follow-UP",
+            });
         }
     };
 

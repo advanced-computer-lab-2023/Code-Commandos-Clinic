@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AppointmentsDetails from "../components/AppointmentsDetails";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const ViewFollowUpRequests = () => {
     const [appointments, setAppointments] = useState([]);
@@ -33,7 +34,11 @@ const ViewFollowUpRequests = () => {
         try {
             const response = await axios.put(`/api/appointment/acceptFollowUp/${appointmentId}`);
             if (response.status === 200) {
-               alert("Follow up request accepted successfully");
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: "Follow up request accepted successfully",
+                });
                 window.location.reload();
             } 
              else{  
@@ -49,6 +54,7 @@ const ViewFollowUpRequests = () => {
         try {
             const response = await axios.put(`/api/appointment/updateStatusToFree/${appointmentId}`);
             if (response.status === 200) {
+
                 alert("Follow up request revoked successfully");
                 window.location.reload();
             } else {

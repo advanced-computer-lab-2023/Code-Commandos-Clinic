@@ -4,6 +4,7 @@ import "../css/style.css"
 import VideoPlayer from '../components/VideoPlayer';
 import VideoCallNotifications from '../components/VideoCallNotifications';
 import VideoCallOptions from '../components/VideoCallOptions';
+import Swal from "sweetalert2";
 
 const VideoCall = () => {
     const [user, setUser] = useState(null)
@@ -16,7 +17,11 @@ const VideoCall = () => {
                 setUser(json)
             }
             else
-                alert(await response.text())
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: await response.text(),
+                });
         }
         fetchUser()
 
@@ -30,7 +35,11 @@ const VideoCall = () => {
                 console.log(`${device.kind}: ${device.label} id = ${device.deviceId}`);
             });
             if(!cameraFound){
-                alert("No camera found")
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: "No camera found",
+                });
                 window.location.href = "http://localhost:3000/"
                 return
             }   

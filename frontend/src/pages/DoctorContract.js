@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ContractDetails from "../components/ContractDetails";
+import Swal from "sweetalert2";
 
 const DoctorContract = () => {
     const [contract, setContract] = useState(null);
@@ -18,7 +19,11 @@ const DoctorContract = () => {
                 setContract(json);
             }
             else {
-                alert(await response.text());
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: await response.text(),
+                });
             }
         };
 
@@ -35,12 +40,24 @@ const DoctorContract = () => {
             });
 
             if (response.ok) {
-                alert('Contract accepted successfully!');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: "Contract accepted successfully",
+                });
             } else {
-                alert('Failed to accept contract. Please try again.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: "An error occured",
+                });
             }
         } catch (error) {
-            console.error('Error accepting contract:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "An error occured",
+            });
         }
     };
 
@@ -54,12 +71,24 @@ const DoctorContract = () => {
             });
 
             if (response.ok) {
-                alert('Contract rejected successfully!');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: "Contract rejected successfully",
+                });
             } else {
-                alert('Failed to reject contract. Please try again.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: "Failed to reject contract",
+                });
             }
         } catch (error) {
-            console.error('Error rejecting contract:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "Failed to reject contract",
+            });
         }
     };
 
